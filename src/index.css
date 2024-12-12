@@ -6,6 +6,4 @@ html,
 body {
     font-family: Poppins;
     scroll-behavior: smooth;
-    min-height: 200vh;
-    background: #f00;
 }

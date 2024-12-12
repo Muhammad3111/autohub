@@ -15,7 +15,9 @@ const renderNavItems = (items: NavItem[]) => {
             to={item.path}
             className={({ isActive }) =>
                 `px-4 py-3 font-medium rounded text-base transition duration-200 ${
-                    isActive ? "bg-primary text-white" : "text-gray-700"
+                    isActive
+                        ? "bg-primary text-white"
+                        : "text-gray-700 hover:text-primary duration-200"
                 }`
             }
         >
@@ -67,7 +69,7 @@ const Navbar: React.FC = () => {
 
     return (
         <div
-            className={`container mx-auto p-2 flex items-center justify-between bg-white w-full h-16 fixed left-1/2 -translate-x-1/2 rounded transition-all duration-200 z-50 ${
+            className={`container mx-auto p-2 flex items-center justify-between bg-white h-16 sticky rounded transition-all duration-200 z-50 ${
                 sticky ? "top-0 shadow-md" : "top-[10px]"
             }`}
             style={{ transition: "top 0.3s ease-in-out" }}
@@ -79,7 +81,7 @@ const Navbar: React.FC = () => {
             </Link>
 
             <div className="flex items-center gap-10">
-                <div className="flex border rounded h-10">
+                <div className="flex border rounded h-10 bg-white">
                     <div className="flex items-center justify-center">
                         <FiSearch className="text-xl text-gray-400 mx-2" />
                     </div>
@@ -97,10 +99,13 @@ const Navbar: React.FC = () => {
                     </div>
                 </button>
 
-                <button className="flex items-center justify-center gap-2 duration-200 px-4 rounded">
+                <Link
+                    to={"/sign-in"}
+                    className="flex items-center justify-center gap-2 duration-200 px-4 rounded"
+                >
                     <FiUser className="text-xl" />
                     <p>Sign In</p>
-                </button>
+                </Link>
 
                 <button className="flex items-center justify-center text-white bg-primary py-3 px-10 rounded">
                     <FiMenu className="text-xl" />
