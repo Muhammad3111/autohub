@@ -4,23 +4,25 @@ import Home from "./pages/home/Home";
 import SignIn from "./pages/sign-in/SignIn";
 import SignUp from "./pages/sign-up/SignUp";
 import NotFound from "./pages/not-found/NotFound";
-import { Toaster } from "react-hot-toast";
+import { Slide, ToastContainer } from "react-toastify";
 
 function App() {
     return (
-        <div className="pb-10">
+        <div>
             <Navbar />
-            <Toaster
+
+            <ToastContainer
                 position="top-right"
-                reverseOrder={false}
-                gutter={10}
-                toastOptions={{
-                    duration: 2000,
-                    style: {
-                        fontSize: "18px",
-                        borderRadius: "2px",
-                    },
-                }}
+                autoClose={1500}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable={false}
+                pauseOnHover={false}
+                theme="colored"
+                transition={Slide}
             />
             <Routes>
                 <Route path="/" element={<Home />} />

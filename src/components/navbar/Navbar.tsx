@@ -1,7 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FiMenu, FiSearch, FiUser } from "react-icons/fi";
-import { GrShop } from "react-icons/gr";
 
 type NavItem = {
     title: string;
@@ -91,13 +90,6 @@ const Navbar: React.FC = () => {
                         className="outline-none rounded h-full text-sm"
                     />
                 </div>
-
-                <button className="flex items-center justify-center relative p-1">
-                    <GrShop className="text-xl" />
-                    <div className="w-4 h-4 bg-primary flex items-center justify-center text-white text-xs rounded-full absolute -right-1 top-0">
-                        0
-                    </div>
-                </button>
 
                 <Link
                     to={"/sign-in"}

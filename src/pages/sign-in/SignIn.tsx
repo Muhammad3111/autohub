@@ -1,10 +1,11 @@
-import toast from "react-hot-toast";
 import Header from "../../components/header/Header";
 import { FiUser } from "react-icons/fi";
 import { MdOutlineVpnKey } from "react-icons/md";
 import { useState } from "react";
 import { BiHide, BiShow } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Footer from "../../components/footer/Footer";
 
 const SignIn = () => {
     const [isShow, setIsShow] = useState(false);
@@ -16,7 +17,8 @@ const SignIn = () => {
     return (
         <div className="flex flex-col items-center gap-20">
             <Header title="Sign In" />
-            <div className="w-[400px] h-[450px] bg-white rounded shadow-custom p-10">
+
+            <div className="w-[400px] min-h-[450px] bg-white rounded shadow-custom p-10">
                 <h1 className="text-center text-2xl font-medium">Login</h1>
 
                 <div className="flex items-center relative mt-8 mb-4">
@@ -77,6 +79,7 @@ const SignIn = () => {
                     Sign Up
                 </button>
             </div>
+            <Footer />
         </div>
     );
 };

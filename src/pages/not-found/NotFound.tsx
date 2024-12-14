@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import WhellImage from "../../assets/error-wheel.png";
+import WhellImage from "../../assets/error-wheel.svg";
 import Header from "../../components/header/Header";
 
 const NotFound = () => {
