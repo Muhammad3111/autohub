@@ -7,7 +7,7 @@ type HeaderProps = {
 
 const Header = ({ title, image = CarImage }: HeaderProps) => {
     return (
-        <div className="w-full h-[420px] flex items-center bg-[#f3f3f3] mt-[15px]">
+        <div className="w-full h-[420px] flex items-center bg-secondary px-0 xl:px-[70px]">
             <div className="flex items-center justify-between container mx-auto">
                 <div>
                     <h1 className="text-3xl font-semibold mb-4">{title}</h1>

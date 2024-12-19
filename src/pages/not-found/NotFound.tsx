@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import WhellImage from "../../assets/error-wheel.svg";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
+import Button from "../../utility/button/Button";
 
 const NotFound = () => {
     const navigate = useNavigate();
@@ -18,12 +19,7 @@ const NotFound = () => {
 
                     <p className="text-sm">We are sorry, page not found.</p>
 
-                    <button
-                        onClick={() => navigate("/")}
-                        className="bg-primary text-white py-2.5 shadow-second shadow-gray-400 font-medium px-10 rounded-sm mt-10"
-                    >
-                        Back To Home
-                    </button>
+                    <Button path="/">Back To Home</Button>
                 </div>
             </div>
 

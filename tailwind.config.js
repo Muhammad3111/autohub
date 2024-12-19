@@ -4,7 +4,8 @@ export default {
     theme: {
         extend: {
             colors: {
-                primary: "red",
+                primary: "#F62518",
+                secondary: "#f4f4f4",
             },
             boxShadow: {
                 custom: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",

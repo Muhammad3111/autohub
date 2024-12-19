@@ -5,11 +5,13 @@ import SignIn from "./pages/sign-in/SignIn";
 import SignUp from "./pages/sign-up/SignUp";
 import NotFound from "./pages/not-found/NotFound";
 import { Slide, ToastContainer } from "react-toastify";
+import Navbar2 from "./components/navbar/Navbar2";
 
 function App() {
     return (
         <div>
-            <Navbar />
+            {/* <Navbar /> */}
+            <Navbar2 />
 
             <ToastContainer
                 position="top-right"
