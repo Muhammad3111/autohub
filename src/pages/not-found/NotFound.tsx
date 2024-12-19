@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import WhellImage from "../../assets/error-wheel.svg";
 import Header from "../../components/header/Header";
+import Footer from "../../components/footer/Footer";
 
 const NotFound = () => {
     const navigate = useNavigate();
@@ -25,6 +26,8 @@ const NotFound = () => {
                     </button>
                 </div>
             </div>
+
+            <Footer />
         </div>
     );
 };

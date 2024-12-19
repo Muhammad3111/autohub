@@ -13,3 +13,7 @@ body {
 .line {
     background: radial-gradient(#ff0000 10%, #000 100%);
 }
+
+.footer__link:hover {
+    text-decoration: underline;
+}
