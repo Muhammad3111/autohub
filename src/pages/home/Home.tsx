@@ -1,8 +1,10 @@
 import Footer from "../../components/footer/Footer";
+import Banner from "./Banner";
 
 const Home = () => {
     return (
-        <div className="mt-10">
+        <div>
+            <Banner />
             <Footer />
         </div>
     );
