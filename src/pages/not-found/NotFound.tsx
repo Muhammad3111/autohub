@@ -1,12 +1,9 @@
-import { useNavigate } from "react-router-dom";
 import WhellImage from "../../assets/error-wheel.svg";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import Button from "../../utility/button/Button";
 
 const NotFound = () => {
-    const navigate = useNavigate();
-
     return (
         <div>
             <Header title="404 Error" />
