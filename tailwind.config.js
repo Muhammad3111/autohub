@@ -11,6 +11,10 @@ export default {
                 custom: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
                 second: "0 10px 16px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.2)",
             },
+            screens: {
+                lg: "1050px",
+                xl: "1350px",
+            },
         },
     },
     plugins: [],

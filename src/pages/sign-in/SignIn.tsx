@@ -11,14 +11,40 @@ const SignIn = () => {
     const [isShow, setIsShow] = useState(false);
     const navigate = useNavigate();
 
+    const [errors, setErrors] = useState({
+        username: false,
+        password: false,
+    });
+
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
+
+    const handleLogin = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        let newErrors = {
+            username: !username,
+            password: !password,
+        };
+
+        setErrors(newErrors);
+
+        if (Object.values(newErrors).includes(true)) {
+            toast.error("All fields are required!");
+            return;
+        }
+
+        toast.success("Login success!");
+    };
 
     return (
         <div className="flex flex-col items-center gap-20">
             <Header title="Sign In" />
 
-            <div className="w-[400px] min-h-[450px] bg-white rounded shadow-custom p-10">
+            <form
+                onSubmit={handleLogin}
+                className="w-[400px] min-h-[450px] bg-white rounded shadow-custom p-10"
+            >
                 <h1 className="text-center text-2xl font-medium">Login</h1>
 
                 <div className="flex items-center relative mt-8 mb-4">
@@ -30,7 +56,12 @@ const SignIn = () => {
                         value={username}
                         onChange={(e) => setUserName(e.target.value)}
                         placeholder="Enter username"
-                        className="border w-full outline-none h-10 rounded text-sm indent-9 font-medium"
+                        className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
+                            errors.username ? "border-red-500" : ""
+                        }`}
+                        onFocus={() =>
+                            setErrors({ ...errors, username: false })
+                        }
                     />
                 </div>
 
@@ -43,7 +74,12 @@ const SignIn = () => {
                         placeholder="Enter password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="border w-full outline-none h-10 rounded text-sm indent-9 font-medium"
+                        className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
+                            errors.password ? "border-red-500" : ""
+                        }`}
+                        onFocus={() =>
+                            setErrors({ ...errors, password: false })
+                        }
                     />
 
                     {password.length > 0 && (
@@ -58,9 +94,7 @@ const SignIn = () => {
                 </div>
 
                 <button
-                    onClick={() => {
-                        toast.success("Login success!");
-                    }}
+                    type="submit"
                     className="w-full font-medium bg-black text-white rounded h-10"
                 >
                     Submit
@@ -74,11 +108,12 @@ const SignIn = () => {
 
                 <button
                     onClick={() => navigate("/sign-up")}
+                    type="button"
                     className="w-full font-medium border-2 rounded h-10 mt-10"
                 >
                     Sign Up
                 </button>
-            </div>
+            </form>
             <Footer />
         </div>
     );

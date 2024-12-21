@@ -3,11 +3,13 @@ import { FiUser } from "react-icons/fi";
 import { MdCall, MdOutlineVpnKey } from "react-icons/md";
 import { BiHide, BiShow } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-import OtpInput from "../../utility/otp-input/OtpInput";
 import { toast } from "react-toastify";
 import { PatternFormat } from "react-number-format";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
+import SwitchRole from "./SwitchRole";
+import { useRegisterMutation } from "../../app/auth";
+import OtpForm from "./OtpForm";
 
 const SignUp = () => {
     const [isShow, setIsShow] = useState(false);
@@ -20,6 +22,9 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [phone, setPhone] = useState("");
     const [smsCode, setSmsCode] = useState("");
+    const [role, setRole] = useState<"user" | "dealer">("user");
+
+    const [registerUser] = useRegisterMutation();
 
     const [errors, setErrors] = useState({
         username: false,
@@ -28,7 +33,7 @@ const SignUp = () => {
         phone: false,
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         let newErrors = {
@@ -57,16 +62,30 @@ const SignUp = () => {
             return;
         }
 
-        toast.success("Account created successfully! Verify with OTP.");
-        setIsOtpMode(true);
+        let newData = {
+            username,
+            password,
+            phone_number: phone,
+            role,
+        };
+
+        await registerUser(newData)
+            .then((res: any) => {
+                if (res?.data) {
+                    setSmsCode(res?.data?.code);
+                    setIsOtpMode(true);
+                } else {
+                    toast.error(res?.error?.data?.detail);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error(err?.error.data.detail);
+            });
     };
 
     const handleBackToForm = () => {
         setIsOtpMode(false);
-    };
-
-    const handleVerify = () => {
-        console.log(smsCode);
     };
 
     return (
@@ -177,6 +196,8 @@ const SignUp = () => {
                             />
                         </div>
 
+                        <SwitchRole role={role} setRole={setRole} />
+
                         <button
                             type="submit"
                             className="w-full font-medium bg-black text-white rounded h-10"
@@ -201,39 +222,12 @@ const SignUp = () => {
                         </button>
                     </form>
                 ) : (
-                    <div className="relative flex flex-col gap-6 items-center justify-center w-full">
-                        <h1 className="text-2xl font-medium">Verify</h1>
-                        <p>Your code was sent to {phone}</p>
-                        <OtpInput
-                            length={4}
-                            onChangeOtp={(otp) => {
-                                if (otp.length === 4) {
-                                    setSmsCode(otp);
-                                }
-                            }}
-                        />
-                        <div className="flex items-center gap-4">
-                            <button
-                                className="border py-2 px-6 rounded"
-                                onClick={handleBackToForm}
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                onClick={handleVerify}
-                                className="bg-blue-500 text-white py-2 px-6 rounded"
-                            >
-                                Verify
-                            </button>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                            <p className="text-sm">Didn't receive the code?</p>
-                            <button className="text-blue-500 underline">
-                                Request again
-                            </button>
-                        </div>
-                    </div>
+                    <OtpForm
+                        code={smsCode}
+                        username={username}
+                        phone={phone}
+                        handleBackToForm={handleBackToForm}
+                    />
                 )}
             </div>
             <Footer />
