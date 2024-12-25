@@ -4,7 +4,7 @@ import { PiBellSimple } from "react-icons/pi";
 
 export default function TopHeader() {
   return (
-    <div className="p-4 shadow-lg flex items-center justify-between">
+    <div className="p-4 shadow-md border-b-2 flex items-center justify-between">
       <div className="flex border rounded h-10 bg-white">
         <div className="flex items-center justify-center">
           <FiSearch className="text-xl text-gray-400 mx-2" />
