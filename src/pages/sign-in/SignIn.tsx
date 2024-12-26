@@ -6,6 +6,8 @@ import { BiHide, BiShow } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Footer from "../../components/footer/Footer";
+import { useLoginMutation } from "../../app/auth";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const SignIn = () => {
     const [isShow, setIsShow] = useState(false);
@@ -18,8 +20,9 @@ const SignIn = () => {
 
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [login] = useLoginMutation();
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
 
         let newErrors = {
@@ -34,7 +37,18 @@ const SignIn = () => {
             return;
         }
 
-        toast.success("Login success!");
+        await login({ username, password })
+            .then((res) => {
+                toast.success("Login success !");
+                navigate("/");
+
+                useLocalStorage.setItem({
+                    key: "token",
+                    value: res.data.access_token,
+                    isJson: true,
+                });
+            })
+            .catch((err) => console.log(err));
     };
 
     return (

@@ -38,7 +38,7 @@ export const authApi = api.injectEndpoints({
             }),
             invalidatesTags: ["AUTH"],
         }),
-        authDetail: builder.query({
+        authDetail: builder.query<void, void>({
             query: () => ({
                 url: "/auth/details",
                 method: "GET",

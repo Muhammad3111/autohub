@@ -1,6 +1,9 @@
 import { useState } from "react";
 import OtpInput from "../../utility/otp-input/OtpInput";
 import { useVerifyMutation } from "../../app/auth";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 type OtpFormProps = {
     code: string;
@@ -16,11 +19,21 @@ const OtpForm: React.FC<OtpFormProps> = ({
     handleBackToForm,
 }) => {
     const [smsCode, setSmsCode] = useState<string>("");
-    const [verifyUser] = useVerifyMutation();
+    const [verifyUser, { isLoading }] = useVerifyMutation();
+    const navigate = useNavigate();
 
     const handleVerify = async () => {
         await verifyUser({ username, code: smsCode })
-            .then((res) => console.log(res))
+            .then((res) => {
+                toast.success("Login success !");
+                navigate("/");
+
+                useLocalStorage.setItem({
+                    key: "token",
+                    value: res.data.access_token,
+                    isJson: true,
+                });
+            })
             .catch((err) => console.log(err));
     };
 
@@ -49,8 +62,9 @@ const OtpForm: React.FC<OtpFormProps> = ({
                 <button
                     onClick={handleVerify}
                     className="bg-blue-500 text-white py-2 px-6 rounded"
+                    disabled={isLoading}
                 >
-                    Verify
+                    {isLoading ? "Verifying..." : "Verify"}
                 </button>
             </div>
 

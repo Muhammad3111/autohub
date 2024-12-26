@@ -1,6 +1,8 @@
 import { FiMenu, FiSearch, FiUser } from "react-icons/fi";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../assets/autohub-logo.jpg";
+import { useAuth } from "../../context/AuthContext";
+import { useAuthDetailQuery } from "../../app/auth";
 
 type NavItem = {
     title: string;
@@ -48,6 +50,10 @@ const Navbar2 = () => {
             path: "/contact",
         },
     ];
+
+    // const { isLogin } = useAuth();
+    const { data } = useAuthDetailQuery();
+    console.log(data);
 
     return (
         <div className="w-full h-16 sticky top-0 left-0 z-40 bg-white flex items-center justify-between pl-6 lg:pl-16 gap-20">
