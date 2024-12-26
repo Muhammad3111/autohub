@@ -1,7 +1,7 @@
 import { FiMenu, FiSearch, FiUser } from "react-icons/fi";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../assets/autohub-logo.jpg";
-import { useAuth } from "../../context/AuthContext";
+// import { useAuth } from "../../context/AuthContext";
 import { useAuthDetailQuery } from "../../app/auth";
 
 type NavItem = {
