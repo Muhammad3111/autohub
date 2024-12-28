@@ -32,7 +32,7 @@ export const authApi = api.injectEndpoints({
         // AUTH
         login: builder.mutation({
             query: (userData: UserData) => ({
-                url: "/auth/token",
+                url: "/auth/refresh",
                 method: "POST",
                 body: userData,
             }),
@@ -46,6 +46,14 @@ export const authApi = api.injectEndpoints({
             providesTags: ["AUTH"],
         }),
 
+        getAccessToken: builder.query({
+            query: () => ({
+                url: "/auth/access",
+                method: "GET",
+            }),
+            providesTags: ["AUTH"],
+        }),
+
         // REGISTER
         register: builder.mutation({
             query: (data: RegisterData) => ({
@@ -53,7 +61,7 @@ export const authApi = api.injectEndpoints({
                 method: "POST",
                 body: data,
             }),
-            invalidatesTags: ["REGISTER"],
+            invalidatesTags: ["AUTH"],
         }),
 
         verify: builder.mutation({
@@ -62,7 +70,7 @@ export const authApi = api.injectEndpoints({
                 method: "POST",
                 body: data,
             }),
-            invalidatesTags: ["REGISTER"],
+            invalidatesTags: ["AUTH"],
         }),
 
         dealerRegister: builder.mutation({
@@ -71,10 +79,9 @@ export const authApi = api.injectEndpoints({
                 method: "POST",
                 body: data,
             }),
-            invalidatesTags: ["REGISTER"],
+            invalidatesTags: ["AUTH"],
         }),
     }),
-    overrideExisting: false,
 });
 
 export const {

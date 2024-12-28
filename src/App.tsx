@@ -5,7 +5,7 @@ import SignIn from "./pages/sign-in/SignIn";
 import SignUp from "./pages/sign-up/SignUp";
 import NotFound from "./pages/not-found/NotFound";
 import { Slide, ToastContainer } from "react-toastify";
-import Navbar2 from "./components/navbar/Navbar2";
+import Navbar from "./components/navbar/Navbar";
 import Login from "./pages/login/Login";
 import Layout from "./layout/Layout";
 import Dashboard from "./pages/dashboard/Dashboard";
@@ -24,8 +24,7 @@ function App() {
 
     return (
         <div>
-            {/* Faqat admin bo'lmagan yo‘llarda Navbar2 ni ko‘rsatish */}
-            {!isAdminPath && <Navbar2 />}
+            {!isAdminPath && <Navbar />}
             <ScrollToTop />
 
             <ToastContainer

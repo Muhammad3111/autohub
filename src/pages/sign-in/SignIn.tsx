@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Footer from "../../components/footer/Footer";
 import { useLoginMutation } from "../../app/auth";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const SignIn = () => {
     const [isShow, setIsShow] = useState(false);
@@ -20,7 +19,7 @@ const SignIn = () => {
 
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
-    const [login] = useLoginMutation();
+    const [login, { isLoading }] = useLoginMutation();
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -38,17 +37,17 @@ const SignIn = () => {
         }
 
         await login({ username, password })
+            .unwrap()
             .then((res) => {
                 toast.success("Login success !");
                 navigate("/");
 
-                useLocalStorage.setItem({
-                    key: "token",
-                    value: res.data.access_token,
-                    isJson: true,
-                });
+                localStorage.setItem("access_token", res.access);
+                localStorage.setItem("refresh_token", res.refresh);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                toast.error(err.data.detail);
+            });
     };
 
     return (
@@ -97,7 +96,10 @@ const SignIn = () => {
                     />
 
                     {password.length > 0 && (
-                        <button className="absolute right-2.5 text-xl">
+                        <button
+                            type="button"
+                            className="absolute right-2.5 text-xl"
+                        >
                             {isShow ? (
                                 <BiHide onClick={() => setIsShow(false)} />
                             ) : (
@@ -109,9 +111,10 @@ const SignIn = () => {
 
                 <button
                     type="submit"
+                    disabled={isLoading}
                     className="w-full font-medium bg-black text-white rounded h-10"
                 >
-                    Submit
+                    {isLoading ? "Submit..." : "Submit"}
                 </button>
 
                 <div className="flex items-center gap-2 mt-6">

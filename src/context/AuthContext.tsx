@@ -1,8 +1,15 @@
-import React, { createContext, useContext, ReactNode, useMemo } from "react";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import React, {
+    createContext,
+    useContext,
+    ReactNode,
+    useMemo,
+    useState,
+} from "react";
 
 interface AuthContextProps {
     isLogin: boolean;
+    language: string;
+    setLanguage: (lang: string) => void;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -10,12 +17,21 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     children,
 }) => {
-    const token = useLocalStorage.getItem({ key: "token", isJson: true });
+    const token = localStorage.getItem("access_token");
 
     const isLogin = useMemo(() => !!token, [token]);
 
+    const [language, setLanguageState] = useState<string>(
+        localStorage.getItem("language") || "uz"
+    );
+
+    const setLanguage = (lang: string) => {
+        setLanguageState(lang);
+        localStorage.setItem("language", lang);
+    };
+
     return (
-        <AuthContext.Provider value={{ isLogin }}>
+        <AuthContext.Provider value={{ isLogin, language, setLanguage }}>
             {children}
         </AuthContext.Provider>
     );

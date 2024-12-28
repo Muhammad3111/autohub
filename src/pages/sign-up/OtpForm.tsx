@@ -3,7 +3,6 @@ import OtpInput from "../../utility/otp-input/OtpInput";
 import { useVerifyMutation } from "../../app/auth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 type OtpFormProps = {
     code: string;
@@ -24,17 +23,16 @@ const OtpForm: React.FC<OtpFormProps> = ({
 
     const handleVerify = async () => {
         await verifyUser({ username, code: smsCode })
-            .then((res) => {
+            .unwrap()
+            .then((res: any) => {
                 toast.success("Login success !");
                 navigate("/");
-
-                useLocalStorage.setItem({
-                    key: "token",
-                    value: res.data.access_token,
-                    isJson: true,
-                });
+                localStorage.setItem("access_token", res.access);
+                localStorage.setItem("refresh_token", res.refresh);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                toast.error(err.detail);
+            });
     };
 
     return (
