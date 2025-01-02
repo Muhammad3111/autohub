@@ -1,4 +1,4 @@
-import { api } from "./api";
+import { apiSlice } from "../../app/api/apiSlice";
 
 type UserData = {
     username: string;
@@ -27,7 +27,7 @@ type DealerData = {
     working_hours: string;
 };
 
-export const authApi = api.injectEndpoints({
+export const authApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         // AUTH
         login: builder.mutation({
@@ -38,10 +38,13 @@ export const authApi = api.injectEndpoints({
             }),
             invalidatesTags: ["AUTH"],
         }),
-        authDetail: builder.query<void, void>({
-            query: () => ({
+        authDetail: builder.query<void, { token: string | null }>({
+            query: ({ token = "" }) => ({
                 url: "/auth/details",
                 method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             }),
             providesTags: ["AUTH"],
         }),
@@ -86,7 +89,7 @@ export const authApi = api.injectEndpoints({
 
 export const {
     useLoginMutation,
-    useAuthDetailQuery,
+    useLazyAuthDetailQuery,
     useRegisterMutation,
     useVerifyMutation,
     useDealerRegisterMutation,

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import OtpInput from "../../utility/otp-input/OtpInput";
-import { useVerifyMutation } from "../../app/auth";
+import { useVerifyMutation } from "../../features/auth/authApiSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../../features/auth/authSlice";
 
 type OtpFormProps = {
     code: string;
@@ -20,15 +22,21 @@ const OtpForm: React.FC<OtpFormProps> = ({
     const [smsCode, setSmsCode] = useState<string>("");
     const [verifyUser, { isLoading }] = useVerifyMutation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleVerify = async () => {
         await verifyUser({ username, code: smsCode })
             .unwrap()
             .then((res: any) => {
-                toast.success("Login success !");
+                toast.success("Ro'yxatdan o'tish muvaffaqqiyatli bajarildi!");
+
                 navigate("/");
-                localStorage.setItem("access_token", res.access);
-                localStorage.setItem("refresh_token", res.refresh);
+                dispatch(
+                    setCredentials({
+                        accessToken: res.token.access,
+                        refreshToken: res.token.refresh,
+                    })
+                );
             })
             .catch((err) => {
                 toast.error(err.detail);
@@ -37,11 +45,11 @@ const OtpForm: React.FC<OtpFormProps> = ({
 
     return (
         <div className="relative flex flex-col gap-6 items-center justify-center w-full">
-            <h1 className="text-2xl font-medium">Verify</h1>
+            <h1 className="text-2xl font-medium">Tasdiqlash</h1>
 
             <p>{code}</p>
 
-            <p>Your code was sent to {phone}</p>
+            <p>Sms {phone} raqamga yuborildi!</p>
             <OtpInput
                 length={5}
                 onChangeOtp={(otp) => {
@@ -55,21 +63,21 @@ const OtpForm: React.FC<OtpFormProps> = ({
                     className="border py-2 px-6 rounded"
                     onClick={handleBackToForm}
                 >
-                    Cancel
+                    Bekor qilish
                 </button>
                 <button
                     onClick={handleVerify}
                     className="bg-blue-500 text-white py-2 px-6 rounded"
                     disabled={isLoading}
                 >
-                    {isLoading ? "Verifying..." : "Verify"}
+                    {isLoading ? "Tasdiqlash..." : "Tasdiqlash"}
                 </button>
             </div>
 
             <div className="flex items-center gap-2">
-                <p className="text-sm">Didn't receive the code?</p>
+                <p className="text-sm">Sms kod xali kelmadimi ?</p>
                 <button className="text-blue-500 underline">
-                    Request again
+                    Qayta jo'natish
                 </button>
             </div>
         </div>

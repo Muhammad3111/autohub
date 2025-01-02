@@ -8,7 +8,7 @@ import { PatternFormat } from "react-number-format";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import SwitchRole from "./SwitchRole";
-import { useRegisterMutation } from "../../app/auth";
+import { useRegisterMutation } from "../../features/auth/authApiSlice";
 import OtpForm from "./OtpForm";
 
 const SignUp = () => {
@@ -46,18 +46,18 @@ const SignUp = () => {
         setErrors(newErrors);
 
         if (Object.values(newErrors).includes(true)) {
-            toast.error("All fields are required!");
+            toast.error("Barcha maydonlarni to'ldiring!");
             return;
         }
 
         if (password !== confirmPassword) {
-            toast.error("Passwords do not match!");
+            toast.error("Parol bir xil emas!");
             setErrors({ ...newErrors, confirmPassword: true });
             return;
         }
 
         if (phone.split(" ").join("").length !== 13) {
-            toast.error("Phone number is not valid!");
+            toast.error("Telefon raqam noto'g'ri!");
             setErrors({ ...newErrors, phone: true });
             return;
         }
@@ -90,12 +90,12 @@ const SignUp = () => {
 
     return (
         <div className="flex flex-col items-center gap-20">
-            <Header title="Sign Up" />
+            <Header title="Ro'yxatdan o'tish" />
             <div className="w-[400px] min-h-[200px] bg-white rounded shadow-custom p-10">
                 {!isOtpMode ? (
                     <form onSubmit={handleSubmit}>
                         <h1 className="text-center text-2xl font-medium">
-                            Create Account
+                            Ro'yxatdan o'tish
                         </h1>
 
                         <div className="flex items-center relative mt-8 mb-4">
@@ -104,7 +104,7 @@ const SignUp = () => {
                             </div>
                             <input
                                 type="text"
-                                placeholder="Create username"
+                                placeholder="Foydalanuvchi nomi"
                                 className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
                                     errors.username ? "border-red-500" : ""
                                 }`}
@@ -122,7 +122,7 @@ const SignUp = () => {
                             </div>
                             <input
                                 type={isShow ? "text" : "password"}
-                                placeholder="Create password"
+                                placeholder="Parol"
                                 className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
                                     errors.password ? "border-red-500" : ""
                                 }`}
@@ -148,7 +148,7 @@ const SignUp = () => {
                             </div>
                             <input
                                 type={isShowConfirm ? "text" : "password"}
-                                placeholder="Confirm password"
+                                placeholder="Parolni tasdiqlash"
                                 className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
                                     errors.confirmPassword
                                         ? "border-red-500"
@@ -202,13 +202,13 @@ const SignUp = () => {
                             type="submit"
                             className="w-full font-medium bg-black text-white rounded h-10"
                         >
-                            Create Account
+                            Ro'yxatdan o'tish
                         </button>
 
                         <div className="flex items-center gap-2 mt-6">
                             <div className="w-full h-[2px] bg-gray-200"></div>
                             <p className="font-medium text-sm text-gray-400">
-                                Or
+                                Yoki
                             </p>
                             <div className="w-full h-[2px] bg-gray-200"></div>
                         </div>
@@ -218,7 +218,7 @@ const SignUp = () => {
                             onClick={() => navigate("/sign-in")}
                             className="w-full font-medium border-2 rounded h-10 mt-10"
                         >
-                            Login
+                            Kirish
                         </button>
                     </form>
                 ) : (

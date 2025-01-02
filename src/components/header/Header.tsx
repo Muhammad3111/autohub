@@ -11,7 +11,7 @@ const Header = ({ title, image = CarImage }: HeaderProps) => {
             <div className="flex items-center justify-between container mx-auto">
                 <div>
                     <h1 className="text-3xl font-semibold mb-4">{title}</h1>
-                    <span>Home - </span>
+                    <span>Bosh sahifa - </span>
                     <span>{title}</span>
                 </div>
                 <img src={image} width={500} alt="" />

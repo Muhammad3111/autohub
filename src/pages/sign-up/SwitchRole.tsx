@@ -22,11 +22,11 @@ const SwitchRole: React.FC<SwitchRoleProps> = ({ role, setRole }) => {
                         htmlFor="radio-user"
                         className={`flex items-center justify-center w-full h-10 font-semibold rounded-sm cursor-pointer transition-all ${
                             role === "user"
-                                ? "text-white bg-primary transform scale-105"
+                                ? "text-white bg-primary transform"
                                 : "text-gray-700"
                         }`}
                     >
-                        User
+                        Foydalanuvchi
                     </label>
                 </li>
                 <li className="w-full">
@@ -42,11 +42,11 @@ const SwitchRole: React.FC<SwitchRoleProps> = ({ role, setRole }) => {
                         htmlFor="radio-dealer"
                         className={`flex items-center justify-center w-full h-10 font-semibold rounded-sm cursor-pointer transition-all ${
                             role === "dealer"
-                                ? "text-white bg-primary transform scale-105"
+                                ? "text-white bg-primary transform"
                                 : "text-gray-700"
                         }`}
                     >
-                        Dealer
+                        Diller
                     </label>
                 </li>
             </ul>
