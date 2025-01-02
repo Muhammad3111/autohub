@@ -6,20 +6,65 @@ import { BiHide, BiShow } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Footer from "../../components/footer/Footer";
+import { useLoginMutation } from "../../features/auth/authApiSlice";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../../features/auth/authSlice";
 
 const SignIn = () => {
     const [isShow, setIsShow] = useState(false);
     const navigate = useNavigate();
 
+    const [errors, setErrors] = useState({
+        username: false,
+        password: false,
+    });
+
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [login, { isLoading }] = useLoginMutation();
+    const dispatch = useDispatch();
+
+    const handleLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        let newErrors = {
+            username: !username,
+            password: !password,
+        };
+
+        setErrors(newErrors);
+
+        if (Object.values(newErrors).includes(true)) {
+            toast.error("Barcha maydonlarni to'ldiring!");
+            return;
+        }
+
+        await login({ username, password })
+            .unwrap()
+            .then((res) => {
+                toast.success("Kirish muvaffaqqiyatli bajarildi!");
+                navigate("/");
+                dispatch(
+                    setCredentials({
+                        accessToken: res.access,
+                        refreshToken: res.refresh,
+                    })
+                );
+            })
+            .catch((err) => {
+                toast.error(err.data.detail);
+            });
+    };
 
     return (
         <div className="flex flex-col items-center gap-20">
-            <Header title="Sign In" />
+            <Header title="Kirish" />
 
-            <div className="w-[400px] min-h-[450px] bg-white rounded shadow-custom p-10">
-                <h1 className="text-center text-2xl font-medium">Login</h1>
+            <form
+                onSubmit={handleLogin}
+                className="w-[400px] min-h-[450px] bg-white rounded shadow-custom p-10"
+            >
+                <h1 className="text-center text-2xl font-medium">Kirish</h1>
 
                 <div className="flex items-center relative mt-8 mb-4">
                     <div className="absolute left-2">
@@ -29,8 +74,13 @@ const SignIn = () => {
                         type="text"
                         value={username}
                         onChange={(e) => setUserName(e.target.value)}
-                        placeholder="Enter username"
-                        className="border w-full outline-none h-10 rounded text-sm indent-9 font-medium"
+                        placeholder="Foydalanuvchi nomi"
+                        className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
+                            errors.username ? "border-red-500" : ""
+                        }`}
+                        onFocus={() =>
+                            setErrors({ ...errors, username: false })
+                        }
                     />
                 </div>
 
@@ -40,14 +90,22 @@ const SignIn = () => {
                     </div>
                     <input
                         type={isShow ? "text" : "password"}
-                        placeholder="Enter password"
+                        placeholder="Parol"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="border w-full outline-none h-10 rounded text-sm indent-9 font-medium"
+                        className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
+                            errors.password ? "border-red-500" : ""
+                        }`}
+                        onFocus={() =>
+                            setErrors({ ...errors, password: false })
+                        }
                     />
 
                     {password.length > 0 && (
-                        <button className="absolute right-2.5 text-xl">
+                        <button
+                            type="button"
+                            className="absolute right-2.5 text-xl"
+                        >
                             {isShow ? (
                                 <BiHide onClick={() => setIsShow(false)} />
                             ) : (
@@ -58,27 +116,27 @@ const SignIn = () => {
                 </div>
 
                 <button
-                    onClick={() => {
-                        toast.success("Login success!");
-                    }}
+                    type="submit"
+                    disabled={isLoading}
                     className="w-full font-medium bg-black text-white rounded h-10"
                 >
-                    Submit
+                    {isLoading ? "Kirish..." : "Kirish"}
                 </button>
 
                 <div className="flex items-center gap-2 mt-6">
                     <div className="w-full h-[2px] bg-gray-200"></div>
-                    <p className="font-medium text-sm text-gray-400">Or</p>
+                    <p className="font-medium text-sm text-gray-400">Yoki</p>
                     <div className="w-full h-[2px] bg-gray-200"></div>
                 </div>
 
                 <button
                     onClick={() => navigate("/sign-up")}
+                    type="button"
                     className="w-full font-medium border-2 rounded h-10 mt-10"
                 >
-                    Sign Up
+                    Ro'yxatdan o'tish
                 </button>
-            </div>
+            </form>
             <Footer />
         </div>
     );

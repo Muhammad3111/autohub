@@ -3,11 +3,13 @@ import { FiUser } from "react-icons/fi";
 import { MdCall, MdOutlineVpnKey } from "react-icons/md";
 import { BiHide, BiShow } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-import OtpInput from "../../utility/otp-input/OtpInput";
 import { toast } from "react-toastify";
 import { PatternFormat } from "react-number-format";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
+import SwitchRole from "./SwitchRole";
+import { useRegisterMutation } from "../../features/auth/authApiSlice";
+import OtpForm from "./OtpForm";
 
 const SignUp = () => {
     const [isShow, setIsShow] = useState(false);
@@ -20,6 +22,9 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [phone, setPhone] = useState("");
     const [smsCode, setSmsCode] = useState("");
+    const [role, setRole] = useState<"user" | "dealer">("user");
+
+    const [registerUser] = useRegisterMutation();
 
     const [errors, setErrors] = useState({
         username: false,
@@ -28,7 +33,7 @@ const SignUp = () => {
         phone: false,
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         let newErrors = {
@@ -41,42 +46,56 @@ const SignUp = () => {
         setErrors(newErrors);
 
         if (Object.values(newErrors).includes(true)) {
-            toast.error("All fields are required!");
+            toast.error("Barcha maydonlarni to'ldiring!");
             return;
         }
 
         if (password !== confirmPassword) {
-            toast.error("Passwords do not match!");
+            toast.error("Parol bir xil emas!");
             setErrors({ ...newErrors, confirmPassword: true });
             return;
         }
 
         if (phone.split(" ").join("").length !== 13) {
-            toast.error("Phone number is not valid!");
+            toast.error("Telefon raqam noto'g'ri!");
             setErrors({ ...newErrors, phone: true });
             return;
         }
 
-        toast.success("Account created successfully! Verify with OTP.");
-        setIsOtpMode(true);
+        let newData = {
+            username,
+            password,
+            phone_number: phone,
+            role,
+        };
+
+        await registerUser(newData)
+            .then((res: any) => {
+                if (res?.data) {
+                    setSmsCode(res?.data?.code);
+                    setIsOtpMode(true);
+                } else {
+                    toast.error(res?.error?.data?.detail);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error(err?.error.data.detail);
+            });
     };
 
     const handleBackToForm = () => {
         setIsOtpMode(false);
     };
 
-    const handleVerify = () => {
-        console.log(smsCode);
-    };
-
     return (
         <div className="flex flex-col items-center gap-20">
-            <Header title="Sign Up" />
+            <Header title="Ro'yxatdan o'tish" />
             <div className="w-[400px] min-h-[200px] bg-white rounded shadow-custom p-10">
                 {!isOtpMode ? (
                     <form onSubmit={handleSubmit}>
                         <h1 className="text-center text-2xl font-medium">
-                            Create Account
+                            Ro'yxatdan o'tish
                         </h1>
 
                         <div className="flex items-center relative mt-8 mb-4">
@@ -85,7 +104,7 @@ const SignUp = () => {
                             </div>
                             <input
                                 type="text"
-                                placeholder="Create username"
+                                placeholder="Foydalanuvchi nomi"
                                 className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
                                     errors.username ? "border-red-500" : ""
                                 }`}
@@ -103,7 +122,7 @@ const SignUp = () => {
                             </div>
                             <input
                                 type={isShow ? "text" : "password"}
-                                placeholder="Create password"
+                                placeholder="Parol"
                                 className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
                                     errors.password ? "border-red-500" : ""
                                 }`}
@@ -129,7 +148,7 @@ const SignUp = () => {
                             </div>
                             <input
                                 type={isShowConfirm ? "text" : "password"}
-                                placeholder="Confirm password"
+                                placeholder="Parolni tasdiqlash"
                                 className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
                                     errors.confirmPassword
                                         ? "border-red-500"
@@ -177,17 +196,19 @@ const SignUp = () => {
                             />
                         </div>
 
+                        <SwitchRole role={role} setRole={setRole} />
+
                         <button
                             type="submit"
                             className="w-full font-medium bg-black text-white rounded h-10"
                         >
-                            Create Account
+                            Ro'yxatdan o'tish
                         </button>
 
                         <div className="flex items-center gap-2 mt-6">
                             <div className="w-full h-[2px] bg-gray-200"></div>
                             <p className="font-medium text-sm text-gray-400">
-                                Or
+                                Yoki
                             </p>
                             <div className="w-full h-[2px] bg-gray-200"></div>
                         </div>
@@ -197,43 +218,16 @@ const SignUp = () => {
                             onClick={() => navigate("/sign-in")}
                             className="w-full font-medium border-2 rounded h-10 mt-10"
                         >
-                            Login
+                            Kirish
                         </button>
                     </form>
                 ) : (
-                    <div className="relative flex flex-col gap-6 items-center justify-center w-full">
-                        <h1 className="text-2xl font-medium">Verify</h1>
-                        <p>Your code was sent to {phone}</p>
-                        <OtpInput
-                            length={4}
-                            onChangeOtp={(otp) => {
-                                if (otp.length === 4) {
-                                    setSmsCode(otp);
-                                }
-                            }}
-                        />
-                        <div className="flex items-center gap-4">
-                            <button
-                                className="border py-2 px-6 rounded"
-                                onClick={handleBackToForm}
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                onClick={handleVerify}
-                                className="bg-blue-500 text-white py-2 px-6 rounded"
-                            >
-                                Verify
-                            </button>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                            <p className="text-sm">Didn't receive the code?</p>
-                            <button className="text-blue-500 underline">
-                                Request again
-                            </button>
-                        </div>
-                    </div>
+                    <OtpForm
+                        code={smsCode}
+                        username={username}
+                        phone={phone}
+                        handleBackToForm={handleBackToForm}
+                    />
                 )}
             </div>
             <Footer />

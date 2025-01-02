@@ -1,107 +1,89 @@
-import { Link, NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { FiMenu, FiSearch, FiUser } from "react-icons/fi";
+import { Link, useNavigate } from "react-router-dom";
+import Logo from "../../assets/autohub-logo.jpg";
+import { useLazyAuthDetailQuery } from "../../features/auth/authApiSlice";
+import UzbFlag from "../../assets/uzbekistan-flag.png";
+import RusFlag from "../../assets/russian-flag.png";
+import { FiUser } from "react-icons/fi";
+import {
+    changeLanguage,
+    selectCurrentAccessToken,
+    selectCurrentLanguage,
+} from "../../features/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
-type NavItem = {
-    title: string;
-    path: string;
-};
-
-const renderNavItems = (items: NavItem[]) => {
-    return items.map((item) => (
-        <NavLink
-            key={item.path}
-            to={item.path}
-            className={({ isActive }) =>
-                `px-4 py-3 font-medium rounded text-base transition duration-200 ${
-                    isActive
-                        ? "bg-primary text-white"
-                        : "text-gray-700 hover:text-primary duration-200"
-                }`
-            }
-        >
-            {item.title}
-        </NavLink>
-    ));
-};
-
-const Navbar: React.FC = () => {
-    const [sticky, setSticky] = useState(false);
+const Navbar = () => {
+    const navigate = useNavigate();
+    const accessToken = useSelector(selectCurrentAccessToken);
+    const language = useSelector(selectCurrentLanguage);
+    const dispatch = useDispatch();
+    const [detailTrigger, { data }] = useLazyAuthDetailQuery<any>();
 
     useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 10) {
-                setSticky(true);
-            } else {
-                setSticky(false);
-            }
-        };
-
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
-
-    const items: NavItem[] = [
-        {
-            title: "Home",
-            path: "/",
-        },
-        {
-            title: "Pages",
-            path: "/pages",
-        },
-        {
-            title: "Shop",
-            path: "/shop",
-        },
-        {
-            title: "Listings",
-            path: "/listings",
-        },
-        {
-            title: "Contact Us",
-            path: "/contact",
-        },
-    ];
+        if (accessToken) {
+            detailTrigger({ token: accessToken });
+        }
+    }, [accessToken, detailTrigger]);
 
     return (
-        <div
-            className={`container mx-auto p-2 flex items-center justify-between bg-white h-16 sticky rounded transition-all duration-200 z-50 ${
-                sticky ? "top-0 shadow-md" : "top-[10px]"
-            }`}
-            style={{ transition: "top 0.3s ease-in-out" }}
-        >
-            <nav>{renderNavItems(items)}</nav>
-
-            <Link to={"/"} className="font-semibold text-2xl">
-                Autohub
-            </Link>
-
-            <div className="flex items-center gap-10">
-                <div className="flex border rounded h-10 bg-white">
-                    <div className="flex items-center justify-center">
-                        <FiSearch className="text-xl text-gray-400 mx-2" />
-                    </div>
-                    <input
-                        type="text"
-                        placeholder="Search Now"
-                        className="outline-none rounded h-full text-sm"
-                    />
-                </div>
-
+        <div className="w-full h-14 sticky top-0 left-0 z-40 bg-white flex items-center justify-center">
+            <div className="flex items-center justify-between container h-full">
                 <Link
-                    to={"/sign-in"}
-                    className="flex items-center justify-center gap-2 duration-200 px-4 rounded"
+                    to={"/"}
+                    className="text-2xl font-semibold flex items-center gap-4"
                 >
-                    <FiUser className="text-xl" />
-                    <p>Sign In</p>
+                    <img src={Logo} alt="" width={40} />
+                    <p>Autohub</p>
                 </Link>
 
-                <button className="flex items-center justify-center text-white bg-primary py-3 px-10 rounded">
-                    <FiMenu className="text-xl" />
-                </button>
+                <div className="flex items-center gap-4">
+                    {data ? (
+                        <button
+                            onClick={() => navigate("/profile")}
+                            className="text-xl font-bold"
+                        >
+                            <p>{data?.user?.username}</p>
+                        </button>
+                    ) : (
+                        <div className="flex items-center gap-4">
+                            <button
+                                onClick={() => navigate("/sign-in")}
+                                className="flex items-center gap-2 px-6 bg-third text-white py-2 rounded-full"
+                            >
+                                <FiUser />
+                                Kirish
+                            </button>
+
+                            <button
+                                onClick={() => navigate("/sign-up")}
+                                className="flex items-center gap-2 px-6 bg-third text-white py-2 rounded-full"
+                            >
+                                Ro'yxatdan o'tish
+                            </button>
+                        </div>
+                    )}
+
+                    <div className="flex items-center gap-2">
+                        <button
+                            disabled={language === "uz"}
+                            onClick={() => dispatch(changeLanguage("uz"))}
+                            className={`${
+                                language === "uz" ? "opacity-50" : "opacity-100"
+                            } flex items-center gap-1`}
+                        >
+                            <img src={UzbFlag} alt="" width={40} />
+                        </button>
+                        <button
+                            disabled={language === "ru"}
+                            onClick={() => dispatch(changeLanguage("ru"))}
+                            className={`${
+                                language === "ru" ? "opacity-50" : "opacity-100"
+                            } flex items-center gap-1`}
+                        >
+                            <img src={RusFlag} alt="" width={40} />
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );
