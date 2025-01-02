@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import Typewriter from "typewriter-effect";
 
-const TypewriterInput: React.FC = () => {
-    const [inputValue, setInputValue] = useState<string>("");
+type PropsType = {
+    inputValue: string;
+    setInputValue: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const TypeWriterInput = ({ inputValue, setInputValue }: PropsType) => {
     const [isFocused, setIsFocused] = useState<boolean>(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,4 +41,6 @@ const TypewriterInput: React.FC = () => {
     );
 };
 
-export default TypewriterInput;
+const MemoizedTypeWriterInput = memo(TypeWriterInput);
+
+export default MemoizedTypeWriterInput;
