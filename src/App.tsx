@@ -16,6 +16,7 @@ import TestDrive from "./pages/test-drive/TestDrive";
 import Commetns from "./pages/comments/Commetns";
 import SpareParts from "./pages/spare-parts/SpareParts";
 import PostsCategory from "./pages/posts/PostsCategory";
+import AddCar from "./components/cars/AddCar";
 
 function App() {
   const location = useLocation();
@@ -51,6 +52,7 @@ function App() {
         <Route path="/admin" element={<Layout />}>
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/cars" element={<Cars />} />
+          <Route path="/admin/cars/add" element={<AddCar />} />
           <Route path="/admin/spare-parts" element={<SpareParts />} />
           <Route path="/admin/posts" element={<Posts />} />
           <Route path="/admin/posts/category" element={<PostsCategory />} />
