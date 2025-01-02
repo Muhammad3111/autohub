@@ -1,5 +1,5 @@
 import Footer from "../../components/footer/Footer";
-import Banner from "./Banner";
+// import Banner from "./Banner";
 import Categories from "./Categories";
 
 const Home = () => {

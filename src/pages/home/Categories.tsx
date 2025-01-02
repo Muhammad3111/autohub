@@ -1,7 +1,9 @@
-import { FiSearch } from "react-icons/fi";
-import TypewriterInput from "./TypeWritter";
+import { useState } from "react";
+import SearchInput from "../../utility/search-input/SearchInput";
 
 const Categories = () => {
+    const [search, setSearch] = useState<string>("");
+
     return (
         <div className="container mx-auto w-full py-10">
             <div>
@@ -12,15 +14,7 @@ const Categories = () => {
                     Biz bilan savollaringizga javob toping.
                 </p>
 
-                <div className="flex items-center gap-4 mt-10 w-full">
-                    <div className="flex items-center border pl-4 rounded-full focus-within:border-primary duration-150 w-full">
-                        <FiSearch className="text-2xl text-gray-500" />
-                        <TypewriterInput />
-                    </div>
-                    <button className="bg-primary h-12 px-10 rounded-full text-white">
-                        Izlash
-                    </button>
-                </div>
+                <SearchInput search={search} setSearch={setSearch} />
             </div>
         </div>
     );

@@ -18,6 +18,7 @@ import SpareParts from "./pages/spare-parts/SpareParts";
 import PostsCategory from "./pages/posts/PostsCategory";
 import ScrollToTop from "./components/scroll-top/ScrollTop";
 import AddCar from "./components/cars/AddCar";
+import Search from "./pages/search/Search";
 
 function App() {
     const location = useLocation();
@@ -47,6 +48,7 @@ function App() {
                 <Route path="/sign-in" element={<SignIn />} />
                 <Route path="/sign-up" element={<SignUp />} />
                 <Route path="/not-found" element={<NotFound />} />
+                <Route path="/search" element={<Search />} />
 
                 {/* Admin yo‘llari */}
                 <Route path="/admin/login" element={<Login />} />
@@ -63,19 +65,22 @@ function App() {
                     <Route path="/admin/test-drive" element={<TestDrive />} />
                     <Route path="/admin/comments" element={<Commetns />} />
                 </Route>
-        {/* Admin yo‘llari */}
-        <Route path="/admin/login" element={<Login />} />
-        <Route path="/admin" element={<Layout />}>
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/admin/cars" element={<Cars />} />
-          <Route path="/admin/cars/add" element={<AddCar />} />
-          <Route path="/admin/spare-parts" element={<SpareParts />} />
-          <Route path="/admin/posts" element={<Posts />} />
-          <Route path="/admin/posts/category" element={<PostsCategory />} />
-          <Route path="/admin/users" element={<Users />} />
-          <Route path="/admin/test-drive" element={<TestDrive />} />
-          <Route path="/admin/comments" element={<Commetns />} />
-        </Route>
+                {/* Admin yo‘llari */}
+                <Route path="/admin/login" element={<Login />} />
+                <Route path="/admin" element={<Layout />}>
+                    <Route path="/admin/dashboard" element={<Dashboard />} />
+                    <Route path="/admin/cars" element={<Cars />} />
+                    <Route path="/admin/cars/add" element={<AddCar />} />
+                    <Route path="/admin/spare-parts" element={<SpareParts />} />
+                    <Route path="/admin/posts" element={<Posts />} />
+                    <Route
+                        path="/admin/posts/category"
+                        element={<PostsCategory />}
+                    />
+                    <Route path="/admin/users" element={<Users />} />
+                    <Route path="/admin/test-drive" element={<TestDrive />} />
+                    <Route path="/admin/comments" element={<Commetns />} />
+                </Route>
 
                 {/* Not Found yo‘llari */}
                 <Route path="*" element={<Navigate to="/not-found" />} />
