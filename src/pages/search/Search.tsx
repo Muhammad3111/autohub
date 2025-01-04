@@ -11,7 +11,7 @@ const SearchPage = () => {
 
     return (
         <div>
-            {!query && !location.pathname.includes("/search") ? (
+            {location.pathname === "/search" && !location.search ? (
                 <EmptySearch />
             ) : (
                 <SearchData searchValue={query || ""} />

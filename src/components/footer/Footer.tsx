@@ -4,9 +4,9 @@ import FooterImage from "../../assets/footer-earth.svg";
 
 const Footer = () => {
     return (
-        <div className="w-full h-[600px] bg-black p-16">
+        <div className="w-full h-[600px] bg-white p-16 mt-10">
             <div className="container mx-auto flex justify-between relative">
-                <div className="text-white w-[300px] font-medium">
+                <div className=" w-[300px] font-medium">
                     <Link to={"/"} className="text-3xl ">
                         Autohub
                     </Link>
@@ -20,13 +20,13 @@ const Footer = () => {
                     <div className="mt-10">
                         <p className="text-xl">Follow Us</p>
                         <div className="flex items-center gap-2 mt-4 text-primary">
-                            <button className="p-2 bg-gray-900 rounded-sm">
+                            <button className="p-2 bg-grey rounded-sm">
                                 <FiInstagram />
                             </button>
-                            <button className="p-2 bg-gray-900 rounded-sm">
+                            <button className="p-2 bg-grey rounded-sm">
                                 <FiFacebook />
                             </button>
-                            <button className="p-2 bg-gray-900 rounded-sm">
+                            <button className="p-2 bg-grey rounded-sm">
                                 <FiYoutube />
                             </button>
                         </div>
@@ -36,15 +36,13 @@ const Footer = () => {
                     <img src={FooterImage} width={400} alt="" />
                 </div>
 
-                <div className="flex flex-col gap-10 text-white">
+                <div className="flex flex-col gap-10">
                     {/* First Row */}
                     <div className="flex justify-between gap-20">
                         {/* Address */}
                         <div>
-                            <p className="text-xl font-medium text-white mb-4">
-                                Address
-                            </p>
-                            <ul className="text-sm text-gray-300 font-light leading-7">
+                            <p className="text-xl font-medium mb-4">Address</p>
+                            <ul className="text-sm text-gray-500 font-light leading-7">
                                 <li>
                                     30, Commercial Road Raton Australia - 47889
                                     45
@@ -59,10 +57,10 @@ const Footer = () => {
 
                         {/* Our Brands */}
                         <div>
-                            <p className="text-xl font-medium text-white mb-4">
+                            <p className="text-xl font-medium mb-4">
                                 Our Brands
                             </p>
-                            <ul className="text-sm text-gray-300 font-light leading-7">
+                            <ul className="text-sm text-gray-500 font-light leading-7">
                                 <li>Jaquar</li>
                                 <li>BMW</li>
                                 <li>Tayota</li>
@@ -76,10 +74,10 @@ const Footer = () => {
                     <div className="flex justify-between">
                         {/* Branch Address */}
                         <div>
-                            <p className="text-xl font-medium text-white mb-4">
+                            <p className="text-xl font-medium mb-4">
                                 Branch Address
                             </p>
-                            <ul className="text-sm text-gray-300 font-light leading-7">
+                            <ul className="text-sm text-gray-500 font-light leading-7">
                                 <li>
                                     167 great portland street, DEON Australia -
                                     47889 55
@@ -94,10 +92,10 @@ const Footer = () => {
 
                         {/* Quick Links */}
                         <div>
-                            <p className="text-xl font-medium text-white mb-4">
+                            <p className="text-xl font-medium mb-4">
                                 Quick Links
                             </p>
-                            <ul className="text-sm text-gray-300 font-light leading-7">
+                            <ul className="text-sm text-gray-500 font-light leading-7">
                                 <li>About Us</li>
                                 <li>News</li>
                                 <li>Gallery</li>
@@ -108,8 +106,8 @@ const Footer = () => {
                 </div>
             </div>
             <div className="container mx-auto mt-16">
-                <div className="w-full  h-1 line"></div>
-                <p className="text-sm font-medium text-gray-300 mt-8">
+                <div className="w-full  h-1 bg-grey"></div>
+                <p className="text-sm font-medium text-gray-500 mt-8">
                     @ 2024 Autohub. All Rights Reserved
                 </p>
             </div>

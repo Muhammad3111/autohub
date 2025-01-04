@@ -118,7 +118,7 @@ const SignIn = () => {
                 <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full font-medium bg-black text-white rounded h-10"
+                    className="w-full font-medium bg-primary hover:bg-primary-hover duration-150 text-white rounded h-10"
                 >
                     {isLoading ? "Kirish..." : "Kirish"}
                 </button>

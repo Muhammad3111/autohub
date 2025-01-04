@@ -8,6 +8,7 @@ html,
 body {
     font-family: "Outfit", serif;
     scroll-behavior: smooth;
+    background-color: #eeeeee;
 }
 
 .line {
@@ -27,4 +28,22 @@ body {
 }
 .scrollbar-thin::-webkit-scrollbar-track {
     background: #e5e7eb;
+}
+
+.mySwiper .slide-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.custom-prev,
+.custom-next {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.custom-prev:hover,
+.custom-next:hover {
+    background-color: #4a5568;
 }

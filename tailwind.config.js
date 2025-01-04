@@ -8,6 +8,7 @@ export default {
                 "primary-hover": "rgb(11, 74, 196)",
                 secondary: "#f4f4f4",
                 third: "#262626",
+                grey: "#eeeeee",
             },
             boxShadow: {
                 custom: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",

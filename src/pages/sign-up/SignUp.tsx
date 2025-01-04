@@ -200,7 +200,7 @@ const SignUp = () => {
 
                         <button
                             type="submit"
-                            className="w-full font-medium bg-black text-white rounded h-10"
+                            className="w-full font-medium bg-primary text-white rounded h-10"
                         >
                             Ro'yxatdan o'tish
                         </button>
