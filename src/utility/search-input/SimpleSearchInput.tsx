@@ -24,13 +24,13 @@ const SimpleSearchInput = ({ search, setSearch }: PropsType) => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="flex items-center gap-4 mt-10 w-full"
+            className="flex items-center gap-4 mt-10 w-full sticky top-5 left-0"
         >
-            <div className="flex items-center border pl-4 rounded-full focus-within:border-primary duration-150 w-full">
+            <div className="flex items-center border pl-4 rounded-full focus-within:border-primary duration-150 w-full bg-white ">
                 <FiSearch className="text-2xl text-gray-500" />
                 <input
                     type="text"
-                    className="w-full h-12 px-4 rounded-full text-lg focus:outline-none"
+                    className="w-full h-12 px-4 rounded-full text-lg focus:outline-none "
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder="Izlash"

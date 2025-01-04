@@ -19,6 +19,8 @@ import PostsCategory from "./pages/posts/PostsCategory";
 import ScrollToTop from "./components/scroll-top/ScrollTop";
 import AddCar from "./components/cars/AddCar";
 import Search from "./pages/search/Search";
+import GlobalLoading from "./components/loading/GlobalLoading";
+import Profile from "./pages/profile/Profile";
 
 function App() {
     const location = useLocation();
@@ -26,6 +28,7 @@ function App() {
 
     return (
         <div>
+            <GlobalLoading />
             {!isAdminPath && <Navbar />}
             <ScrollToTop />
 
@@ -49,6 +52,7 @@ function App() {
                 <Route path="/sign-up" element={<SignUp />} />
                 <Route path="/not-found" element={<NotFound />} />
                 <Route path="/search" element={<Search />} />
+                <Route path="/profile" element={<Profile />} />
 
                 {/* Admin yo‘llari */}
                 <Route path="/admin/login" element={<Login />} />

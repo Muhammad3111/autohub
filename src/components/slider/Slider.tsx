@@ -1,34 +1,75 @@
 import { Swiper, SwiperSlide } from "swiper/react";
+
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { Autoplay, Pagination, Navigation } from "swiper";
+
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+
+import Slide1 from "../../assets/1slider.webp";
+import Slide2 from "../../assets/2slider.webp";
+import Slide3 from "../../assets/3slider.webp";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 export default function App() {
     return (
-        <Swiper
-            spaceBetween={30}
-            centeredSlides={true}
-            autoplay={{
-                delay: 2500,
-                disableOnInteraction: false,
-            }}
-            pagination={{
-                clickable: true,
-            }}
-            navigation={true}
-            modules={[Autoplay, Pagination, Navigation]}
-            className="mySwiper"
-        >
-            <SwiperSlide>Slide 1</SwiperSlide>
-            <SwiperSlide>Slide 2</SwiperSlide>
-            <SwiperSlide>Slide 3</SwiperSlide>
-            <SwiperSlide>Slide 4</SwiperSlide>
-            <SwiperSlide>Slide 5</SwiperSlide>
-            <SwiperSlide>Slide 6</SwiperSlide>
-            <SwiperSlide>Slide 7</SwiperSlide>
-            <SwiperSlide>Slide 8</SwiperSlide>
-            <SwiperSlide>Slide 9</SwiperSlide>
-        </Swiper>
+        <div className="container mx-auto my-10 relative">
+            {/* Custom Navigation Buttons */}
+            <button
+                className="custom-prev absolute left-2 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-gray-800 text-white rounded-full shadow hover:bg-gray-700"
+                id="prevButton"
+            >
+                <FaChevronLeft size={20} />
+            </button>
+            <button
+                className="custom-next absolute right-2 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-gray-800 text-white rounded-full shadow hover:bg-gray-700"
+                id="nextButton"
+            >
+                <FaChevronRight size={20} />
+            </button>
+
+            <div style={{ width: "100%", maxWidth: "100%", margin: "0 auto" }}>
+                <Swiper
+                    spaceBetween={30}
+                    centeredSlides={true}
+                    autoplay={{
+                        delay: 2500,
+                        disableOnInteraction: false,
+                    }}
+                    pagination={{
+                        clickable: true,
+                    }}
+                    navigation={{
+                        nextEl: "#nextButton",
+                        prevEl: "#prevButton",
+                    }}
+                    modules={[Autoplay, Pagination, Navigation]}
+                    loop={true}
+                    className="mySwiper"
+                >
+                    <SwiperSlide>
+                        <img
+                            src={Slide1}
+                            alt="slide 1"
+                            className="slide-image"
+                        />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img
+                            src={Slide2}
+                            alt="slide 2"
+                            className="slide-image"
+                        />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img
+                            src={Slide3}
+                            alt="slide 3"
+                            className="slide-image"
+                        />
+                    </SwiperSlide>
+                </Swiper>
+            </div>
+        </div>
     );
 }

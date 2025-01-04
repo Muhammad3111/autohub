@@ -27,6 +27,12 @@ type DealerData = {
     working_hours: string;
 };
 
+type UserDetailType = {
+    user: {
+        username: string;
+    };
+};
+
 export const authApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         // AUTH
@@ -38,21 +44,13 @@ export const authApi = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ["AUTH"],
         }),
-        authDetail: builder.query<void, { token: string | null }>({
+        authDetail: builder.query<UserDetailType, { token: string | null }>({
             query: ({ token = "" }) => ({
                 url: "/auth/details",
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-            }),
-            providesTags: ["AUTH"],
-        }),
-
-        getAccessToken: builder.query({
-            query: () => ({
-                url: "/auth/access",
-                method: "GET",
             }),
             providesTags: ["AUTH"],
         }),

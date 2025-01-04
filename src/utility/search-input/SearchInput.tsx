@@ -22,7 +22,7 @@ const SearchInput = ({ search, setSearch }: PropsType) => {
             onSubmit={handleSubmit}
             className="flex items-center gap-4 mt-10 w-full"
         >
-            <div className="flex items-center border pl-4 rounded-full focus-within:border-primary duration-150 w-full">
+            <div className="flex items-center border pl-4 rounded-full focus-within:border-primary duration-150 w-full bg-white">
                 <FiSearch className="text-2xl text-gray-500" />
                 <TypeWriterInput
                     inputValue={search}

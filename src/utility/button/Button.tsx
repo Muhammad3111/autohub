@@ -20,7 +20,7 @@ const Button = ({ children, path, className }: ButtonType) => {
     return (
         <button
             onClick={handleClick}
-            className={`bg-primary text-white py-2.5 shadow-custom shadow-gray-400 font-medium rounded-sm flex items-center gap-4 ${className}`}
+            className={`bg-primary hover:bg-primary-hover duration-150 text-white py-2.5 shadow-custom shadow-gray-400 font-medium rounded-sm flex items-center gap-4 ${className}`}
         >
             {children}
             <div className="w-2 h-2 rounded-full bg-white"></div>

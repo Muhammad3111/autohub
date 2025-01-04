@@ -20,9 +20,9 @@ const SwitchRole: React.FC<SwitchRoleProps> = ({ role, setRole }) => {
                     />
                     <label
                         htmlFor="radio-user"
-                        className={`flex items-center justify-center w-full h-10 font-semibold rounded-sm cursor-pointer transition-all ${
+                        className={`flex items-center justify-center w-full h-10 font-semibold rounded-sm cursor-pointer ${
                             role === "user"
-                                ? "text-white bg-primary transform"
+                                ? "text-white bg-primary"
                                 : "text-gray-700"
                         }`}
                     >
@@ -40,9 +40,9 @@ const SwitchRole: React.FC<SwitchRoleProps> = ({ role, setRole }) => {
                     />
                     <label
                         htmlFor="radio-dealer"
-                        className={`flex items-center justify-center w-full h-10 font-semibold rounded-sm cursor-pointer transition-all ${
+                        className={`flex items-center justify-center w-full h-10 font-semibold rounded-sm cursor-pointer ${
                             role === "dealer"
-                                ? "text-white bg-primary transform"
+                                ? "text-white bg-primary"
                                 : "text-gray-700"
                         }`}
                     >
