@@ -4,7 +4,8 @@ export default {
     theme: {
         extend: {
             colors: {
-                primary: "#F62518",
+                primary: "#005BFF",
+                "primary-hover": "rgb(11, 74, 196)",
                 secondary: "#f4f4f4",
                 third: "#262626",
             },
@@ -15,6 +16,25 @@ export default {
             screens: {
                 lg: "1050px",
                 xl: "1350px",
+            },
+            animation: {
+                "width-expand": "widthExpand 1s ease-out infinite",
+                "fade-in-down": "fadeInDown 0.3s ease-out",
+                "fade-out-up": "fadeOutUp 0.3s ease-in",
+            },
+            keyframes: {
+                widthExpand: {
+                    "0%": { width: "0%" },
+                    "100%": { width: "100%" },
+                },
+                fadeInDown: {
+                    "0%": { opacity: 0, transform: "translateY(-10px)" },
+                    "100%": { opacity: 1, transform: "translateY(0)" },
+                },
+                fadeOutUp: {
+                    "0%": { opacity: 1, transform: "translateY(0)" },
+                    "100%": { opacity: 0, transform: "translateY(-10px)" },
+                },
             },
         },
     },

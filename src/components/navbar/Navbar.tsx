@@ -1,22 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/autohub-logo.jpg";
 import { useLazyAuthDetailQuery } from "../../features/auth/authApiSlice";
-import UzbFlag from "../../assets/uzbekistan-flag.png";
-import RusFlag from "../../assets/russian-flag.png";
 import { FiUser } from "react-icons/fi";
-import {
-    changeLanguage,
-    selectCurrentAccessToken,
-    selectCurrentLanguage,
-} from "../../features/auth/authSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { selectCurrentAccessToken } from "../../features/auth/authSlice";
+import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import Language from "./Language";
 
 const Navbar = () => {
     const navigate = useNavigate();
     const accessToken = useSelector(selectCurrentAccessToken);
-    const language = useSelector(selectCurrentLanguage);
-    const dispatch = useDispatch();
     const [detailTrigger, { data }] = useLazyAuthDetailQuery<any>();
 
     useEffect(() => {
@@ -37,18 +30,11 @@ const Navbar = () => {
                 </Link>
 
                 <div className="flex items-center gap-4">
-                    {data ? (
-                        <button
-                            onClick={() => navigate("/profile")}
-                            className="text-xl font-bold"
-                        >
-                            <p>{data?.user?.username}</p>
-                        </button>
-                    ) : (
+                    {!data && (
                         <div className="flex items-center gap-4">
                             <button
                                 onClick={() => navigate("/sign-in")}
-                                className="flex items-center gap-2 px-6 bg-third text-white py-2 rounded-full"
+                                className="flex items-center gap-2 px-6 bg-primary text-white py-2 rounded-full"
                             >
                                 <FiUser />
                                 Kirish
@@ -56,33 +42,22 @@ const Navbar = () => {
 
                             <button
                                 onClick={() => navigate("/sign-up")}
-                                className="flex items-center gap-2 px-6 bg-third text-white py-2 rounded-full"
+                                className="flex items-center gap-2 px-6 bg-primary text-white py-2 rounded-full"
                             >
                                 Ro'yxatdan o'tish
                             </button>
                         </div>
                     )}
 
-                    <div className="flex items-center gap-2">
+                    <Language />
+                    {data && (
                         <button
-                            disabled={language === "uz"}
-                            onClick={() => dispatch(changeLanguage("uz"))}
-                            className={`${
-                                language === "uz" ? "opacity-50" : "opacity-100"
-                            } flex items-center gap-1`}
+                            onClick={() => navigate("/profile")}
+                            className="text-xl font-bold"
                         >
-                            <img src={UzbFlag} alt="" width={40} />
+                            <p>{data?.user?.username}</p>
                         </button>
-                        <button
-                            disabled={language === "ru"}
-                            onClick={() => dispatch(changeLanguage("ru"))}
-                            className={`${
-                                language === "ru" ? "opacity-50" : "opacity-100"
-                            } flex items-center gap-1`}
-                        >
-                            <img src={RusFlag} alt="" width={40} />
-                        </button>
-                    </div>
+                    )}
                 </div>
             </div>
         </div>
