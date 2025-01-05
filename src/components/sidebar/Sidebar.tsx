@@ -7,7 +7,7 @@ import {
 import Logo from "../../assets/autohub-logo.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IoCarSportOutline, IoChatbubblesOutline } from "react-icons/io5";
-import { MdOutlineSpeakerNotes } from "react-icons/md";
+import { MdOutlinePermMedia, MdOutlineSpeakerNotes } from "react-icons/md";
 import { RiMenuFold3Line } from "react-icons/ri";
 import { CiBoxes } from "react-icons/ci";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -45,6 +45,17 @@ export default function Sidebar() {
         >
           <LuLayoutDashboard className="text-2xl" />
           Dashboard
+        </li>
+        <li
+          onClick={() => navigate("/admin/media")}
+          className={`px-4 py-2 ${
+            location.pathname === "/admin/media"
+              ? "bg-primary text-white"
+              : "bg-transparent text-black"
+          } text-base font-semibold w-full rounded-xl cursor-pointer hover:bg-primary/50 hover:text-white duration-300 flex items-center gap-2`}
+        >
+          <MdOutlinePermMedia className="text-2xl" />
+          Media
         </li>
         <li
           onClick={() => navigate("/admin/cars")}

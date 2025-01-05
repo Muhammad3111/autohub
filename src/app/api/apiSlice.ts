@@ -1,8 +1,8 @@
 import {
-    createApi,
-    fetchBaseQuery,
-    // FetchBaseQueryError,
-    // BaseQueryApi,
+  createApi,
+  fetchBaseQuery,
+  // FetchBaseQueryError,
+  // BaseQueryApi,
 } from "@reduxjs/toolkit/query/react";
 // import { setCredentials, logOut } from "../../features/auth/authSlice";
 import { RootState } from "../store";
@@ -10,15 +10,15 @@ import { RootState } from "../store";
 const BASE_URL = import.meta.env.VITE_BASE_URL as string;
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: BASE_URL,
-    prepareHeaders: (headers, { getState }) => {
-        const state = getState() as RootState;
-        const token = state.auth?.accessToken;
-        if (token) {
-            headers.set("authorization", `Bearer ${token}`);
-        }
-        return headers;
-    },
+  baseUrl: BASE_URL,
+  prepareHeaders: (headers, { getState }) => {
+    const state = getState() as RootState;
+    const token = state.auth?.accessToken;
+    if (token) {
+      headers.set("authorization", `Bearer ${token}`);
+    }
+    return headers;
+  },
 });
 
 // const baseQueryWithReauth = async (
@@ -70,7 +70,7 @@ const baseQuery = fetchBaseQuery({
 // };
 
 export const apiSlice = createApi({
-    baseQuery: baseQuery,
-    tagTypes: ["AUTH"],
-    endpoints: () => ({}),
+  baseQuery: baseQuery,
+  tagTypes: ["AUTH", "CAR", "MEDIA"],
+  endpoints: () => ({}),
 });

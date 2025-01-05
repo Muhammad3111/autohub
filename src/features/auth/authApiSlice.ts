@@ -57,14 +57,6 @@ export const authApi = apiSlice.injectEndpoints({
             providesTags: ["AUTH"],
         }),
 
-        getAccessToken: builder.query({
-            query: () => ({
-                url: "/auth/access",
-                method: "GET",
-            }),
-            providesTags: ["AUTH"],
-        }),
-
         // REGISTER
         register: builder.mutation({
             query: (data: RegisterData) => ({
