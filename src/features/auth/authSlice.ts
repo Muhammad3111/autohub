@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type AuthState = {
-    userData?: string | null;
+    userData?: any;
     accessToken: string | null;
     refreshToken: string | null;
     language?: string;
@@ -26,7 +26,7 @@ const authSlice = createSlice({
         setCredentials: (
             state,
             action: PayloadAction<{
-                userData?: string | null;
+                userData?: any;
                 accessToken: string | null;
                 refreshToken: string | null;
             }>
@@ -45,7 +45,6 @@ const authSlice = createSlice({
         },
         changeLanguage: (state, action) => {
             state.language = action.payload;
-
             localStorage.setItem("language", action.payload);
         },
         logOut: (state) => {
@@ -62,7 +61,6 @@ const authSlice = createSlice({
 
 export const { setCredentials, logOut, changeLanguage } = authSlice.actions;
 export default authSlice.reducer;
-
 // Selectors
 export const selectCurrentUserData = (state: { auth: AuthState }) =>
     state.auth.userData;

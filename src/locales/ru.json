@@ -1,0 +1,16 @@
+{
+    "cars": "Автомобили",
+    "aboutUs": "О нас",
+    "spareParts": "Запчасти",
+    "services": "Услуги",
+    "dealers": "Дилеры",
+    "news": "Новости",
+    "contact": "Контакты",
+
+    "searchByName": "Искать по имени",
+    "searchByBrand": "Выбрать по бренду",
+    "search": "Поиск",
+    "seeAll": "Посмотреть все",
+    "all": "Все",
+    "popular": "Популярные"
+}
