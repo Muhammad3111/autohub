@@ -1,6 +1,9 @@
 import { useState } from "react";
 import OtpInput from "../../utility/otp-input/OtpInput";
-import { useVerifyMutation } from "../../features/auth/authApiSlice";
+import {
+    useLazyAuthDetailQuery,
+    useVerifyMutation,
+} from "../../features/auth/authApiSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -21,6 +24,7 @@ const OtpForm: React.FC<OtpFormProps> = ({
 }) => {
     const [smsCode, setSmsCode] = useState<string>("");
     const [verifyUser, { isLoading }] = useVerifyMutation();
+    const [detailTrigger] = useLazyAuthDetailQuery();
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -30,13 +34,24 @@ const OtpForm: React.FC<OtpFormProps> = ({
             .then((res: any) => {
                 toast.success("Ro'yxatdan o'tish muvaffaqqiyatli bajarildi!");
 
+                if (res.token) {
+                    detailTrigger({ token: res.token.access })
+                        .unwrap()
+                        .then((authData) => {
+                            console.log(authData);
+
+                            if (authData) {
+                                dispatch(
+                                    setCredentials({
+                                        accessToken: res.token.access,
+                                        refreshToken: res.token.refresh,
+                                        userData: authData.user,
+                                    })
+                                );
+                            }
+                        });
+                }
                 navigate("/");
-                dispatch(
-                    setCredentials({
-                        accessToken: res.token.access,
-                        refreshToken: res.token.refresh,
-                    })
-                );
             })
             .catch((err) => {
                 toast.error(err.detail);

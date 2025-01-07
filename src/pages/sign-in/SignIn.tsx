@@ -6,7 +6,10 @@ import { BiHide, BiShow } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Footer from "../../components/footer/Footer";
-import { useLoginMutation } from "../../features/auth/authApiSlice";
+import {
+    useLazyAuthDetailQuery,
+    useLoginMutation,
+} from "../../features/auth/authApiSlice";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../features/auth/authSlice";
 
@@ -22,6 +25,7 @@ const SignIn = () => {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [login, { isLoading }] = useLoginMutation();
+    const [detailTrigger] = useLazyAuthDetailQuery();
     const dispatch = useDispatch();
 
     const handleLogin = async (e: React.FormEvent) => {
@@ -43,13 +47,23 @@ const SignIn = () => {
             .unwrap()
             .then((res) => {
                 toast.success("Kirish muvaffaqqiyatli bajarildi!");
+
+                if (res.access) {
+                    detailTrigger({ token: res.access })
+                        .unwrap()
+                        .then((authData) => {
+                            if (authData) {
+                                dispatch(
+                                    setCredentials({
+                                        accessToken: res.access,
+                                        refreshToken: res.refresh,
+                                        userData: authData.user,
+                                    })
+                                );
+                            }
+                        });
+                }
                 navigate("/");
-                dispatch(
-                    setCredentials({
-                        accessToken: res.access,
-                        refreshToken: res.refresh,
-                    })
-                );
             })
             .catch((err) => {
                 toast.error(err.data.detail);

@@ -1,23 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/autohub-logo.jpg";
-import { useLazyAuthDetailQuery } from "../../features/auth/authApiSlice";
 import { FiUser } from "react-icons/fi";
-import { selectCurrentAccessToken } from "../../features/auth/authSlice";
+import { selectCurrentUserData } from "../../features/auth/authSlice";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import Language from "./Language";
 import NavHeader from "./NavHeader";
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const accessToken = useSelector(selectCurrentAccessToken);
-    const [detailTrigger, { data }] = useLazyAuthDetailQuery();
-
-    useEffect(() => {
-        if (accessToken) {
-            detailTrigger({ token: accessToken });
-        }
-    }, [accessToken, detailTrigger]);
+    const userData = useSelector(selectCurrentUserData);
 
     return (
         <>
@@ -32,7 +23,7 @@ const Navbar = () => {
                     </Link>
 
                     <div className="flex items-center gap-4">
-                        {!data && (
+                        {!userData && (
                             <div className="flex items-center gap-4">
                                 <button
                                     onClick={() => navigate("/sign-in")}
@@ -52,12 +43,12 @@ const Navbar = () => {
                         )}
 
                         <Language />
-                        {data && (
+                        {userData && (
                             <button
                                 onClick={() => navigate("/profile")}
                                 className="text-xl font-bold"
                             >
-                                <p>{data?.user?.username}</p>
+                                <p>{userData?.username}</p>
                             </button>
                         )}
                     </div>

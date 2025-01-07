@@ -1,6 +1,7 @@
 import { FiSearch } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import TypeWriterInput from "../typewritter-input/TypeWritterInput";
+import { useTranslation } from "react-i18next";
 
 type PropsType = {
     search: string;
@@ -9,6 +10,7 @@ type PropsType = {
 
 const SearchInput = ({ search, setSearch }: PropsType) => {
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -33,7 +35,7 @@ const SearchInput = ({ search, setSearch }: PropsType) => {
                 type="submit"
                 className="bg-primary h-12 px-10 rounded-full text-white"
             >
-                Izlash
+                {t("search")}
             </button>
         </form>
     );
