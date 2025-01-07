@@ -28,6 +28,7 @@ export default function AddCar() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<CarFormInputs>();
 
   const [addCar] = useAddCarMutation();
@@ -62,7 +63,7 @@ export default function AddCar() {
       data.images = galleryImages;
     }
     await addCar(data);
-    // console.log(data);
+    reset();
   };
 
   return (
@@ -85,7 +86,7 @@ export default function AddCar() {
         </Button>
       </div>
       <form
-        className="grid grid-cols-3 w-full gap-4"
+        className="grid grid-cols-3 w-full gap-4 items-start"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="col-span-2 grid grid-cols-4 gap-4">
@@ -301,7 +302,7 @@ export default function AddCar() {
             {selectedImage && (
               <div className="mb-4 relative w-full h-48">
                 <img
-                  src={selectedImage}
+                  src={`http://89.223.126.64:8080${selectedImage}`}
                   alt="Selected"
                   className="w-full h-full object-cover rounded-md"
                 />
@@ -333,7 +334,7 @@ export default function AddCar() {
                 {galleryImages.map((url, index) => (
                   <div key={index} className="relative">
                     <img
-                      src={url}
+                      src={`http://89.223.126.64:8080${url}`}
                       alt={`Gallery ${index}`}
                       className="w-full h-32 object-cover rounded-md"
                     />

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useGetUrlsQuery } from "../../features/media/mediaSlice";
+import DeleteMedia from "./DeleteMedia";
 
 const ReadMedia = () => {
   const [page, setPage] = useState(1);
@@ -22,13 +23,14 @@ const ReadMedia = () => {
         {data?.urls.map((url, index) => (
           <div
             key={index}
-            className="border border-gray-300 rounded-lg overflow-hidden shadow-sm"
+            className="border border-gray-300 rounded-lg overflow-hidden shadow-sm group relative"
           >
             <img
               src={`http://89.223.126.64:8080${url}`}
               alt={`Media ${index}`}
               className="w-full h-48 object-cover"
             />
+            <DeleteMedia url={url} />
           </div>
         ))}
       </div>

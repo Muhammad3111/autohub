@@ -1,7 +1,7 @@
 import ReadMedia from "../../components/media/ReadMedia";
 import Button from "../../utility/button/Button";
 
-export default function Cars() {
+export default function Media() {
   return (
     <div className="flex flex-col gap-4 px-6 py-4">
       <div className="flex items-center justify-between">

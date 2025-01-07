@@ -1,4 +1,5 @@
 import { apiSlice } from "../../app/api/apiSlice";
+import { Vehicle } from "../../components/cars/ReadCars";
 
 type CarData = {
   name_uz: string;
@@ -18,6 +19,14 @@ type CarData = {
   images?: string[];
 };
 
+type UrlsData = {
+  total: number;
+  page: number;
+  limit: number;
+  total_pages: number;
+  vehicles: Vehicle[];
+};
+
 export const carsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     addCar: builder.mutation({
@@ -29,10 +38,11 @@ export const carsApi = apiSlice.injectEndpoints({
       invalidatesTags: ["CAR"],
     }),
 
-    getCars: builder.query({
-      query: () => ({
-        url: "/cars",
+    getCars: builder.query<UrlsData, { page?: number; limit?: number }>({
+      query: ({ page = 1, limit = 12 }) => ({
+        url: "/vehicles",
         method: "GET",
+        params: { page, limit },
       }),
       providesTags: ["CAR"],
     }),

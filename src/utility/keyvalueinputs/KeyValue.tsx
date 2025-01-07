@@ -8,12 +8,12 @@ type KeyValueInputsProps = {
 };
 
 const KeyValueInputs: React.FC<KeyValueInputsProps> = ({ name, register }) => {
-  const [fields, setFields] = React.useState<{ key: string; value: string }[]>([
-    { key: "", value: "" },
+  const [fields, setFields] = React.useState<{ key_uz: string; value_uz: string }[]>([
+    { key_uz: "", value_uz: "" },
   ]);
 
   const handleAddField = () => {
-    setFields((prev) => [...prev, { key: "", value: "" }]);
+    setFields((prev) => [...prev, { key_uz: "", value_uz: "" }]);
   };
 
   const handleRemoveField = (index: number) => {

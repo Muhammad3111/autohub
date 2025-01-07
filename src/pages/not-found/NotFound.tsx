@@ -12,11 +12,15 @@ const NotFound = () => {
                 <div className="flex flex-col items-center">
                     <img src={WhellImage} width={200} alt="" />
 
-                    <h1 className="text-6xl font-bold mb-4 mt-10">404 Error</h1>
+                    <h1 className="text-4xl font-bold mb-4 mt-10">
+                        404 Xatolik
+                    </h1>
 
-                    <p className="text-sm">We are sorry, page not found.</p>
+                    <p>Biz siz izlagan sahifani topa olmadik.</p>
 
-                    <Button path="/">Back To Home</Button>
+                    <Button path="/" className="px-6 mt-5">
+                        Bosh sahifaga qaytish
+                    </Button>
                 </div>
             </div>
 

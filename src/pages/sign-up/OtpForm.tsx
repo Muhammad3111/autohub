@@ -67,7 +67,7 @@ const OtpForm: React.FC<OtpFormProps> = ({
                 </button>
                 <button
                     onClick={handleVerify}
-                    className="bg-blue-500 text-white py-2 px-6 rounded"
+                    className="bg-primary text-white py-2 px-6 rounded"
                     disabled={isLoading}
                 >
                     {isLoading ? "Tasdiqlash..." : "Tasdiqlash"}
@@ -76,7 +76,7 @@ const OtpForm: React.FC<OtpFormProps> = ({
 
             <div className="flex items-center gap-2">
                 <p className="text-sm">Sms kod xali kelmadimi ?</p>
-                <button className="text-blue-500 underline">
+                <button className="text-prbg-primary underline">
                     Qayta jo'natish
                 </button>
             </div>

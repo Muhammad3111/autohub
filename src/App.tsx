@@ -18,7 +18,11 @@ import SpareParts from "./pages/spare-parts/SpareParts";
 import PostsCategory from "./pages/posts/PostsCategory";
 import ScrollToTop from "./components/scroll-top/ScrollTop";
 import AddCar from "./components/cars/AddCar";
+import Search from "./pages/search/Search";
+import GlobalLoading from "./components/loading/GlobalLoading";
+import Profile from "./pages/profile/Profile";
 import Media from "./pages/media/Media";
+import AddMedia from "./components/media/AddMedia";
 
 function App() {
   const location = useLocation();
@@ -26,6 +30,7 @@ function App() {
 
   return (
     <div>
+      <GlobalLoading />
       {!isAdminPath && <Navbar />}
       <ScrollToTop />
 
@@ -48,12 +53,15 @@ function App() {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/not-found" element={<NotFound />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/profile" element={<Profile />} />
 
         {/* Admin yo‘llari */}
         <Route path="/admin/login" element={<Login />} />
         <Route path="/admin" element={<Layout />}>
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/media" element={<Media />} />
+          <Route path="/admin/media/add" element={<AddMedia />} />
           <Route path="/admin/cars" element={<Cars />} />
           <Route path="/admin/cars/add" element={<AddCar />} />
           <Route path="/admin/spare-parts" element={<SpareParts />} />
