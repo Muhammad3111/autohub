@@ -1,29 +1,42 @@
-import { useDispatch } from "react-redux";
-import { logOut } from "../../features/auth/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import MyInformation from "./MyInformation";
+import MyFavouriteCars from "./MyFavouriteCars";
 
 const Profile = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    const handleLogout = () => {
-        dispatch(logOut());
-        navigate("/");
-    };
+    const [activeTab, setActiveTab] = useState<"profile" | "liked-car">(
+        "profile"
+    );
 
     return (
-        <div
-            style={{ height: "calc(100vh - 154px)" }}
-            className="container mx-auto w-full pb-2"
-        >
-            <h1 className="text-2xl">Profile sahifasi tayyorlanmoqda...</h1>
-            <div className="flex items-end justify-center h-full">
-                <button
-                    onClick={handleLogout}
-                    className="bg-red-500 h-10 w-full text-white rounded"
-                >
-                    Chiqish
-                </button>
+        <div className="container mx-auto w-full">
+            <div className="my-10 font-medium text-2xl">
+                Muhammadjon Tursunboyev
+            </div>
+            <div className="flex justify-between gap-20">
+                <div className="w-[400px] flex flex-col gap-1">
+                    <button
+                        onClick={() => setActiveTab("profile")}
+                        className={`w-full h-11  text-lg text-left pl-5 rounded ${
+                            activeTab === "profile" ? "bg-[#ddd]" : ""
+                        }`}
+                    >
+                        Ma'lumotlarim
+                    </button>
+                    <button
+                        onClick={() => setActiveTab("liked-car")}
+                        className={`w-full h-11  text-lg text-left pl-5 rounded ${
+                            activeTab === "liked-car" ? "bg-[#ddd]" : ""
+                        }`}
+                    >
+                        Sevimlilar
+                    </button>
+                </div>
+
+                {activeTab === "profile" ? (
+                    <MyInformation />
+                ) : (
+                    <MyFavouriteCars />
+                )}
             </div>
         </div>
     );
