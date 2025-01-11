@@ -9,11 +9,12 @@ import Modal from "../../utility/modal/Modal";
 import KeyValueInputs from "../../utility/keyvalueinputs/KeyValue";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import { BrandData, useGetBrandsQuery } from "../../features/brands/brands";
 
 type CarFormInputs = {
   name_uz: string;
   name_ru: string;
-  brand: string;
+  brand_id: number;
   model: string;
   year: number;
   transmission: string;
@@ -39,7 +40,7 @@ export default function UpdateCar() {
   const [modalType, setModalType] = useState<"single" | "gallery">("single");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
-
+  const { data } = useGetBrandsQuery({});
   const {
     register,
     handleSubmit,
@@ -81,6 +82,8 @@ export default function UpdateCar() {
   const handleRemoveMainImage = () => {
     setSelectedImage(null);
   };
+
+  const brands: BrandData[] = data?.brands || [];
 
   const onSubmit: SubmitHandler<CarFormInputs> = async (data) => {
     if (selectedImage) {
@@ -146,14 +149,23 @@ export default function UpdateCar() {
             <label className="block text-sm font-medium text-gray-700">
               Brand
             </label>
-            <input
-              type="text"
-              {...register("brand", { required: "Brand yozish majburiy" })}
+            <select
+              {...register("brand_id", { required: "Brand yozish majburiy" })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
-            />
-            {errors.brand && (
+            >
+              {isLoading ? (
+                <option>Loading...</option>
+              ) : (
+                brands.map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.name}
+                  </option>
+                ))
+              )}
+            </select>
+            {errors.brand_id && (
               <span className="text-red-500 text-sm">
-                {errors.brand.message}
+                {errors.brand_id.message}
               </span>
             )}
           </div>
@@ -172,6 +184,21 @@ export default function UpdateCar() {
                 {errors.model.message}
               </span>
             )}
+          </div>
+
+          <div className="col-span-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Avtomobil harakat turi
+            </label>
+            <select
+              defaultValue={"fwd"}
+              {...register("drive_type")}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2.5"
+            >
+              <option value="FWD">Old g'ildirakli harakat (FWD)</option>
+              <option value="RWD">Orqa g'ildirakli harakat (RWD)</option>
+              <option value="AWD">To'liq g'ildirakli harakat (4WD)</option>
+            </select>
           </div>
 
           <div className="col-span-1">
@@ -212,7 +239,7 @@ export default function UpdateCar() {
             )}
           </div>
 
-          <div className="col-span-2">
+          <div className="col-span-1">
             <label className="block text-sm font-medium text-gray-700">
               Avtomobil turi
             </label>
@@ -244,20 +271,6 @@ export default function UpdateCar() {
                 {errors.color_uz.message}
               </span>
             )}
-          </div>
-
-          <div className="col-span-1">
-            <label className="block text-sm font-medium text-gray-700">
-              Transmissiya
-            </label>
-            <select
-              defaultValue={"Left"}
-              {...register("drive_type")}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2.5"
-            >
-              <option value="Left">Chap</option>
-              <option value="Right">O'ng</option>
-            </select>
           </div>
 
           <div className="col-span-1">

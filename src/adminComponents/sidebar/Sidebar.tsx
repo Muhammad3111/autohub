@@ -11,6 +11,7 @@ import { MdOutlinePermMedia, MdOutlineSpeakerNotes } from "react-icons/md";
 import { RiMenuFold3Line } from "react-icons/ri";
 import { CiBoxes } from "react-icons/ci";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { TbBrandAppstore } from "react-icons/tb";
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -67,6 +68,17 @@ export default function Sidebar() {
         >
           <MdOutlinePermMedia className="text-2xl" />
           Media
+        </li>
+        <li
+          onClick={() => navigate("/admin/brands")}
+          className={`px-4 py-2 ${
+            location.pathname.includes("/admin/brands")
+              ? "bg-primary text-white"
+              : "bg-transparent text-black"
+          } text-base font-semibold w-full rounded-xl cursor-pointer hover:bg-primary/50 hover:text-white duration-300 flex items-center gap-2`}
+        >
+          <TbBrandAppstore className="text-2xl" />
+          Brandlar
         </li>
         <li
           onClick={() => navigate("/admin/cars")}

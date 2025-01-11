@@ -4,7 +4,7 @@ import { Vehicle } from "../../adminComponents/cars/ReadCars";
 type CarData = {
   name_uz: string;
   name_ru: string;
-  brand: string;
+  brand_id: number;
   model: string;
   year: number;
   transmission: string;
@@ -59,8 +59,8 @@ export const carsApi = apiSlice.injectEndpoints({
 
     updateCar: builder.mutation({
       query: ({ id, carData }: { id: string; carData: CarData }) => ({
-        url: `/vehicles/${id}`,
-        method: "PUT",
+        url: `/vehicles/update/${id}`,
+        method: "PATCH",
         body: carData,
       }),
       invalidatesTags: ["CAR"],
