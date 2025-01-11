@@ -38,7 +38,7 @@ const SimpleSearchInput = ({ search, setSearch }: PropsType) => {
             </div>
             <button
                 type="submit"
-                className="bg-primary h-12 px-10 rounded-full text-white"
+                className="bg-primary hover:bg-primary-hover duration-150 h-12 px-10 rounded-full text-white"
             >
                 Izlash
             </button>

@@ -1,41 +1,82 @@
 import { useState } from "react";
-import MyInformation from "./MyInformation";
-import MyFavouriteCars from "./MyFavouriteCars";
+import UserProfile from "./UserProfile";
+import UserLikedCars from "./UserLikedCars";
+import { useSelector } from "react-redux";
+import { selectCurrentUserData } from "../../features/auth/authSlice";
+import DealerProfile from "./DealerProfile";
+import MyCreateCar from "./MyCreateCar";
+
+type UserDataState = {
+    phone_number: string;
+    role: string;
+    username: string;
+    name: string;
+};
 
 const Profile = () => {
-    const [activeTab, setActiveTab] = useState<"profile" | "liked-car">(
-        "profile"
-    );
+    const userData: UserDataState = useSelector(selectCurrentUserData);
+    const [activeTab, setActiveTab] = useState<
+        "userProfile" | "likedCar" | "dealerProfile" | "myCreateCars"
+    >(userData.role === "user" ? "userProfile" : "dealerProfile");
 
     return (
         <div className="container mx-auto w-full">
             <div className="my-10 font-medium text-2xl">
-                Muhammadjon Tursunboyev
+                {userData.name ? userData.name : userData.username}
             </div>
             <div className="flex justify-between gap-20">
-                <div className="w-[400px] flex flex-col gap-1">
-                    <button
-                        onClick={() => setActiveTab("profile")}
-                        className={`w-full h-11  text-lg text-left pl-5 rounded ${
-                            activeTab === "profile" ? "bg-[#ddd]" : ""
-                        }`}
-                    >
-                        Ma'lumotlarim
-                    </button>
-                    <button
-                        onClick={() => setActiveTab("liked-car")}
-                        className={`w-full h-11  text-lg text-left pl-5 rounded ${
-                            activeTab === "liked-car" ? "bg-[#ddd]" : ""
-                        }`}
-                    >
-                        Sevimlilar
-                    </button>
-                </div>
-
-                {activeTab === "profile" ? (
-                    <MyInformation />
+                {userData.role === "user" ? (
+                    <div className="w-[400px] flex flex-col gap-1">
+                        <button
+                            onClick={() => setActiveTab("userProfile")}
+                            className={`w-full h-11  text-lg text-left pl-5 rounded ${
+                                activeTab === "userProfile" ? "bg-[#ddd]" : ""
+                            }`}
+                        >
+                            Ma'lumotlarim
+                        </button>
+                        <button
+                            onClick={() => setActiveTab("likedCar")}
+                            className={`w-full h-11  text-lg text-left pl-5 rounded ${
+                                activeTab === "likedCar" ? "bg-[#ddd]" : ""
+                            }`}
+                        >
+                            Sevimlilar
+                        </button>
+                    </div>
                 ) : (
-                    <MyFavouriteCars />
+                    <div className="w-[400px] flex flex-col gap-1">
+                        <button
+                            onClick={() => setActiveTab("dealerProfile")}
+                            className={`w-full h-11  text-lg text-left pl-5 rounded ${
+                                activeTab === "dealerProfile" ? "bg-[#ddd]" : ""
+                            }`}
+                        >
+                            Ma'lumotlarim
+                        </button>
+                        <button
+                            onClick={() => setActiveTab("myCreateCars")}
+                            className={`w-full h-11  text-lg text-left pl-5 rounded ${
+                                activeTab === "myCreateCars" ? "bg-[#ddd]" : ""
+                            }`}
+                        >
+                            Mening mashinalarim
+                        </button>
+                    </div>
+                )}
+
+                {activeTab === "userProfile" && userData.role === "user" ? (
+                    <UserProfile userData={userData} />
+                ) : activeTab === "dealerProfile" &&
+                  userData.role === "dealer" ? (
+                    <DealerProfile userData={userData} />
+                ) : activeTab === "likedCar" && userData.role === "user" ? (
+                    <UserLikedCars />
+                ) : activeTab === "myCreateCars" &&
+                  userData.role === "dealer" ? (
+                    <MyCreateCar />
+                ) : (
+                    <></>
                 )}
             </div>
         </div>

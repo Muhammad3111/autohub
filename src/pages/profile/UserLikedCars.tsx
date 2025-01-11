@@ -1,8 +1,8 @@
-const MyFavouriteCars = () => {
+const UserLikedCars = () => {
     return (
         <div className="w-full h-full border border-[#ccc] rounded-md p-10">
-            MyFavouriteCars
+            UserLikedCars
         </div>
     );
 };
-export default MyFavouriteCars;
+export default UserLikedCars;

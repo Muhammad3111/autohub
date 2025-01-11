@@ -13,8 +13,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 export default function App() {
     return (
-        <div className="container mx-auto my-10 relative">
-            {/* Custom Navigation Buttons */}
+        <div className="my-10 relative">
             <button
                 className="custom-prev absolute left-2 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-gray-800 text-white rounded-full shadow hover:bg-gray-700"
                 id="prevButton"
