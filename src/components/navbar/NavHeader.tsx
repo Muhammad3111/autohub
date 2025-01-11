@@ -21,12 +21,12 @@ const Header = () => {
         {
             name: t("cars"),
             img: CarsImg,
-            path: "/vehicles",
+            path: "/cars",
         },
         {
             name: t("spareParts"),
             img: SparePartsImg,
-            path: "/spareparts",
+            path: "/spare-parts",
         },
         {
             name: t("services"),

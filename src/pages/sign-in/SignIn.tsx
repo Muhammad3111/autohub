@@ -57,7 +57,7 @@ const SignIn = () => {
                                     setCredentials({
                                         accessToken: res.access,
                                         refreshToken: res.refresh,
-                                        userData: authData,
+                                        userData: authData.user,
                                     })
                                 );
                             }
