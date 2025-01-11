@@ -38,14 +38,12 @@ const OtpForm: React.FC<OtpFormProps> = ({
                     detailTrigger({ token: res.token.access })
                         .unwrap()
                         .then((authData) => {
-                            console.log(authData);
-
                             if (authData) {
                                 dispatch(
                                     setCredentials({
                                         accessToken: res.token.access,
                                         refreshToken: res.token.refresh,
-                                        userData: authData.user,
+                                        userData: authData,
                                     })
                                 );
                             }

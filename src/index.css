@@ -35,7 +35,13 @@ body {
     width: 100%;
     height: 500px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.mySwiper .slide-image:hover {
+    scale: 1.02;
 }
 
 .custom-prev,
