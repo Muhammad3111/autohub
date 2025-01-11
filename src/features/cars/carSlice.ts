@@ -1,5 +1,5 @@
 import { apiSlice } from "../../app/api/apiSlice";
-import { Vehicle } from "../../components/cars/ReadCars";
+import { Vehicle } from "../../adminComponents/cars/ReadCars";
 
 type CarData = {
   name_uz: string;
@@ -11,10 +11,12 @@ type CarData = {
   vehicle_type: string;
   price: number;
   engine_type: string;
-  color: string;
+  color_uz: string;
+  color_ru: string;
   drive_type: string;
   properties: Record<string, string>;
-  description: string;
+  description_uz: string;
+  description_ru: string;
   cover_image?: string;
   images?: string[];
 };
@@ -49,7 +51,7 @@ export const carsApi = apiSlice.injectEndpoints({
 
     getCarById: builder.query({
       query: (id: string) => ({
-        url: `/cars/${id}`,
+        url: `/vehicles/details/${id}`,
         method: "GET",
       }),
       providesTags: ["CAR"],
@@ -57,7 +59,7 @@ export const carsApi = apiSlice.injectEndpoints({
 
     updateCar: builder.mutation({
       query: ({ id, carData }: { id: string; carData: CarData }) => ({
-        url: `/cars/${id}`,
+        url: `/vehicles/${id}`,
         method: "PUT",
         body: carData,
       }),
@@ -66,7 +68,7 @@ export const carsApi = apiSlice.injectEndpoints({
 
     deleteCar: builder.mutation({
       query: (id: string) => ({
-        url: `/cars/${id}`,
+        url: `/vehicles/delete/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["CAR"],

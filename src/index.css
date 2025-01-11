@@ -21,6 +21,7 @@ body {
 
 .scrollbar-thin::-webkit-scrollbar {
     height: 6px;
+    width: 5px;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb {
     background: #9ca3af;

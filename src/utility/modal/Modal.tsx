@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"; // Import your API hook
 import { useGetUrlsQuery } from "../../features/media/mediaSlice";
-import AddMedia from "../../components/media/AddMedia";
+import { IoMdClose } from "react-icons/io";
+import FileUploader from "../file-uploader/FileUploader";
 
 type ModalProps = {
   onClose: () => void;
@@ -58,14 +59,14 @@ const Modal: React.FC<ModalProps> = ({ onClose, onSelect, type }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white rounded-md shadow-lg w-3/4 h-3/4 p-4 flex flex-col">
-        <div className="flex justify-between items-center border-b pb-2 mb-4">
-          <h2 className="text-lg font-bold">Image Manager</h2>
+      <div className="bg-white rounded-md shadow-lg w-3/4 h-[90%] p-4 flex flex-col">
+        <div className="flex justify-between items-center border-b pb-2">
+          <h2 className="text-lg font-bold">Fayl Manager</h2>
           <button
             onClick={onClose}
             className="text-red-600 hover:text-red-800 font-semibold"
           >
-            Close
+            <IoMdClose className="text-2xl" />
           </button>
         </div>
 
@@ -90,43 +91,45 @@ const Modal: React.FC<ModalProps> = ({ onClose, onSelect, type }) => {
         </div>
 
         {/* Tab Content */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1">
           {isLoading ? (
             <div>Loading...</div>
           ) : error ? (
             <div>Error loading images</div>
           ) : activeTab === "upload" ? (
-            <AddMedia />
+            <FileUploader />
           ) : (
             <>
-              <div className="grid grid-cols-4 gap-4">
-                {uploadedImages.map((url, index) => (
-                  <div
-                    key={index}
-                    className={`relative cursor-pointer border rounded-md overflow-hidden shadow-sm hover:shadow-md ${
-                      type === "single" && selectedImage === url
-                        ? "border-blue-500"
-                        : ""
-                    }`}
-                    onClick={() => handleImageToggle(url)}
-                  >
-                    <img
-                      src={`http://89.223.126.64:8080${url}`}
-                      alt={`Media ${index}`}
-                      className="w-full h-32 object-cover"
-                    />
-                    {type === "single" && selectedImage === url && (
-                      <div className="absolute top-2 right-2 w-5 h-5 flex items-center justify-center text-sm bg-green-500 text-white rounded-full">
-                        ✓
-                      </div>
-                    )}
-                    {type === "gallery" && selectedImages.includes(url) && (
-                      <div className="absolute top-2 right-2 w-5 h-5 flex items-center justify-center text-sm bg-green-500 text-white rounded-full">
-                        ✓
-                      </div>
-                    )}
-                  </div>
-                ))}
+              <div className="scrollbar-thin h-[55vh] overflow-y-auto">
+                <div className="grid grid-cols-4 gap-4">
+                  {uploadedImages.map((url, index) => (
+                    <div
+                      key={index}
+                      className={`relative cursor-pointer border rounded-md overflow-hidden shadow-sm hover:shadow-md ${
+                        type === "single" && selectedImage === url
+                          ? "border-blue-500"
+                          : ""
+                      }`}
+                      onClick={() => handleImageToggle(url)}
+                    >
+                      <img
+                        src={`http://89.223.126.64:8080${url}`}
+                        alt={`Media ${index}`}
+                        className="w-full h-32 object-cover"
+                      />
+                      {type === "single" && selectedImage === url && (
+                        <div className="absolute top-2 right-2 w-5 h-5 flex items-center justify-center text-sm bg-green-500 text-white rounded-full">
+                          ✓
+                        </div>
+                      )}
+                      {type === "gallery" && selectedImages.includes(url) && (
+                        <div className="absolute top-2 right-2 w-5 h-5 flex items-center justify-center text-sm bg-green-500 text-white rounded-full">
+                          ✓
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
               <div className="mt-4 flex justify-between">
                 <button

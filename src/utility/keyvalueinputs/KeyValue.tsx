@@ -1,16 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React, { useEffect } from "react";
 import { UseFormRegister } from "react-hook-form";
 
 type KeyValueInputsProps = {
   name: string;
   register: UseFormRegister<any>;
+  defaultFields?: { key_uz: string; value_uz: string }[]; // Default qiymatlar
 };
 
-const KeyValueInputs: React.FC<KeyValueInputsProps> = ({ name, register }) => {
-  const [fields, setFields] = React.useState<{ key_uz: string; value_uz: string }[]>([
-    { key_uz: "", value_uz: "" },
-  ]);
+const KeyValueInputs: React.FC<KeyValueInputsProps> = ({
+  name,
+  register,
+  defaultFields = [],
+}) => {
+  const [fields, setFields] = React.useState<
+    { key_uz: string; value_uz: string }[]
+  >([]);
+
+  useEffect(() => {
+    // Agar defaultFields mavjud bo'lsa, uni maydonlarga yuklash
+    if (defaultFields.length > 0) {
+      setFields(defaultFields);
+    } else {
+      setFields([{ key_uz: "", value_uz: "" }]); // Default bo'sh qiymat
+    }
+  }, [defaultFields]);
 
   const handleAddField = () => {
     setFields((prev) => [...prev, { key_uz: "", value_uz: "" }]);
@@ -27,12 +41,14 @@ const KeyValueInputs: React.FC<KeyValueInputsProps> = ({ name, register }) => {
       {fields.map((field, index) => (
         <div key={index} className="flex items-center gap-2 mb-2">
           <input
-            {...register(`${name}.${index}.key`)}
+            {...register(`${name}.${index}.key_uz`)}
+            defaultValue={field.key_uz} // Default qiymat
             placeholder="Nomi"
             className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
           />
           <input
-            {...register(`${name}.${index}.value`)}
+            {...register(`${name}.${index}.value_uz`)}
+            defaultValue={field.value_uz} // Default qiymat
             placeholder="Qiymati"
             className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
           />

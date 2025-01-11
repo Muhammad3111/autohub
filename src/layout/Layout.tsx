@@ -1,6 +1,6 @@
-import Sidebar from "../components/sidebar/Sidebar";
 import { Outlet } from "react-router-dom";
-import TopHeader from "../components/topheader/TopHeader";
+import TopHeader from "../adminComponents/topheader/TopHeader";
+import Sidebar from "../adminComponents/sidebar/Sidebar";
 
 export default function Layout() {
   return (
