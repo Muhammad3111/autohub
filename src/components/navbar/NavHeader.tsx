@@ -7,41 +7,44 @@ import ServiceImg from "../../assets/service-icon.png";
 import DealerImg from "../../assets/dealer-icon.png";
 import NewsImg from "../../assets/news-icon.png";
 import ContactImg from "../../assets/contact-icon.png";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
+    const { t } = useTranslation();
+
     const links = [
         {
-            name: "Biz haqimizda",
+            name: t("aboutUs"),
             img: AboutImg,
             path: "/about",
         },
         {
-            name: "Avtomobillar",
+            name: t("cars"),
             img: CarsImg,
             path: "/cars",
         },
         {
-            name: "Extiyot qismlar",
+            name: t("spareParts"),
             img: SparePartsImg,
             path: "/spareparts",
         },
         {
-            name: "Servislar",
+            name: t("services"),
             img: ServiceImg,
             path: "/services",
         },
         {
-            name: "Dillerlar",
+            name: t("dealers"),
             img: DealerImg,
             path: "/dealers",
         },
         {
-            name: "Yangiliklar",
+            name: t("news"),
             img: NewsImg,
             path: "/news",
         },
         {
-            name: "Aloqa",
+            name: t("contact"),
             img: ContactImg,
             path: "/contact",
         },

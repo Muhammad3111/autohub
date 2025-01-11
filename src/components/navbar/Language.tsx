@@ -7,16 +7,19 @@ import {
     selectCurrentLanguage,
     changeLanguage,
 } from "../../features/auth/authSlice";
+import { useTranslation } from "react-i18next";
 
 const Language = () => {
     const language = useSelector(selectCurrentLanguage);
     const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const { i18n } = useTranslation();
 
     const handleLanguageChange = (lang: "uz" | "ru") => {
         dispatch(changeLanguage(lang));
         setIsOpen(false);
+        i18n.changeLanguage(lang);
     };
 
     const handleClickOutside = (event: MouseEvent) => {

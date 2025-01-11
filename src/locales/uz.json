@@ -1,0 +1,16 @@
+{
+    "cars": "Avtomobillar",
+    "aboutUs": "Biz haqimizda",
+    "spareParts": "Extiyot qismlar",
+    "services": "Servislar",
+    "dealers": "Dillerlar",
+    "news": "Yangiliklar",
+    "contact": "Aloqa",
+
+    "searchByName": "Nom bo'yicha izlang",
+    "searchByBrand": "Brend bo'yicha tanlang",
+    "search": "Izlash",
+    "seeAll": "Barchasini ko'rish",
+    "all": "Barchasi",
+    "popular": "Mashxurlar"
+}

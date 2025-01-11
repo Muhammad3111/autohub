@@ -1,9 +1,11 @@
 import { useState } from "react";
 import SearchInput from "../../utility/search-input/SearchInput";
 import CarImg from "../../assets/car-category.png";
+import { useTranslation } from "react-i18next";
 
 const Categories = () => {
     const [search, setSearch] = useState<string>("");
+    const { t } = useTranslation();
 
     const [isOpenAllCarsNames, setIsOpenAllCarsNames] =
         useState<boolean>(false);
@@ -26,7 +28,7 @@ const Categories = () => {
             img: CarImg,
         },
         {
-            name: "Dizel",
+            name: "Propan",
             img: CarImg,
         },
     ];
@@ -233,13 +235,13 @@ const Categories = () => {
                     isOpenAllCarsNames ? "min-h-[730px]" : "h-[730px]"
                 } overflow-hidden relative`}
             >
-                <h1 className="text-xl font-semibold">Nom bo'yicha izlang</h1>
+                <h1 className="text-xl font-semibold">{t("searchByName")}</h1>
                 <SearchInput search={search} setSearch={setSearch} />
 
                 <div className="flex items-center justify-between mt-10">
                     <div></div>
                     <h1 className="text-xl font-semibold">
-                        Brend bo'yicha tanlang
+                        {t("searchByBrand")}
                     </h1>
 
                     <div className="flex items-center bg-grey rounded-full p-1.5">
@@ -249,7 +251,7 @@ const Categories = () => {
                             } rounded-full p-1 px-3`}
                             onClick={() => setIsOpenAllCarsNames(false)}
                         >
-                            Mashxurlar
+                            {t("popular")}
                         </button>
                         <button
                             className={`${
@@ -257,7 +259,7 @@ const Categories = () => {
                             } rounded-full p-1 px-3`}
                             onClick={() => setIsOpenAllCarsNames(true)}
                         >
-                            Barchasi
+                            {t("all")}
                         </button>
                     </div>
                 </div>
@@ -268,7 +270,7 @@ const Categories = () => {
                             className="hover:bg-grey duration-150 px-6 py-2 rounded"
                         >
                             <img src={item.img} alt="" />
-                            <p>{item.name}</p>
+                            <p className="font-semibold">{item.name}</p>
                         </button>
                     ))}
                 </div>
@@ -289,7 +291,7 @@ const Categories = () => {
                             onClick={() => setIsOpenAllCarsNames(true)}
                             className="w-full bg-grey h-10 text-lg rounded"
                         >
-                            Barchasini ko'rish
+                            {t("seeAll")}
                         </button>
                     </div>
                 )}
