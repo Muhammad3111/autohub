@@ -229,9 +229,9 @@ const Categories = () => {
     ];
 
     return (
-        <div className="container mx-auto w-full">
+        <div className="w-full">
             <div
-                className={`bg-white p-6 rounded ${
+                className={`bg-white p-6 rounded-lg ${
                     isOpenAllCarsNames ? "min-h-[730px]" : "h-[730px]"
                 } overflow-hidden relative`}
             >

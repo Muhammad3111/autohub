@@ -1,8 +1,9 @@
 import { FiCamera } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logOut, selectCurrentUserData } from "../../features/auth/authSlice";
+import { logOut } from "../../features/auth/authSlice";
 import { useRef, useState } from "react";
+import { PatternFormat } from "react-number-format";
 
 type InputState = {
     name: string;
@@ -11,18 +12,25 @@ type InputState = {
     email: string;
 };
 
-const MyInformation = () => {
+type UserDataProps = {
+    userData: {
+        phone_number: string;
+        role: string;
+        username: string;
+        name: string;
+    };
+};
+
+const UserProfile = ({ userData }: UserDataProps) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isChangeInput, setIsChangeInput] = useState<boolean>(false);
-    const userData = useSelector(selectCurrentUserData);
-    console.log(userData);
 
     const profilePhoto = useRef<HTMLInputElement>(null);
     const [formState, setFormState] = useState<InputState>({
         name: "",
         surname: "",
-        phoneNumber: "",
+        phoneNumber: userData.phone_number,
         email: "",
     });
 
@@ -42,6 +50,21 @@ const MyInformation = () => {
             (val) => val.trim() !== ""
         );
         setIsChangeInput(hasValue);
+    };
+
+    const handleSave = () => {
+        setIsChangeInput(false);
+    };
+
+    const handleCancel = () => {
+        setFormState({
+            name: userData.name,
+            surname: "",
+            phoneNumber: userData.phone_number,
+            email: "",
+        });
+
+        setIsChangeInput(false);
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,13 +138,14 @@ const MyInformation = () => {
                         >
                             Telefon raqam
                         </label>
-                        <input
-                            type="text"
-                            id="phoneNumber"
-                            name="phoneNumber"
+                        <PatternFormat
                             className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-[#aaa] duration-150"
+                            format="+998 ## ### ## ##"
+                            placeholder="+998"
                             value={formState.phoneNumber}
                             onChange={handleChange}
+                            name="phoneNumber"
+                            id="phoneNumber"
                         />
                     </div>
                     <div className="flex flex-col w-full gap-1">
@@ -132,7 +156,7 @@ const MyInformation = () => {
                             Email
                         </label>
                         <input
-                            type="text"
+                            type="email"
                             id="email"
                             name="email"
                             className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-[#aaa] duration-150"
@@ -152,16 +176,24 @@ const MyInformation = () => {
                 </button>
                 <div className="flex items-center gap-2">
                     {isChangeInput && (
-                        <button className="py-2 text-lg px-8 rounded hover:bg-[#ddd] duration-150">
+                        <button
+                            onClick={handleCancel}
+                            className="py-2 text-lg px-8 rounded hover:bg-[#ddd] duration-150"
+                        >
                             Bekor qilish
                         </button>
                     )}
-                    <button className="py-2 text-lg bg-primary text-white px-8 rounded hover:bg-primary-hover duration-150">
-                        Saqlash
-                    </button>
+                    {isChangeInput && (
+                        <button
+                            onClick={handleSave}
+                            className="py-2 text-lg bg-primary text-white px-8 rounded hover:bg-primary-hover duration-150"
+                        >
+                            Saqlash
+                        </button>
+                    )}
                 </div>
             </div>
         </div>
     );
 };
-export default MyInformation;
+export default UserProfile;
