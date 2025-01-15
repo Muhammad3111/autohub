@@ -10,6 +10,15 @@ import Footer from "../../components/footer/Footer";
 import SwitchRole from "./SwitchRole";
 import { useRegisterMutation } from "../../features/auth/authApiSlice";
 import OtpForm from "./OtpForm";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+
+type RegisterInput = {
+    username: string;
+    password: string;
+    confirmPassword: string;
+    phone_number: string;
+    role: "user" | "dealer";
+};
 
 const SignUp = () => {
     const [isShow, setIsShow] = useState(false);
@@ -17,59 +26,30 @@ const SignUp = () => {
     const [isOtpMode, setIsOtpMode] = useState(false);
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [phone, setPhone] = useState("");
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        watch,
+        control,
+    } = useForm<RegisterInput>({
+        defaultValues: {
+            role: "user",
+        },
+    });
+
     const [smsCode, setSmsCode] = useState("");
     const [role, setRole] = useState<"user" | "dealer">("user");
 
     const [registerUser] = useRegisterMutation();
 
-    const [errors, setErrors] = useState({
-        username: false,
-        password: false,
-        confirmPassword: false,
-        phone: false,
-    });
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        let newErrors = {
-            username: !username,
-            password: !password,
-            confirmPassword: !confirmPassword,
-            phone: !phone,
-        };
-
-        setErrors(newErrors);
-
-        if (Object.values(newErrors).includes(true)) {
-            toast.error("Barcha maydonlarni to'ldiring!");
-            return;
-        }
-
-        if (password !== confirmPassword) {
+    const handleCreate: SubmitHandler<RegisterInput> = async (data) => {
+        if (data.password !== data.confirmPassword) {
             toast.error("Parol bir xil emas!");
-            setErrors({ ...newErrors, confirmPassword: true });
             return;
         }
 
-        if (phone.split(" ").join("").length !== 13) {
-            toast.error("Telefon raqam noto'g'ri!");
-            setErrors({ ...newErrors, phone: true });
-            return;
-        }
-
-        let newData = {
-            username,
-            password,
-            phone_number: phone,
-            role,
-        };
-
-        await registerUser(newData)
+        await registerUser(data)
             .then((res: any) => {
                 if (res?.data) {
                     setSmsCode(res?.data?.code);
@@ -93,107 +73,147 @@ const SignUp = () => {
             <Header title="Ro'yxatdan o'tish" />
             <div className="w-[400px] min-h-[200px] bg-white rounded shadow-custom p-10">
                 {!isOtpMode ? (
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit(handleCreate)}>
                         <h1 className="text-center text-2xl font-medium">
                             Ro'yxatdan o'tish
                         </h1>
 
-                        <div className="flex items-center relative mt-8 mb-4">
-                            <div className="absolute left-2">
-                                <FiUser className="text-xl" />
+                        <div className="mb-4">
+                            <div className="flex items-center relative mt-8">
+                                <div className="absolute left-2">
+                                    <FiUser className="text-xl" />
+                                </div>
+                                <input
+                                    type="text"
+                                    placeholder="Foydalanuvchi nomi"
+                                    className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
+                                        errors.username && "border-red-500"
+                                    }`}
+                                    {...register("username", {
+                                        required: "Foydalanuvchi nomi majburiy",
+                                    })}
+                                />
                             </div>
-                            <input
-                                type="text"
-                                placeholder="Foydalanuvchi nomi"
-                                className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
-                                    errors.username ? "border-red-500" : ""
-                                }`}
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                onFocus={() =>
-                                    setErrors({ ...errors, username: false })
-                                }
-                            />
+                            {errors.username && (
+                                <span className="text-red-500 text-sm">
+                                    {errors.username.message}
+                                </span>
+                            )}
+                        </div>
+                        <div className="mb-4">
+                            <div className="flex items-center relative mt-8">
+                                <div className="absolute left-2">
+                                    <MdOutlineVpnKey className="text-xl" />
+                                </div>
+                                <input
+                                    type={isShow ? "text" : "password"}
+                                    placeholder="Parol"
+                                    className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
+                                        errors.password && "border-red-500"
+                                    } ${
+                                        watch("password") !==
+                                            watch("confirmPassword") &&
+                                        "border-red-500"
+                                    }`}
+                                    {...register("password", {
+                                        required: "Parol majburiy",
+                                    })}
+                                />
+
+                                <button
+                                    type="button"
+                                    className="absolute right-2.5 text-xl"
+                                    onClick={() => setIsShow((prev) => !prev)}
+                                >
+                                    {isShow ? <BiHide /> : <BiShow />}
+                                </button>
+                            </div>
+                            {errors.password && (
+                                <span className="text-red-500 text-sm">
+                                    {errors.password.message}
+                                </span>
+                            )}
                         </div>
 
-                        <div className="flex items-center relative mt-8 mb-4">
-                            <div className="absolute left-2">
-                                <MdOutlineVpnKey className="text-xl" />
-                            </div>
-                            <input
-                                type={isShow ? "text" : "password"}
-                                placeholder="Parol"
-                                className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
-                                    errors.password ? "border-red-500" : ""
-                                }`}
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                onFocus={() =>
-                                    setErrors({ ...errors, password: false })
-                                }
-                            />
+                        <div className="mb-4">
+                            <div className="flex items-center relative mt-8">
+                                <div className="absolute left-2">
+                                    <MdOutlineVpnKey className="text-xl" />
+                                </div>
+                                <input
+                                    type={isShowConfirm ? "text" : "password"}
+                                    placeholder="Parolni tasdiqlash"
+                                    className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
+                                        errors.confirmPassword &&
+                                        "border-red-500"
+                                    } ${
+                                        watch("password") !==
+                                            watch("confirmPassword") &&
+                                        "border-red-500"
+                                    }`}
+                                    {...register("confirmPassword", {
+                                        required: "Parolni takrorlang",
+                                    })}
+                                />
 
-                            <button
-                                type="button"
-                                className="absolute right-2.5 text-xl"
-                                onClick={() => setIsShow((prev) => !prev)}
-                            >
-                                {isShow ? <BiHide /> : <BiShow />}
-                            </button>
+                                <button
+                                    type="button"
+                                    className="absolute right-2.5 text-xl"
+                                    onClick={() =>
+                                        setIsShowConfirm((prev) => !prev)
+                                    }
+                                >
+                                    {isShowConfirm ? <BiHide /> : <BiShow />}
+                                </button>
+                            </div>
+
+                            {errors.confirmPassword && (
+                                <span className="text-red-500 text-sm">
+                                    {errors.confirmPassword.message}
+                                </span>
+                            )}
                         </div>
 
-                        <div className="flex items-center relative mt-8 mb-4">
-                            <div className="absolute left-2">
-                                <MdOutlineVpnKey className="text-xl" />
+                        <div className="mb-4">
+                            <div className="flex items-center relative mt-8">
+                                <div className="absolute left-2">
+                                    <MdCall className="text-xl" />
+                                </div>
+                                <Controller
+                                    name="phone_number"
+                                    control={control}
+                                    rules={{
+                                        required: "Telefon raqam majburiy",
+                                        pattern: {
+                                            value: /^\+998 \d{2} \d{3} \d{2} \d{2}$/,
+                                            message: "Telefon raqam noto'g'ri",
+                                        },
+                                    }}
+                                    render={({ field }) => (
+                                        <PatternFormat
+                                            {...field}
+                                            format="+998 ## ### ## ##"
+                                            mask=" "
+                                            placeholder="+998 90 123 45 67"
+                                            className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
+                                                errors.phone_number &&
+                                                "border-red-500"
+                                            }`}
+                                            onValueChange={(values) => {
+                                                field.onChange(
+                                                    values.formattedValue
+                                                ); // Faqat formatlangan qiymatni saqlaymiz
+                                            }}
+                                        />
+                                    )}
+                                />
                             </div>
-                            <input
-                                type={isShowConfirm ? "text" : "password"}
-                                placeholder="Parolni tasdiqlash"
-                                className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
-                                    errors.confirmPassword
-                                        ? "border-red-500"
-                                        : ""
-                                }`}
-                                value={confirmPassword}
-                                onChange={(e) =>
-                                    setConfirmPassword(e.target.value)
-                                }
-                                onFocus={() =>
-                                    setErrors({
-                                        ...errors,
-                                        confirmPassword: false,
-                                    })
-                                }
-                            />
 
-                            <button
-                                type="button"
-                                className="absolute right-2.5 text-xl"
-                                onClick={() =>
-                                    setIsShowConfirm((prev) => !prev)
-                                }
-                            >
-                                {isShowConfirm ? <BiHide /> : <BiShow />}
-                            </button>
-                        </div>
-
-                        <div className="flex items-center relative mt-8 mb-4">
-                            <div className="absolute left-2">
-                                <MdCall className="text-xl" />
-                            </div>
-                            <PatternFormat
-                                format="+998 ## ### ## ##"
-                                mask=" "
-                                placeholder="90 123 45 67"
-                                className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
-                                    errors.phone ? "border-red-500" : ""
-                                }`}
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                                onFocus={() =>
-                                    setErrors({ ...errors, phone: false })
-                                }
-                            />
+                            {errors.phone_number && (
+                                <span className="text-red-500 text-sm">
+                                    {errors.phone_number.message}
+                                </span>
+                            )}
                         </div>
 
                         <SwitchRole role={role} setRole={setRole} />
@@ -224,8 +244,8 @@ const SignUp = () => {
                 ) : (
                     <OtpForm
                         code={smsCode}
-                        username={username}
-                        phone={phone}
+                        username={watch("username")}
+                        phone={watch("phone_number")}
                         handleBackToForm={handleBackToForm}
                     />
                 )}
