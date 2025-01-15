@@ -68,12 +68,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/cars" element={<Cars />} />
+        <Route path="/cars/:id" element />
         <Route path="/spare-parts" element={<SpareParts />} />
         <Route path="/services" element={<Services />} />
         <Route path="/dealers" element={<Dealers />} />
         <Route path="/news" element={<News />} />
         <Route path="/contact" element={<Contact />} />
-
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/not-found" element={<NotFound />} />

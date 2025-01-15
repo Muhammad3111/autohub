@@ -1,4 +1,4 @@
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import Button from "../../utility/button/Button";
 import { useState } from "react";
 import Modal from "../../utility/modal/Modal";
@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { useAddSpareMutation } from "../../features/spare-parts/spare-parts";
 import { useGetCarsQuery } from "../../features/cars/carSlice";
 import { useGetCatsQuery } from "../../features/spare-parts/spare-categories";
-import Select from "react-select";
+import Select, { MultiValue } from "react-select";
 
 export type SpareFormInputs = {
   name_uz: string;
@@ -36,12 +36,18 @@ type CarsProps = {
   name_ru: string;
 };
 
+type OptionType = {
+  value: string;
+  label: string;
+};
+
 export default function AddSpareParts() {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm<SpareFormInputs>();
   const { data, isLoading } = useGetCatsQuery({});
   const { data: vehicles } = useGetCarsQuery({ page: 1, limit: 10 });
@@ -91,7 +97,7 @@ export default function AddSpareParts() {
 
   const categories: CatsProps[] = data || [];
   const cars: CarsProps[] = vehicles?.vehicles || [];
-  const options = cars.map((car) => {
+  const options: OptionType[] = cars.map((car) => {
     return { value: car.id, label: car.name_uz };
   });
 
@@ -108,7 +114,7 @@ export default function AddSpareParts() {
       <div className="flex justify-between items-center">
         <h1 className="text-2xl text-black">Ehtiyot qisim Qo'shish</h1>
         <Button
-          path="/admin/cars"
+          path="/admin/spare-parts"
           className="mt-0 flex items-center gap-2 px-5"
         >
           Orqaga
@@ -119,7 +125,7 @@ export default function AddSpareParts() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="col-span-2 grid grid-cols-4 gap-4">
-          <div className="col-span-4">
+          <div className="col-span-2">
             <label className="block text-sm font-medium text-gray-700">
               Ehtiyot qisim nomi
             </label>
@@ -133,6 +139,23 @@ export default function AddSpareParts() {
             {errors.name_uz && (
               <span className="text-red-500 text-sm">
                 {errors.name_uz.message}
+              </span>
+            )}
+          </div>
+          <div className="col-span-2">
+            <label className="block text-sm font-medium text-gray-700">
+              OEM code
+            </label>
+            <input
+              type="text"
+              {...register("oem_code", {
+                required: "OEM code yozish majburiy",
+              })}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
+            />
+            {errors.oem_code && (
+              <span className="text-red-500 text-sm">
+                {errors.oem_code.message}
               </span>
             )}
           </div>
@@ -182,7 +205,9 @@ export default function AddSpareParts() {
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
             >
               {cars.map((c) => (
-                <option value={c.id}>{c.name_uz}</option>
+                <option key={c.id} value={c.id}>
+                  {c.name_uz}
+                </option>
               ))}
             </select>
             {errors.vehicle_id && (
@@ -219,7 +244,28 @@ export default function AddSpareParts() {
             )}
           </div>
           <div className="col-span-4">
-            <Select options={options} />
+            <Controller
+              name="applicable_models"
+              control={control}
+              defaultValue={[]}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  isMulti
+                  options={options}
+                  placeholder="Avtomobil Turlarini belgilang"
+                  noOptionsMessage={() => "Ma'lumotlar topilmadi"}
+                  onChange={(selectedOptions: MultiValue<OptionType>) => {
+                    field.onChange(
+                      selectedOptions.map((option) => option.value)
+                    );
+                  }}
+                  value={options.filter((option) =>
+                    field.value.includes(option.value)
+                  )}
+                />
+              )}
+            />
           </div>
           <div className="col-span-4">
             <label className="block text-sm font-medium text-gray-700">

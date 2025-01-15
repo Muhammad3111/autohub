@@ -76,7 +76,7 @@ export default function AddBlog() {
       )}
 
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl text-black">Ehtiyot qisim Qo'shish</h1>
+        <h1 className="text-2xl text-black">Blog Qo'shish</h1>
         <Button
           path="/admin/posts"
           className="mt-0 flex items-center gap-2 px-5"

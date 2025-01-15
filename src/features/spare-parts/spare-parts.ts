@@ -1,13 +1,13 @@
 import { apiSlice } from "../../app/api/apiSlice";
-import { Vehicle } from "../../adminComponents/cars/ReadCars";
 import { SpareFormInputs } from "../../adminComponents/spareparts/AddSparePart";
+import { SpareData } from "../../adminComponents/spareparts/ReadParts";
 
 type UrlsData = {
   total: number;
   page: number;
   limit: number;
   total_pages: number;
-  vehicles: Vehicle[];
+  items: SpareData[];
 };
 
 export const carsApi = apiSlice.injectEndpoints({
