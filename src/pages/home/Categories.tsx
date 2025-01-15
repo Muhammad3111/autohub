@@ -2,7 +2,7 @@ import { useState } from "react";
 import SearchInput from "../../utility/search-input/SearchInput";
 import CarImg from "../../assets/login-car.webp";
 import CarCategory from "../../assets/car-category.png";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 
 type CarModels = {
     name: string;
@@ -11,7 +11,7 @@ type CarModels = {
 
 const Categories = () => {
     const [search, setSearch] = useState<string>("");
-    const { t } = useTranslation();
+    // const { t } = useTranslation();
 
     const carModels: CarModels[] = [
         {
