@@ -11,7 +11,7 @@ import Slide2 from "../../assets/2slider.webp";
 import Slide3 from "../../assets/3slider.webp";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-export default function App() {
+const Slider = () => {
     return (
         <div className="my-10 relative">
             <button
@@ -71,4 +71,6 @@ export default function App() {
             </div>
         </div>
     );
-}
+};
+
+export default Slider;
