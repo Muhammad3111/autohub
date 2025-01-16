@@ -5,16 +5,18 @@ import { useSelector } from "react-redux";
 import { selectCurrentUserData } from "../../features/auth/authSlice";
 import DealerProfile from "./DealerProfile";
 import MyCreateCar from "./MyCreateCar";
-
-type UserDataState = {
-    phone_number: string;
-    role: string;
-    username: string;
-    name: string;
-};
+import { UserDataType } from "../../types";
+import Loading from "../../components/loading/Loading";
 
 const Profile = () => {
-    const userData: UserDataState = useSelector(selectCurrentUserData);
+    const userData: UserDataType | null | undefined = useSelector(
+        selectCurrentUserData
+    );
+
+    if (!userData) {
+        return <Loading />;
+    }
+
     const [activeTab, setActiveTab] = useState<
         "userProfile" | "likedCar" | "dealerProfile" | "myCreateCars"
     >(userData.role === "user" ? "userProfile" : "dealerProfile");
