@@ -27,6 +27,10 @@ type UrlsData = {
   page: number;
   limit: number;
   total_pages: number;
+  name_uz?: string;
+  brand?: string;
+  model?: string;
+  price?: number;
   vehicles: Vehicle[];
 };
 
@@ -41,11 +45,21 @@ export const carsApi = apiSlice.injectEndpoints({
       invalidatesTags: ["CAR"],
     }),
 
-    getCars: builder.query<UrlsData, { page?: number; limit?: number }>({
-      query: ({ page = 1, limit = 12 }) => ({
+    getCars: builder.query<
+      UrlsData,
+      {
+        page?: number;
+        limit?: number;
+        name_uz?: string;
+        brand?: string;
+        model?: string;
+        price?: number;
+      }
+    >({
+      query: ({ page = 1, limit = 12, name_uz, brand, model, price }) => ({
         url: "/vehicles",
         method: "GET",
-        params: { page, limit },
+        params: { page, limit, name_uz, brand, model, price },
       }),
       providesTags: ["CAR"],
     }),
