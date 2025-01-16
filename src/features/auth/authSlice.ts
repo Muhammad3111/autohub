@@ -1,21 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AuthState, UserDataType } from "../../types";
 
-type AuthState = {
-    userData?: any;
-    accessToken: string | null;
-    refreshToken: string | null;
-    language?: string;
-};
-
-const getFromLocalStorage = (key: string) => {
+const getFromLocalStorage = <T>(key: string, defaultValue: T): T => {
     const value = localStorage.getItem(key);
-    return value ? JSON.parse(value) : null;
+    return value ? JSON.parse(value) : defaultValue;
 };
 
 const initialState: AuthState = {
-    userData: getFromLocalStorage("user_data"),
-    accessToken: getFromLocalStorage("access_token"),
-    refreshToken: getFromLocalStorage("refresh_token"),
+    userData: getFromLocalStorage<UserDataType | null>("user_data", null),
+    accessToken: getFromLocalStorage<string | null>("access_token", null),
+    refreshToken: getFromLocalStorage<string | null>("refresh_token", null),
     language: localStorage.getItem("language") || "uz",
 };
 
@@ -26,7 +20,7 @@ const authSlice = createSlice({
         setCredentials: (
             state,
             action: PayloadAction<{
-                userData?: any;
+                userData?: UserDataType;
                 accessToken: string | null;
                 refreshToken: string | null;
             }>
@@ -37,13 +31,31 @@ const authSlice = createSlice({
             state.accessToken = accessToken;
             state.refreshToken = refreshToken;
 
-            if (userData !== undefined) {
+            if (userData) {
                 localStorage.setItem("user_data", JSON.stringify(userData));
+            } else {
+                localStorage.removeItem("user_data");
             }
-            localStorage.setItem("access_token", JSON.stringify(accessToken));
-            localStorage.setItem("refresh_token", JSON.stringify(refreshToken));
+
+            if (accessToken) {
+                localStorage.setItem(
+                    "access_token",
+                    JSON.stringify(accessToken)
+                );
+            } else {
+                localStorage.removeItem("access_token");
+            }
+
+            if (refreshToken) {
+                localStorage.setItem(
+                    "refresh_token",
+                    JSON.stringify(refreshToken)
+                );
+            } else {
+                localStorage.removeItem("refresh_token");
+            }
         },
-        changeLanguage: (state, action) => {
+        changeLanguage: (state, action: PayloadAction<string>) => {
             state.language = action.payload;
             localStorage.setItem("language", action.payload);
         },
@@ -55,12 +67,14 @@ const authSlice = createSlice({
             localStorage.removeItem("user_data");
             localStorage.removeItem("access_token");
             localStorage.removeItem("refresh_token");
+            localStorage.removeItem("language");
         },
     },
 });
 
 export const { setCredentials, logOut, changeLanguage } = authSlice.actions;
 export default authSlice.reducer;
+
 // Selectors
 export const selectCurrentUserData = (state: { auth: AuthState }) =>
     state.auth.userData;
@@ -68,6 +82,5 @@ export const selectCurrentAccessToken = (state: { auth: AuthState }) =>
     state.auth.accessToken;
 export const selectCurrentRefreshToken = (state: { auth: AuthState }) =>
     state.auth.refreshToken;
-
 export const selectCurrentLanguage = (state: { auth: AuthState }) =>
     state.auth.language;
