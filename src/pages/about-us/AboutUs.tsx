@@ -59,13 +59,13 @@ const AboutUs = () => {
         {
             img: About7,
             title: "Membership and Rewards",
-            desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+            desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
             isBorder: true,
         },
         {
             img: About8,
             title: "Flexible Rental Options",
-            desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+            desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
             isBorder: true,
         },
     ];
