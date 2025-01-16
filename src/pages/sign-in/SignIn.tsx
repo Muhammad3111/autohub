@@ -12,42 +12,34 @@ import {
 } from "../../features/auth/authApiSlice";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../features/auth/authSlice";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type LoginInput = {
+    username: string;
+    password: string;
+};
 
 const SignIn = () => {
     const [isShow, setIsShow] = useState(false);
     const navigate = useNavigate();
 
-    const [errors, setErrors] = useState({
-        username: false,
-        password: false,
-    });
-
-    const [username, setUserName] = useState("");
-    const [password, setPassword] = useState("");
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+        watch,
+    } = useForm<LoginInput>();
     const [login, { isLoading }] = useLoginMutation();
     const [detailTrigger] = useLazyAuthDetailQuery();
     const dispatch = useDispatch();
 
-    const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        let newErrors = {
-            username: !username,
-            password: !password,
-        };
-
-        setErrors(newErrors);
-
-        if (Object.values(newErrors).includes(true)) {
-            toast.error("Barcha maydonlarni to'ldiring!");
-            return;
-        }
-
-        await login({ username, password })
+    const handleLogin: SubmitHandler<LoginInput> = async (data) => {
+        await login(data)
             .unwrap()
             .then((res) => {
                 toast.success("Kirish muvaffaqqiyatli bajarildi!");
-
+                reset();
                 if (res.access) {
                     detailTrigger({ token: res.access })
                         .unwrap()
@@ -75,57 +67,67 @@ const SignIn = () => {
             <Header title="Kirish" />
 
             <form
-                onSubmit={handleLogin}
+                onSubmit={handleSubmit(handleLogin)}
                 className="w-[400px] min-h-[450px] bg-white rounded shadow-custom p-10"
             >
                 <h1 className="text-center text-2xl font-medium">Kirish</h1>
 
-                <div className="flex items-center relative mt-8 mb-4">
-                    <div className="absolute left-2">
-                        <FiUser className="text-xl" />
+                <div className="mb-4">
+                    <div className="flex items-center relative mt-8">
+                        <div className="absolute left-2">
+                            <FiUser className="text-xl" />
+                        </div>
+                        <input
+                            type="text"
+                            {...register("username", {
+                                required: "Foydalanuvchi nomi majburiy",
+                            })}
+                            placeholder="Foydalanuvchi nomi"
+                            className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
+                                errors.username && "border-red-500"
+                            }`}
+                        />
                     </div>
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUserName(e.target.value)}
-                        placeholder="Foydalanuvchi nomi"
-                        className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
-                            errors.username ? "border-red-500" : ""
-                        }`}
-                        onFocus={() =>
-                            setErrors({ ...errors, username: false })
-                        }
-                    />
+                    {errors.username && (
+                        <span className="text-red-500 text-sm">
+                            {errors.username.message}
+                        </span>
+                    )}
                 </div>
 
-                <div className="flex items-center relative mt-8 mb-4">
-                    <div className="absolute left-2">
-                        <MdOutlineVpnKey className="text-xl" />
-                    </div>
-                    <input
-                        type={isShow ? "text" : "password"}
-                        placeholder="Parol"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
-                            errors.password ? "border-red-500" : ""
-                        }`}
-                        onFocus={() =>
-                            setErrors({ ...errors, password: false })
-                        }
-                    />
+                <div className="mb-4">
+                    <div className="flex items-center relative mt-8">
+                        <div className="absolute left-2">
+                            <MdOutlineVpnKey className="text-xl" />
+                        </div>
+                        <input
+                            type={isShow ? "text" : "password"}
+                            placeholder="Parol"
+                            {...register("password", {
+                                required: "Parol majburiy",
+                            })}
+                            className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
+                                errors.password && "border-red-500"
+                            }`}
+                        />
 
-                    {password.length > 0 && (
-                        <button
-                            type="button"
-                            className="absolute right-2.5 text-xl"
-                        >
-                            {isShow ? (
-                                <BiHide onClick={() => setIsShow(false)} />
-                            ) : (
-                                <BiShow onClick={() => setIsShow(true)} />
-                            )}
-                        </button>
+                        {watch("password") && watch("password").length > 0 && (
+                            <button
+                                type="button"
+                                className="absolute right-2.5 text-xl"
+                            >
+                                {isShow ? (
+                                    <BiHide onClick={() => setIsShow(false)} />
+                                ) : (
+                                    <BiShow onClick={() => setIsShow(true)} />
+                                )}
+                            </button>
+                        )}
+                    </div>
+                    {errors.password && (
+                        <span className="text-red-500 text-sm">
+                            {errors.password.message}
+                        </span>
                     )}
                 </div>
 
