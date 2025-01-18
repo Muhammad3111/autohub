@@ -67,7 +67,7 @@ export default function Filter({ filters, setFilters }: FilterProps) {
           id="price"
           type="range"
           min="0"
-          max="100"
+          max="100000"
           className="w-full py-2 text-base px-4 rounded-md focus:outline-none border"
           value={filters.price}
           onChange={handleChange}

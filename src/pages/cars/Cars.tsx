@@ -38,7 +38,7 @@ const Cars = () => {
           <a href="#" className="text-gray-500 hover:text-primary duration-300">
             Bosh Sahifa
           </a>{" "}
-          <span className="text-gray-500">- Avtomobillar</span>
+          <span className="text-black">- Avtomobillar</span>
         </div>
       </div>
       <div className="flex flex-col gap-4 bg-white">
@@ -47,7 +47,7 @@ const Cars = () => {
           <Filter setFilters={setFilters} filters={filters} />
         </div>
         <div className="grid grid-cols-4 gap-4 py-6">
-          {data?.vehicles.map((car) => (
+          {data?.items.map((car) => (
             <CardCar key={car.id} vehicle={car} />
           ))}
         </div>

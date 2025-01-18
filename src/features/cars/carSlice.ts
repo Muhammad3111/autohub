@@ -23,15 +23,15 @@ type CarData = {
 };
 
 type UrlsData = {
-  total: number;
-  page: number;
+  total_count: number;
+  current_page: number;
   limit: number;
   total_pages: number;
   name_uz?: string;
   brand?: string;
   model?: string;
   price?: number;
-  vehicles: Vehicle[];
+  items: Vehicle[];
 };
 
 export const carsApi = apiSlice.injectEndpoints({

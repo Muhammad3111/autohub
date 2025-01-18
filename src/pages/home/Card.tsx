@@ -20,17 +20,11 @@ const Card = () => {
       </h1>
 
       <div className="grid grid-cols-4 mt-10 gap-12">
-        {data?.vehicles.map((item) => (
+        {data?.items.map((item) => (
           <div
             key={item.id}
             className="w-full min-h-[400px] bg-white rounded-lg flex flex-col justify-start p-5 relative cursor-pointer"
           >
-            {/* {item.isNew && (
-                          <div className="absolute font-medium bg-grey px-3 text-sm py-1 rounded-sm hover:bg-primary hover:text-white duration-150">
-                              New
-                          </div>
-                      )} */}
-
             <button className="absolute right-5 top-5">
               {isSaved ? (
                 <AiFillHeart
