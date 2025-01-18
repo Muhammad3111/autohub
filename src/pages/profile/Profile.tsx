@@ -22,7 +22,7 @@ const Profile = () => {
     >(userData.role === "user" ? "userProfile" : "dealerProfile");
 
     return (
-        <div className="container mx-auto w-full">
+        <div className="my-container">
             <div className="my-10 font-medium text-2xl">
                 {userData.name ? userData.name : userData.username}
             </div>

@@ -73,7 +73,7 @@ const AboutUs = () => {
     return (
         <div>
             <Header title="About" />
-            <div className="container mx-auto flex flex-col gap-20 my-20">
+            <div className="my-container flex flex-col gap-20 py-20">
                 <h1 className="text-3xl text-center font-medium">
                     Our Partners
                 </h1>
