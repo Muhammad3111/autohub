@@ -5,7 +5,7 @@ const SearchData = ({ searchValue }: { searchValue: string }) => {
     const [search, setSearch] = useState(searchValue);
 
     return (
-        <div className="container mx-auto flex gap-10 pt-5">
+        <div className="my-container flex gap-10 pt-5">
             {/* sidebar */}
             <div className="w-[300px] h-[400px] bg-white sticky left-0 top-5"></div>
 

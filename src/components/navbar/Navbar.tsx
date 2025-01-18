@@ -11,9 +11,9 @@ const Navbar = () => {
     const userData = useSelector(selectCurrentUserData);
 
     return (
-        <>
+        <div className="sticky top-0 left-0 z-20">
             <div className="w-full h-14 bg-white flex items-center justify-center">
-                <div className="flex items-center justify-between container h-full">
+                <div className="flex items-center justify-between my-container h-full">
                     <Link
                         to={"/"}
                         className="text-2xl font-semibold flex items-center gap-4"
@@ -55,7 +55,7 @@ const Navbar = () => {
                 </div>
             </div>
             <NavHeader />
-        </>
+        </div>
     );
 };
 

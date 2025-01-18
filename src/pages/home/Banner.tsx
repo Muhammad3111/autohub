@@ -37,7 +37,7 @@ const Banner = () => {
             className="bg-secondary flex items-center justify-center duration-200"
             style={{ height: "calc(100vh - 64px)" }}
         >
-            <div className="container mx-auto px-10 xl:px-10 2xl:px-0">
+            <div className="my-container px-10 xl:px-10 2xl:px-0">
                 <h1 className="text-gray-300 uppercase font-bold select-none text-[40px] sm:text-[50px] md:text-[60px] lg:text-[80px] xl:text-[120px] 2xl:text-[120px]">
                     {currentCar.brand}
                 </h1>
