@@ -50,8 +50,8 @@ const Header = () => {
         },
     ];
     return (
-        <div className="w-full h-12 bg-white border-t-2 mb-10">
-            <div className="flex items-center h-full justify-between container mx-auto">
+        <div className="w-full h-12 bg-white border-t-2 border-b-2">
+            <div className="flex items-center h-full justify-between my-container">
                 {links.map((item, index) => (
                     <Link
                         to={item.path}

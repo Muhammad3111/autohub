@@ -41,6 +41,8 @@ const SignIn = () => {
                 toast.success("Kirish muvaffaqqiyatli bajarildi!");
                 reset();
                 if (res.access) {
+                    console.log(res);
+
                     detailTrigger({ token: res.access })
                         .unwrap()
                         .then((authData) => {
