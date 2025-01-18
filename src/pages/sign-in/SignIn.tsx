@@ -39,7 +39,6 @@ const SignIn = () => {
             .unwrap()
             .then((res) => {
                 toast.success("Kirish muvaffaqqiyatli bajarildi!");
-                console.log(res);
 
                 reset();
                 if (res.access) {
