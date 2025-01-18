@@ -6,6 +6,7 @@ import Modal from "../../utility/modal/Modal";
 import KeyValueInputs from "../../utility/keyvalueinputs/KeyValue";
 import { toast } from "react-toastify";
 import { BrandData, useGetBrandsQuery } from "../../features/brands/brands";
+import DefaultProperty from "../../mock/data.json";
 
 type CarFormInputs = {
   name_uz: string;
@@ -74,6 +75,7 @@ export default function AddCar() {
       reset();
       setSelectedImage(null);
       setGalleryImages([]);
+      console.log(data);
     } catch (error) {
       toast.error("Avtomobil qo'shishda xatolik yuz berdi");
       console.error(error);
@@ -128,7 +130,7 @@ export default function AddCar() {
             <select
               defaultValue={1}
               {...register("brand_id", {
-                required: "Brand yozish majburiy",
+                required: false,
                 valueAsNumber: true,
               })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
@@ -284,7 +286,6 @@ export default function AddCar() {
               <option value="Propane">Propan</option>
             </select>
           </div>
-
           <div className="col-span-4">
             <label className="block text-sm font-medium text-gray-700">
               Izoh
@@ -379,12 +380,12 @@ export default function AddCar() {
                 ))}
               </div>
             )}
+            <KeyValueInputs
+              name="properties"
+              register={register}
+              defaultFields={DefaultProperty.items}
+            />
           </div>
-          <KeyValueInputs
-            name="properties"
-            register={register}
-            defaultFields={[]}
-          />
         </div>
       </form>
     </div>
