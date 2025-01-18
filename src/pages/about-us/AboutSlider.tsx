@@ -12,6 +12,15 @@ import Slide4 from "../../assets/our-partner-bmw.png";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const AboutSlider = () => {
+    const descriptions = [
+        "Morris Garages",
+        "Tesla",
+        "Isuzu",
+        "BMW",
+        "Morris Garages",
+        "Isuzu",
+    ];
+
     return (
         <div className="relative w-full max-w-[1400px] mx-auto">
             <button
@@ -36,13 +45,16 @@ const AboutSlider = () => {
                     {[Slide1, Slide2, Slide3, Slide4, Slide1, Slide3].map(
                         (slide, index) => (
                             <SwiperSlide key={index}>
-                                <div className="bg-white w-full h-[250px] flex items-center justify-center rounded cursor-pointer hover:bg-primary hover:bg-opacity-20 duration-150">
+                                <div className="relative bg-white w-full h-[250px] flex items-center justify-center rounded cursor-pointer group hover:bg-primary hover:bg-opacity-20 duration-150">
                                     <img
                                         src={slide}
                                         alt={`slide ${index + 1}`}
                                         width={150}
                                         className="object-contain"
                                     />
+                                    <div className="absolute bottom-0 left-0 right-0 bg-opacity-60 text-white text-3xl uppercase font-semibold text-center p-2 translate-y-full group-hover:bottom-1/2 group-hover:translate-y-1/2 duration-300">
+                                        {descriptions[index]}
+                                    </div>
                                 </div>
                             </SwiperSlide>
                         )
