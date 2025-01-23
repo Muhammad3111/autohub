@@ -36,7 +36,7 @@ export default function CarId() {
 
     const car: CarData = data;
     return (
-        <div className="flex flex-col gap-4 my-container">
+        <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-4 px-28 py-5">
                 <h1 className="text-4xl font-bold">{car.name_uz}</h1>
                 <div className="flex items-center gap-1">

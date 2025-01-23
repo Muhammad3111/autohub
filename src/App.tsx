@@ -4,6 +4,7 @@ import Navbar from "./components/navbar/Navbar";
 import ScrollToTop from "./components/scroll-top/ScrollTop";
 import { Slide, ToastContainer } from "react-toastify";
 import Router from "./router/Router";
+import Footer from "./components/footer/Footer";
 
 function App() {
     const location = useLocation();
@@ -28,6 +29,7 @@ function App() {
                 transition={Slide}
             />
             <Router />
+            <Footer />
         </div>
     );
 }

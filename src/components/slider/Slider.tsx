@@ -13,7 +13,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const Slider = () => {
     return (
-        <div className="my-10 relative">
+        <div className="m-10 relative">
             <button
                 className="custom-prev absolute left-2 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-gray-800 text-white rounded-full shadow hover:bg-gray-700"
                 id="prevButton"

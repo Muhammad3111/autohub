@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SearchInput from "../../utility/search-input/SearchInput";
-import CarImg from "../../assets/login-car.webp";
+import CarImg from "../../assets/dashboard.png";
 import CarCategory from "../../assets/car-category.png";
 // import { useTranslation } from "react-i18next";
 
@@ -46,14 +46,14 @@ const Categories = () => {
 
     return (
         <div className="w-full">
-            <div
+            {/* <img src={CarImg} alt="" className="w-full" /> */}
+            {/* <div
                 className={` rounded-lg overflow-hidden relative flex flex-col items-center`}
             >
                 <div className="w-[70%]">
                     <SearchInput search={search} setSearch={setSearch} />
                 </div>
 
-                <img src={CarImg} alt="" width={800} />
                 <div className="flex items-center justify-around mt-10 w-full">
                     {carModels.map((item, index) => (
                         <button
@@ -67,7 +67,7 @@ const Categories = () => {
                         </button>
                     ))}
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };

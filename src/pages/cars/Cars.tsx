@@ -31,7 +31,7 @@ const Cars = () => {
         setCurrentPage(page); // Sahifani yangilaydi
     };
     return (
-        <div className="flex flex-col gap-4 my-container">
+        <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-4">
                 <h1 className="text-4xl font-bold">Avtomobillar</h1>
                 <div className="flex items-center gap-1">

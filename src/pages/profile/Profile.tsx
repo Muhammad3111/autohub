@@ -22,8 +22,8 @@ const Profile = () => {
     >(userData.role === "user" ? "userProfile" : "dealerProfile");
 
     return (
-        <div className="my-container">
-            <div className="my-10 font-medium text-2xl">
+        <div className="p-10">
+            <div className="my-10 font-medium text-2xl ml-5">
                 {userData.name ? userData.name : userData.username}
             </div>
             <div className="flex justify-between gap-20">

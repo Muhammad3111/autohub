@@ -22,7 +22,7 @@ const AboutSlider = () => {
     ];
 
     return (
-        <div className="relative w-full max-w-[1250px] mx-auto">
+        <div className="relative w-full max-w-full mx-auto">
             <button
                 className="absolute -left-16 z-10 p-3 bg-gray-300 rounded-full -translate-y-1/2 top-1/2"
                 id="prevButton"
@@ -45,7 +45,7 @@ const AboutSlider = () => {
                     {[Slide1, Slide2, Slide3, Slide4, Slide1, Slide3].map(
                         (slide, index) => (
                             <SwiperSlide key={index}>
-                                <div className="relative bg-white w-full h-[250px] flex items-center justify-center rounded cursor-pointer group hover:bg-black hover:bg-opacity-20 duration-150">
+                                <div className="relative bg-white my-2 border-2 w-full h-[250px] flex items-center justify-center rounded cursor-pointer group hover:bg-black hover:bg-opacity-20 duration-150">
                                     <img
                                         src={slide}
                                         alt={`slide ${index + 1}`}

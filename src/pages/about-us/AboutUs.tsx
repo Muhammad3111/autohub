@@ -8,7 +8,6 @@ import About5 from "../../assets/about-5.png";
 import About6 from "../../assets/about-6.png";
 import About7 from "../../assets/about-7.png";
 import About8 from "../../assets/about-8.png";
-import Footer from "../../components/footer/Footer";
 import AboutSlider from "./AboutSlider";
 
 type AboutState = {
@@ -71,14 +70,16 @@ const AboutUs = () => {
     ];
 
     return (
-        <div>
+        <div className="bg-white">
             <Header title="About" />
-            <div className="my-container flex flex-col gap-20 py-20">
+            <div className="flex flex-col gap-20 p-10">
                 <h1 className="text-3xl text-center font-medium">
                     Our Partners
                 </h1>
 
-                <AboutSlider />
+                <div className="p-20">
+                    <AboutSlider />
+                </div>
 
                 <div className="text-3xl text-center font-medium">
                     Why We are{" "}
@@ -92,9 +93,7 @@ const AboutUs = () => {
                     {carsAbout.map((item, index) => (
                         <div
                             key={index}
-                            className={`p-6 rounded-lg transition-all duration-300 hover:shadow-xl cursor-pointer ${
-                                item.isBorder ? "bg-gray-50" : "bg-white"
-                            }`}
+                            className={`p-6 rounded-lg transition-all duration-300 hover:shadow-xl cursor-pointer border-2`}
                         >
                             <div className="flex flex-col items-center text-center space-y-4">
                                 <div className="w-16 h-16 flex items-center justify-center">
@@ -117,8 +116,6 @@ const AboutUs = () => {
                     ))}
                 </div>
             </div>
-
-            <Footer />
         </div>
     );
 };
