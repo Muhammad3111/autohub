@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { PatternFormat } from "react-number-format";
 import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
 import SwitchRole from "./SwitchRole";
 import { useRegisterMutation } from "../../features/auth/authApiSlice";
 import OtpForm from "./OtpForm";
@@ -69,9 +68,9 @@ const SignUp = () => {
     };
 
     return (
-        <div className="flex flex-col items-center gap-20">
+        <div className="flex flex-col items-center bg-white">
             <Header title="Ro'yxatdan o'tish" />
-            <div className="w-[400px] min-h-[200px] bg-white rounded shadow-custom p-10">
+            <div className="w-[400px] min-h-[200px] bg-white rounded shadow-custom p-10 my-20">
                 {!isOtpMode ? (
                     <form onSubmit={handleSubmit(handleCreate)}>
                         <h1 className="text-center text-2xl font-medium">
@@ -250,7 +249,6 @@ const SignUp = () => {
                     />
                 )}
             </div>
-            <Footer />
         </div>
     );
 };

@@ -5,7 +5,6 @@ import { useState } from "react";
 import { BiHide, BiShow } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Footer from "../../components/footer/Footer";
 import {
     useLazyAuthDetailQuery,
     useLoginMutation,
@@ -65,7 +64,7 @@ const SignIn = () => {
     };
 
     return (
-        <div className="flex flex-col items-center gap-20">
+        <div className="flex flex-col items-center gap-20 bg-white">
             <Header title="Kirish" />
 
             <form
@@ -155,7 +154,6 @@ const SignIn = () => {
                     Ro'yxatdan o'tish
                 </button>
             </form>
-            <Footer />
         </div>
     );
 };
