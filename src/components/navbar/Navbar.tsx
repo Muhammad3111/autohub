@@ -1,29 +1,74 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Logo from "../../assets/autohub-logo.jpg";
-import { FiSearch, FiUser } from "react-icons/fi";
+import { FiUser } from "react-icons/fi";
 import { selectCurrentUserData } from "../../features/auth/authSlice";
 import { useSelector } from "react-redux";
 import Language from "./Language";
-import NavHeader from "./NavHeader";
+
+type NavLinkType = {
+    name: string;
+    path: string;
+};
 
 const Navbar = () => {
     const navigate = useNavigate();
     const userData = useSelector(selectCurrentUserData);
     const { pathname } = useLocation();
 
+    const navLinks: NavLinkType[] = [
+        {
+            name: "Biz haqimizda",
+            path: "/about-us",
+        },
+        {
+            name: "Avtomobillar",
+            path: "/cars",
+        },
+        {
+            name: "Extiyot qismlar",
+            path: "/spare-parts",
+        },
+        {
+            name: "Servislar",
+            path: "/services",
+        },
+        {
+            name: "Dillerlar",
+            path: "/dealers",
+        },
+        {
+            name: "Yangiliklar",
+            path: "/news",
+        },
+        {
+            name: "Aloqa",
+            path: "/contact",
+        },
+    ];
+
     return (
         <div className="sticky top-0 left-0 z-20">
-            <div className="w-full h-14 bg-white flex items-center justify-center">
-                <div className="flex items-center justify-between my-container h-full">
-                    <Link
-                        to={"/"}
-                        className="text-2xl font-semibold flex items-center gap-4"
-                    >
-                        <img src={Logo} alt="" width={40} />
-                        <p>Autohub</p>
-                    </Link>
+            <div className="w-full h-20 bg-white flex items-center justify-between px-10">
+                <Link to={"/"} className="text-2xl font-semibold">
+                    <p>Autohub</p>
+                </Link>
 
-                    {pathname !== "/" && (
+                <div className="flex items-center gap-3">
+                    {navLinks.map((item, index) => (
+                        <Link
+                            key={index}
+                            to={item.path}
+                            className={`${
+                                pathname === item.path
+                                    ? "bg-primary text-white"
+                                    : "text-black"
+                            } px-4 py-3 font-medium`}
+                        >
+                            {item.name}
+                        </Link>
+                    ))}
+                </div>
+
+                {/* {pathname !== "/" && (
                         <div className="flex h-10 items-center w-1/3">
                             <input
                                 type="text"
@@ -34,41 +79,31 @@ const Navbar = () => {
                                 <FiSearch />
                             </button>
                         </div>
+                    )} */}
+
+                <div className="flex items-center gap-6">
+                    <Language />
+
+                    {!userData && (
+                        <button
+                            onClick={() => navigate("/sign-in")}
+                            className="flex items-center gap-2 rounded-full font-medium"
+                        >
+                            <FiUser className="text-xl" />
+                            Kirish
+                        </button>
                     )}
 
-                    <div className="flex items-center gap-4">
-                        {!userData && (
-                            <div className="flex items-center gap-4">
-                                <button
-                                    onClick={() => navigate("/sign-in")}
-                                    className="flex items-center gap-2 px-6 bg-primary text-white py-2 rounded-full"
-                                >
-                                    <FiUser />
-                                    Kirish
-                                </button>
-
-                                <button
-                                    onClick={() => navigate("/sign-up")}
-                                    className="flex items-center gap-2 px-6 bg-primary text-white py-2 rounded-full"
-                                >
-                                    Ro'yxatdan o'tish
-                                </button>
-                            </div>
-                        )}
-
-                        <Language />
-                        {userData && (
-                            <button
-                                onClick={() => navigate("/profile")}
-                                className="text-xl font-bold"
-                            >
-                                <p>{userData?.username}</p>
-                            </button>
-                        )}
-                    </div>
+                    {userData && (
+                        <button
+                            onClick={() => navigate("/profile")}
+                            className="text-xl font-bold"
+                        >
+                            <p>{userData?.username}</p>
+                        </button>
+                    )}
                 </div>
             </div>
-            <NavHeader />
         </div>
     );
 };

@@ -54,33 +54,3 @@ body {
 .custom-next:hover {
     background-color: #4a5568;
 }
-
-.my-container {
-    width: 100%;
-    margin: 0 auto;
-}
-@media (min-width: 640px) {
-    .my-container {
-        max-width: 640px;
-    }
-}
-@media (min-width: 768px) {
-    .my-container {
-        max-width: 768px;
-    }
-}
-@media (min-width: 1050px) {
-    .my-container {
-        max-width: 1050px;
-    }
-}
-@media (min-width: 1350px) {
-    .my-container {
-        max-width: 1350px;
-    }
-}
-@media (min-width: 1400px) {
-    .my-container {
-        max-width: 1400px;
-    }
-}

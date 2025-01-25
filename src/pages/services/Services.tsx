@@ -1,12 +1,11 @@
-import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 
 const Services = () => {
     return (
-        <div>
+        <div className="w-full bg-white">
             <Header title="Services" />
-            <div className="my-container py-20 flex flex-col gap-5">
-                <div className="w-full bg-white p-5 hover:bg-primary hover:bg-opacity-5 border hover:border-primary duration-150 flex justify-between">
+            <div className="p-10 flex flex-col gap-4">
+                <div className="w-full bg-white hover:bg-primary hover:bg-opacity-5 border hover:border-primary duration-150 flex justify-between p-5">
                     <div className="flex gap-8">
                         <img
                             src="https://chinaglobalsouth.com/dev/wp-content/uploads/2023/11/BYD-Thailand-768x464.jpg"
@@ -115,7 +114,6 @@ const Services = () => {
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 };
