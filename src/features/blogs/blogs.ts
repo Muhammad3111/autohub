@@ -20,7 +20,7 @@ type UrlsData = {
   page: number;
   limit: number;
   total_pages: number;
-  articles: Blogs[];
+  items: Blogs[];
 };
 
 export const carsApi = apiSlice.injectEndpoints({
