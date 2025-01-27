@@ -12,6 +12,7 @@ import {
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../features/auth/authSlice";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { getFromLocalStorage } from "../../hooks/useGetFromLocalStorage";
 
 type LoginInput = {
     username: string;
@@ -37,15 +38,24 @@ const SignIn = () => {
         await login(data)
             .unwrap()
             .then((res) => {
-                toast.success("Kirish muvaffaqqiyatli bajarildi!");
-                reset();
                 if (res.access) {
-                    console.log(res);
+                    dispatch(
+                        setCredentials({
+                            accessToken: res.access,
+                            refreshToken: res.refresh,
+                        })
+                    );
 
-                    detailTrigger({ token: res.access })
+                    let accessToken = getFromLocalStorage("accessToken", null);
+
+                    detailTrigger({ token: accessToken })
                         .unwrap()
                         .then((authData) => {
                             if (authData) {
+                                toast.success(
+                                    "Kirish muvaffaqqiyatli bajarildi!"
+                                );
+                                reset();
                                 dispatch(
                                     setCredentials({
                                         accessToken: res.access,
@@ -53,10 +63,12 @@ const SignIn = () => {
                                         userData: authData,
                                     })
                                 );
+                                navigate("/");
                             }
                         });
+                } else {
+                    console.log(res);
                 }
-                navigate("/");
             })
             .catch((err) => {
                 toast.error(err.data.detail);

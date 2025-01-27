@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthState, UserDataType } from "../../types";
-
-const getFromLocalStorage = <T>(key: string, defaultValue: T): T => {
-    const value = localStorage.getItem(key);
-    return value ? JSON.parse(value) : defaultValue;
-};
+import { getFromLocalStorage } from "../../hooks/useGetFromLocalStorage";
 
 const initialState: AuthState = {
     userData: getFromLocalStorage<UserDataType | null>("user_data", null),
@@ -21,8 +17,8 @@ const authSlice = createSlice({
             state,
             action: PayloadAction<{
                 userData?: UserDataType;
-                accessToken: string | null;
-                refreshToken: string | null;
+                accessToken?: string | null;
+                refreshToken?: string | null;
             }>
         ) => {
             const { userData, accessToken, refreshToken } = action.payload;
