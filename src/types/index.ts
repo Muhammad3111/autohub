@@ -2,7 +2,7 @@ export type AuthState = {
     userData?: UserDataType | null;
     accessToken?: string | null;
     refreshToken?: string | null;
-    language?: string;
+    language?: string | null;
 };
 
 export type UserDataType = {

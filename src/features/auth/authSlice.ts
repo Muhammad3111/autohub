@@ -3,10 +3,10 @@ import { AuthState, UserDataType } from "../../types";
 import { getFromLocalStorage } from "../../hooks/useGetFromLocalStorage";
 
 const initialState: AuthState = {
-    userData: getFromLocalStorage<UserDataType | null>("user_data", null),
-    accessToken: getFromLocalStorage<string | null>("access_token", null),
-    refreshToken: getFromLocalStorage<string | null>("refresh_token", null),
-    language: localStorage.getItem("language") || "uz",
+    userData: getFromLocalStorage<UserDataType | null>("user_data"),
+    accessToken: getFromLocalStorage<string | null>("access_token"),
+    refreshToken: getFromLocalStorage<string | null>("refresh_token"),
+    language: getFromLocalStorage("language", "uz"),
 };
 
 const authSlice = createSlice({
@@ -71,7 +71,6 @@ const authSlice = createSlice({
 export const { setCredentials, logOut, changeLanguage } = authSlice.actions;
 export default authSlice.reducer;
 
-// Selectors
 export const selectCurrentUserData = (state: { auth: AuthState }) =>
     state.auth.userData;
 export const selectCurrentAccessToken = (state: { auth: AuthState }) =>

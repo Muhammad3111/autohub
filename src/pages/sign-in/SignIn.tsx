@@ -12,7 +12,6 @@ import {
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../features/auth/authSlice";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { getFromLocalStorage } from "../../hooks/useGetFromLocalStorage";
 
 type LoginInput = {
     username: string;
@@ -39,16 +38,7 @@ const SignIn = () => {
             .unwrap()
             .then((res) => {
                 if (res.access) {
-                    dispatch(
-                        setCredentials({
-                            accessToken: res.access,
-                            refreshToken: res.refresh,
-                        })
-                    );
-
-                    let accessToken = getFromLocalStorage("accessToken", null);
-
-                    detailTrigger({ token: accessToken })
+                    detailTrigger({ token: res.access })
                         .unwrap()
                         .then((authData) => {
                             if (authData) {
@@ -56,6 +46,7 @@ const SignIn = () => {
                                     "Kirish muvaffaqqiyatli bajarildi!"
                                 );
                                 reset();
+
                                 dispatch(
                                     setCredentials({
                                         accessToken: res.access,
