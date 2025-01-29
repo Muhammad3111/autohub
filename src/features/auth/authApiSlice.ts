@@ -39,20 +39,12 @@ export const authApi = apiSlice.injectEndpoints({
             invalidatesTags: ["AUTH"],
         }),
         authDetail: builder.query<null, { token: string | null }>({
-            query: ({ token = "" }) => ({
+            query: ({ token }) => ({
                 url: "/auth/details",
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-            }),
-            providesTags: ["AUTH"],
-        }),
-
-        getAccessToken: builder.query({
-            query: () => ({
-                url: "/auth/access",
-                method: "GET",
             }),
             providesTags: ["AUTH"],
         }),

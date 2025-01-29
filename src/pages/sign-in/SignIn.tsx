@@ -37,15 +37,16 @@ const SignIn = () => {
         await login(data)
             .unwrap()
             .then((res) => {
-                toast.success("Kirish muvaffaqqiyatli bajarildi!");
-                reset();
                 if (res.access) {
-                    console.log(res);
-
                     detailTrigger({ token: res.access })
                         .unwrap()
                         .then((authData) => {
                             if (authData) {
+                                toast.success(
+                                    "Kirish muvaffaqqiyatli bajarildi!"
+                                );
+                                reset();
+
                                 dispatch(
                                     setCredentials({
                                         accessToken: res.access,
@@ -53,10 +54,12 @@ const SignIn = () => {
                                         userData: authData,
                                     })
                                 );
+                                navigate("/");
                             }
                         });
+                } else {
+                    console.log(res);
                 }
-                navigate("/");
             })
             .catch((err) => {
                 toast.error(err.data.detail);

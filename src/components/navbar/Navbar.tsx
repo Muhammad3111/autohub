@@ -1,8 +1,11 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FiUser } from "react-icons/fi";
-import { selectCurrentUserData } from "../../features/auth/authSlice";
-import { useSelector } from "react-redux";
+import { selectCurrentAccessToken } from "../../features/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 import Language from "./Language";
+import { useEffect } from "react";
+import { useLazyAuthDetailQuery } from "../../features/auth/authApiSlice";
+import Loading from "../loading/Loading";
 
 type NavLinkType = {
     name: string;
@@ -11,8 +14,16 @@ type NavLinkType = {
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const userData = useSelector(selectCurrentUserData);
+    const token = useSelector(selectCurrentAccessToken);
+    const [detailTrigger, { data: userData, isLoading }]: any =
+        useLazyAuthDetailQuery();
+
     const { pathname } = useLocation();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        detailTrigger({ token: token });
+    }, [userData, token, dispatch, detailTrigger]);
 
     const navLinks: NavLinkType[] = [
         {
@@ -47,6 +58,7 @@ const Navbar = () => {
 
     return (
         <div className="sticky top-0 left-0 z-20">
+            {isLoading && <Loading />}
             <div className="w-full h-20 bg-white flex items-center justify-between px-10">
                 <Link to={"/"} className="text-2xl font-semibold">
                     <p>Autohub</p>

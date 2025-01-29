@@ -1,5 +1,4 @@
 import { useLocation } from "react-router-dom";
-import GlobalLoading from "./components/loading/GlobalLoading";
 import Navbar from "./components/navbar/Navbar";
 import ScrollToTop from "./components/scroll-top/ScrollTop";
 import { Slide, ToastContainer } from "react-toastify";
@@ -12,7 +11,6 @@ function App() {
 
     return (
         <div>
-            <GlobalLoading />
             {!isAdminPath && <Navbar />}
             <ScrollToTop />
             <ToastContainer

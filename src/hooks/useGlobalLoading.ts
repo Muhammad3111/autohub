@@ -8,10 +8,13 @@ const useGlobalLoading = () => {
 
         if (!api?.queries) return false;
 
-        return Object.values(api.queries).some((query) => {
-            const status = query?.status;
-            return status === QueryStatus.pending;
-        });
+        for (let query of Object.values(api.queries)) {
+            if (query?.status === QueryStatus.pending) {
+                return true;
+            }
+        }
+
+        return false;
     });
 
     return isLoading;
