@@ -35,7 +35,7 @@ export default function Filter({ filters, setFilters }: FilterProps) {
           placeholder="Misol: Tucson"
           type="text"
           value={filters.name_uz}
-          className="w-full py-2 text-base px-4 rounded-md focus:outline-none border"
+          className="w-full py-2 text-base px-4 focus:outline-none border"
           onChange={handleChange}
         />
       </label>
@@ -45,7 +45,7 @@ export default function Filter({ filters, setFilters }: FilterProps) {
           id="brand"
           placeholder="Misol: Hyundai"
           type="text"
-          className="w-full py-2 text-base px-4 rounded-md focus:outline-none border"
+          className="w-full py-2 text-base px-4 focus:outline-none border"
           value={filters.brand}
           onChange={handleChange}
         />
@@ -56,7 +56,7 @@ export default function Filter({ filters, setFilters }: FilterProps) {
           id="model"
           placeholder="Misol: Crossover"
           type="text"
-          className="w-full py-2 text-base px-4 rounded-md focus:outline-none border"
+          className="w-full py-2 text-base px-4 focus:outline-none border"
           value={filters.model}
           onChange={handleChange}
         />
@@ -68,7 +68,7 @@ export default function Filter({ filters, setFilters }: FilterProps) {
           type="range"
           min="0"
           max="100000"
-          className="w-full py-2 text-base px-4 rounded-md focus:outline-none border"
+          className="w-full py-2 text-base focus:outline-none border"
           value={filters.price}
           onChange={handleChange}
         />
