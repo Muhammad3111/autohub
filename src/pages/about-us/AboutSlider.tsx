@@ -12,64 +12,64 @@ import Slide4 from "../../assets/our-partner-bmw.png";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const AboutSlider = () => {
-    const descriptions = [
-        "Morris Garages",
-        "Tesla",
-        "Isuzu",
-        "BMW",
-        "Morris Garages",
-        "Isuzu",
-    ];
+  const descriptions = [
+    "Morris Garages",
+    "Tesla",
+    "Isuzu",
+    "BMW",
+    "Morris Garages",
+    "Isuzu",
+  ];
 
-    return (
-        <div className="relative w-full max-w-full mx-auto">
-            <button
-                className="absolute -left-16 z-10 p-3 bg-gray-300 rounded-full -translate-y-1/2 top-1/2"
-                id="prevButton"
-            >
-                <FaChevronLeft size={20} />
-            </button>
+  return (
+    <div className="relative max-w-full mx-auto">
+      <button
+        className="absolute -left-16 z-10 p-3 bg-gray-300 rounded-full -translate-y-1/2 top-1/2"
+        id="prevButton"
+      >
+        <FaChevronLeft size={20} />
+      </button>
 
-            <div className="w-full">
-                <Swiper
-                    spaceBetween={30}
-                    slidesPerView={4}
-                    navigation={{
-                        nextEl: "#nextButton",
-                        prevEl: "#prevButton",
-                    }}
-                    modules={[Autoplay, Navigation]}
-                    loop={true}
-                    className="mySwiper"
-                >
-                    {[Slide1, Slide2, Slide3, Slide4, Slide1, Slide3].map(
-                        (slide, index) => (
-                            <SwiperSlide key={index}>
-                                <div className="relative bg-white my-2 border-2 w-full h-[250px] flex items-center justify-center rounded cursor-pointer group hover:bg-black hover:bg-opacity-20 duration-150">
-                                    <img
-                                        src={slide}
-                                        alt={`slide ${index + 1}`}
-                                        width={150}
-                                        className="object-contain"
-                                    />
-                                    <div className="absolute bottom-0 left-0 right-0 bg-opacity-60 text-white text-3xl uppercase font-semibold text-center p-2 translate-y-full group-hover:bottom-1/2 group-hover:translate-y-1/2 duration-300">
-                                        {descriptions[index]}
-                                    </div>
-                                </div>
-                            </SwiperSlide>
-                        )
-                    )}
-                </Swiper>
-            </div>
+      <div className="w-full">
+        <Swiper
+          spaceBetween={30}
+          slidesPerView={5}
+          navigation={{
+            nextEl: "#nextButton",
+            prevEl: "#prevButton",
+          }}
+          modules={[Autoplay, Navigation]}
+          loop={true}
+          className="mySwiper"
+        >
+          {[Slide1, Slide2, Slide3, Slide4, Slide1, Slide3].map(
+            (slide, index) => (
+              <SwiperSlide key={index}>
+                <div className="relative bg-white my-2 border-2 w-full h-[200px] flex items-center justify-center rounded cursor-pointer group hover:bg-black hover:bg-opacity-20 duration-150">
+                  <img
+                    src={slide}
+                    alt={`slide ${index + 1}`}
+                    width={120}
+                    className="object-contain"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-opacity-60 text-white text-3xl uppercase font-semibold text-center p-2 translate-y-full group-hover:bottom-1/2 group-hover:translate-y-1/2 duration-300">
+                    {descriptions[index]}
+                  </div>
+                </div>
+              </SwiperSlide>
+            )
+          )}
+        </Swiper>
+      </div>
 
-            <button
-                className="absolute -right-16 z-10 p-3 bg-gray-300 rounded-full -translate-y-1/2 top-1/2"
-                id="nextButton"
-            >
-                <FaChevronRight size={20} />
-            </button>
-        </div>
-    );
+      <button
+        className="absolute -right-16 z-10 p-3 bg-gray-300 rounded-full -translate-y-1/2 top-1/2"
+        id="nextButton"
+      >
+        <FaChevronRight size={20} />
+      </button>
+    </div>
+  );
 };
 
 export default AboutSlider;
