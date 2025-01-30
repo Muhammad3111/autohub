@@ -44,6 +44,7 @@ const OtpForm: React.FC<OtpFormProps> = ({
                                         accessToken: res.token.access,
                                         refreshToken: res.token.refresh,
                                         userData: authData,
+                                        isLogin: true,
                                     })
                                 );
                             }
