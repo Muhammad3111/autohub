@@ -1,7 +1,10 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FiUser } from "react-icons/fi";
-import { selectCurrentAccessToken } from "../../features/auth/authSlice";
-import { useDispatch, useSelector } from "react-redux";
+import {
+    selectCurrentAccessToken,
+    selectCurrentIsLogin,
+} from "../../features/auth/authSlice";
+import { useSelector } from "react-redux";
 import Language from "./Language";
 import { useEffect } from "react";
 import { useLazyAuthDetailQuery } from "../../features/auth/authApiSlice";
@@ -15,15 +18,15 @@ type NavLinkType = {
 const Navbar = () => {
     const navigate = useNavigate();
     const token = useSelector(selectCurrentAccessToken);
+    const isLogin = useSelector(selectCurrentIsLogin);
     const [detailTrigger, { data: userData, isLoading }]: any =
         useLazyAuthDetailQuery();
 
     const { pathname } = useLocation();
-    const dispatch = useDispatch();
 
     useEffect(() => {
         detailTrigger({ token: token });
-    }, [userData, token, dispatch, detailTrigger]);
+    }, [userData, token, isLogin]);
 
     const navLinks: NavLinkType[] = [
         {
@@ -96,7 +99,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-6">
                     <Language />
 
-                    {!userData && (
+                    {!isLogin && (
                         <button
                             onClick={() => navigate("/sign-in")}
                             className="flex items-center gap-2 rounded-full font-medium"
@@ -106,7 +109,7 @@ const Navbar = () => {
                         </button>
                     )}
 
-                    {userData && (
+                    {userData && isLogin && (
                         <button
                             onClick={() => navigate("/profile")}
                             className="text-xl font-bold"

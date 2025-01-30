@@ -5,9 +5,9 @@ const SearchData = ({ searchValue }: { searchValue: string }) => {
     const [search, setSearch] = useState(searchValue);
 
     return (
-        <div className="flex gap-10 pt-5">
+        <div className="flex gap-10 pt-5 px-10">
             {/* sidebar */}
-            <div className="w-[300px] h-[400px] bg-white sticky left-0 top-5"></div>
+            <div className="w-[300px] h-[400px] bg-white sticky left-0 top-[100px] border-2"></div>
 
             {/* search bar */}
 

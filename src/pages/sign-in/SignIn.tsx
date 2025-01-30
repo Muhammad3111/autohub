@@ -52,6 +52,7 @@ const SignIn = () => {
                                         accessToken: res.access,
                                         refreshToken: res.refresh,
                                         userData: authData,
+                                        isLogin: true,
                                     })
                                 );
                                 navigate("/");
