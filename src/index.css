@@ -8,11 +8,7 @@ html,
 body {
     font-family: "Outfit", serif;
     scroll-behavior: smooth;
-    background-color: #eeeeee;
-}
-
-.line {
-    background: radial-gradient(#ff0000 10%, #000 100%);
+    background-color: #eee;
 }
 
 .footer__link:hover {
@@ -23,10 +19,12 @@ body {
     height: 6px;
     width: 5px;
 }
+
 .scrollbar-thin::-webkit-scrollbar-thumb {
     background: #9ca3af;
     border-radius: 10px;
 }
+
 .scrollbar-thin::-webkit-scrollbar-track {
     background: #e5e7eb;
 }

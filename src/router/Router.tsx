@@ -39,11 +39,11 @@ import Profile from "../pages/profile/Profile";
 // Layouts
 import Layout from "../layout/Layout";
 import { useSelector } from "react-redux";
-import { selectCurrentAccessToken } from "../features/auth/authSlice";
+import { selectCurrentIsLogin } from "../features/auth/authSlice";
 import CarId from "../pages/cars/id/CarId";
 
 const Router = () => {
-    const userToken = useSelector(selectCurrentAccessToken);
+    const isLogin = useSelector(selectCurrentIsLogin);
 
     return (
         <Routes>
@@ -60,11 +60,11 @@ const Router = () => {
             <Route path="/search" element={<Search />} />
             <Route
                 path="/sign-in"
-                element={userToken ? <Navigate to="/" replace /> : <SignIn />}
+                element={isLogin ? <Navigate to="/" replace /> : <SignIn />}
             />
             <Route
                 path="/sign-up"
-                element={userToken ? <Navigate to="/" replace /> : <SignUp />}
+                element={isLogin ? <Navigate to="/" replace /> : <SignUp />}
             />
 
             <Route

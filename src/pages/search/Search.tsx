@@ -1,6 +1,5 @@
 import { useLocation } from "react-router-dom";
 import EmptySearch from "./EmptySearch";
-import Footer from "../../components/footer/Footer";
 import SearchData from "./SearchData";
 
 const SearchPage = () => {
@@ -16,7 +15,6 @@ const SearchPage = () => {
             ) : (
                 <SearchData searchValue={query || ""} />
             )}
-            <Footer />
         </div>
     );
 };
