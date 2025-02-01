@@ -6,7 +6,7 @@ type UrlsData = {
   page: number;
   limit: number;
   total_pages: number;
-  items: [];
+  items: SpareParts[];
 };
 
 export const carsApi = apiSlice.injectEndpoints({

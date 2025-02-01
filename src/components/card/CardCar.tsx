@@ -32,12 +32,12 @@ const CardCar = ({ vehicle }: Props) => {
       </button>
       <div>
         <img
-          src={vehicle.cover_image}
+          src={`http://89.223.126.64:8080/api/${vehicle.cover_image}`}
           alt={vehicle.specifics[0].name_uz || "car-image.png"}
           className="w-full h-60 object-cover"
         />
       </div>
-      <div className="p-4 flex flex-col gap-4 hover:bg-primary hover:text-white">
+      <div className="p-4 flex flex-col gap-4 hover:bg-primary hover:text-white h-full">
         <span className="bg-green-600/20 px-2 py-1 rounded-md text-center text-sm text-black w-max group-hover:bg-white">
           {vehicle.specifics[0].brand.name}
         </span>
@@ -50,7 +50,7 @@ const CardCar = ({ vehicle }: Props) => {
             {vehicle.specifics[0].currency === "USD" ? "$" : "UZS"}
           </strong>
         </div>
-        <div className="border-y-2 py-4 flex flex-col gap-2">
+        <div className="border-y-2 py-4 flex flex-col gap-2 h-32">
           <p className="text-sm text-gray-500 line-clamp-3 group-hover:text-white">
             {vehicle.specifics[0].description_uz}
           </p>

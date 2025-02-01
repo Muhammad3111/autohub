@@ -6,6 +6,7 @@ import CImage from "../../assets/car-category.png";
 import AboutSlider from "../about-us/AboutSlider";
 import CardCar from "../../components/card/CardCar";
 import { useGetCarsQuery } from "../../features/cars/carSlice";
+import Button from "../../utility/button/Button";
 
 type Collection = {
   id: number;
@@ -20,9 +21,9 @@ const Cars = () => {
     model: "",
     price: 0,
   });
-  const { data: cars } = useGetCarsQuery({ page: 1 });
+  const { data: carsData } = useGetCarsQuery({ page: 1 });
   const collections: Collection[] = data.collection;
-
+  const cars: CarObject[] = carsData?.items || [];
   return (
     <div>
       <Header title="Avtomobillar" />
@@ -32,7 +33,7 @@ const Cars = () => {
         </div>
         <div className="flex flex-col gap-4 p-10 bg-white">
           <h1 className="text-4xl font-semibold text-center">
-            Avtomobil klassifikatsiyasi:
+            Avtomobillar:
             <span className="text-primary"> Korpus (Kuzov) turlari</span>
           </h1>
           <div className="grid grid-cols-6 gap-4 ">
@@ -59,6 +60,9 @@ const Cars = () => {
           <div className="px-20">
             <AboutSlider />
           </div>
+          <div className="col-span-full flex justify-center">
+            <Button className="px-4">Barcha brendlarni ko'rish</Button>
+          </div>
         </div>
         <div className="flex flex-col gap-4 p-10 bg-white">
           <h1 className="text-4xl font-semibold text-center">
@@ -66,9 +70,22 @@ const Cars = () => {
             <span className="text-primary">Avtomobillar</span>
           </h1>
           <div className="grid grid-cols-3 gap-4">
-            {cars?.items.slice(0, 6).map((car) => (
-              <CardCar key={car.id} vehicle={car} />
-            ))}
+            {cars?.length > 0 ? (
+              cars
+                .slice(0, 6)
+                .map((car) => <CardCar key={car.id} vehicle={car} />)
+            ) : (
+              <div className="col-span-full text-2xl font-semibold text-center py-10 bg-grey">
+                <h1 className="text-3xl font-normal text-primary">
+                  Ma'lumotlar topilmadi
+                </h1>
+              </div>
+            )}
+            {cars.length > 6 && (
+              <div className="col-span-full flex justify-center">
+                <Button className="px-4">Barcha bo'limlarni ko'rish</Button>
+              </div>
+            )}
           </div>
         </div>
       </div>

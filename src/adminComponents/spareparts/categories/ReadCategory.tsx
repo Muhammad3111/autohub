@@ -1,21 +1,18 @@
 import { MdOutlineEdit } from "react-icons/md";
-import {
-  Categories,
-  useGetCatsQuery,
-} from "../../../features/spare-parts/spare-categories";
+import { useGetSpareCatsQuery } from "../../../features/spare-parts/spare-categories";
 import DeleteCat from "./DeleteCat";
 import AddCategory from "./AddCategory";
 import { useState } from "react";
 import UpdateCategory from "./UpdateCat";
 
 export default function ReadCategory() {
-  const { data, isLoading } = useGetCatsQuery({});
-  const [updateCat, setUpdateCat] = useState<Categories | null>(null);
+  const { data, isLoading } = useGetSpareCatsQuery({});
+  const [updateCat, setUpdateCat] = useState<SpareCategories | null>(null);
   const [changeComponent, setChangeComponent] = useState<boolean>(false);
   if (isLoading) return <p>Loading...</p>;
-  const categories: Categories[] = data;
+  const categories: SpareCategories[] = data;
 
-  const changeComponentFn = (cat: Categories) => {
+  const changeComponentFn = (cat: SpareCategories) => {
     setUpdateCat(cat);
     setChangeComponent(true);
   };
@@ -24,7 +21,7 @@ export default function ReadCategory() {
     <div className="grid grid-cols-2 gap-4">
       {changeComponent ? (
         <UpdateCategory
-          id={updateCat?.id || ""}
+          id={updateCat?.id || null}
           title_uz={updateCat?.title_uz || ""}
           title_ru={updateCat?.title_ru}
           setChangeComponent={setChangeComponent}
@@ -64,7 +61,7 @@ export default function ReadCategory() {
                 >
                   <MdOutlineEdit className="text-lg" />
                 </button>
-                <DeleteCat id={cat.id} />
+                <DeleteCat id={cat.id || null} />
               </div>
             </div>
           ))}

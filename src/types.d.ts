@@ -1,10 +1,10 @@
-declare interface Image {
+declare type Image = {
   id: string;
   path: string;
   created_at: string;
-}
+};
 
-declare interface Property {
+declare type Property = {
   key_uz: string;
   key_ru: string;
   value_uz: string;
@@ -12,16 +12,16 @@ declare interface Property {
   id: string;
   created_at: string;
   updated_at: string;
-}
+};
 
-declare interface Brand {
+declare type Brand = {
   name: string;
   image: string;
   brand_type: string;
   id: number;
-}
+};
 
-declare interface Specifics {
+declare type Specifics = {
   name_uz: string;
   name_ru: string;
   brand_id: number;
@@ -39,9 +39,9 @@ declare interface Specifics {
   currency: string;
   id: string;
   brand: Brand;
-}
+};
 
-declare interface Measurements {
+declare type Measurements = {
   length: number;
   height: number;
   wheelbase: number;
@@ -55,9 +55,9 @@ declare interface Measurements {
   min_loading_weight: number;
   created_at: string;
   updated_at: string;
-}
+};
 
-declare interface CarObject {
+declare type CarObject = {
   model_file: string;
   cover_image: string;
   images: Image[];
@@ -69,4 +69,40 @@ declare interface CarObject {
   properties: Property[];
   specifics: Specifics[];
   measurements: Measurements[];
-}
+};
+
+declare type Image = {
+  id: string;
+  path: string;
+};
+
+declare type Vehicle = {
+  id: string;
+  name_uz: string;
+  name_ru: string;
+};
+
+declare type SpareParts = {
+  name_uz: string;
+  name_ru: string;
+  description_uz: string;
+  description_ru: string;
+  brand_id: number;
+  applicable_models: string[];
+  cover_image: string;
+  images: Image[];
+  category_id: number;
+  oem_code: string;
+  status: boolean;
+  price: number;
+  vehicle_id: string;
+  id: string;
+  rating: number;
+  vehicle: Vehicle;
+};
+
+declare type SpareCategories = {
+  title_uz: string;
+  title_ru?: string;
+  id: number | null | undefined;
+};

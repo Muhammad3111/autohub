@@ -1,8 +1,8 @@
 import { FaRegTrashCan } from "react-icons/fa6";
-import { useDeleteCatMutation } from "../../../features/spare-parts/spare-categories";
+import { useDeleteSpareCatMutation } from "../../../features/spare-parts/spare-categories";
 
-export default function DeleteCat({ id }: { id: string }) {
-  const [deleteCat] = useDeleteCatMutation();
+export default function DeleteCat({ id }: { id: number | null }) {
+  const [deleteCat] = useDeleteSpareCatMutation();
   return (
     <button
       onClick={() => deleteCat(id)}

@@ -1,8 +1,5 @@
 import { useForm } from "react-hook-form";
-import {
-  Categories,
-  useAddCatMutation,
-} from "../../../features/spare-parts/spare-categories";
+import { useAddSpareCatMutation } from "../../../features/spare-parts/spare-categories";
 import { toast } from "react-toastify";
 
 export default function AddCategory() {
@@ -11,8 +8,8 @@ export default function AddCategory() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Categories>();
-  const [addCat] = useAddCatMutation();
+  } = useForm<SpareCategories>();
+  const [addCat] = useAddSpareCatMutation();
 
   const onSubmit = handleSubmit(async (data) => {
     try {

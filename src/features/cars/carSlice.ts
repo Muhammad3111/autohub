@@ -65,7 +65,7 @@ export const carsApi = apiSlice.injectEndpoints({
 
     getCarById: builder.query({
       query: (id: string) => ({
-        url: `/vehicles/details/${id}`,
+        url: `/vehicles/filters/details/${id}`,
         method: "GET",
       }),
       providesTags: ["CAR"],

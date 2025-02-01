@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import { useUpdateCatMutation } from "../../../features/spare-parts/spare-categories";
+import { useUpdateSpareCatMutation } from "../../../features/spare-parts/spare-categories";
 import { toast } from "react-toastify";
 import React from "react";
 
 type Categories = {
-  id: string;
+  id: number | null;
   title_uz: string;
   title_ru?: string;
   setChangeComponent: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,7 +24,7 @@ export default function UpdateCategory({
   } = useForm<Categories>({
     defaultValues: { id, title_uz, title_ru },
   });
-  const [upadateCat] = useUpdateCatMutation();
+  const [upadateCat] = useUpdateSpareCatMutation();
 
   const onSubmit = handleSubmit(async (data) => {
     try {

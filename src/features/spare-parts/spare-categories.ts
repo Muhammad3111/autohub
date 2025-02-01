@@ -1,15 +1,9 @@
 import { apiSlice } from "../../app/api/apiSlice";
 
-export type Categories = {
-  id: string;
-  title_uz: string;
-  title_ru?: string;
-};
-
 export const spateCatApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    addCat: builder.mutation({
-      query: (carData: Categories) => ({
+    addSpareCat: builder.mutation({
+      query: (carData: SpareCategories) => ({
         url: "/commons/categories",
         method: "POST",
         body: carData,
@@ -17,7 +11,7 @@ export const spateCatApi = apiSlice.injectEndpoints({
       invalidatesTags: ["SPARE_CATEGORIES"],
     }),
 
-    getCats: builder.query({
+    getSpareCats: builder.query({
       query: () => ({
         url: "/commons/categories",
         method: "GET",
@@ -25,8 +19,14 @@ export const spateCatApi = apiSlice.injectEndpoints({
       providesTags: ["SPARE_CATEGORIES"],
     }),
 
-    updateCat: builder.mutation({
-      query: ({ id, catData }: { id: string; catData: Categories }) => ({
+    updateSpareCat: builder.mutation({
+      query: ({
+        id,
+        catData,
+      }: {
+        id: number | null;
+        catData: SpareCategories;
+      }) => ({
         url: `/commons/categories/${id}`,
         method: "PATCH",
         body: catData,
@@ -34,8 +34,8 @@ export const spateCatApi = apiSlice.injectEndpoints({
       invalidatesTags: ["SPARE_CATEGORIES"],
     }),
 
-    deleteCat: builder.mutation({
-      query: (id: string) => ({
+    deleteSpareCat: builder.mutation({
+      query: (id: number | null) => ({
         url: `/commons/categories/${id}`,
         method: "DELETE",
       }),
@@ -45,8 +45,8 @@ export const spateCatApi = apiSlice.injectEndpoints({
 });
 
 export const {
-  useAddCatMutation,
-  useGetCatsQuery,
-  useUpdateCatMutation,
-  useDeleteCatMutation,
+  useAddSpareCatMutation,
+  useGetSpareCatsQuery,
+  useUpdateSpareCatMutation,
+  useDeleteSpareCatMutation,
 } = spateCatApi;

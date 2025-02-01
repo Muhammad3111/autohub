@@ -5,7 +5,7 @@ import Modal from "../../utility/modal/Modal";
 import { toast } from "react-toastify";
 import { useAddSpareMutation } from "../../features/spare-parts/spare-parts";
 import { useGetCarsQuery } from "../../features/cars/carSlice";
-import { useGetCatsQuery } from "../../features/spare-parts/spare-categories";
+import { useGetSpareCatsQuery } from "../../features/spare-parts/spare-categories";
 import Select, { MultiValue } from "react-select";
 
 export type SpareFormInputs = {
@@ -30,12 +30,6 @@ type CatsProps = {
   title_ru: string;
 };
 
-type CarsProps = {
-  id: string;
-  name_uz: string;
-  name_ru: string;
-};
-
 type OptionType = {
   value: string;
   label: string;
@@ -49,7 +43,7 @@ export default function AddSpareParts() {
     reset,
     control,
   } = useForm<SpareFormInputs>();
-  const { data, isLoading } = useGetCatsQuery({});
+  const { data, isLoading } = useGetSpareCatsQuery({});
   const { data: vehicles } = useGetCarsQuery({ page: 1, limit: 10 });
   const [addSpare] = useAddSpareMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -96,9 +90,9 @@ export default function AddSpareParts() {
   };
 
   const categories: CatsProps[] = data || [];
-  const cars: CarsProps[] = vehicles?.vehicles || [];
+  const cars: CarObject[] = vehicles?.items || [];
   const options: OptionType[] = cars.map((car) => {
-    return { value: car.id, label: car.name_uz };
+    return { value: car.id, label: car.specifics[0].name_uz };
   });
 
   return (
@@ -206,7 +200,7 @@ export default function AddSpareParts() {
             >
               {cars.map((c) => (
                 <option key={c.id} value={c.id}>
-                  {c.name_uz}
+                  {c.specifics[0].name_uz}
                 </option>
               ))}
             </select>

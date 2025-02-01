@@ -1,43 +1,14 @@
 import { useState } from "react";
 import { useGetSparesQuery } from "../../features/spare-parts/spare-parts";
 
-type CatsProps = {
-  id: string;
-  title_uz: string;
-  title_ru: string;
-};
-
-type CarsProps = {
-  id: string;
-  name_uz: string;
-  name_ru: string;
-};
-
-export type SpareData = {
-  id: string;
-  name_uz: string;
-  name_ru?: string;
-  description_uz: string;
-  description_ru?: string;
-  brand: string;
-  applicable_models: CarsProps;
-  cover_image: string;
-  images: string[];
-  category_id: CatsProps;
-  oem_code: string;
-  status: boolean;
-  price: number;
-  vehicle_id: string;
-};
-
 const ReadParts = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const { data, isLoading } = useGetSparesQuery({});
 
-  const spareParts: SpareData[] = data?.items || [];
+  const spareParts: SpareParts[] = data?.items || [];
   const filteredData = spareParts.filter((item) =>
-    [item.name_uz, item.brand].some((field) =>
+    [item.name_uz].some((field) =>
       field.toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
@@ -88,7 +59,7 @@ const ReadParts = () => {
                     />
                   </td>
                   <td className="px-4 py-2">{item.name_uz}</td>
-                  <td className="px-4 py-2 text-center">{item.brand}</td>
+                  <td className="px-4 py-2 text-center">{item.brand_id}</td>
                   <td className="px-4 py-2 text-center">{item.oem_code}</td>
                   <td className="px-4 py-2 text-center">
                     {item.description_uz}
