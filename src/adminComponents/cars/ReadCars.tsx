@@ -8,53 +8,16 @@ import DeleteCar from "./DeleteCar";
 import { MdOutlineEdit } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
-type Image = {
-  id: string;
-  path: string;
-  created_at: string;
-};
-
-type Property = {
-  key_uz: string | null;
-  key_ru: string | null;
-  value_uz: string | null;
-  value_ru: string | null;
-};
-
-export type Vehicle = {
-  brand: string;
-  name_uz: string;
-  name_ru: string;
-  model: string;
-  year: number;
-  transmission: string;
-  vehicle_type: string;
-  price: number;
-  engine_type: string;
-  drive_type: string;
-  color_uz: string;
-  color_ru: string;
-  cover_image: string | null;
-  images: Image[];
-  properties: Property[];
-  description_uz: string;
-  description_ru: string;
-  id: string;
-  view_count: number;
-  created_at: string;
-  updated_at: string;
-};
-
 export default function ReadCars() {
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
   const perPage = 12; // 4 ustunda ko'rsatiladi
-  const [filteredCars, setFilteredCars] = useState<Vehicle[]>([]);
+  const [filteredCars, setFilteredCars] = useState<CarObject[]>([]);
   const { data, isLoading } = useGetCarsQuery({ page, limit: perPage });
   const navigate = useNavigate();
   useEffect(() => {
-    if (data && data.vehicles) {
-      const filtered = data.vehicles.filter((car: any) =>
+    if (data && data.items) {
+      const filtered = data.items.filter((car: any) =>
         car.name_uz.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setFilteredCars(filtered);
@@ -62,7 +25,7 @@ export default function ReadCars() {
   }, [data, searchQuery]);
 
   const handleNextPage = () => {
-    if (data && page < data.total_pages) {
+    if (data && page < data.metadata.total_pages) {
       setPage((prev) => prev + 1);
     }
   };
@@ -102,7 +65,7 @@ export default function ReadCars() {
                     src={`http://89.223.126.64:8080${
                       car.cover_image || "placeholder.jpg"
                     }`}
-                    alt={car.name_uz}
+                    alt={car.specifics[0].name_uz}
                     className="w-full h-48 object-cover"
                   />
                   <button
@@ -115,37 +78,45 @@ export default function ReadCars() {
                 </div>
                 <div className="flex flex-col items-start gap-6 p-4">
                   <div className="flex items-start justify-between w-full">
-                    <h1 className="text-lg font-bold">{car.name_uz}</h1>
-                    <p className="text-lg font-bold">{car.price} $</p>
+                    <h1 className="text-lg font-bold">
+                      {car.specifics[0].name_uz}
+                    </h1>
+                    <p className="text-lg font-bold">
+                      {car.specifics[0].price} $
+                    </p>
                   </div>
                   <ul className="flex flex-wrap gap-2">
                     <li className="p-1.5 border rounded-md shadow-md text-sm">
-                      Yil: {car.year}
+                      Yil: {car.specifics[0].year}
                     </li>
                     <li className="p-1.5 border rounded-md shadow-md text-sm">
-                      Motor: {car.engine_type}
+                      Motor: {car.specifics[0].engine_type}
                     </li>
                     <li className="p-1.5 border rounded-md shadow-md text-sm">
-                      Transmissiya: {car.transmission}
+                      Transmissiya: {car.specifics[0].transmission}
                     </li>
                     <li className="p-1.5 border rounded-md shadow-md text-sm">
-                      Rang: {car.color_uz}
+                      Rang: {car.specifics[0].color_uz}
                     </li>
                   </ul>
                   <div className="flex justify-between items-center w-full">
                     <div className="flex items-center gap-2">
                       <IoSpeedometerOutline className="text-xl" />
-                      <p className="text-base font-normal">{car.drive_type}</p>
+                      <p className="text-base font-normal">
+                        {car.specifics[0].drive_type}
+                      </p>
                     </div>
                     <div className="flex items-center gap-2">
                       <TbPropeller className="text-xl" />
                       <p className="text-base font-normal">
-                        {car.transmission}
+                        {car.specifics[0].transmission}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
                       <PiGasCan className="text-xl" />
-                      <p className="text-base font-normal">{car.engine_type}</p>
+                      <p className="text-base font-normal">
+                        {car.specifics[0].engine_type}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -172,11 +143,11 @@ export default function ReadCars() {
           Previous
         </button>
         <p>
-          Page {page} of {data?.total_pages || 1}
+          Page {page} of {data?.metadata.total_pages || 1}
         </p>
         <button
           onClick={handleNextPage}
-          disabled={data && page >= data.total_pages}
+          disabled={data && page >= data.metadata.total_pages}
           className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
         >
           Next

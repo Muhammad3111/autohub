@@ -4,13 +4,7 @@ import { useState } from "react";
 import Modal from "../../utility/modal/Modal";
 import { toast } from "react-toastify";
 import { useGetCarsQuery } from "../../features/cars/carSlice";
-import { Blogs, useAddBlogMutation } from "../../features/blogs/blogs";
-
-type CarsProps = {
-  id: string;
-  name_uz: string;
-  name_ru: string;
-};
+import { useAddBlogMutation } from "../../features/blogs/blogs";
 
 export default function AddBlog() {
   const {
@@ -62,8 +56,8 @@ export default function AddBlog() {
       console.error(error);
     }
   };
-
-  const cars: CarsProps[] = vehicles?.vehicles || [];
+  
+  const cars: CarObject[] = vehicles?.items || [];
 
   return (
     <div className="flex flex-col gap-4 p-6">
@@ -146,7 +140,9 @@ export default function AddBlog() {
               {isLoading ? (
                 <option>Loading...</option>
               ) : (
-                cars.map((c) => <option value={c.id}>{c.name_uz}</option>)
+                cars.map((c) => (
+                  <option value={c.id}>{c.specifics[0].name_uz}</option>
+                ))
               )}
             </select>
             {errors.vehicle_id && (

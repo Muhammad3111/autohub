@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
+import {} from "../../../features/spare-parts/spare-categories";
+import { toast } from "react-toastify";
 import {
   Categories,
   useAddCatMutation,
-} from "../../../features/spare-parts/spare-categories";
-import { toast } from "react-toastify";
+} from "../../../features/blogs/blog-cat";
 
 export default function AddBlogCat() {
   const {

@@ -121,7 +121,7 @@ declare type Blogs = {
   video_link: string;
   category: string;
   vehicle_id: string | null;
-  images: ArticleImage[];
+  images: ArticleImage[] | string[];
   cover_image: string | null;
   id: string;
   like_count: number | null;
@@ -133,4 +133,26 @@ declare type Collection = {
   id: number;
   title: string;
   icon: string;
+};
+
+declare type AuthState = {
+  userData?: UserDataType | null;
+  accessToken?: string | null;
+  refreshToken?: string | null;
+  language?: string | null;
+  isLogin?: boolean | null;
+};
+
+declare type UserDataType = {
+  phone_number: string;
+  role: string;
+  username: string;
+  name: string;
+};
+
+declare type InputState = {
+  name: string;
+  surname: string;
+  phoneNumber: string;
+  email: string;
 };

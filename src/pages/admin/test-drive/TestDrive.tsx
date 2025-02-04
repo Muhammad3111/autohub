@@ -1,7 +1,3 @@
-import React from 'react'
-
 export default function TestDrive() {
-  return (
-    <div>TestDrive</div>
-  )
+  return <div>TestDrive</div>;
 }
