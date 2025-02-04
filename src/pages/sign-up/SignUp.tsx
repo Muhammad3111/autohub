@@ -9,7 +9,7 @@ import Header from "../../components/header/Header";
 import SwitchRole from "./SwitchRole";
 import { useRegisterMutation } from "../../features/auth/authApiSlice";
 import OtpForm from "./OtpForm";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 type RegisterInput = {
     username: string;
@@ -30,7 +30,6 @@ const SignUp = () => {
         handleSubmit,
         formState: { errors },
         watch,
-        control,
     } = useForm<RegisterInput>({
         defaultValues: {
             role: "user",
@@ -85,12 +84,11 @@ const SignUp = () => {
                                 <input
                                     type="text"
                                     placeholder="Foydalanuvchi nomi"
-                                    className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
-                                        errors.username && "border-red-500"
-                                    }`}
                                     {...register("username", {
                                         required: "Foydalanuvchi nomi majburiy",
                                     })}
+                                    className={`custom-input`}
+                                    autoComplete="off"
                                 />
                             </div>
                             {errors.username && (
@@ -107,16 +105,11 @@ const SignUp = () => {
                                 <input
                                     type={isShow ? "text" : "password"}
                                     placeholder="Parol"
-                                    className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
-                                        errors.password && "border-red-500"
-                                    } ${
-                                        watch("password") !==
-                                            watch("confirmPassword") &&
-                                        "border-red-500"
-                                    }`}
+                                    className={`custom-input`}
                                     {...register("password", {
                                         required: "Parol majburiy",
                                     })}
+                                    autoComplete="off"
                                 />
 
                                 <button
@@ -142,14 +135,7 @@ const SignUp = () => {
                                 <input
                                     type={isShowConfirm ? "text" : "password"}
                                     placeholder="Parolni tasdiqlash"
-                                    className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
-                                        errors.confirmPassword &&
-                                        "border-red-500"
-                                    } ${
-                                        watch("password") !==
-                                            watch("confirmPassword") &&
-                                        "border-red-500"
-                                    }`}
+                                    className={`custom-input`}
                                     {...register("confirmPassword", {
                                         required: "Parolni takrorlang",
                                     })}
@@ -178,33 +164,14 @@ const SignUp = () => {
                                 <div className="absolute left-2">
                                     <MdCall className="text-xl" />
                                 </div>
-                                <Controller
-                                    name="phone_number"
-                                    control={control}
-                                    rules={{
+                                <PatternFormat
+                                    format="+998 ## ### ## ##"
+                                    mask=" "
+                                    placeholder="+998 90 123 45 67"
+                                    className={`custom-input`}
+                                    {...register("phone_number", {
                                         required: "Telefon raqam majburiy",
-                                        pattern: {
-                                            value: /^\+998 \d{2} \d{3} \d{2} \d{2}$/,
-                                            message: "Telefon raqam noto'g'ri",
-                                        },
-                                    }}
-                                    render={({ field }) => (
-                                        <PatternFormat
-                                            {...field}
-                                            format="+998 ## ### ## ##"
-                                            mask=" "
-                                            placeholder="+998 90 123 45 67"
-                                            className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
-                                                errors.phone_number &&
-                                                "border-red-500"
-                                            }`}
-                                            onValueChange={(values) => {
-                                                field.onChange(
-                                                    values.formattedValue
-                                                ); // Faqat formatlangan qiymatni saqlaymiz
-                                            }}
-                                        />
-                                    )}
+                                    })}
                                 />
                             </div>
 
@@ -219,7 +186,7 @@ const SignUp = () => {
 
                         <button
                             type="submit"
-                            className="w-full font-medium bg-primary text-white rounded h-10"
+                            className="w-full font-medium bg-primary hover:bg-primary-hover duration-150 text-white rounded h-10"
                         >
                             Ro'yxatdan o'tish
                         </button>

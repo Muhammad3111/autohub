@@ -8,7 +8,7 @@ type SwitchRoleProps = {
 const SwitchRole: React.FC<SwitchRoleProps> = ({ role, setRole }) => {
     return (
         <div className="flex justify-center items-center mb-4">
-            <ul className="flex relative p-1 bg-gray-200 rounded-sm w-full">
+            <ul className="flex gap-1 relative p-1 bg-gray-200 rounded-sm w-full">
                 <li className="w-full">
                     <input
                         type="radio"
@@ -23,7 +23,7 @@ const SwitchRole: React.FC<SwitchRoleProps> = ({ role, setRole }) => {
                         className={`flex items-center justify-center w-full h-10 font-semibold rounded-sm cursor-pointer ${
                             role === "user"
                                 ? "text-white bg-primary"
-                                : "text-gray-700"
+                                : "text-gray-700 bg-white"
                         }`}
                     >
                         Foydalanuvchi
@@ -43,7 +43,7 @@ const SwitchRole: React.FC<SwitchRoleProps> = ({ role, setRole }) => {
                         className={`flex items-center justify-center w-full h-10 font-semibold rounded-sm cursor-pointer ${
                             role === "dealer"
                                 ? "text-white bg-primary"
-                                : "text-gray-700"
+                                : "text-gray-700 bg-white"
                         }`}
                     >
                         Diller
