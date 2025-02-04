@@ -22,7 +22,10 @@ const CardCar = ({ vehicle }: Props) => {
       {/* Save Button */}
       <button
         className="absolute right-6 top-6 p-1 bg-gray-300 border-2 border-gray-400 rounded-full"
-        onClick={toggleSave}
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleSave();
+        }}
       >
         {isSaved ? (
           <AiFillHeart className="text-xl text-red-500 " />
@@ -37,15 +40,15 @@ const CardCar = ({ vehicle }: Props) => {
           className="w-full h-60 object-cover"
         />
       </div>
-      <div className="p-4 flex flex-col gap-4 hover:bg-primary hover:text-white h-full">
+      <div className="p-4 flex flex-col gap-4 group-hover:bg-primary group-hover:text-white h-full">
         <span className="bg-green-600/20 px-2 py-1 rounded-md text-center text-sm text-black w-max group-hover:bg-white">
           {vehicle.specifics[0].brand.name}
         </span>
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-semibold truncate">
+        <div className="flex items-center">
+          <h1 className="text-2xl font-semibold truncate basis-1/2">
             {vehicle.specifics[0].name_uz}
           </h1>
-          <strong className="text-lg font-semibold">
+          <strong className="text-lg font-semibold basis-1/2 inline-flex justify-end">
             {Number(vehicle.specifics[0].price).toLocaleString()}
             {vehicle.specifics[0].currency === "USD" ? "$" : "UZS"}
           </strong>

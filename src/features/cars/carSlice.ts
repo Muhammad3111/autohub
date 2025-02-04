@@ -22,14 +22,11 @@ type CarData = {
 };
 
 type UrlsData = {
-  total_count: number;
-  current_page: number;
-  limit: number;
-  total_pages: number;
-  name_uz?: string;
-  brand?: string;
-  model?: string;
-  price?: number;
+  metadata: {
+    total_count: number;
+    current_page: number;
+    total_pages: number;
+  };
   items: CarObject[];
 };
 

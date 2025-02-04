@@ -1,41 +1,41 @@
+import { useState } from "react";
 import Header from "../../components/header/Header";
-import { useEffect, useState } from "react";
-import Pagination from "../../utility/pagination/Pagination";
 import BlogCard from "../../components/blog/BlogCard";
 import { useGetBlogsQuery } from "../../features/blogs/blogs";
+import BlogSidebar from "../../components/blog/BlogSidebar";
+import Pagination from "../../utility/pagination/Pagination";
 
 const SpareParts = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const { data } = useGetBlogsQuery({ page: currentPage });
-  useEffect(() => {
-    if (data?.total_pages) {
-      setTotalPages(data.total_pages); // Birinchi so‘rov amalga oshirilgandan keyin skip-ni true qilib qo‘yish
-    }
-  }, [data?.total_pages]);
+
+  const posts: Blogs[] = data?.items || [];
+  const totalPages = data?.metadata?.total_pages || 1;
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page); // Sahifani yangilaydi
+    setCurrentPage(page);
   };
 
   return (
     <div>
       <Header title="Yangiliklar" />
-      <div className="flex flex-col gap-4 my-container pt-10">
-        <div className="grid grid-cols-4 gap-4 py-6">
-          {data?.items.map((blog) => (
+      <div className="flex items-start gap-4 my-container p-10 bg-white">
+        <div className="grid grid-cols-1 basis-3/4">
+          {posts.map((blog) => (
             <BlogCard key={blog.id} blogs={blog} />
           ))}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
-      </div>
-      <div className="w-full">
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
+        <div className="basis-1/4 w-full">
+          <BlogSidebar blogs={posts} />
+        </div>
       </div>
     </div>
   );
 };
+
 export default SpareParts;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 interface PaginationProps {
   totalPages: number;
@@ -51,10 +51,11 @@ const Pagination: React.FC<PaginationProps> = ({
       {/* Oldingi tugma */}
       {currentRange > 0 && (
         <button
-          className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+          className="flex items-center gap-2 hover:text-primary duration-300 group"
           onClick={handlePrevious}
         >
-          &lt;
+          Avvalgi
+          <IoIosArrowBack className="text-xl text-black group-hover:text-primary duration-300" />{" "}
         </button>
       )}
 
@@ -65,9 +66,9 @@ const Pagination: React.FC<PaginationProps> = ({
             key={page}
             className={`px-3 py-1 rounded ${
               page === currentPage
-                ? "text-black rounded-full w-10 h-10 text-base border-2 border-black flex items-center justify-center"
-                : "bg-gray-200 text-black rounded-full w-10 h-10 text-base border-2 border-black flex items-center justify-center"
-            } hover:bg-gray-300`}
+                ? "text-black rounded-full w-10 h-10 text-base border-2 border-primary flex items-center justify-center"
+                : "text-black rounded-full w-10 h-10 text-base flex items-center justify-center border-2 border-transparent"
+            } hover:border-primary hover:border-2 duration-300`}
             onClick={() => handlePageClick(page)}
           >
             {page}
@@ -77,8 +78,12 @@ const Pagination: React.FC<PaginationProps> = ({
 
       {/* Keyingi tugma */}
       {endPage < totalPages && (
-        <button onClick={handleNext}>
-          <IoIosArrowForward className="text-xl text-black hover:text-primary duration-300" />
+        <button
+          onClick={handleNext}
+          className="flex items-center gap-2 hover:text-primary duration-300 group"
+        >
+          <IoIosArrowForward className="text-xl text-black group-hover:text-primary duration-300" />{" "}
+          Keyingi
         </button>
       )}
     </div>

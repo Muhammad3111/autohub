@@ -16,7 +16,7 @@ const SpareParts = () => {
   });
   const { data } = useGetSparesQuery({ page: 1 });
   const { data: spareCats } = useGetSpareCatsQuery({});
-
+  
   const spareParts: SpareParts[] = data?.items || [];
   const categories: SpareCategories[] = spareCats || [];
   return (
@@ -68,11 +68,11 @@ const SpareParts = () => {
             Eng reytingi baland{" "}
             <span className="text-primary">Ehtiyot qisimlar</span>
           </h1>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-4 gap-4">
             {spareParts.length > 0 ? (
-              spareParts.map((spare) => (
-                <SpareCard key={spare.id} spares={spare} />
-              ))
+              spareParts
+                .slice(0, 8)
+                .map((spare) => <SpareCard key={spare.id} spares={spare} />)
             ) : (
               <div className="col-span-full text-2xl font-semibold text-center py-10 bg-grey">
                 <h1 className="text-3xl font-normal text-primary">

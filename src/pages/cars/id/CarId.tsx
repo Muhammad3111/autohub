@@ -46,9 +46,7 @@ export default function CarId() {
             {car.specifics[0].name_uz}
           </h1>
           <div className="flex items-center gap-10">
-            <Button className="bg-black text-white px-4">
-              Apply for Test Driver
-            </Button>
+            <Button className="bg-black text-white px-4">Parametrs</Button>
             <h2 className="text-2xl font-bold text-primary">
               ${Number(car.specifics[0].price).toLocaleString()}
             </h2>
@@ -108,7 +106,7 @@ export default function CarId() {
           <div className="col-span-1 row-span-3 bg-white p-4 flex flex-col gap-4">
             <h1 className="text-2xl font-semibold">Vehicles details</h1>
             <div className="flex flex-col divide-y">
-              {car.measurements.map((item, index) => (
+              {car.measurements?.map((item, index) => (
                 <div
                   key={index}
                   className="flex items-center justify-between py-4"

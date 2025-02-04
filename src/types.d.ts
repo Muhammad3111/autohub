@@ -106,3 +106,31 @@ declare type SpareCategories = {
   title_ru?: string;
   id: number | null | undefined;
 };
+
+declare type ArticleImage = {
+  path: string;
+  article_id: string;
+  id: string;
+};
+
+declare type Blogs = {
+  title_uz: string;
+  title_ru: string;
+  content_uz: string;
+  content_ru: string;
+  video_link: string;
+  category: string;
+  vehicle_id: string | null;
+  images: ArticleImage[];
+  cover_image: string | null;
+  id: string;
+  like_count: number | null;
+  author_id: string;
+  view_count: number;
+};
+
+declare type Collection = {
+  id: number;
+  title: string;
+  icon: string;
+};

@@ -17,7 +17,7 @@ const CardCar = ({ spares }: Props) => {
 
   return (
     <div
-      onClick={() => navigate(`/cars/${spares.id}`)}
+      onClick={() => navigate(`/spare-parts/${spares.id}`)}
       className="w-full min-h-[400px] bg-white flex flex-col duration-300 justify-between group relative shadow-md hover:shadow-lg border-2 cursor-pointer hover:border-primary"
     >
       {/* Save Button */}
@@ -42,9 +42,11 @@ const CardCar = ({ spares }: Props) => {
         <span className="bg-green-600/20 px-2 py-1 rounded-md text-center text-sm text-black w-max group-hover:bg-white">
           {spares.oem_code}
         </span>
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-semibold truncate">{spares.name_uz}</h1>
-          <strong className="text-lg font-semibold">
+        <div className="flex items-center">
+          <h1 className="text-2xl font-semibold truncate basis-1/2">
+            {spares.name_uz}
+          </h1>
+          <strong className="text-lg font-semibold basis-1/2 inline-flex justify-end">
             {Number(spares.price).toLocaleString()}$
           </strong>
         </div>

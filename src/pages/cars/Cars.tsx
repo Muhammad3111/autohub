@@ -7,12 +7,7 @@ import AboutSlider from "../about-us/AboutSlider";
 import CardCar from "../../components/card/CardCar";
 import { useGetCarsQuery } from "../../features/cars/carSlice";
 import Button from "../../utility/button/Button";
-
-type Collection = {
-  id: number;
-  title: string;
-  icon: string;
-};
+import { useNavigate } from "react-router-dom";
 
 const Cars = () => {
   const [filters, setFilters] = useState({
@@ -21,7 +16,10 @@ const Cars = () => {
     model: "",
     price: 0,
   });
+
   const { data: carsData } = useGetCarsQuery({ page: 1 });
+  const navigate = useNavigate();
+
   const collections: Collection[] = data.collection;
   const cars: CarObject[] = carsData?.items || [];
   return (
@@ -40,7 +38,8 @@ const Cars = () => {
             {collections.map((c) => (
               <div
                 key={c.id}
-                className="flex flex-col items-center gap-2 col-span-1 shadow-md border bg-grey hover:border-red-500 duration-300 p-4"
+                className="flex flex-col items-center gap-2 col-span-1 shadow-md border bg-grey hover:border-red-500 duration-300 p-4 cursor-pointer"
+                onClick={() => navigate(`/cars/models/${c.title}`)}
               >
                 <img
                   src={c.icon || CImage}
@@ -69,10 +68,10 @@ const Cars = () => {
             Eng reytingi baland{" "}
             <span className="text-primary">Avtomobillar</span>
           </h1>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-4 gap-4">
             {cars?.length > 0 ? (
               cars
-                .slice(0, 6)
+                .slice(0, 8)
                 .map((car) => <CardCar key={car.id} vehicle={car} />)
             ) : (
               <div className="col-span-full text-2xl font-semibold text-center py-10 bg-grey">
@@ -83,7 +82,7 @@ const Cars = () => {
             )}
             {cars.length > 6 && (
               <div className="col-span-full flex justify-center">
-                <Button className="px-4">Barcha bo'limlarni ko'rish</Button>
+                <Button className="px-4">Barchasini ko'rish</Button>
               </div>
             )}
           </div>
