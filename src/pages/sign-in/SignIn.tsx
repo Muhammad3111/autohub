@@ -88,9 +88,8 @@ const SignIn = () => {
                                 required: "Foydalanuvchi nomi majburiy",
                             })}
                             placeholder="Foydalanuvchi nomi"
-                            className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
-                                errors.username && "border-red-500"
-                            }`}
+                            className={`w-full ring-1 ring-grey focus:ring-2 focus:ring-primary outline-none  duration-300 h-10 rounded text-sm indent-9`}
+                            autoComplete="off"
                         />
                     </div>
                     {errors.username && (
@@ -111,9 +110,8 @@ const SignIn = () => {
                             {...register("password", {
                                 required: "Parol majburiy",
                             })}
-                            className={`border w-full outline-none h-10 rounded text-sm indent-9 font-medium ${
-                                errors.password && "border-red-500"
-                            }`}
+                            className={`w-full ring-1 ring-grey focus:ring-2 focus:ring-primary outline-none  duration-300 h-10 rounded text-sm indent-9`}
+                            autoComplete="off"
                         />
 
                         {watch("password") && watch("password").length > 0 && (
