@@ -9,6 +9,7 @@ export default {
                 secondary: "#f4f4f4",
                 third: "#262626",
                 grey: "#eeeeee",
+                dark: "#1A1A1A",
             },
             boxShadow: {
                 custom: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",

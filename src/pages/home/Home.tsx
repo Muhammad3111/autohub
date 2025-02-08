@@ -1,15 +1,13 @@
-import Slider from "../../components/slider/Slider";
-import Main from "./Main";
+import Brands from "./Brands";
+import Categories from "./Categories";
 
 const Home = () => {
-  return (
-    <div>
-      <Main />
-      {/* <Categories /> */}
-      <Slider />
-      {/* <Card /> */}
-    </div>
-  );
+    return (
+        <div className="px-10 flex flex-col gap-10 mt-16">
+            <Brands />
+            <Categories />
+        </div>
+    );
 };
 
 export default Home;
