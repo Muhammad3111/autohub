@@ -6,9 +6,10 @@ import {
 } from "../../features/auth/authSlice";
 import { useSelector } from "react-redux";
 import Language from "./Language";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLazyAuthDetailQuery } from "../../features/auth/authApiSlice";
 import Loading from "../loading/Loading";
+import Modal from "../modal/Modal";
 
 type NavLinkType = {
     name: string;
@@ -23,6 +24,8 @@ const Navbar = () => {
         useLazyAuthDetailQuery();
 
     const { pathname } = useLocation();
+
+    const [openLogin, setOpenLogin] = useState(false);
 
     useEffect(() => {
         detailTrigger({ token: token });
@@ -83,25 +86,12 @@ const Navbar = () => {
                     ))}
                 </div>
 
-                {/* {pathname !== "/" && (
-                        <div className="flex h-10 items-center w-1/3">
-                            <input
-                                type="text"
-                                placeholder="Search cars"
-                                className="outline-none h-full border indent-4 rounded-tl rounded-bl w-[90%]"
-                            />
-                            <button className="w-14 h-full bg-primary hover:bg-primary-hover duration-150 text-white flex items-center justify-center text-xl rounded-tr rounded-br">
-                                <FiSearch />
-                            </button>
-                        </div>
-                    )} */}
-
                 <div className="flex items-center gap-6">
                     <Language />
 
                     {!isLogin && (
                         <button
-                            onClick={() => navigate("/sign-in")}
+                            onClick={() => setOpenLogin(true)}
                             className="flex items-center gap-2 rounded-full font-medium"
                         >
                             <FiUser className="text-xl" />
@@ -119,6 +109,9 @@ const Navbar = () => {
                     )}
                 </div>
             </div>
+            <Modal isOpen={openLogin} onClose={() => setOpenLogin(false)}>
+                <div></div>
+            </Modal>
         </div>
     );
 };
