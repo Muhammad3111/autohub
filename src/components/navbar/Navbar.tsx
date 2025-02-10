@@ -70,7 +70,7 @@ const Navbar = () => {
     return (
         <div className="fixed w-full top-0 left-0 z-20 bg-dark">
             {isLoading && <Loading />}
-            <div className="w-[1440px] mx-auto h-[72px] flex items-center justify-between px-10 text-white">
+            <div className="w-[1440px] mx-auto h-[72px] flex items-center justify-between text-white">
                 <Link to={"/"} className="text-2xl font-semibold">
                     <p>Autohub</p>
                 </Link>

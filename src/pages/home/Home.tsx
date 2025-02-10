@@ -3,7 +3,7 @@ import Categories from "./Categories";
 
 const Home = () => {
     return (
-        <div className="px-10 flex flex-col gap-10 mt-16">
+        <div className="flex flex-col gap-10 mt-12">
             <Brands />
             <Categories />
         </div>

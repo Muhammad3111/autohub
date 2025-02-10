@@ -4,7 +4,7 @@ import FooterImage from "../../assets/footer-earth.svg";
 
 const Footer = () => {
     return (
-        <div className="w-full bg-white p-10 mt-10">
+        <div className="w-full bg-white mt-10">
             <div className="flex justify-between relative">
                 <div className=" w-[300px] font-medium">
                     <Link to={"/"} className="text-3xl ">
@@ -107,7 +107,7 @@ const Footer = () => {
             </div>
             <div className="mt-16">
                 <div className="w-full  h-1 bg-grey"></div>
-                <p className="text-sm font-medium text-gray-500 mt-8 text-center">
+                <p className="text-sm font-medium text-gray-500 my-4 text-center">
                     @ 2024 Autohub. All Rights Reserved
                 </p>
             </div>
