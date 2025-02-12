@@ -13,62 +13,63 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const Slider = () => {
     return (
-        <div className="m-10 relative">
+        <div className="relative group w-[850px] max-w-[850px] mx-auto">
+            {/* Prev Button */}
             <button
-                className="custom-prev absolute left-2 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-gray-800 text-white rounded-full shadow hover:bg-gray-700"
+                className="custom-prev absolute left-2 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-black bg-opacity-50 text-white rounded-full shadow opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                 id="prevButton"
             >
                 <FaChevronLeft size={20} />
             </button>
+
+            {/* Next Button */}
             <button
-                className="custom-next absolute right-2 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-gray-800 text-white rounded-full shadow hover:bg-gray-700"
+                className="custom-next absolute right-2 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-black bg-opacity-50 text-white rounded-full shadow opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                 id="nextButton"
             >
                 <FaChevronRight size={20} />
             </button>
 
-            <div style={{ width: "100%", maxWidth: "100%", margin: "0 auto" }}>
-                <Swiper
-                    spaceBetween={30}
-                    centeredSlides={true}
-                    autoplay={{
-                        delay: 5000,
-                        disableOnInteraction: false,
-                    }}
-                    pagination={{
-                        clickable: true,
-                    }}
-                    navigation={{
-                        nextEl: "#nextButton",
-                        prevEl: "#prevButton",
-                    }}
-                    modules={[Autoplay, Pagination, Navigation]}
-                    loop={true}
-                    className="mySwiper"
-                >
-                    <SwiperSlide>
-                        <img
-                            src={Slide1}
-                            alt="slide 1"
-                            className="slide-image"
-                        />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img
-                            src={Slide2}
-                            alt="slide 2"
-                            className="slide-image"
-                        />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <img
-                            src={Slide3}
-                            alt="slide 3"
-                            className="slide-image"
-                        />
-                    </SwiperSlide>
-                </Swiper>
-            </div>
+            <Swiper
+                spaceBetween={30}
+                centeredSlides={true}
+                autoplay={{
+                    delay: 5000,
+                    disableOnInteraction: false,
+                }}
+                pagination={{
+                    clickable: true,
+                }}
+                navigation={{
+                    nextEl: "#nextButton",
+                    prevEl: "#prevButton",
+                }}
+                modules={[Autoplay, Pagination, Navigation]}
+                loop={true}
+                className="mySwiper"
+            >
+                <SwiperSlide>
+                    <img
+                        src={Slide1}
+                        alt="slide 1"
+                        className="slide-image w-full"
+                    />
+                </SwiperSlide>
+                <SwiperSlide>
+                    <img
+                        src={Slide2}
+                        alt="slide 2"
+                        className="slide-image w-full"
+                    />
+                </SwiperSlide>
+                <SwiperSlide>
+                    <img
+                        src={Slide3}
+                        alt="slide 3"
+                        className="slide-image w-full"
+                    />
+                </SwiperSlide>
+            </Swiper>
         </div>
     );
 };

@@ -4,53 +4,52 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .custom-input {
+        @apply w-full ring-1 ring-grey focus:ring-2 focus:ring-primary outline-none duration-300 h-10 rounded text-sm indent-9;
+    }
+}
+
+@layer utilities {
+    .ranking-sales {
+        clip-path: polygon(100% 0, 100% 76%, 54% 100%, 0 76%, 0 0);
+    }
+}
+
 html,
 body {
-  font-family: "Outfit", serif;
-  scroll-behavior: smooth;
-  background-color: #eee;
-  max-width: 1540px;
-  margin: auto;
+    font-family: "Outfit", serif;
+    scroll-behavior: smooth;
+    max-width: 1440px;
+    margin: auto;
 }
 
 .footer__link:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .scrollbar-thin::-webkit-scrollbar {
-  height: 6px;
-  width: 5px;
+    height: 6px;
+    width: 5px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: #9ca3af;
-  border-radius: 10px;
+    background: #9ca3af;
+    border-radius: 10px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-track {
-  background: #e5e7eb;
+    background: #e5e7eb;
 }
 
 .mySwiper .slide-image {
-  width: 100%;
-  height: 500px;
-  object-fit: cover;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.mySwiper .slide-image:hover {
-  scale: 1.02;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    cursor: pointer;
 }
 
 .custom-prev,
 .custom-next {
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.custom-prev:hover,
-.custom-next:hover {
-  background-color: #4a5568;
+    cursor: pointer;
 }

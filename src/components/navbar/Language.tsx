@@ -58,7 +58,7 @@ const Language = () => {
             </button>
 
             <div
-                className={`absolute top-12 -left-[22px] w-40 bg-white border border-gray-300 rounded shadow-lg p-2 z-10 ${
+                className={`absolute top-14 -left-[22px] w-40 bg-white text-black border border-gray-300 rounded shadow-lg p-2 z-10 ${
                     isOpen ? "animate-fade-in-down" : "hidden"
                 }`}
             >
