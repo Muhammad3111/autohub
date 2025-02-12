@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Header from "../../../components/header/Header";
 import data from "../../../mock/data.json";
 import CImage from "../../../assets/car-category.png";
@@ -6,11 +6,11 @@ import { useGetCarsQuery } from "../../../features/cars/carSlice";
 import CardCar from "../../../components/card/CardCar";
 import { useState } from "react";
 import Pagination from "../../../utility/pagination/Pagination";
+import Checkbox from "../../../utility/checkbox/Checkbox";
 
 export default function Shop() {
   const { slug } = useParams<{ slug: string }>();
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const navigate = useNavigate();
   const { data: carsData } = useGetCarsQuery({ page: 1, model: slug });
   const collections: Collection[] = data.collection;
   const cars: CarObject[] = carsData?.items || [];
@@ -30,9 +30,11 @@ export default function Shop() {
               <div
                 key={c.id}
                 className="flex justify-between items-center hover:text-primary duration-300 py-2 cursor-pointer"
-                onClick={() => navigate(`/cars/models/${c.title}`)}
               >
-                <h3 className="text-base font-semibold">{c.title}</h3>
+                <div className="flex items-center gap-2">
+                  <Checkbox />
+                  <h3 className="text-base font-semibold">{c.title}</h3>
+                </div>
                 <img
                   src={c.icon || CImage}
                   alt={c.title}
