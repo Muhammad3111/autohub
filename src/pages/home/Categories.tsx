@@ -116,26 +116,28 @@ const Categories = () => {
                                 key={index}
                                 className="flex justify-between items-center cursor-pointer"
                             >
-                                <div
-                                    className={`ranking-sales ${
-                                        data.rank === 1
-                                            ? "bg-[#FFC900]"
-                                            : data.rank === 2
-                                            ? "bg-[#E1BF98]"
-                                            : data.rank === 3
-                                            ? "bg-[#E6E3E6]"
-                                            : "bg-gray-300"
-                                    } w-5 h-6 flex items-center justify-center text-sm`}
-                                >
-                                    {data.rank}
+                                <div className="flex items-center gap-5">
+                                    <div
+                                        className={`ranking-sales ${
+                                            data.rank === 1
+                                                ? "bg-[#FFC900]"
+                                                : data.rank === 2
+                                                ? "bg-[#E1BF98]"
+                                                : data.rank === 3
+                                                ? "bg-[#E6E3E6]"
+                                                : "bg-gray-300"
+                                        } w-5 h-6 flex items-center justify-center text-sm`}
+                                    >
+                                        {data.rank}
+                                    </div>
+                                    <img
+                                        src={data.img}
+                                        alt={data.model}
+                                        className="border"
+                                        width={120}
+                                        height={60}
+                                    />
                                 </div>
-                                <img
-                                    src={data.img}
-                                    alt={data.model}
-                                    className="border"
-                                    width={120}
-                                    height={60}
-                                />
                                 <div>
                                     <h2>{data.model}</h2>
                                     <p className="text-primary">
@@ -235,26 +237,28 @@ const Categories = () => {
                                     key={index}
                                     className="flex justify-between items-center cursor-pointer"
                                 >
-                                    <div
-                                        className={`ranking-sales ${
-                                            data.rank === 1
-                                                ? "bg-[#FFC900]"
-                                                : data.rank === 2
-                                                ? "bg-[#E1BF98]"
-                                                : data.rank === 3
-                                                ? "bg-[#E6E3E6]"
-                                                : "bg-gray-300"
-                                        } w-5 h-6 flex items-center justify-center text-sm`}
-                                    >
-                                        {data.rank}
+                                    <div className="flex items-center gap-5">
+                                        <div
+                                            className={`ranking-sales ${
+                                                data.rank === 1
+                                                    ? "bg-[#FFC900]"
+                                                    : data.rank === 2
+                                                    ? "bg-[#E1BF98]"
+                                                    : data.rank === 3
+                                                    ? "bg-[#E6E3E6]"
+                                                    : "bg-gray-300"
+                                            } w-5 h-6 flex items-center justify-center text-sm`}
+                                        >
+                                            {data.rank}
+                                        </div>
+                                        <img
+                                            src={data.img}
+                                            alt={data.model}
+                                            className="border"
+                                            width={120}
+                                            height={60}
+                                        />
                                     </div>
-                                    <img
-                                        src={data.img}
-                                        alt={data.model}
-                                        className="border"
-                                        width={120}
-                                        height={60}
-                                    />
                                     <div>
                                         <h2>{data.model}</h2>
                                         <p className="text-primary">
@@ -288,26 +292,28 @@ const Categories = () => {
                                     key={index}
                                     className="flex justify-between items-center cursor-pointer"
                                 >
-                                    <div
-                                        className={`ranking-sales ${
-                                            data.rank === 1
-                                                ? "bg-[#FFC900]"
-                                                : data.rank === 2
-                                                ? "bg-[#E1BF98]"
-                                                : data.rank === 3
-                                                ? "bg-[#E6E3E6]"
-                                                : "bg-gray-300"
-                                        } w-5 h-6 flex items-center justify-center text-sm`}
-                                    >
-                                        {data.rank}
+                                    <div className="flex items-center gap-5">
+                                        <div
+                                            className={`ranking-sales ${
+                                                data.rank === 1
+                                                    ? "bg-[#FFC900]"
+                                                    : data.rank === 2
+                                                    ? "bg-[#E1BF98]"
+                                                    : data.rank === 3
+                                                    ? "bg-[#E6E3E6]"
+                                                    : "bg-gray-300"
+                                            } w-5 h-6 flex items-center justify-center text-sm`}
+                                        >
+                                            {data.rank}
+                                        </div>
+                                        <img
+                                            src={data.img}
+                                            alt={data.model}
+                                            className="border"
+                                            width={120}
+                                            height={60}
+                                        />
                                     </div>
-                                    <img
-                                        src={data.img}
-                                        alt={data.model}
-                                        className="border"
-                                        width={120}
-                                        height={60}
-                                    />
                                     <div>
                                         <h2>{data.model}</h2>
                                         <p className="text-primary">
