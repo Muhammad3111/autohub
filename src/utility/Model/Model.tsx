@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { Suspense, useEffect, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Html, OrbitControls, useGLTF } from "@react-three/drei";
@@ -16,7 +17,7 @@ const FerrariModel: React.FC = () => {
     }
   }, [initialRotation]);
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (modelRef.current && !spinComplete.current) {
       // Tezlikni oshirish uchun delta koeffitsientini ko'paytiramiz
       modelRef.current.rotation.y += delta * rotationSpeed;
