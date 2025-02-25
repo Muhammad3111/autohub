@@ -8,24 +8,24 @@ type Display = {
 const Footer = ({ display }: Display) => {
   return (
     <div
-      className={`w-full bg-white p-10 mt-10 ${
+      className={`w-full bg-dark p-10 mt-10 ${
         display === "none" ? "hidden" : ""
       }`}
     >
-      <div className="flex justify-between relative">
+      <div className="flex justify-between relative max-w-[1440px] mx-auto">
         <div className=" w-[300px] font-medium">
-          <Link to={"/"} className="text-3xl ">
+          <Link to={"/"} className="text-3xl text-white">
             Autohub
           </Link>
-          <p className="my-6 text-sm font-normal">
+          <p className="my-6 text-sm font-normal text-white">
             Research has had a very large influence on my life. I have learned
             most of what I know through research.
           </p>
 
-          <p className="text-2xl">Call Centre: 90 123 45 67</p>
+          <p className="text-2xl text-white">Call Centre: 90 123 45 67</p>
 
           <div className="mt-10">
-            <p className="text-xl">Follow Us</p>
+            <p className="text-xl text-white">Follow Us</p>
             <div className="flex items-center gap-2 mt-4 text-primary">
               <button className="p-2 bg-grey rounded-sm">
                 <FiInstagram />
@@ -41,8 +41,8 @@ const Footer = ({ display }: Display) => {
         </div>
 
         <div>
-          <p className="text-xl font-medium mb-4">Our Brands</p>
-          <ul className="text-sm text-gray-500 font-light leading-7">
+          <p className="text-xl font-medium mb-4 text-white">Our Brands</p>
+          <ul className="text-base font-light leading-7 text-white">
             <li>Jaquar</li>
             <li>BMW</li>
             <li>Tayota</li>
@@ -53,8 +53,8 @@ const Footer = ({ display }: Display) => {
 
         {/* Quick Links */}
         <div>
-          <p className="text-xl font-medium mb-4">Quick Links</p>
-          <ul className="text-sm text-gray-500 font-light leading-7">
+          <p className="text-xl font-medium mb-4 text-white">Quick Links</p>
+          <ul className="text-base text-white font-light leading-7">
             <li>About Us</li>
             <li>News</li>
             <li>Gallery</li>
@@ -65,8 +65,8 @@ const Footer = ({ display }: Display) => {
         <div className="flex flex-col gap-20">
           {/* Address */}
           <div>
-            <p className="text-xl font-medium mb-4">Address</p>
-            <ul className="text-sm text-gray-500 font-light leading-7">
+            <p className="text-xl font-medium mb-4 text-white">Address</p>
+            <ul className="text-sm text-white font-light leading-7">
               <li>30, Commercial Road Raton Australia - 47889 45</li>
               <li>
                 Mail: solutions@example.com
@@ -77,8 +77,10 @@ const Footer = ({ display }: Display) => {
           </div>
 
           <div>
-            <p className="text-xl font-medium mb-4">Branch Address</p>
-            <ul className="text-sm text-gray-500 font-light leading-7">
+            <p className="text-xl font-medium mb-4 text-white">
+              Branch Address
+            </p>
+            <ul className="text-sm text-white font-light leading-7">
               <li>167 great portland street, DEON Australia - 47889 55</li>
               <li>
                 Mail: solutions@example.com
@@ -91,7 +93,7 @@ const Footer = ({ display }: Display) => {
       </div>
       <div className="mt-16">
         <div className="w-full  h-1 bg-grey"></div>
-        <p className="text-sm font-medium text-gray-500 mt-8 text-center">
+        <p className="text-base font-medium text-white mt-8 text-center">
           @ 2024 Autohub. All Rights Reserved
         </p>
       </div>

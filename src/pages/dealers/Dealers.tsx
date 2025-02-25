@@ -40,33 +40,35 @@ const Dealers = () => {
   ];
 
   return (
-    <div className="w-full bg-white max-w-[1400px] mx-auto">
+    <div className="w-full">
       <Header title="Dealers" />
-      <div className="flex flex-col gap-4 p-10">
-        {dealerData.map((item) => (
-          <Link
-            to={`/dealers/${item.id}`}
-            state={item}
-            key={item.id}
-            className="w-full bg-white p-5 hover:bg-primary hover:bg-opacity-5 border hover:border-primary duration-150 flex gap-8"
-          >
-            <img
-              src={item.img}
-              alt={item.title}
-              className="h-[150px] object-cover"
-              width={200}
-            />
+      <div className="w-full bg-white max-w-[1440px] mx-auto">
+        <div className="flex flex-col gap-4 p-10">
+          {dealerData.map((item) => (
+            <Link
+              to={`/dealers/${item.id}`}
+              state={item}
+              key={item.id}
+              className="w-full bg-white p-5 hover:bg-primary hover:bg-opacity-5 border hover:border-primary duration-150 flex gap-8"
+            >
+              <img
+                src={item.img}
+                alt={item.title}
+                className="h-[150px] object-cover"
+                width={200}
+              />
 
-            <div className="flex flex-col gap-4">
-              <h1 className="font-normal text-primary text-lg cursor-pointer">
-                {item.title}
-              </h1>
-              <p className="text-[#666666] text-sm">{item.mainBrands}</p>
-              <p className="text-[#666666] text-sm">{item.electricity}</p>
-              <p className="text-[#666666] text-sm">{item.landsite}</p>
-            </div>
-          </Link>
-        ))}
+              <div className="flex flex-col gap-4">
+                <h1 className="font-normal text-primary text-lg cursor-pointer">
+                  {item.title}
+                </h1>
+                <p className="text-[#666666] text-sm">{item.mainBrands}</p>
+                <p className="text-[#666666] text-sm">{item.electricity}</p>
+                <p className="text-[#666666] text-sm">{item.landsite}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
       <Footer />
     </div>

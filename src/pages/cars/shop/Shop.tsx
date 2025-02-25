@@ -30,30 +30,32 @@ export default function Shop() {
   };
 
   return (
-    <div className="flex flex-col max-w-[1400px] mx-auto">
+    <div className="w-full">
       <Header title={"Avtomobillar"} />
-      <div className="flex gap-4 py-5 my-container bg-white">
-        {/* Brendlar bo'limi */}
-        <BrandsFilter />
-        {/* Mashinalar bo'limi */}
-        <div className="grid grid-cols-4 gap-4 basis-3/4 items-start">
-          <div className="col-span-4">
-            <VehicleFilter />
-          </div>
-          {cars?.length > 0 ? (
-            cars.map((car) => <ShopCard key={car.id} vehicle={car} />)
-          ) : (
-            <div className="col-span-full text-2xl font-semibold text-center py-10 bg-grey">
-              <h1 className="text-3xl font-normal text-primary">
-                Ma'lumotlar topilmadi
-              </h1>
+      <div className="flex flex-col max-w-[1440px] mx-auto">
+        <div className="flex gap-4 py-5 my-container bg-white">
+          {/* Brendlar bo'limi */}
+          <BrandsFilter />
+          {/* Mashinalar bo'limi */}
+          <div className="grid grid-cols-4 gap-4 basis-3/4 items-start">
+            <div className="col-span-4">
+              <VehicleFilter />
             </div>
-          )}
-          <Pagination
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-            totalPages={total_pages}
-          />
+            {cars?.length > 0 ? (
+              cars.map((car) => <ShopCard key={car.id} vehicle={car} />)
+            ) : (
+              <div className="col-span-full text-2xl font-semibold text-center py-10 bg-grey">
+                <h1 className="text-3xl font-normal text-primary">
+                  Ma'lumotlar topilmadi
+                </h1>
+              </div>
+            )}
+            <Pagination
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+              totalPages={total_pages}
+            />
+          </div>
         </div>
       </div>
     </div>

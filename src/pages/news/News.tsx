@@ -4,6 +4,7 @@ import BlogCard from "../../components/blog/BlogCard";
 import { useGetBlogsQuery } from "../../features/blogs/blogs";
 import BlogSidebar from "../../components/blog/BlogSidebar";
 import Pagination from "../../utility/pagination/Pagination";
+import Footer from "../../components/footer/Footer";
 
 const SpareParts = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -17,23 +18,26 @@ const SpareParts = () => {
   };
 
   return (
-    <div className="max-w-[1400px] mx-auto">
+    <div className="w-full">
       <Header title="Yangiliklar" />
-      <div className="flex items-start gap-4 my-container p-10 bg-white">
-        <div className="grid grid-cols-1 basis-3/4">
-          {posts.map((blog) => (
-            <BlogCard key={blog.id} blogs={blog} />
-          ))}
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
-        <div className="basis-1/4 w-full">
-          <BlogSidebar blogs={posts} />
+      <div className="max-w-[1440px] mx-auto">
+        <div className="flex items-start gap-4 my-container p-10 bg-white">
+          <div className="grid grid-cols-1 basis-3/4">
+            {posts.map((blog) => (
+              <BlogCard key={blog.id} blogs={blog} />
+            ))}
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          </div>
+          <div className="basis-1/4 w-full">
+            <BlogSidebar blogs={posts} />
+          </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

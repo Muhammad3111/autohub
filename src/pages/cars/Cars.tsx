@@ -23,9 +23,9 @@ const Cars = () => {
   const collections: Collection[] = data.collection;
   const cars: CarObject[] = carsData?.items || [];
   return (
-    <div className="max-w-[1400px] mx-auto">
+    <div className="w-full">
       <Header title="Avtomobillar" />
-      <div className="flex flex-col gap-4 my-container pt-10">
+      <div className="flex flex-col gap-4 pt-10 max-w-[1440px] mx-auto">
         <div className="flex flex-col gap-4 p-10 bg-white">
           <h1 className="text-4xl font-semibold text-center">
             Avtomobillar:
