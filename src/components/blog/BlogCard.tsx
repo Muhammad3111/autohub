@@ -10,7 +10,7 @@ const BlogCard = ({ blogs }: Props) => {
 
   return (
     <div
-      onClick={() => navigate(`/cars/${blogs.id}`)}
+      onClick={() => navigate(`/news/${blogs.id}`)}
       className="w-full h-full bg-white flex flex-col gap-4 relative duration-200 cursor-pointer mb-10"
     >
       {/* Image */}

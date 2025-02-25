@@ -7,13 +7,16 @@ import App from "./App.tsx";
 import { Provider } from "react-redux";
 import { store } from "./app/store.ts";
 import { BrowserRouter } from "react-router-dom";
+import { ContextProvider } from "./context/Context.tsx";
 
 createRoot(document.getElementById("root")!).render(
-    <StrictMode>
-        <Provider store={store}>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
-        </Provider>
-    </StrictMode>
+  <StrictMode>
+    <ContextProvider>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </ContextProvider>
+  </StrictMode>
 );

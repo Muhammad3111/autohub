@@ -1,31 +1,22 @@
 import Header from "../../components/header/Header";
 import { useGetSparesQuery } from "../../features/spare-parts/spare-parts";
-import { useState } from "react";
-import Filter from "../../utility/filter/Filter";
 import SpareCard from "../../components/spare-card/SpareCard";
 import { useGetSpareCatsQuery } from "../../features/spare-parts/spare-categories";
 import Button from "../../utility/button/Button";
 import AboutSlider from "../about-us/AboutSlider";
+import Footer from "../../components/footer/Footer";
 
 const SpareParts = () => {
-  const [filters, setFilters] = useState({
-    name_uz: "",
-    brand: "",
-    model: "",
-    price: 0,
-  });
   const { data } = useGetSparesQuery({ page: 1 });
   const { data: spareCats } = useGetSpareCatsQuery({});
-  
+
   const spareParts: SpareParts[] = data?.items || [];
   const categories: SpareCategories[] = spareCats || [];
   return (
-    <div>
+    <div className="max-w-[1400px] mx-auto">
       <Header title="Ehtiyot qisimlar" />
       <div className="flex flex-col gap-4 my-container pt-10">
-        <div className="flex flex-col gap-4 items-center">
-          <Filter setFilters={setFilters} filters={filters} />
-        </div>
+        <div className="flex flex-col gap-4 items-center"></div>
         <div className="flex flex-col gap-4 p-10 bg-white">
           <h1 className="text-3xl font-semibold text-center">
             Ehtiyot qisimlarning <span className="text-primary">Turlari</span>
@@ -88,6 +79,7 @@ const SpareParts = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

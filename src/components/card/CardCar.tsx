@@ -16,12 +16,14 @@ const CardCar = ({ vehicle }: Props) => {
 
   return (
     <div
-      onClick={() => navigate(`/cars/${vehicle.id}`)}
+      onClick={() =>
+        navigate(`/cars/${vehicle?.specifics[0].brand.name}/${vehicle.id}`)
+      }
       className="w-full min-h-[400px] bg-white flex flex-col duration-300 justify-between group relative shadow-md hover:shadow-lg border-2 cursor-pointer hover:border-primary"
     >
       {/* Save Button */}
       <button
-        className="absolute right-6 top-6 p-1 bg-gray-300 border-2 border-gray-400 rounded-full"
+        className="absolute right-2 top-2 p-1 bg-gray-300 border-2 border-gray-400 rounded-full"
         onClick={(e) => {
           e.stopPropagation();
           toggleSave();

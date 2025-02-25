@@ -49,13 +49,14 @@ export const carsApi = apiSlice.injectEndpoints({
         name_uz?: string;
         brand?: string;
         model?: string;
-        price?: number;
+        price_gt?: number;
+        price_lt?: number;
       }
     >({
-      query: ({ page = 1, name_uz, brand, model, price }) => ({
+      query: ({ page = 1, name_uz, brand, model, price_gt, price_lt }) => ({
         url: "/vehicles/filters",
         method: "GET",
-        params: { page, name_uz, brand, model, price },
+        params: { page, name_uz, brand, model, price_gt, price_lt },
       }),
       providesTags: ["CAR"],
     }),

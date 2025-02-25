@@ -14,7 +14,7 @@ export default function SpareId() {
   const spare: SpareParts = data;
 
   return (
-    <div>
+    <div className="max-w-[1400px] mx-auto">
       <Header title={spare.name_uz} />
       <div className="flex flex-col gap-4 py-5 my-container p-10">
         <div className="flex items-center gap-4">

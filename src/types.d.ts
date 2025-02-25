@@ -156,3 +156,10 @@ declare type InputState = {
   phoneNumber: string;
   email: string;
 };
+
+declare type PriceButton = {
+  id: number;
+  title: string;
+  start: number;
+  end: number;
+};

@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-three/drei": "^9.121.5",
+    "@react-three/fiber": "^8.17.14",
     "@reduxjs/toolkit": "^2.4.0",
     "@types/i18next": "^13.0.0",
     "@types/react-i18next": "^8.1.0",
@@ -27,6 +29,7 @@
     "react-select": "^5.9.0",
     "react-toastify": "^10.0.6",
     "swiper": "^11.2.0",
+    "three": "^0.173.0",
     "typewriter-effect": "^2.21.0"
   },
   "devDependencies": {

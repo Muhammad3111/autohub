@@ -206,6 +206,7 @@
     }
   ],
   "collection": [
+    { "id": 0, "title": "Cheksiz", "icon": "" },
     {
       "id": 1,
       "title": "Sedan",
@@ -218,53 +219,339 @@
     },
     {
       "id": 3,
-      "title": "Crossover",
+      "title": "MPV",
       "icon": ""
     },
     {
       "id": 4,
-      "title": "Hatchback",
+      "title": "Sport Avtomobili",
       "icon": ""
     },
     {
       "id": 5,
-      "title": "Coupe",
+      "title": "Mikro yuz",
       "icon": ""
     },
     {
       "id": 6,
-      "title": "Convertible",
+      "title": "Mikro karta",
       "icon": ""
     },
     {
       "id": 7,
-      "title": "Pickup Truck",
+      "title": "Yengil yo'lovchi",
       "icon": ""
+    }
+  ],
+  "priceButtons": [
+    { "id": 0, "title": "Cheksiz", "start": 0, "end": 0 },
+    { "id": 1, "title": "15 000$ dan past", "start": 0, "end": 15000 },
+    { "id": 2, "title": "15 000$ - 25 000$", "start": 15000, "end": 25000 },
+    { "id": 3, "title": "25 000$ - 40 000$", "start": 25000, "end": 40000 },
+    { "id": 4, "title": "40 000$ - 60 000$", "start": 40000, "end": 60000 },
+    { "id": 5, "title": "60 000$ - 85 000$", "start": 60000, "end": 85000 },
+    { "id": 6, "title": "85 000$ dan yuqori", "start": 85000, "end": 0 }
+  ],
+  "brands": [
+    {
+      "id": 1,
+      "name": "Audi",
+      "image": "https://example.com/images/75.png",
+      "brand_type": "Economy"
+    },
+    {
+      "id": 2,
+      "name": "BMW",
+      "image": "https://example.com/images/95.png",
+      "brand_type": "Coupe"
+    },
+    {
+      "id": 3,
+      "name": "Chevrolet",
+      "image": "https://example.com/images/14.png",
+      "brand_type": "Coupe"
+    },
+    {
+      "id": 4,
+      "name": "Dodge",
+      "image": "https://example.com/images/44.png",
+      "brand_type": "SUV"
+    },
+    {
+      "id": 5,
+      "name": "Ferrari",
+      "image": "https://example.com/images/85.png",
+      "brand_type": "Sedan"
+    },
+    {
+      "id": 6,
+      "name": "Ford",
+      "image": "https://example.com/images/45.png",
+      "brand_type": "Off-road"
+    },
+    {
+      "id": 7,
+      "name": "Honda",
+      "image": "https://example.com/images/13.png",
+      "brand_type": "Coupe"
     },
     {
       "id": 8,
-      "title": "Minivan",
-      "icon": ""
+      "name": "Hyundai",
+      "image": "https://example.com/images/95.png",
+      "brand_type": "Sports"
     },
     {
       "id": 9,
-      "title": "Wagon",
-      "icon": ""
+      "name": "Jaguar",
+      "image": "https://example.com/images/71.png",
+      "brand_type": "Sedan"
     },
     {
       "id": 10,
-      "title": "Roadster",
-      "icon": ""
+      "name": "Jeep",
+      "image": "https://example.com/images/54.png",
+      "brand_type": "Sports"
     },
     {
       "id": 11,
-      "title": "Electric Vehicle",
-      "icon": ""
+      "name": "Kia",
+      "image": "https://example.com/images/55.png",
+      "brand_type": "Sedan"
     },
     {
       "id": 12,
-      "title": "Hybrid Vehicle",
-      "icon": ""
+      "name": "Lamborghini",
+      "image": "https://example.com/images/9.png",
+      "brand_type": "Economy"
+    },
+    {
+      "id": 13,
+      "name": "Land Rover",
+      "image": "https://example.com/images/89.png",
+      "brand_type": "Sedan"
+    },
+    {
+      "id": 14,
+      "name": "Lexus",
+      "image": "https://example.com/images/32.png",
+      "brand_type": "Sports"
+    },
+    {
+      "id": 15,
+      "name": "Maserati",
+      "image": "https://example.com/images/49.png",
+      "brand_type": "Off-road"
+    },
+    {
+      "id": 16,
+      "name": "Mazda",
+      "image": "https://example.com/images/46.png",
+      "brand_type": "Luxury"
+    },
+    {
+      "id": 17,
+      "name": "Mercedes-Benz",
+      "image": "https://example.com/images/79.png",
+      "brand_type": "Electric"
+    },
+    {
+      "id": 18,
+      "name": "Mini",
+      "image": "https://example.com/images/84.png",
+      "brand_type": "SUV"
+    },
+    {
+      "id": 19,
+      "name": "Mitsubishi",
+      "image": "https://example.com/images/100.png",
+      "brand_type": "Luxury"
+    },
+    {
+      "id": 20,
+      "name": "Nissan",
+      "image": "https://example.com/images/5.png",
+      "brand_type": "Coupe"
+    },
+    {
+      "id": 21,
+      "name": "Opel",
+      "image": "https://example.com/images/19.png",
+      "brand_type": "Coupe"
+    },
+    {
+      "id": 22,
+      "name": "Peugeot",
+      "image": "https://example.com/images/13.png",
+      "brand_type": "Economy"
+    },
+    {
+      "id": 23,
+      "name": "Porsche",
+      "image": "https://example.com/images/35.png",
+      "brand_type": "Electric"
+    },
+    {
+      "id": 24,
+      "name": "Renault",
+      "image": "https://example.com/images/89.png",
+      "brand_type": "Sports"
+    },
+    {
+      "id": 25,
+      "name": "Rolls-Royce",
+      "image": "https://example.com/images/24.png",
+      "brand_type": "Luxury"
+    },
+    {
+      "id": 26,
+      "name": "Tesla",
+      "image": "https://example.com/images/49.png",
+      "brand_type": "Sedan"
+    },
+    {
+      "id": 27,
+      "name": "Toyota",
+      "image": "https://example.com/images/46.png",
+      "brand_type": "Electric"
+    },
+    {
+      "id": 28,
+      "name": "Volkswagen",
+      "image": "https://example.com/images/54.png",
+      "brand_type": "SUV"
+    },
+    {
+      "id": 29,
+      "name": "Volvo",
+      "image": "https://example.com/images/72.png",
+      "brand_type": "Sports"
+    },
+    {
+      "id": 30,
+      "name": "Acura",
+      "image": "https://example.com/images/81.png",
+      "brand_type": "Economy"
+    },
+    {
+      "id": 31,
+      "name": "Alfa Romeo",
+      "image": "https://example.com/images/8.png",
+      "brand_type": "Off-road"
+    },
+    {
+      "id": 32,
+      "name": "Aston Martin",
+      "image": "https://example.com/images/99.png",
+      "brand_type": "Luxury"
+    },
+    {
+      "id": 33,
+      "name": "Bentley",
+      "image": "https://example.com/images/61.png",
+      "brand_type": "Coupe"
+    },
+    {
+      "id": 34,
+      "name": "Bugatti",
+      "image": "https://example.com/images/8.png",
+      "brand_type": "Electric"
+    },
+    {
+      "id": 35,
+      "name": "McLaren",
+      "image": "https://example.com/images/64.png",
+      "brand_type": "SUV"
+    },
+    {
+      "id": 36,
+      "name": "Lucid",
+      "image": "https://example.com/images/77.png",
+      "brand_type": "SUV"
+    },
+    {
+      "id": 37,
+      "name": "Rivian",
+      "image": "https://example.com/images/38.png",
+      "brand_type": "Coupe"
+    },
+    {
+      "id": 38,
+      "name": "Fisker",
+      "image": "https://example.com/images/98.png",
+      "brand_type": "SUV"
+    },
+    {
+      "id": 39,
+      "name": "Polestar",
+      "image": "https://example.com/images/78.png",
+      "brand_type": "Coupe"
+    },
+    {
+      "id": 40,
+      "name": "Borgward",
+      "image": "https://example.com/images/71.png",
+      "brand_type": "Off-road"
+    },
+    {
+      "id": 41,
+      "name": "BYD",
+      "image": "https://example.com/images/48.png",
+      "brand_type": "Economy"
+    },
+    {
+      "id": 42,
+      "name": "NIO",
+      "image": "https://example.com/images/24.png",
+      "brand_type": "Off-road"
+    },
+    {
+      "id": 43,
+      "name": "Xpeng",
+      "image": "https://example.com/images/67.png",
+      "brand_type": "Sports"
+    },
+    {
+      "id": 44,
+      "name": "VinFast",
+      "image": "https://example.com/images/61.png",
+      "brand_type": "Sedan"
+    },
+    {
+      "id": 45,
+      "name": "Pagani",
+      "image": "https://example.com/images/11.png",
+      "brand_type": "Economy"
+    },
+    {
+      "id": 46,
+      "name": "Koenigsegg",
+      "image": "https://example.com/images/76.png",
+      "brand_type": "Off-road"
+    },
+    {
+      "id": 47,
+      "name": "Rimac",
+      "image": "https://example.com/images/93.png",
+      "brand_type": "Electric"
+    },
+    {
+      "id": 48,
+      "name": "Wiesmann",
+      "image": "https://example.com/images/86.png",
+      "brand_type": "Electric"
+    },
+    {
+      "id": 49,
+      "name": "Saab",
+      "image": "https://example.com/images/46.png",
+      "brand_type": "Sedan"
+    },
+    {
+      "id": 50,
+      "name": "Seat",
+      "image": "https://example.com/images/87.png",
+      "brand_type": "Sedan"
     }
   ]
 }

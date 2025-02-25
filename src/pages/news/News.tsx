@@ -17,7 +17,7 @@ const SpareParts = () => {
   };
 
   return (
-    <div>
+    <div className="max-w-[1400px] mx-auto">
       <Header title="Yangiliklar" />
       <div className="flex items-start gap-4 my-container p-10 bg-white">
         <div className="grid grid-cols-1 basis-3/4">
