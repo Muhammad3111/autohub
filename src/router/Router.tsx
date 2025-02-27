@@ -47,6 +47,7 @@ import SpareId from "../pages/spare-parts/id/SpareId";
 import Panorama from "../pages/cars/panorama/Panorama";
 import Interier from "../pages/cars/panorama/Interier";
 import Post from "../pages/news/id/Post";
+import Parametrs from "../pages/cars/parametrs/Parametrs";
 
 const Router = () => {
   const isLogin = useSelector(selectCurrentIsLogin);
@@ -61,6 +62,7 @@ const Router = () => {
       <Route path="/cars/:slug" element={<Shop />} />
       <Route path="/cars/3dmodel/panorama" element={<Panorama />} />
       <Route path="/cars/3dmodel/interier" element={<Interier />} />
+      <Route path="/cars/parametrs/:id" element={<Parametrs />} />
       <Route path="/spare-parts" element={<SpareParts />} />
       <Route path="/spare-parts/:id" element={<SpareId />} />
       <Route path="/services" element={<Services />} />

@@ -3,6 +3,7 @@ import { useGetCarByIdQuery } from "../../../features/cars/carSlice";
 import Header from "../../../components/header/Header";
 import ModelViewer from "../../../utility/Model/Model";
 import { RiFullscreenLine } from "react-icons/ri";
+import Button from "../../../utility/button/Button";
 
 export default function CarId() {
   const { id } = useParams<{ id: string }>();
@@ -20,7 +21,7 @@ export default function CarId() {
         <h1 className="text-4xl font-bold capitalize">
           {car.specifics[0].name_uz}
         </h1>
-        <div className="flex items-center gap-4">
+        <div className="flex gap-4">
           <div className="basis-1/2 flex gap-2">
             <div className="w-full h-[350px] bg-gray-300 relative">
               <ModelViewer />
@@ -46,9 +47,43 @@ export default function CarId() {
               ))}
             </div>
           </div>
-          <div className="basis-1/2 flex flec-col">
-            <div>
-              <p>Price on Diller</p>
+          <div className="basis-1/2 flex flex-col justify-between p-6">
+            <div className="flex items-center gap-2">
+              <p className="text-lg font-semibold text-gray-500">
+                Price on Diller:
+              </p>
+              <p className="text-xl text-primary">${car.specifics[0].price}</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <p className="text-lg font-semibold text-gray-500">
+                Manufacturer's suggested retail price:
+              </p>
+              <p>{car.specifics[0].price}</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <p className="text-lg font-semibold text-gray-500">
+                Manufacturer:
+              </p>
+              <p>{car.specifics[0].brand.name}</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <p className="text-lg font-semibold text-gray-500">Duration:</p>
+              <p>630km</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <p className="text-lg font-semibold text-gray-500">
+                Fast Charger:
+              </p>
+              <p>0,17h</p>
+            </div>
+            <div className="flex gap-4">
+              <button
+                onClick={() => navigate(`/cars/parametrs/${car.id}`)}
+                className="border-red-500 border text-base text-black px-4 py-2"
+              >
+                Parametrs
+              </button>
+              <Button className="px-4">Calculation</Button>
             </div>
           </div>
         </div>
