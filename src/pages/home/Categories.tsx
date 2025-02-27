@@ -162,7 +162,7 @@ const Categories = () => {
                         <button
                             className={`${
                                 activeTab === "recommend"
-                                    ? "text-black"
+                                    ? "text-primary"
                                     : "text-gray-500"
                             }`}
                             disabled={activeTab === "recommend"}
@@ -173,7 +173,7 @@ const Categories = () => {
                         <button
                             className={`${
                                 activeTab === "new-car"
-                                    ? "text-black"
+                                    ? "text-primary"
                                     : "text-gray-500"
                             }`}
                             disabled={activeTab === "new-car"}
@@ -184,7 +184,7 @@ const Categories = () => {
                         <button
                             className={`${
                                 activeTab === "luxury-car"
-                                    ? "text-black"
+                                    ? "text-primary"
                                     : "text-gray-500"
                             }`}
                             disabled={activeTab === "luxury-car"}
