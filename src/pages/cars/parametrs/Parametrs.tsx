@@ -1,6 +1,3 @@
-
 export default function Parametrs() {
-  return (
-    <div>Parametrs</div>
-  )
+    return <div className="pt-20">Parametrs</div>;
 }
