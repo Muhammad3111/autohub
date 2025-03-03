@@ -1,99 +1,14 @@
 import { FiChevronRight } from "react-icons/fi";
 import Slider from "../../components/slider/Slider";
 import { useState } from "react";
-
-type SalesRankingType = {
-    rank: number;
-    img: string;
-    model: string;
-    price: number;
-    volume: number;
-};
-
-type VideosType = {
-    video: string;
-    title: string;
-    desc: string;
-    created_at: string;
-};
+import { salesModels, videoData } from "../../mock/data.json";
 
 const Categories = () => {
     const [activeTab, setActiveTab] = useState<null | string>("recommend");
 
-    const salesData: SalesRankingType[] = [
-        {
-            rank: 1,
-            img: "",
-            model: "Model X",
-            price: 249000,
-            volume: 61233,
-        },
-        {
-            rank: 2,
-            img: "",
-            model: "Model Y",
-            price: 279000,
-            volume: 58233,
-        },
-        {
-            rank: 3,
-            img: "",
-            model: "Model Z",
-            price: 349000,
-            volume: 49283,
-        },
-    ];
+    const salesData: SalesRankingType[] = salesModels;
 
-    const videosData: VideosType[] = [
-        {
-            video: "",
-            title: "Because of this Geely electric car, Wolong may have to spend money in vain again",
-            desc: "Car Lovers",
-            created_at: "8 hours ago",
-        },
-        {
-            video: "",
-            title: "One city, one test | Driving the Leapmotor C16 to start a New Year 'blessing' journey",
-            desc: "Technology Dog",
-            created_at: "12 hours ago",
-        },
-        {
-            video: "",
-            title: "What are the procedures for transferring ownership of a motor vehicle? What information and procedures are required for transferring ownership of a vehicle?",
-            desc: "Little Car Dad",
-            created_at: "14 hours ago",
-        },
-        {
-            video: "",
-            title: "Because of this Geely electric car, Wolong may have to spend money in vain again",
-            desc: "Car Lovers",
-            created_at: "8 hours ago",
-        },
-        {
-            video: "",
-            title: "One city, one test | Driving the Leapmotor C16 to start a New Year 'blessing' journey",
-            desc: "Technology Dog",
-            created_at: "12 hours ago",
-        },
-        {
-            video: "",
-            title: "What are the procedures for transferring ownership of a motor vehicle? What information and procedures are required for transferring ownership of a vehicle?",
-            desc: "Little Car Dad",
-            created_at: "14 hours ago",
-        },
-        {
-            video: "",
-            title: "One city, one test | Driving the Leapmotor C16 to start a New Year 'blessing' journey",
-            desc: "Technology Dog",
-            created_at: "12 hours ago",
-        },
-        {
-            video: "",
-            title: "What are the procedures for transferring ownership of a motor vehicle? What information and procedures are required for transferring ownership of a vehicle?",
-            desc: "Little Car Dad",
-            created_at: "14 hours ago",
-        },
-    ];
+    const videosData: VideosType[] = videoData;
 
     return (
         <div>

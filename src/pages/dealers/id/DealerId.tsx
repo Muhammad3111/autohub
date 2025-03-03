@@ -20,7 +20,7 @@ const DealerId = () => {
 
     return (
         state?.id === id && (
-            <div className="mt-10">
+            <div className="mt-20">
                 <img src={state.img} alt="" />
             </div>
         )
