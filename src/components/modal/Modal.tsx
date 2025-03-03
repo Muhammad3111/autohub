@@ -16,7 +16,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
             onClick={onClose}
         >
             <div
-                className={`bg-white p-6 rounded-lg shadow-lg w-96 relative transform transition-all duration-300 ease-in-out ${
+                className={`bg-white p-4 rounded-lg shadow-lg w-96 relative transform transition-all duration-300 ease-in-out ${
                     isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"
                 }`}
                 onClick={(e) => e.stopPropagation()}
