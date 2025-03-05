@@ -22,6 +22,7 @@ const Cars = () => {
 
   const collections: Collection[] = data.collection;
   const cars: CarObject[] = carsData?.items || [];
+
   return (
     <div className="w-full">
       <Header title="Avtomobillar" />

@@ -163,3 +163,9 @@ declare type PriceButton = {
   start: number;
   end: number;
 };
+
+declare type MenuParametrs = {
+  id: number;
+  name: string;
+  children: string[];
+};

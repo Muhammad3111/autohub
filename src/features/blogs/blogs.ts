@@ -45,6 +45,14 @@ export const carsApi = apiSlice.injectEndpoints({
       invalidatesTags: ["BLOGS"],
     }),
 
+    updateLike: builder.mutation({
+      query: (id: string) => ({
+        url: `/articles/like/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["BLOGS"],
+    }),
+
     deleteBlog: builder.mutation({
       query: (id: string) => ({
         url: `/articles/delete/${id}`,
