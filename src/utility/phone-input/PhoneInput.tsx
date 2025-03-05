@@ -48,6 +48,7 @@ const PhoneInput = ({ value, onChange }: PhoneInputProps) => {
                     autoComplete="off"
                     name="phone-number-input"
                     id="phone-number-input"
+                    autoFocus
                 />
             </div>
         </div>
