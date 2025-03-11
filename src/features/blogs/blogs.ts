@@ -19,7 +19,14 @@ export const carsApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["BLOGS"],
     }),
-
+    addComment: builder.mutation({
+      query: (commentData: Comments) => ({
+        url: "/commons/reviews/create",
+        method: "POST",
+        body: commentData,
+      }),
+      invalidatesTags: ["BLOGS"],
+    }),
     getBlogs: builder.query<UrlsData, { page?: number }>({
       query: ({ page = 1 }) => ({
         url: "/articles",
@@ -65,8 +72,10 @@ export const carsApi = apiSlice.injectEndpoints({
 
 export const {
   useAddBlogMutation,
+  useAddCommentMutation,
   useGetBlogsQuery,
   useGetBlogByIdQuery,
+  useUpdateLikeMutation,
   useUpdateBlogMutation,
   useDeleteBlogMutation,
 } = carsApi;
