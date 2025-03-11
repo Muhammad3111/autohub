@@ -11,7 +11,7 @@ export default function Parametrs() {
     scroller.scrollTo(id, {
       duration: 800,
       smooth: "easeInOutQuart",
-      offset: -50,
+      offset: -80,
       containerId: "tableContainer",
     });
   };
