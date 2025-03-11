@@ -93,9 +93,18 @@ const Navbar = () => {
                 <div className="flex items-center gap-6">
                     <Language />
 
-                    {!isLogin && (
+                    {/* {!isLogin && (
                         <button
                             onClick={() => setOpenLogin(true)}
+                            className="flex items-center gap-2 rounded-full font-medium"
+                        >
+                            <FiUser className="text-xl" />
+                            Kirish
+                        </button>
+                    )} */}
+                    {!isLogin && (
+                        <button
+                            onClick={() => navigate("/sign-in")}
                             className="flex items-center gap-2 rounded-full font-medium"
                         >
                             <FiUser className="text-xl" />
