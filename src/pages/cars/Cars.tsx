@@ -8,7 +8,6 @@ import CardCar from "../../components/card/CardCar";
 import { useGetCarsQuery } from "../../features/cars/carSlice";
 import Button from "../../utility/button/Button";
 import { Context } from "../../context/Context";
-import Footer from "../../components/footer/Footer";
 import SkeletonByCars from "../../components/skeletons/SkeletonByCars";
 
 const Cars = () => {
@@ -113,7 +112,6 @@ const Cars = () => {
                     )}
                 </div>
             </div>
-            <Footer />
         </div>
     );
 };

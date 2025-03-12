@@ -9,113 +9,117 @@ import About6 from "../../assets/about-6.png";
 import About7 from "../../assets/about-7.png";
 import About8 from "../../assets/about-8.png";
 import AboutSlider from "./AboutSlider";
-import Footer from "../../components/footer/Footer";
 
 type AboutState = {
-  img: string;
-  title: string;
-  desc: string;
-  isBorder: boolean;
+    img: string;
+    title: string;
+    desc: string;
+    isBorder: boolean;
 };
 
 const AboutUs = () => {
-  const carsAbout: AboutState[] = [
-    {
-      img: About1,
-      title: "Wide Selection of Vehicles",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      isBorder: false,
-    },
-    {
-      img: About2,
-      title: "Insurance & Special Offers",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      isBorder: true,
-    },
-    {
-      img: About3,
-      title: "Excellent Customer Service",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      isBorder: true,
-    },
-    {
-      img: About4,
-      title: "Locialized Car Service",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      isBorder: true,
-    },
-    {
-      img: About5,
-      title: "Easy Booking Process",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      isBorder: false,
-    },
-    {
-      img: About6,
-      title: "Well-Maintained Vehicles",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      isBorder: true,
-    },
-    {
-      img: About7,
-      title: "Membership and Rewards",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      isBorder: true,
-    },
-    {
-      img: About8,
-      title: "Flexible Rental Options",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-      isBorder: true,
-    },
-  ];
+    const carsAbout: AboutState[] = [
+        {
+            img: About1,
+            title: "Wide Selection of Vehicles",
+            desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            isBorder: false,
+        },
+        {
+            img: About2,
+            title: "Insurance & Special Offers",
+            desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            isBorder: true,
+        },
+        {
+            img: About3,
+            title: "Excellent Customer Service",
+            desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            isBorder: true,
+        },
+        {
+            img: About4,
+            title: "Locialized Car Service",
+            desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            isBorder: true,
+        },
+        {
+            img: About5,
+            title: "Easy Booking Process",
+            desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            isBorder: false,
+        },
+        {
+            img: About6,
+            title: "Well-Maintained Vehicles",
+            desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            isBorder: true,
+        },
+        {
+            img: About7,
+            title: "Membership and Rewards",
+            desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            isBorder: true,
+        },
+        {
+            img: About8,
+            title: "Flexible Rental Options",
+            desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            isBorder: true,
+        },
+    ];
 
-  return (
-    <div className="w-full">
-      <Header title="About" />
-      <div className="bg-white max-w-[1440px] mx-auto">
-        <div className="flex flex-col gap-10 p-10">
-          <h1 className="text-3xl text-center font-medium">Our Partners</h1>
+    return (
+        <div className="w-full">
+            <Header title="About" />
+            <div className="bg-white">
+                <div className="flex flex-col gap-10 p-10">
+                    <h1 className="text-3xl text-center font-medium">
+                        Our Partners
+                    </h1>
 
-          <div className="p-20">
-            <AboutSlider />
-          </div>
+                    <div className="p-20">
+                        <AboutSlider />
+                    </div>
 
-          <div className="text-3xl text-center font-medium">
-            Why We are{" "}
-            <span className="text-primary cursor-pointer">Specialized!</span>{" "}
-            Why Choose Us?
-          </div>
+                    <div className="text-3xl text-center font-medium">
+                        Why We are{" "}
+                        <span className="text-primary cursor-pointer">
+                            Specialized!
+                        </span>{" "}
+                        Why Choose Us?
+                    </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {carsAbout.map((item, index) => (
-              <div
-                key={index}
-                className={`p-6 rounded-lg transition-all duration-300 hover:shadow-xl cursor-pointer border-2`}
-              >
-                <div className="flex flex-col items-center text-center space-y-4">
-                  <div className="w-16 h-16 flex items-center justify-center">
-                    <img
-                      src={item.img}
-                      alt={item.title}
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {carsAbout.map((item, index) => (
+                            <div
+                                key={index}
+                                className={`p-6 rounded-lg transition-all duration-300 hover:shadow-xl cursor-pointer border-2`}
+                            >
+                                <div className="flex flex-col items-center text-center space-y-4">
+                                    <div className="w-16 h-16 flex items-center justify-center">
+                                        <img
+                                            src={item.img}
+                                            alt={item.title}
+                                            className="w-full h-full object-contain"
+                                        />
+                                    </div>
 
-                  <h3 className="text-xl font-semibold">{item.title}</h3>
+                                    <h3 className="text-xl font-semibold">
+                                        {item.title}
+                                    </h3>
 
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    {item.desc}
-                  </p>
+                                    <p className="text-gray-600 text-sm leading-relaxed">
+                                        {item.desc}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-              </div>
-            ))}
-          </div>
+            </div>
         </div>
-      </div>
-      <Footer />
-    </div>
-  );
+    );
 };
 
 export default AboutUs;
