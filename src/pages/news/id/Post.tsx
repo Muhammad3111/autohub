@@ -87,7 +87,6 @@ export default function Post() {
                   onSubmit={handleSubmit(onSubmit)}
                   className="mt-4 flex flex-col gap-2"
                 >
-                  <label className="font-semibold">{userData.username}</label>
                   <textarea
                     className="border rounded p-2"
                     placeholder="Fikringizni yozing..."
@@ -96,10 +95,7 @@ export default function Post() {
                     })}
                     required
                   />
-                  <button
-                    type="submit"
-                    className="bg-blue-500 text-white rounded p-2" 
-                  >
+                  <button type="submit" className="bg-primary text-white p-2">
                     Yuborish
                   </button>
                 </form>
