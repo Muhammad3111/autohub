@@ -68,94 +68,102 @@ const SignIn = () => {
     };
 
     return (
-        <div className="flex flex-col items-center gap-20 bg-white">
+        <div>
             <Header title="Kirish" />
+            <div className="flex flex-col items-center gap-20 bg-white">
+                <form
+                    onSubmit={handleSubmit(handleLogin)}
+                    className="w-[400px] min-h-[450px] bg-white rounded shadow-custom p-10"
+                >
+                    <h1 className="text-center text-2xl font-medium">Kirish</h1>
 
-            <form
-                onSubmit={handleSubmit(handleLogin)}
-                className="w-[400px] min-h-[450px] bg-white rounded shadow-custom p-10"
-            >
-                <h1 className="text-center text-2xl font-medium">Kirish</h1>
-
-                <div className="mb-4">
-                    <div className="flex items-center relative mt-8">
-                        <div className="absolute left-2">
-                            <FiUser className="text-xl" />
+                    <div className="mb-4">
+                        <div className="flex items-center relative mt-8">
+                            <div className="absolute left-2">
+                                <FiUser className="text-xl" />
+                            </div>
+                            <input
+                                type="text"
+                                {...register("username", {
+                                    required: "Foydalanuvchi nomi majburiy",
+                                })}
+                                placeholder="Foydalanuvchi nomi"
+                                className={`w-full ring-1 ring-grey focus:ring-2 focus:ring-primary outline-none  duration-300 h-10 rounded text-sm indent-9`}
+                                autoComplete="off"
+                            />
                         </div>
-                        <input
-                            type="text"
-                            {...register("username", {
-                                required: "Foydalanuvchi nomi majburiy",
-                            })}
-                            placeholder="Foydalanuvchi nomi"
-                            className={`w-full ring-1 ring-grey focus:ring-2 focus:ring-primary outline-none  duration-300 h-10 rounded text-sm indent-9`}
-                            autoComplete="off"
-                        />
-                    </div>
-                    {errors.username && (
-                        <span className="text-red-500 text-sm">
-                            {errors.username.message}
-                        </span>
-                    )}
-                </div>
-
-                <div className="mb-4">
-                    <div className="flex items-center relative mt-8">
-                        <div className="absolute left-2">
-                            <MdOutlineVpnKey className="text-xl" />
-                        </div>
-                        <input
-                            type={isShow ? "text" : "password"}
-                            placeholder="Parol"
-                            {...register("password", {
-                                required: "Parol majburiy",
-                            })}
-                            className={`w-full ring-1 ring-grey focus:ring-2 focus:ring-primary outline-none  duration-300 h-10 rounded text-sm indent-9`}
-                            autoComplete="off"
-                        />
-
-                        {watch("password") && watch("password").length > 0 && (
-                            <button
-                                type="button"
-                                className="absolute right-2.5 text-xl"
-                            >
-                                {isShow ? (
-                                    <BiHide onClick={() => setIsShow(false)} />
-                                ) : (
-                                    <BiShow onClick={() => setIsShow(true)} />
-                                )}
-                            </button>
+                        {errors.username && (
+                            <span className="text-red-500 text-sm">
+                                {errors.username.message}
+                            </span>
                         )}
                     </div>
-                    {errors.password && (
-                        <span className="text-red-500 text-sm">
-                            {errors.password.message}
-                        </span>
-                    )}
-                </div>
 
-                <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full font-medium bg-primary hover:bg-primary-hover duration-150 text-white rounded h-10"
-                >
-                    {isLoading ? "Kirish..." : "Kirish"}
-                </button>
+                    <div className="mb-4">
+                        <div className="flex items-center relative mt-8">
+                            <div className="absolute left-2">
+                                <MdOutlineVpnKey className="text-xl" />
+                            </div>
+                            <input
+                                type={isShow ? "text" : "password"}
+                                placeholder="Parol"
+                                {...register("password", {
+                                    required: "Parol majburiy",
+                                })}
+                                className={`w-full ring-1 ring-grey focus:ring-2 focus:ring-primary outline-none  duration-300 h-10 rounded text-sm indent-9`}
+                                autoComplete="off"
+                            />
 
-                <div className="flex items-center gap-2 mt-6">
-                    <div className="w-full h-[2px] bg-gray-200"></div>
-                    <p className="font-medium text-sm text-gray-400">Yoki</p>
-                    <div className="w-full h-[2px] bg-gray-200"></div>
-                </div>
+                            {watch("password") &&
+                                watch("password").length > 0 && (
+                                    <button
+                                        type="button"
+                                        className="absolute right-2.5 text-xl"
+                                    >
+                                        {isShow ? (
+                                            <BiHide
+                                                onClick={() => setIsShow(false)}
+                                            />
+                                        ) : (
+                                            <BiShow
+                                                onClick={() => setIsShow(true)}
+                                            />
+                                        )}
+                                    </button>
+                                )}
+                        </div>
+                        {errors.password && (
+                            <span className="text-red-500 text-sm">
+                                {errors.password.message}
+                            </span>
+                        )}
+                    </div>
 
-                <button
-                    onClick={() => navigate("/sign-up")}
-                    type="button"
-                    className="w-full font-medium border-2 rounded h-10 mt-10"
-                >
-                    Ro'yxatdan o'tish
-                </button>
-            </form>
+                    <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="w-full font-medium bg-primary hover:bg-primary-hover duration-150 text-white rounded h-10"
+                    >
+                        {isLoading ? "Kirish..." : "Kirish"}
+                    </button>
+
+                    <div className="flex items-center gap-2 mt-6">
+                        <div className="w-full h-[2px] bg-gray-200"></div>
+                        <p className="font-medium text-sm text-gray-400">
+                            Yoki
+                        </p>
+                        <div className="w-full h-[2px] bg-gray-200"></div>
+                    </div>
+
+                    <button
+                        onClick={() => navigate("/sign-up")}
+                        type="button"
+                        className="w-full font-medium border-2 rounded h-10 mt-10"
+                    >
+                        Ro'yxatdan o'tish
+                    </button>
+                </form>
+            </div>
         </div>
     );
 };
