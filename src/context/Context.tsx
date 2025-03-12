@@ -1,57 +1,79 @@
-import React, { createContext, useState, ReactNode, useEffect } from "react";
+import React, {
+    createContext,
+    useState,
+    ReactNode,
+    useEffect,
+    Dispatch,
+    SetStateAction,
+} from "react";
 
 type Price = {
-  id: number;
-  start: number;
-  end: number;
+    id: number;
+    start: number;
+    end: number;
 };
 
 type CarContextProps = {
-  brand: string;
-  setBrand: (brand: string) => void;
-  model: string;
-  setModel: (model: string) => void;
-  price: Price;
-  setPrice: (price: Price) => void;
+    brand: string;
+    setBrand: (brand: string) => void;
+    model: string;
+    setModel: (model: string) => void;
+    price: Price;
+    setPrice: (price: Price) => void;
+    sidebarOpen: boolean;
+    setSidebarOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 export const Context = createContext<CarContextProps | undefined>(undefined);
 
 interface CarProviderProps {
-  children: ReactNode;
+    children: ReactNode;
 }
 
 export const ContextProvider: React.FC<CarProviderProps> = ({ children }) => {
-  // Dastlabki qiymatlarni localStorage'dan olish
-  const [brand, setBrand] = useState<string>(
-    () => localStorage.getItem("brand") || ""
-  );
-  const [model, setModel] = useState<string>(
-    () => localStorage.getItem("model") || "Cheksiz"
-  );
-  const [price, setPrice] = useState<Price>(() => {
-    const storedPrice = localStorage.getItem("price");
-    return storedPrice ? JSON.parse(storedPrice) : { id: 0, start: 0, end: 0 };
-  });
+    // Dastlabki qiymatlarni localStorage'dan olish
+    const [brand, setBrand] = useState<string>(
+        () => localStorage.getItem("brand") || ""
+    );
+    const [model, setModel] = useState<string>(
+        () => localStorage.getItem("model") || "Cheksiz"
+    );
+    const [price, setPrice] = useState<Price>(() => {
+        const storedPrice = localStorage.getItem("price");
+        return storedPrice
+            ? JSON.parse(storedPrice)
+            : { id: 0, start: 0, end: 0 };
+    });
 
-  // Har safar state o'zgarganda localStorage'ni yangilash
-  useEffect(() => {
-    localStorage.setItem("brand", brand);
-  }, [brand]);
+    const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  useEffect(() => {
-    localStorage.setItem("model", model);
-  }, [model]);
+    // Har safar state o'zgarganda localStorage'ni yangilash
+    useEffect(() => {
+        localStorage.setItem("brand", brand);
+    }, [brand]);
 
-  useEffect(() => {
-    localStorage.setItem("price", JSON.stringify(price));
-  }, [price]);
+    useEffect(() => {
+        localStorage.setItem("model", model);
+    }, [model]);
 
-  return (
-    <Context.Provider
-      value={{ brand, setBrand, model, setModel, price, setPrice }}
-    >
-      {children}
-    </Context.Provider>
-  );
+    useEffect(() => {
+        localStorage.setItem("price", JSON.stringify(price));
+    }, [price]);
+
+    return (
+        <Context.Provider
+            value={{
+                brand,
+                setBrand,
+                model,
+                setModel,
+                price,
+                setPrice,
+                sidebarOpen,
+                setSidebarOpen,
+            }}
+        >
+            {children}
+        </Context.Provider>
+    );
 };

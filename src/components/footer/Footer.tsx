@@ -1,11 +1,29 @@
 import { FiFacebook, FiInstagram, FiYoutube } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 type Display = {
     display?: string;
 };
 
 const Footer = ({ display }: Display) => {
+    const { pathname } = useLocation();
+    const links = [
+        "/about-us",
+        "/cars",
+        "/spare-parts",
+        "/services",
+        "/dealers",
+        "/news",
+    ];
+
+    const shouldHideFooter = links.some((route) =>
+        pathname.startsWith(`${route}/`)
+    );
+
+    if (shouldHideFooter || display === "none") {
+        return <></>;
+    }
+
     return (
         <div
             className={`w-full bg-dark p-10 mt-10 ${
