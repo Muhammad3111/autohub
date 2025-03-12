@@ -16,7 +16,7 @@ export default function Post() {
   const { register, reset, handleSubmit } = useForm<Comments>();
   const { data, isLoading } = useGetBlogByIdQuery(id!);
   const [updateBlogLike, { isSuccess }] = useUpdateLikeMutation();
-  const [addComment] = useAddCommentMutation();
+  const [addComment, { isSuccess: commentSuccess }] = useAddCommentMutation();
   const userData = useSelector(selectCurrentUserData);
 
   if (isLoading) {
@@ -32,12 +32,16 @@ export default function Post() {
   };
 
   const onSubmit: SubmitHandler<Comments> = async (data) => {
+    const formData = new FormData();
     if (id) {
-      data.target_id = id;
+      formData.append("target_id", id);
+      formData.append("comment", data.comment);
     }
     try {
-      await addComment(data);
-      toast.success("Comment muvaffaqiyatli qo'shildi");
+      await addComment(formData);
+      if (commentSuccess) {
+        toast.success("Comment muvaffaqiyatli qo'shildi");
+      }
       reset();
     } catch (error) {
       console.error(error);
@@ -70,7 +74,7 @@ export default function Post() {
             </div>
             <div className="flex items-center justify-end">
               <button className="flex items-center gap-2" onClick={handleLike}>
-                {!isSuccess ? (
+                {isSuccess ? (
                   <BiSolidLike className="text-gray-500" />
                 ) : (
                   <BiLike />

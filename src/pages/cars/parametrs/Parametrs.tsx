@@ -4,7 +4,7 @@ import data from "../../../mock/data.json";
 
 export default function Parametrs() {
   const categories: MenuParametrs[] = data.menu_sidebar;
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string | null>("cat0");
 
   const handleScrollToCategory = (id: string) => {
     setActiveCategory(id);

@@ -11,7 +11,7 @@ const Rating: FC<RatingProps> = ({ rating }) => {
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0); // Bo‘sh yulduzlar
 
   return (
-    <div className="flex gap-1 text-yellow-500 text-xl">
+    <div className="flex gap-1 text-primary text-xl">
       {[...Array(fullStars)].map((_, i) => (
         <FaStar key={`full-${i}`} />
       ))}

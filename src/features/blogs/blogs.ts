@@ -20,10 +20,11 @@ export const carsApi = apiSlice.injectEndpoints({
       invalidatesTags: ["BLOGS"],
     }),
     addComment: builder.mutation({
-      query: (commentData: Comments) => ({
+      query: (commentData: FormData) => ({
         url: "/commons/reviews/create",
         method: "POST",
         body: commentData,
+        formdata: true,
       }),
       invalidatesTags: ["BLOGS"],
     }),
