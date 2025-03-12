@@ -80,11 +80,10 @@ const CarPrices = () => {
                                 className="border p-2 text-center hover:border-primary duration-300 group w-full"
                             >
                                 <img
-                                    width={150}
                                     src={`http://89.223.126.64:8080/api/${item.cover_image}`}
                                     alt={item.specifics[0].name_uz}
                                     loading="lazy"
-                                    className="group-hover:scale-105 duration-300 object-cover h-40"
+                                    className="group-hover:scale-105 duration-300 object-cover w-full h-40"
                                 />
                                 <p>{item.specifics[0].name_uz}</p>
                                 <p>

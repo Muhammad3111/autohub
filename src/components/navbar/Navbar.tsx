@@ -67,7 +67,7 @@ const Navbar = () => {
     ];
 
     return (
-        <div className="fixed w-full top-0 z-20 bg-dark">
+        <div className="fixed top-0 left-0 z-20 bg-dark w-full">
             {isLoading && <Loading />}
             <div className="max-w-[1440px] mx-auto h-[72px] flex items-center justify-between text-white">
                 <Link to={"/"} className="text-2xl font-semibold">
