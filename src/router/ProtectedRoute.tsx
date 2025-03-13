@@ -14,7 +14,7 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
     const hasRequiredRole = userData?.role === requiredRole;
 
     if (!isAuthenticated) {
-        return <Navigate to="/sign-in" />;
+        return <Navigate to="/" />;
     }
 
     if (requiredRole === "admin" && !hasRequiredRole) {

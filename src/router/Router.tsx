@@ -31,16 +31,12 @@ import Dealers from "../pages/dealers/Dealers";
 import DealerId from "../pages/dealers/id/DealerId";
 import News from "../pages/news/News";
 import Contact from "../pages/contact/Contact";
-import SignIn from "../pages/sign-in/SignIn";
-import SignUp from "../pages/sign-up/SignUp";
 import NotFound from "../pages/not-found/NotFound";
 import Search from "../pages/search/Search";
 import Profile from "../pages/profile/Profile";
 
 // Layouts
 import Layout from "../layout/Layout";
-import { useSelector } from "react-redux";
-import { selectCurrentIsLogin } from "../features/auth/authSlice";
 import CarId from "../pages/cars/id/CarId";
 import Shop from "../pages/cars/shop/Shop";
 import SpareId from "../pages/spare-parts/id/SpareId";
@@ -51,8 +47,6 @@ import Parametrs from "../pages/cars/parametrs/Parametrs";
 import HomeLayout from "../layout/HomeLayout";
 
 const Router = () => {
-    const isLogin = useSelector(selectCurrentIsLogin);
-
     return (
         <Routes>
             {/* user route */}
@@ -74,14 +68,16 @@ const Router = () => {
                 <Route path="news/:id" element={<Post />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/search" element={<Search />} />
-                <Route
+                <Route path="*" element={<Navigate to="/not-found" />} />
+                <Route path="/not-found" element={<NotFound />} />
+                {/* <Route
                     path="/sign-in"
                     element={isLogin ? <Navigate to="/" replace /> : <SignIn />}
                 />
                 <Route
                     path="/sign-up"
                     element={isLogin ? <Navigate to="/" replace /> : <SignUp />}
-                />
+                /> */}
 
                 <Route
                     path="/profile"
@@ -128,9 +124,6 @@ const Router = () => {
                 <Route path="test-drive" element={<TestDrive />} />
                 <Route path="comments" element={<Comments />} />
             </Route>
-
-            <Route path="*" element={<Navigate to="/not-found" />} />
-            <Route path="/not-found" element={<NotFound />} />
         </Routes>
     );
 };

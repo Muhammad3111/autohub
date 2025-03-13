@@ -6,13 +6,15 @@ type OTPFormProps = {
     onBack: () => void;
     onSubmit: (otp: string) => void;
     cancel: () => void;
+    code: string;
+    loading: boolean;
 };
 
 type OTPInput = {
     otp: string[];
 };
 
-const OTPForm = ({ onBack, onSubmit, cancel }: OTPFormProps) => {
+const OTPForm = ({ onBack, onSubmit, cancel, code, loading }: OTPFormProps) => {
     const [countdown, setCountdown] = useState(60);
     const [resendCount, setResendCount] = useState(0);
     const {
@@ -27,6 +29,7 @@ const OTPForm = ({ onBack, onSubmit, cancel }: OTPFormProps) => {
             otp: ["", "", "", "", ""],
         },
         mode: "onChange",
+        shouldUnregister: false,
     });
 
     useEffect(() => {
@@ -97,7 +100,7 @@ const OTPForm = ({ onBack, onSubmit, cancel }: OTPFormProps) => {
                 SMS kodni kiriting
             </h2>
             <p className="text-sm text-center text-gray-500 mb-6">
-                Kodni telefoningizga yubordik
+                Kodni telefoningizga yubordik {code}
             </p>
 
             <form onSubmit={handleSubmit(onSubmitOTP)}>
@@ -162,9 +165,9 @@ const OTPForm = ({ onBack, onSubmit, cancel }: OTPFormProps) => {
                                 ? "bg-primary hover:bg-primary-hover"
                                 : "bg-gray-400 cursor-not-allowed"
                         }`}
-                        disabled={!isValid}
+                        disabled={!isValid || loading}
                     >
-                        Tasdiqlash
+                        Tasdiqlash{loading && "..."}
                     </button>
                 </div>
             </form>

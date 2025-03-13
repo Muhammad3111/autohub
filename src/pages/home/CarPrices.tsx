@@ -30,7 +30,7 @@ const CarPrices = () => {
         return <h2>Loading...</h2>;
     }
 
-    const cars = carsData?.items || [];
+    const cars: CarObject[] = carsData?.items || [];
 
     return (
         <div className="w-full min-h-[300px] border">
@@ -54,18 +54,18 @@ const CarPrices = () => {
                 {cars.length > 0 ? (
                     cars.map((item) => (
                         <Link
-                            to={`/cars/${item?.specifics[0].brand.name}/${item.id}`}
+                            to={`/cars/${item?.id}`}
                             key={item.id}
                             className="border p-2 text-center hover:border-primary duration-300 group w-full"
                         >
                             <img
                                 src={`http://89.223.126.64:8080/api/${item.cover_image}`}
-                                alt={item.specifics[0].name_uz}
+                                alt={""}
                                 loading="lazy"
                                 className="group-hover:scale-105 duration-300 object-cover w-full h-40"
                             />
-                            <p>{item.specifics[0].name_uz}</p>
-                            <p>${item.specifics[0].price.toLocaleString()}</p>
+                            {/* <p>{item.specifics[0].name_uz}</p>
+                            <p>${item.specifics[0].price.toLocaleString()}</p> */}
                         </Link>
                     ))
                 ) : (

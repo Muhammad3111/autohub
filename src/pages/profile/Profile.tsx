@@ -8,9 +8,7 @@ import MyCreateCar from "./MyCreateCar";
 import Loading from "../../components/loading/Loading";
 
 const Profile = () => {
-    const userData: UserDataType | null | undefined = useSelector(
-        selectCurrentUserData
-    );
+    const userData = useSelector(selectCurrentUserData);
 
     const [activeTab, setActiveTab] = useState<
         "userProfile" | "likedCar" | "dealerProfile" | "myCreateCars"
@@ -23,7 +21,7 @@ const Profile = () => {
     return (
         <div>
             <div className="my-10 font-medium text-2xl">
-                {userData.name ? userData.name : userData.username}
+                {userData.first_name}
             </div>
             <div className="flex justify-between gap-20">
                 {userData.role === "user" ? (
