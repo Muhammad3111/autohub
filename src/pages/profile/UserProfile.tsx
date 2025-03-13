@@ -5,33 +5,21 @@ import { logOut } from "../../features/auth/authSlice";
 import { useRef, useState } from "react";
 import { PatternFormat } from "react-number-format";
 
-type InputState = {
-    name: string;
-    surname: string;
-    phoneNumber: string;
-    email: string;
+type UserProfileProps = {
+    userData: UserDataType;
 };
 
-type UserDataProps = {
-    userData: {
-        phone_number: string;
-        role: string;
-        username: string;
-        name: string;
-    };
-};
-
-const UserProfile = ({ userData }: UserDataProps) => {
+const UserProfile = ({ userData }: UserProfileProps) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isChangeInput, setIsChangeInput] = useState<boolean>(false);
 
     const profilePhoto = useRef<HTMLInputElement>(null);
-    const [formState, setFormState] = useState<InputState>({
-        name: "",
-        surname: "",
-        phoneNumber: userData.phone_number,
-        email: "",
+    const [formState, setFormState] = useState<UserDataType>({
+        first_name: userData.first_name || "",
+        last_name: userData.last_name || "",
+        role: userData.role || "",
+        phone_number: userData.phone_number || "",
     });
 
     const handleLogout = () => {
@@ -58,10 +46,10 @@ const UserProfile = ({ userData }: UserDataProps) => {
 
     const handleCancel = () => {
         setFormState({
-            name: userData.name,
-            surname: "",
-            phoneNumber: userData.phone_number,
-            email: "",
+            first_name: "",
+            last_name: "",
+            role: "",
+            phone_number: "",
         });
 
         setIsChangeInput(false);
@@ -101,39 +89,39 @@ const UserProfile = ({ userData }: UserDataProps) => {
                 <div className="grid grid-cols-2 flex-1 gap-10">
                     <div className="flex flex-col w-full gap-1">
                         <label
-                            htmlFor="name"
+                            htmlFor="first_name"
                             className="font-semibold text-gray-500"
                         >
                             Ism
                         </label>
                         <input
                             type="text"
-                            name="name"
-                            id="name"
+                            name="first_name"
+                            id="first_name"
                             className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-[#aaa] duration-150"
-                            value={formState.name}
+                            value={formState.first_name}
                             onChange={handleChange}
                         />
                     </div>
                     <div className="flex flex-col w-full gap-1">
                         <label
-                            htmlFor="surname"
+                            htmlFor="last_name"
                             className="font-semibold text-gray-500"
                         >
                             Familiya
                         </label>
                         <input
                             type="text"
-                            id="surname"
-                            name="surname"
+                            id="last_name"
+                            name="last_name"
                             className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-[#aaa] duration-150"
-                            value={formState.surname}
+                            value={formState.last_name}
                             onChange={handleChange}
                         />
                     </div>
                     <div className="flex flex-col w-full gap-1">
                         <label
-                            htmlFor="phoneNumber"
+                            htmlFor="phone_number"
                             className="font-semibold text-gray-500"
                         >
                             Telefon raqam
@@ -142,26 +130,10 @@ const UserProfile = ({ userData }: UserDataProps) => {
                             className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-[#aaa] duration-150"
                             format="+998 ## ### ## ##"
                             placeholder="+998"
-                            value={formState.phoneNumber}
+                            value={formState.phone_number}
                             onChange={handleChange}
-                            name="phoneNumber"
-                            id="phoneNumber"
-                        />
-                    </div>
-                    <div className="flex flex-col w-full gap-1">
-                        <label
-                            htmlFor="email"
-                            className="font-semibold text-gray-500"
-                        >
-                            Email
-                        </label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-[#aaa] duration-150"
-                            value={formState.email}
-                            onChange={handleChange}
+                            name="phone_number"
+                            id="phone_number"
                         />
                     </div>
                 </div>

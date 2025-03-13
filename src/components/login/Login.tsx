@@ -4,36 +4,101 @@ import Modal from "../modal/Modal";
 import PhoneInput from "../../utility/phone-input/PhoneInput";
 import OTPForm from "./OtpForm";
 import { SubmitHandler, useForm, Controller } from "react-hook-form";
+import RegisterForm from "./RegisterForm";
+import {
+    useLazyAuthDetailQuery,
+    useRegisterMutation,
+    useSendOtpMutation,
+    useVerifyOtpMutation,
+} from "../../features/auth/authApiSlice";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../../features/auth/authSlice";
 
 type LoginProps = {
     openLogin: boolean;
     setOpenLogin: (openLogin: boolean) => void;
 };
 
-type LoginInput = {
-    phone_number: string;
-};
-
 const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
-    const [step, setStep] = useState<"phone" | "otp">("phone");
+    const [step, setStep] = useState<"phone" | "otp" | "register">("phone");
+    const [code, setCode] = useState("");
+
+    const [sendOtp, { isLoading: otpLoading }] = useSendOtpMutation();
+    const [verifyOtp, { isLoading: verifyLoading }] = useVerifyOtpMutation();
+    const [authRegister, { isLoading: registerLoading }] =
+        useRegisterMutation();
+    const [detailTrigger] = useLazyAuthDetailQuery();
+    const dispatch = useDispatch();
 
     const {
         control,
         handleSubmit,
         formState: { errors },
-    } = useForm<LoginInput>({
+        getValues,
+        reset,
+    } = useForm<AuthSendOtp>({
         defaultValues: {
             phone_number: "",
         },
     });
 
-    const handleLogin: SubmitHandler<LoginInput> = async (data) => {
-        console.log("Submitted data:", data);
-        setStep("otp");
+    const handleLogin: SubmitHandler<AuthSendOtp> = async (data) => {
+        await sendOtp({
+            phone_number: `+998${data.phone_number.split(" ").join("")}`,
+        })
+            .unwrap()
+            .then((res) => {
+                setCode(res.otp);
+                setStep("otp");
+            });
     };
 
-    const handleOtpSubmit = (otp: string) => {
-        console.log("Entered OTP:", otp);
+    const handleOtpSubmit = async (otp: string) => {
+        await verifyOtp({
+            phone_number: `+998${getValues("phone_number")
+                .split(" ")
+                .join("")}`,
+            otp,
+        })
+            .unwrap()
+            .then((res) => {
+                if (res.access_token) {
+                    detailTrigger({ token: res.access_token })
+                        .unwrap()
+                        .then((authData) => {
+                            if (authData) {
+                                dispatch(
+                                    setCredentials({
+                                        accessToken: res.access_toke,
+                                        refreshToken: res.refresh_token,
+                                        userData: authData,
+                                    })
+                                );
+                                setOpenLogin(false);
+                                setStep("phone");
+                                reset();
+                            }
+                        });
+                } else {
+                    setStep("register");
+                }
+            });
+    };
+
+    const handleRegisterSubmit = async (data: AuthRegister) => {
+        await authRegister({
+            ...data,
+            phone_number: `+998${getValues("phone_number")
+                .split(" ")
+                .join("")}`,
+        })
+            .unwrap()
+            .then((res) => {
+                console.log(res);
+
+                setStep("phone");
+                reset();
+            });
     };
 
     return (
@@ -50,11 +115,23 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
                 )}
 
                 <div
-                    className={`flex transition-transform duration-500 ${
-                        step === "otp" ? "-translate-x-1/2" : "translate-x-0"
-                    } w-[200%]`}
+                    style={{
+                        transform:
+                            step === "phone"
+                                ? "translateX(0%)"
+                                : step === "otp"
+                                ? "translateX(-100%)"
+                                : "translateX(-200%)",
+                        height:
+                            step === "phone"
+                                ? "250px"
+                                : step === "otp"
+                                ? "280px"
+                                : "430px",
+                    }}
+                    className={`flex transition-transform duration-500`}
                 >
-                    <div className="w-1/2 p-6">
+                    <div className="w-full flex-shrink-0 p-6">
                         <h2 className="text-xl font-bold text-center mb-4">
                             Telefon raqamingizni kiriting
                         </h2>
@@ -91,21 +168,31 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
                             <button
                                 type="submit"
                                 className="w-full bg-primary text-white p-2.5 text-sm mt-5 hover:bg-primary-hover duration-150 rounded"
+                                disabled={otpLoading}
                             >
-                                Kodni olish
+                                Kodni olish{otpLoading && "..."}
                             </button>
                         </form>
                     </div>
 
-                    {step === "otp" && (
-                        <div className="w-1/2">
-                            <OTPForm
-                                onBack={() => setStep("phone")}
-                                onSubmit={handleOtpSubmit}
-                                cancel={() => setOpenLogin(false)}
-                            />
-                        </div>
-                    )}
+                    <div className="w-full flex-shrink-0">
+                        <OTPForm
+                            onBack={() => setStep("phone")}
+                            onSubmit={handleOtpSubmit}
+                            cancel={() => setOpenLogin(false)}
+                            code={code}
+                            loading={verifyLoading}
+                        />
+                    </div>
+
+                    <div className="w-full flex-shrink-0">
+                        <RegisterForm
+                            onBack={() => setStep("otp")}
+                            onSubmit={handleRegisterSubmit}
+                            cancel={() => setOpenLogin(false)}
+                            loading={registerLoading}
+                        />
+                    </div>
                 </div>
             </div>
         </Modal>
