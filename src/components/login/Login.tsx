@@ -37,7 +37,7 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
     };
 
     return (
-        <Modal isOpen={openLogin} onClose={() => setOpenLogin(false)}>
+        <Modal isOpen={openLogin}>
             <div className="bg-white rounded-2xl w-full relative overflow-hidden">
                 {step === "phone" && (
                     <button
