@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import {
-  LuLayoutDashboard,
-  LuNotebookText,
-  LuUsersRound,
-} from "react-icons/lu";
+import { LuLayoutDashboard, LuNotebookText } from "react-icons/lu";
 import Logo from "../../assets/autohub-logo.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
-import { IoCarSportOutline, IoChatbubblesOutline } from "react-icons/io5";
+import { IoCarSportOutline } from "react-icons/io5";
 import { MdOutlinePermMedia, MdOutlineSpeakerNotes } from "react-icons/md";
 import { RiMenuFold3Line } from "react-icons/ri";
 import { CiBoxes } from "react-icons/ci";
@@ -167,7 +163,7 @@ export default function Sidebar() {
           <LuNotebookText className="text-2xl" />
           Test Drive
         </li>
-        <li
+        {/* <li
           onClick={() => navigate("/admin/comments")}
           className={`px-4 py-2 ${
             location.pathname === "/admin/comments"
@@ -188,7 +184,7 @@ export default function Sidebar() {
         >
           <LuUsersRound className="text-2xl" />
           Users
-        </li>
+        </li> */}
       </ul>
     </div>
   );

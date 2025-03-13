@@ -47,7 +47,7 @@ const Pagination: React.FC<PaginationProps> = ({
   );
 
   return (
-    <div className="flex items-center w-full justify-center py-4 col-span-full">
+    <div className="flex items-center w-full justify-center py-2 col-span-full">
       {/* Oldingi tugma */}
       {currentRange > 0 && (
         <button

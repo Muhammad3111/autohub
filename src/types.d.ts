@@ -191,3 +191,12 @@ declare type Comments = {
   comment: string;
   images?: string[];
 };
+
+declare type TestDrive = {
+  id?: string;
+  volunteer_phone: string;
+  volunteer_name: string;
+  test_date: string;
+  status: string;
+  vehicle_id: string;
+};
