@@ -5,7 +5,6 @@ import Modal from "../../utility/modal/Modal";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import {
-  BrandData,
   useGetBrandyIdQuery,
   useUpdateBrandMutation,
 } from "../../features/brands/brands";
@@ -24,13 +23,13 @@ export default function UpdateBrand() {
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<BrandData>({
+  } = useForm<Brand>({
     defaultValues: data,
   });
 
   useEffect(() => {
     if (data) {
-      (Object.keys(data) as (keyof BrandData)[]).forEach((key) => {
+      (Object.keys(data) as (keyof Brand)[]).forEach((key) => {
         setValue(key, data[key]);
       });
       setSelectedImage(data.image || null);
@@ -48,7 +47,7 @@ export default function UpdateBrand() {
     setSelectedImage(null);
   };
 
-  const onSubmit: SubmitHandler<BrandData> = async (data) => {
+  const onSubmit: SubmitHandler<Brand> = async (data) => {
     if (selectedImage) {
       data.image = selectedImage;
     }
@@ -99,6 +98,24 @@ export default function UpdateBrand() {
               {...register("name", { required: "Brand nomi majburiy" })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
             />
+            {errors.name && (
+              <span className="text-red-500 text-sm">
+                {errors.name.message}
+              </span>
+            )}
+          </div>
+          <div className="col-span-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Brand turi
+            </label>
+            <select
+              defaultValue={"vehicle"}
+              {...register("brand_type", { required: "Brnad turi majburiy" })}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
+            >
+              <option value="vehicle">Avtomobil</option>
+              <option value="spare_part">Ehtiyot qisim</option>
+            </select>
             {errors.name && (
               <span className="text-red-500 text-sm">
                 {errors.name.message}

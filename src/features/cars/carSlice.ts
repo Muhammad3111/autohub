@@ -1,26 +1,5 @@
 import { apiSlice } from "../../app/api/apiSlice";
 
-type CarData = {
-  id?: string;
-  name_uz: string;
-  name_ru: string;
-  brand_id: number;
-  model: string;
-  year: number;
-  transmission: string;
-  vehicle_type: string;
-  price: number;
-  engine_type: string;
-  color_uz: string;
-  color_ru: string;
-  drive_type: string;
-  properties: Record<string, string>;
-  description_uz: string;
-  description_ru: string;
-  cover_image?: string;
-  images?: string[];
-};
-
 type UrlsData = {
   metadata: {
     total_count: number;
@@ -33,8 +12,8 @@ type UrlsData = {
 export const carsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     addCar: builder.mutation({
-      query: (carData: CarData) => ({
-        url: "/vehicles/create",
+      query: (carData: CarObject) => ({
+        url: "/vehicles",
         method: "POST",
         body: carData,
       }),
@@ -70,7 +49,7 @@ export const carsApi = apiSlice.injectEndpoints({
     }),
 
     updateCar: builder.mutation({
-      query: ({ id, carData }: { id: string; carData: CarData }) => ({
+      query: ({ id, carData }: { id: string; carData: CarObject }) => ({
         url: `/vehicles/${id}`,
         method: "PUT",
         body: carData,

@@ -31,7 +31,8 @@
     "react-toastify": "^10.0.6",
     "swiper": "^11.2.0",
     "three": "^0.173.0",
-    "typewriter-effect": "^2.21.0"
+    "typewriter-effect": "^2.21.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
@@ -40,6 +41,7 @@
     "@types/react-dom": "^18.3.1",
     "@types/react-scroll": "^1.8.10",
     "@types/swiper": "^6.0.0",
+    "@types/xlsx": "^0.0.35",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.15.0",

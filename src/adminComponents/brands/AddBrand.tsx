@@ -3,7 +3,7 @@ import Button from "../../utility/button/Button";
 import { useState } from "react";
 import Modal from "../../utility/modal/Modal";
 import { toast } from "react-toastify";
-import { BrandData, useAddBrandMutation } from "../../features/brands/brands";
+import { useAddBrandMutation } from "../../features/brands/brands";
 
 export default function AddBrand() {
   const {
@@ -11,7 +11,7 @@ export default function AddBrand() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<BrandData>();
+  } = useForm<Brand>();
 
   const [addBrand] = useAddBrandMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,7 +28,7 @@ export default function AddBrand() {
   const handleRemoveMainImage = () => {
     setSelectedImage(null);
   };
-  const onSubmit: SubmitHandler<BrandData> = async (data) => {
+  const onSubmit: SubmitHandler<Brand> = async (data) => {
     if (selectedImage) {
       data.image = selectedImage;
     }
@@ -76,6 +76,24 @@ export default function AddBrand() {
               {...register("name", { required: "Brnad nomi majburiy" })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
             />
+            {errors.name && (
+              <span className="text-red-500 text-sm">
+                {errors.name.message}
+              </span>
+            )}
+          </div>
+          <div className="col-span-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Brand turi
+            </label>
+            <select
+              defaultValue={"vehicle"}
+              {...register("brand_type", { required: "Brnad turi majburiy" })}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
+            >
+              <option value="vehicle">Avtomobil</option>
+              <option value="spare_part">Ehtiyot qisim</option>
+            </select>
             {errors.name && (
               <span className="text-red-500 text-sm">
                 {errors.name.message}

@@ -1,23 +1,18 @@
 import { apiSlice } from "../../app/api/apiSlice";
 
-export type BrandData = {
-  id?: number;
-  name: string;
-  image: string;
-};
-
 type UrlsData = {
-  total: number;
-  page: number;
-  limit: number;
-  total_pages: number;
-  brands: BrandData[];
+  metadata: {
+    total_count: number;
+    current_page: number;
+    total_pages: number;
+  };
+  items: Brand[];
 };
 
 export const brandsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     addBrand: builder.mutation({
-      query: (brandData: BrandData) => ({
+      query: (brandData: Brand) => ({
         url: "/brands",
         method: "POST",
         body: brandData,
@@ -25,11 +20,11 @@ export const brandsApi = apiSlice.injectEndpoints({
       invalidatesTags: ["BRANDS"],
     }),
 
-    getBrands: builder.query<UrlsData, { page?: number; limit?: number }>({
-      query: ({ page = 1, limit = 12 }) => ({
+    getBrands: builder.query<UrlsData, { page?: number }>({
+      query: ({ page = 1 }) => ({
         url: "/brands",
         method: "GET",
-        params: { page, limit },
+        params: { page },
       }),
       providesTags: ["BRANDS"],
     }),
@@ -43,7 +38,7 @@ export const brandsApi = apiSlice.injectEndpoints({
     }),
 
     updateBrand: builder.mutation({
-      query: ({ id, brandData }: { id: number; brandData: BrandData }) => ({
+      query: ({ id, brandData }: { id: number; brandData: Brand }) => ({
         url: `/brands/${id}`,
         method: "PATCH",
         body: brandData,

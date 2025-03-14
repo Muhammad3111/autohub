@@ -56,7 +56,7 @@ export default function AddBlog() {
       console.error(error);
     }
   };
-  
+
   const cars: CarObject[] = vehicles?.items || [];
 
   return (
@@ -132,9 +132,7 @@ export default function AddBlog() {
               Avtomobil turi
             </label>
             <select
-              {...register("vehicle_id", {
-                required: "Avtomobil turi majburiy",
-              })}
+              {...register("vehicle_id")}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
             >
               {isLoading ? (
