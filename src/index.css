@@ -27,6 +27,7 @@ html,
 body {
     font-family: "Outfit", serif;
     scroll-behavior: smooth;
+    background-color: #f7f8fc;
 }
 
 .footer__link:hover {

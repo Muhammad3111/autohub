@@ -7,14 +7,14 @@ type HeaderProps = {
 
 const Header = ({ title, image = CarImage }: HeaderProps) => {
     return (
-        <div className="-mx-10 mb-8">
-            <div className="w-full h-80 bg-grey px-10 flex items-center justify-between">
-                <div className="mt-[72px]">
-                    <h1 className="text-3xl font-semibold mb-4">{title}</h1>
+        <div className="mb-8 mt-20">
+            <div className="w-full h-52 bg-grey px-10 flex items-center justify-between">
+                <div>
+                    <h1 className="text-2xl font-semibold mb-4">{title}</h1>
                     <span>Bosh sahifa - </span>
                     <span>{title}</span>
                 </div>
-                <img src={image} width={400} alt="" />
+                <img src={image} width={200} alt="" />
             </div>
         </div>
     );

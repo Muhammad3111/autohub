@@ -106,7 +106,6 @@ const Categories = () => {
                                         ? "text-primary"
                                         : "text-gray-500"
                                 }`}
-                                disabled={activeTab === item.value}
                                 onClick={() => setActiveTab(item.value)}
                             >
                                 {item.name}

@@ -52,7 +52,7 @@ const CarPrices = () => {
 
             <div className="p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
                 {cars.length > 0 ? (
-                    cars.map((item) => (
+                    cars.slice(0, 7).map((item) => (
                         <Link
                             to={`/cars/${item?.brand_id}/${item.id}`}
                             key={item.id}

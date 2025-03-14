@@ -14,7 +14,7 @@ const SpareParts = () => {
     return (
         <div className="w-full">
             <Header title="Ehtiyot qisimlar" />
-            <div className="max-w-[1440px] mx-auto">
+            <div>
                 <div className="flex flex-col gap-4 my-container pt-10">
                     <div className="flex flex-col gap-4 items-center"></div>
                     <div className="flex flex-col gap-4 p-10 bg-white">
@@ -26,7 +26,7 @@ const SpareParts = () => {
                             {categories.slice(0, 12).map((c) => (
                                 <div
                                     key={c.id}
-                                    className="flex flex-col items-center gap-2 col-span-1 shadow-md border bg-grey hover:border-red-500 duration-300 p-4"
+                                    className="flex flex-col items-center gap-2 col-span-1 shadow-md border bg-grey hover:border-red-500 duration-300 p-4 cursor-pointer"
                                 >
                                     <img
                                         src="https://scdn.autodoc.de/catalog/categories/150x150/10106.png"

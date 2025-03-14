@@ -30,7 +30,7 @@ const Cars = () => {
     return (
         <div className="w-full">
             <Header title="Avtomobillar" />
-            <div className="flex flex-col gap-4 pt-10 max-w-[1440px] mx-auto">
+            <div className="flex flex-col gap-4 pt-10">
                 {collections.length > 1 && (
                     <div className="flex flex-col gap-4 p-10 bg-white">
                         <h1 className="text-4xl font-semibold text-center">
