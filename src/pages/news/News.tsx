@@ -19,7 +19,7 @@ const SpareParts = () => {
     return (
         <div className="w-full">
             <Header title="Yangiliklar" />
-            <div className="max-w-[1440px] mx-auto">
+            <div>
                 <div className="flex items-start gap-4 my-container p-10 bg-white">
                     <div className="grid grid-cols-1 basis-3/4">
                         {posts.map((blog) => (

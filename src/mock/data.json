@@ -209,36 +209,41 @@
         { "id": 0, "title": "Cheksiz", "icon": "" },
         {
             "id": 1,
-            "title": "Sedan",
+            "title": "Elektr",
             "icon": ""
         },
         {
             "id": 2,
-            "title": "SUV",
+            "title": "Sedan",
             "icon": ""
         },
         {
             "id": 3,
-            "title": "MPV",
+            "title": "SUV",
             "icon": ""
         },
         {
             "id": 4,
-            "title": "Sport Avtomobili",
+            "title": "MPV",
             "icon": ""
         },
         {
             "id": 5,
-            "title": "Mikro yuz",
+            "title": "Sport Avtomobili",
             "icon": ""
         },
         {
             "id": 6,
-            "title": "Mikro karta",
+            "title": "Mikro yuz",
             "icon": ""
         },
         {
             "id": 7,
+            "title": "Mikro karta",
+            "icon": ""
+        },
+        {
+            "id": 8,
             "title": "Yengil yo'lovchi",
             "icon": ""
         }

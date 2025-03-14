@@ -73,16 +73,16 @@ const AboutUs = () => {
         <div className="w-full">
             <Header title="About" />
             <div className="bg-white">
-                <div className="flex flex-col gap-10 p-10">
-                    <h1 className="text-3xl text-center font-medium">
+                <div className="flex flex-col p-10">
+                    <h1 className="text-2xl text-center font-medium">
                         Our Partners
                     </h1>
 
-                    <div className="p-20">
+                    <div className="p-10">
                         <AboutSlider />
                     </div>
 
-                    <div className="text-3xl text-center font-medium">
+                    <div className="text-2xl text-center font-medium mb-10">
                         Why We are{" "}
                         <span className="text-primary cursor-pointer">
                             Specialized!
@@ -94,10 +94,10 @@ const AboutUs = () => {
                         {carsAbout.map((item, index) => (
                             <div
                                 key={index}
-                                className={`p-6 rounded-lg transition-all duration-300 hover:shadow-xl cursor-pointer border-2`}
+                                className={`p-2 rounded-lg transition-all duration-300 hover:shadow-xl cursor-pointer border-2 w-[300px]`}
                             >
                                 <div className="flex flex-col items-center text-center space-y-4">
-                                    <div className="w-16 h-16 flex items-center justify-center">
+                                    <div className="w-10 h-10 flex items-center justify-center">
                                         <img
                                             src={item.img}
                                             alt={item.title}
@@ -105,11 +105,11 @@ const AboutUs = () => {
                                         />
                                     </div>
 
-                                    <h3 className="text-xl font-semibold">
+                                    <h3 className="text-lg font-semibold">
                                         {item.title}
                                     </h3>
 
-                                    <p className="text-gray-600 text-sm leading-relaxed">
+                                    <p className="text-gray-600 text-xs leading-relaxed">
                                         {item.desc}
                                     </p>
                                 </div>

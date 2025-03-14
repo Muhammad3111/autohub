@@ -57,7 +57,7 @@ const Search = () => {
                     </div>
                 )}
             </div>
-            <button type="submit" className="bg-primary h-10 px-2">
+            <button type="submit" className="bg-primary text-white h-10 px-2">
                 Search
             </button>
         </form>

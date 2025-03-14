@@ -4,7 +4,7 @@ const Services = () => {
     return (
         <div className="w-full">
             <Header title="Services" />
-            <div className="w-full bg-white max-w-[1440px] mx-auto">
+            <div className="w-full bg-white">
                 <div className="p-10 flex flex-col gap-4">
                     <div className="w-full bg-white hover:bg-primary hover:bg-opacity-5 border hover:border-primary duration-150 flex justify-between p-5">
                         <div className="flex gap-8">

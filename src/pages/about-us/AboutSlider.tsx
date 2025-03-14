@@ -20,10 +20,14 @@ const AboutSlider = () => {
         "Morris Garages",
         "Isuzu",
         "Tesla",
+        "BMW",
+        "Morris Garages",
+        "Isuzu",
+        "Tesla",
     ];
 
     return (
-        <div className="relative max-w-full">
+        <div className="relative">
             <button
                 className="absolute -left-16 z-10 p-3 bg-gray-300 rounded-full -translate-y-1/2 top-1/2"
                 id="prevButton"
@@ -34,7 +38,7 @@ const AboutSlider = () => {
             <div className="w-full">
                 <Swiper
                     spaceBetween={30}
-                    slidesPerView={6}
+                    slidesPerView={10}
                     navigation={{
                         nextEl: "#nextButton",
                         prevEl: "#prevButton",
@@ -51,16 +55,20 @@ const AboutSlider = () => {
                         Slide1,
                         Slide3,
                         Slide2,
+                        Slide4,
+                        Slide1,
+                        Slide3,
+                        Slide2,
                     ].map((slide, index) => (
                         <SwiperSlide key={index}>
-                            <div className="relative bg-white my-2 border-2 w-full h-[160px] flex items-center justify-center rounded cursor-pointer group hover:bg-black hover:bg-opacity-20 duration-150">
+                            <div className="relative bg-white my-2 border-2 w-full h-[100px] flex items-center justify-center rounded cursor-pointer group hover:bg-black hover:bg-opacity-20 duration-150">
                                 <img
                                     src={slide}
                                     alt={`slide ${index + 1}`}
-                                    width={100}
+                                    width={70}
                                     className="object-contain"
                                 />
-                                <div className="absolute bottom-0 left-0 right-0 bg-opacity-60 text-white text-xl uppercase font-semibold text-center p-2 translate-y-full group-hover:bottom-1/2 group-hover:translate-y-1/2 duration-300">
+                                <div className="absolute bottom-0 left-0 right-0 bg-opacity-60 text-white uppercase font-semibold text-center p-2 translate-y-full group-hover:bottom-1/2 group-hover:translate-y-1/2 duration-300">
                                     {descriptions[index]}
                                 </div>
                             </div>

@@ -10,6 +10,8 @@ export default {
                 third: "#262626",
                 grey: "#eeeeee",
                 dark: "#1A1A1A",
+                light: "#fefeff",
+                "light-500": "##F7F8FC",
             },
             boxShadow: {
                 custom: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",

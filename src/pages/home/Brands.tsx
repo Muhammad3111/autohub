@@ -1,22 +1,8 @@
-// import sedanImg from "../../assets/sedan-category.png";
-// import suvImg from "../../assets/suv-category.png";
-// import mpvImg from "../../assets/mpv-category.png";
-// import sportImg from "../../assets/sport-category.png";
-// import minivanImg from "../../assets/minivan-category.png";
-// import pickupImg from "../../assets/pickup-category.png";
-// import vanImg from "../../assets/van-category.png";
-
-// import bmwBrand from "../../assets/bmw-brand.png";
-// import nissanBrand from "../../assets/nissan-brand.png";
-// import audiBrand from "../../assets/audi-brand.png";
-// import fordBrand from "../../assets/ford-brand.png";
-// import mazdaBrand from "../../assets/mazda-brand.png";
-// import hondaBrand from "../../assets/honda-brand.png";
-
 import { useContext } from "react";
 import { Context } from "../../context/Context";
 import { useNavigate } from "react-router-dom";
-import { collection, brands } from "../../mock/data.json";
+import { collection } from "../../mock/data.json";
+import { useGetBrandsQuery } from "../../features/brands/brands";
 
 const Brands = () => {
     const context = useContext(Context);
@@ -31,11 +17,11 @@ const Brands = () => {
     const { setModel } = context;
 
     const carModels: Collection[] = collection;
-    const carBrands: Brand[] = brands;
+    const { data: carBrands, isLoading } = useGetBrandsQuery({ page: 1 });
 
     return (
         <div className="w-full">
-            <div className="flex items-center justify-between mt-10 w-full">
+            <div className="flex items-center justify-between mt-20 w-full bg-light p-6">
                 {carModels.slice(1).map((item, index) => (
                     <button
                         onClick={() => {
@@ -43,25 +29,33 @@ const Brands = () => {
                             navigate(`/cars/${item.title}`);
                         }}
                         key={index}
+                        className="flex flex-col items-center gap-1"
                     >
-                        <img src={item.icon} alt="" width={80} />
-                        <p className="text-dark uppercase mt-2">{item.title}</p>
+                        <p className="text-dark uppercase">{item.title}</p>
                     </button>
                 ))}
             </div>
 
-            <div className="border-t w-full pt-5 mt-5 grid grid-cols-10 grid-rows-5 gap-4 justify-items-center [grid-auto-flow:column]">
-                {carBrands
-                    .sort((a, b) => a.name.localeCompare(b.name))
-                    .map((item) => (
+            <div className="w-full py-5 mt-5 grid grid-cols-10 gap-4 justify-items-center bg-light">
+                {isLoading ? (
+                    <h2>Loading...</h2>
+                ) : carBrands?.items?.length ? (
+                    carBrands.items.slice(0, 10).map((item) => (
                         <button
                             key={item.id}
                             className="flex flex-col items-center gap-2 text-center"
                         >
-                            {/* <img src={item.image} alt={item.name} width={40} /> */}
+                            <img
+                                src={`http://89.223.126.64:8080${item.image}`}
+                                alt={item.name}
+                                width={40}
+                            />
                             <p className="text-dark uppercase">{item.name}</p>
                         </button>
-                    ))}
+                    ))
+                ) : (
+                    <h2>Brands not found</h2>
+                )}
             </div>
         </div>
     );
