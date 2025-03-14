@@ -44,7 +44,7 @@ const Dealers = () => {
     return (
         <div className="w-full">
             <Header title="Dealers" />
-            <div className="w-full bg-white max-w-[1440px] mx-auto">
+            <div className="w-full bg-white">
                 <div className="flex flex-col gap-4 p-10">
                     {dealerData.map((item) => (
                         <Link

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { FiUser } from "react-icons/fi";
+import { FiDownload, FiUser } from "react-icons/fi";
 import { selectCurrentUserData } from "../../features/auth/authSlice";
 import { useSelector } from "react-redux";
 import Language from "./Language";
@@ -8,6 +8,7 @@ import Login from "../login/Login";
 import { LuMenu } from "react-icons/lu";
 import Search from "../search/Search";
 import { Context } from "../../context/Context";
+import { FaRegHandshake } from "react-icons/fa6";
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -29,8 +30,8 @@ const Navbar = () => {
     const { setSidebarOpen } = context;
 
     return (
-        <div className="fixed top-0 left-0 z-20 bg-dark w-full">
-            <div className="h-[72px] flex items-center justify-between text-white px-6">
+        <div className="fixed top-0 left-0 z-20 bg-light w-full shadow-sm">
+            <div className="h-[72px] flex items-center justify-between px-6">
                 <div className="flex items-center gap-8">
                     <button
                         onClick={() => setSidebarOpen((prev) => !prev)}
@@ -48,6 +49,15 @@ const Navbar = () => {
 
                 <div className="flex items-center gap-6">
                     <Language />
+
+                    <button className="flex items-center gap-2 p-1.5 px-2">
+                        <FiDownload className="text-lg" />
+                        <p>App download</p>
+                    </button>
+                    <button className="flex items-center gap-2 p-1.5 px-2">
+                        <FaRegHandshake className="text-lg" />
+                        <p>Partner</p>
+                    </button>
 
                     {!userData && (
                         <button

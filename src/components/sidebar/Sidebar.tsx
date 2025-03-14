@@ -1,25 +1,30 @@
-import { useContext } from "react";
+import { ReactElement, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Context } from "../../context/Context";
+import { GoHome } from "react-icons/go";
+import { IoCarSportOutline, IoNewspaperOutline } from "react-icons/io5";
+import { BsBuilding, BsBuildingGear, BsInfoCircle } from "react-icons/bs";
+import { CiBoxes } from "react-icons/ci";
+import { MdOutlinePhone } from "react-icons/md";
 
 type NavLinkType = {
     name: string;
     path: string;
+    icon: ReactElement;
 };
 
 const Sidebar = () => {
     const location = useLocation();
     const pathname = location.pathname;
-
     const navLinks: NavLinkType[] = [
-        { name: "Bosh sahifa", path: "/" },
-        { name: "Biz haqimizda", path: "/about-us" },
-        { name: "Avtomobillar", path: "/cars" },
-        { name: "Extiyot qismlar", path: "/spare-parts" },
-        { name: "Servislar", path: "/services" },
-        { name: "Dillerlar", path: "/dealers" },
-        { name: "Yangiliklar", path: "/news" },
-        { name: "Aloqa", path: "/contact" },
+        { name: "Bosh sahifa", path: "/", icon: <GoHome /> },
+        { name: "Avtomobillar", path: "/cars", icon: <IoCarSportOutline /> },
+        { name: "Dillerlar", path: "/dealers", icon: <BsBuilding /> },
+        { name: "Servislar", path: "/services", icon: <BsBuildingGear /> },
+        { name: "Extiyot qismlar", path: "/spare-parts", icon: <CiBoxes /> },
+        { name: "Yangiliklar", path: "/news", icon: <IoNewspaperOutline /> },
+        { name: "Biz haqimizda", path: "/about-us", icon: <BsInfoCircle /> },
+        { name: "Aloqa", path: "/contact", icon: <MdOutlinePhone /> },
     ];
 
     const context = useContext(Context);
@@ -34,10 +39,10 @@ const Sidebar = () => {
 
     return (
         <div
-            className={`fixed top-[72px] left-0 h-[calc(100vh-72px)] bg-dark duration-150 overflow-hidden whitespace-nowrap
-            ${sidebarOpen ? "w-52 px-3" : "w-0 px-0"}`}
+            className={`fixed top-[72px] left-0 h-[calc(100vh-72px)] bg-light-500 duration-150 overflow-hidden whitespace-nowrap
+            ${sidebarOpen ? "w-60 px-3" : "w-0 px-0"}`}
         >
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 mt-2">
                 {navLinks.map((item, index) => {
                     const isActive = pathname === item.path;
 
@@ -45,12 +50,13 @@ const Sidebar = () => {
                         <Link
                             key={index}
                             to={item.path}
-                            className={`px-4 py-2 font-medium text-base ${
+                            className={`px-4 py-2.5 hover:bg-primary flex items-center gap-2 duration-150 w-40 ${
                                 isActive
-                                    ? "bg-primary text-white"
-                                    : "text-white"
+                                    ? "bg-primary text-white "
+                                    : "hover:bg-opacity-20"
                             }`}
                         >
+                            {item.icon}
                             {item.name}
                         </Link>
                     );

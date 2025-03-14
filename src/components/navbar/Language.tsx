@@ -49,7 +49,6 @@ const Language = () => {
                     width={30}
                     alt="language icon"
                 />
-                <p>{language === "uz" ? "O'zbekcha" : "Русский"}</p>
                 <FaChevronDown
                     className={`duration-300 ${
                         isOpen ? "rotate-180" : "rotate-0"

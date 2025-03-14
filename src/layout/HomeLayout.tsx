@@ -29,15 +29,17 @@ const HomeLayout = () => {
             <Sidebar />
 
             <main
-                className={`duration-150 ${sidebarOpen ? "ml-52" : "ml-0"} ${
-                    !pathname.startsWith("/cars/parametrs") ? "p-10" : ""
+                className={`duration-150 pr-6 ${
+                    sidebarOpen ? "ml-60" : "ml-0 pl-6"
                 }`}
             >
                 <Outlet />
             </main>
 
             <footer
-                className={`duration-150 ${sidebarOpen ? "ml-52" : "ml-0"}`}
+                className={`duration-150 pr-6 ${
+                    sidebarOpen ? "ml-60" : "ml-0 pl-6"
+                }`}
             >
                 <Footer />
             </footer>
