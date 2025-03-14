@@ -16,6 +16,13 @@
     }
 }
 
+@layer base {
+    button:disabled,
+    select:disabled {
+        @apply cursor-not-allowed opacity-80;
+    }
+}
+
 html,
 body {
     font-family: "Outfit", serif;

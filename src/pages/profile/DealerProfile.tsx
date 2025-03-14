@@ -16,16 +16,11 @@ type InputState = {
     working_hours: string;
 };
 
-type UserDataProps = {
-    userData: {
-        phone_number: string;
-        role: string;
-        username: string;
-        name: string;
-    };
+type DealerProfileProps = {
+    userData: UserDataType;
 };
 
-const DealerProfile = ({ userData }: UserDataProps) => {
+const DealerProfile = ({ userData }: DealerProfileProps) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isChangeInput, setIsChangeInput] = useState<boolean>(false);

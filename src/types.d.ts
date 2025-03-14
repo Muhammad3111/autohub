@@ -110,10 +110,10 @@ declare type AuthState = {
 };
 
 declare type UserDataType = {
-  phone_number: string;
-  role: string;
-  username: string;
-  name: string;
+    phone_number: string;
+    role: string;
+    first_name: string;
+    last_name: string;
 };
 
 declare type InputState = {
@@ -164,10 +164,26 @@ declare type Articles = {
 };
 
 declare type TestDrive = {
-  id?: string;
-  volunteer_phone: string;
-  volunteer_name: string;
-  test_date: string;
-  status: string;
-  vehicle_id: string;
+    id?: string;
+    volunteer_phone: string;
+    volunteer_name: string;
+    test_date: string;
+    status: string;
+    vehicle_id: string;
+};
+
+declare type AuthSendOtp = {
+    phone_number: string;
+};
+
+declare type AuthVerifyOtp = {
+    phone_number: string;
+    otp: string;
+};
+
+declare type AuthRegister = {
+    phone_number: string;
+    role: string;
+    first_name: string;
+    last_name?: string;
 };
