@@ -14,7 +14,12 @@ const CardCar = ({ vehicle }: Props) => {
   const [isSaved, setIsSaved] = useState(false);
   const navigate = useNavigate();
   const toggleSave = () => setIsSaved((prev) => !prev);
-  const { data: brands } = useGetBrandyIdQuery(vehicle.brand_id!);
+  const { data: brands, isLoading } = useGetBrandyIdQuery(
+    vehicle.brand_id || 7
+  );
+  if (isLoading) {
+    return <h1>...</h1>;
+  }
   const brand: Brand = brands;
   return (
     <div

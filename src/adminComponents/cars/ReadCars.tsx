@@ -65,7 +65,7 @@ export default function ReadCars() {
                     src={`http://89.223.126.64:8080${
                       car.cover_image || "placeholder.jpg"
                     }`}
-                    alt={car.specifics[0].name_uz}
+                    alt={car.name_uz}
                     className="w-full h-48 object-cover"
                   />
                   <button
@@ -74,49 +74,38 @@ export default function ReadCars() {
                   >
                     <MdOutlineEdit className="text-lg" />
                   </button>
-                  <DeleteCar id={car.id} />
+                  <DeleteCar id={car.id || ""} />
                 </div>
                 <div className="flex flex-col items-start gap-6 p-4">
                   <div className="flex items-start justify-between w-full">
-                    <h1 className="text-lg font-bold">
-                      {car.specifics[0].name_uz}
-                    </h1>
-                    <p className="text-lg font-bold">
-                      {car.specifics[0].price} $
-                    </p>
+                    <h1 className="text-lg font-bold">{car.name_uz}</h1>
+                    <p className="text-lg font-bold">{car.price} $</p>
                   </div>
                   <ul className="flex flex-wrap gap-2">
                     <li className="p-1.5 border rounded-md shadow-md text-sm">
-                      Yil: {car.specifics[0].year}
+                      Yil: {car.year}
                     </li>
                     <li className="p-1.5 border rounded-md shadow-md text-sm">
-                      Motor: {car.specifics[0].engine_type}
+                      Motor: {car.engine_type}
                     </li>
                     <li className="p-1.5 border rounded-md shadow-md text-sm">
-                      Transmissiya: {car.specifics[0].transmission}
-                    </li>
-                    <li className="p-1.5 border rounded-md shadow-md text-sm">
-                      Rang: {car.specifics[0].color_uz}
+                      Transmissiya: {car.transmission}
                     </li>
                   </ul>
                   <div className="flex justify-between items-center w-full">
                     <div className="flex items-center gap-2">
                       <IoSpeedometerOutline className="text-xl" />
-                      <p className="text-base font-normal">
-                        {car.specifics[0].drive_type}
-                      </p>
+                      <p className="text-base font-normal">{car.drive_type}</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <TbPropeller className="text-xl" />
                       <p className="text-base font-normal">
-                        {car.specifics[0].transmission}
+                        {car.transmission}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
                       <PiGasCan className="text-xl" />
-                      <p className="text-base font-normal">
-                        {car.specifics[0].engine_type}
-                      </p>
+                      <p className="text-base font-normal">{car.engine_type}</p>
                     </div>
                   </div>
                 </div>
