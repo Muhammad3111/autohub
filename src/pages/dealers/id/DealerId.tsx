@@ -1,4 +1,5 @@
 import { Navigate, useLocation, useParams } from "react-router-dom";
+import Header from "../../../components/header/Header";
 
 type DealerIdType = {
     id: string;
@@ -19,11 +20,14 @@ const DealerId = () => {
     }
 
     return (
-        state?.id === id && (
-            <div className="mt-20">
-                <img src={state.img} alt="" />
-            </div>
-        )
+        <div>
+            <Header title={state.title} />
+            {state?.id === id && (
+                <div className="mt-20">
+                    <img src={state.img} alt="" />
+                </div>
+            )}
+        </div>
     );
 };
 export default DealerId;
