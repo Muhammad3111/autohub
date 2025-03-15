@@ -13,7 +13,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const Slider = () => {
     return (
-        <div className="relative group w-[850px] max-w-[850px] mx-auto">
+        <div className="relative group w-[950px] max-w-[950px] mx-auto">
             {/* Prev Button */}
             <button
                 className="custom-prev absolute left-2 top-1/2 transform -translate-y-1/2 z-10 p-3 bg-black bg-opacity-50 text-white rounded-full shadow opacity-0 transition-opacity duration-300 group-hover:opacity-100"
