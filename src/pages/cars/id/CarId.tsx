@@ -42,10 +42,10 @@ export default function CarId() {
   const car: CarObject = data;
   return (
     <div className="flex flex-col gap-4 w-full">
-      <Header title={car.specifics[0].name_uz} />
+      <Header title={car.name_uz} />
       <div className="flex flex-col gap-4 py-5 my-container">
         <h1 className="text-4xl font-bold capitalize">
-          {car.specifics[0].name_uz}
+          {car.name_uz}
         </h1>
         <div className="flex gap-4">
           <div className="basis-1/2 flex gap-2">
@@ -66,8 +66,8 @@ export default function CarId() {
               {car.images?.slice(0, 3).map((img, ind) => (
                 <div key={ind}>
                   <img
-                    src={`http://89.223.126.64:8080/api/${img.path}`}
-                    alt={img.path}
+                    src={`http://89.223.126.64:8080/api/${img}`}
+                    alt={img}
                     className="w-full h-[110px] object-cover"
                   />
                 </div>
@@ -79,7 +79,7 @@ export default function CarId() {
       <div>
         <div className="flex items-center gap-4">
           <h1 className="text-xl">{car.rating}</h1>
-          <Rating rating={car.rating} />
+          <Rating rating={car.rating || 0} />
         </div>
         <div>
           <h1 className="text-2xl font-normal">
