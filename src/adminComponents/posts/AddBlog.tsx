@@ -1,10 +1,11 @@
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import Button from "../../utility/button/Button";
 import { useState } from "react";
 import Modal from "../../utility/modal/Modal";
 import { toast } from "react-toastify";
 import { useGetCarsQuery } from "../../features/cars/carSlice";
 import { useAddBlogMutation } from "../../features/blogs/blogs";
+import Select from "react-select";
 
 export default function AddBlog() {
   const {
@@ -12,6 +13,7 @@ export default function AddBlog() {
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm<Blogs>();
   const { data: vehicles, isLoading } = useGetCarsQuery({ page: 1, limit: 10 });
   const [addBlog] = useAddBlogMutation();
@@ -58,6 +60,12 @@ export default function AddBlog() {
   };
 
   const cars: CarObject[] = vehicles?.items || [];
+  const carsOption = cars.map((car) => {
+    return {
+      value: car.id || "",
+      label: car.name_uz,
+    };
+  });
 
   return (
     <div className="flex flex-col gap-4 p-6">
@@ -131,18 +139,39 @@ export default function AddBlog() {
             <label className="block text-sm font-medium text-gray-700">
               Avtomobil turi
             </label>
-            <select
+            {/* <select
               {...register("vehicle_id")}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
             >
               {isLoading ? (
                 <option>Loading...</option>
               ) : (
-                cars.map((c) => (
-                  <option value={c.id}>{c.specifics[0].name_uz}</option>
-                ))
+                cars.map((c) => <option value={c.id}>{c.name_uz}</option>)
               )}
-            </select>
+            </select> */}
+            <Controller
+              name="vehicle_id"
+              control={control}
+              rules={{ required: "Avtomobil turi majburiy" }}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  options={carsOption}
+                  isLoading={isLoading}
+                  isClearable={true}
+                  isSearchable={true}
+                  className="basic-single mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2"
+                  classNamePrefix="select"
+                  value={
+                    carsOption.find((option) => option.value === field.value) ||
+                    null
+                  } // ✅ `value` obyekt sifatida bo'lishi kerak
+                  onChange={(selectedOption) =>
+                    field.onChange(selectedOption?.value)
+                  }
+                />
+              )}
+            />
             {errors.vehicle_id && (
               <span className="text-red-500 text-sm">
                 {errors.vehicle_id.message}

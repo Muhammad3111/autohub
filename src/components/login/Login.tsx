@@ -69,7 +69,7 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
                             if (authData) {
                                 dispatch(
                                     setCredentials({
-                                        accessToken: res.access_toke,
+                                        accessToken: res.access_token,
                                         refreshToken: res.refresh_token,
                                         userData: authData,
                                     })

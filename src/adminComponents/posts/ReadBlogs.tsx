@@ -49,6 +49,7 @@ const ReadBlogs = () => {
               <th className="px-4 py-2">ID</th>
               <th className="px-4 py-2">Rasm</th>
               <th className="px-4 py-2">Sarlavha</th>
+              <th className="px-4 py-2">Avtomobil</th>
               <th className="px-4 py-2">Bo‘lim</th>
               <th className="px-4 py-2">Tavsif</th>
               <th className="px-4 py-2">Xarakat</th>
@@ -70,6 +71,7 @@ const ReadBlogs = () => {
                     />
                   </td>
                   <td className="px-4 py-2">{item.title_uz}</td>
+                  <td className="px-4 py-2">{item.vname_ru}</td>
                   <td className="px-4 py-2 text-center">{item.category}</td>
                   <td className="px-4 py-2 text-center truncate max-w-[200px]">
                     {item.content_uz}
