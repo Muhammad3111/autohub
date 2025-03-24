@@ -133,4 +133,5 @@ export const {
     useVerifyOtpMutation,
     useRegisterMutation,
     useLazyAuthDetailQuery,
+    useAuthDetailQuery,
 } = authApi;

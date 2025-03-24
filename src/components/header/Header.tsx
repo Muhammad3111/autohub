@@ -10,7 +10,6 @@ const Header = ({ title, image = CarImage }: HeaderProps) => {
     const location = useLocation();
     const pathnames = location.pathname.split("/").filter((x) => x);
 
-    // ID larni odam tushunadigan nomlarga o‘zgartirish
     const formatBreadcrumbName = (name: string) => {
         if (name.length === 36) return "Ma'lumot";
         return decodeURIComponent(name);
@@ -22,7 +21,6 @@ const Header = ({ title, image = CarImage }: HeaderProps) => {
                 <div>
                     <h1 className="text-2xl font-semibold mb-4">{title}</h1>
 
-                    {/* Breadcrumb */}
                     <nav className="text-gray-600 text-sm">
                         <Link to="/" className="hover:underline">
                             Bosh sahifa
@@ -37,13 +35,13 @@ const Header = ({ title, image = CarImage }: HeaderProps) => {
                                 <span key={routeTo}>
                                     <span className="mx-2">/</span>
                                     {isLast ? (
-                                        <span className="text-black font-medium">
+                                        <span className="text-black font-medium capitalize">
                                             {formatBreadcrumbName(path)}
                                         </span>
                                     ) : (
                                         <Link
                                             to={routeTo}
-                                            className="hover:underline"
+                                            className="hover:underline capitalize"
                                         >
                                             {formatBreadcrumbName(path)}
                                         </Link>

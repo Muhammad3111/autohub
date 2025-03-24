@@ -999,29 +999,6 @@
             ]
         }
     ],
-    "salesModels": [
-        {
-            "rank": 1,
-            "img": "",
-            "model": "Model X",
-            "price": 249000,
-            "volume": 61233
-        },
-        {
-            "rank": 2,
-            "img": "",
-            "model": "Model Y",
-            "price": 279000,
-            "volume": 58233
-        },
-        {
-            "rank": 3,
-            "img": "",
-            "model": "Model Z",
-            "price": 349000,
-            "volume": 49283
-        }
-    ],
     "articles": [
         {
             "name": "News",

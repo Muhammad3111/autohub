@@ -1,5 +1,6 @@
 import { FiArrowLeft } from "react-icons/fi";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
+import PhoneInput from "../../utility/phone-input/PhoneInput";
 
 type RegisterFormProps = {
     onBack: () => void;
@@ -17,20 +18,44 @@ const RegisterForm = ({
     const {
         handleSubmit,
         register,
+        control,
+        watch,
         formState: { errors, isValid },
     } = useForm<AuthRegister>({
         defaultValues: {
-            phone_number: "",
-            first_name: "",
-            last_name: "",
-            role: "user",
+            user_data: {
+                first_name: "",
+                last_name: "",
+                avatar: "",
+                phone_number: "",
+                role: "user",
+            },
+            dealer_data: {
+                workplace_name: "",
+                region: "",
+                city: "",
+                address: "",
+                avatar: "",
+                working_hours: "",
+                info: "",
+                work_phone: "",
+            },
         },
         mode: "onChange",
-        shouldUnregister: false,
     });
 
+    const selectedRole = watch("user_data.role");
+
     const handleRegister = (data: AuthRegister) => {
-        onSubmit(data);
+        const submitData: AuthRegister = {
+            user_data: data.user_data,
+            dealer_data:
+                selectedRole !== "user"
+                    ? data.dealer_data
+                    : ({} as AuthRegister["dealer_data"]),
+        };
+
+        onSubmit(submitData);
         cancel();
     };
 
@@ -53,62 +78,149 @@ const RegisterForm = ({
             <form onSubmit={handleSubmit(handleRegister)}>
                 <div className="mb-4">
                     <label className="block mb-1" htmlFor="first_name">
-                        To'liq ism
+                        Ismingiz
                     </label>
                     <input
                         id="first_name"
-                        type="text"
-                        {...register("first_name", {
-                            required: "Ism majburiy",
+                        {...register("user_data.first_name", {
+                            required: "Ismingiz majburiy",
                         })}
                         className="w-full bg-transparent indent-2 h-10 ring-1 ring-grey focus-within:ring-2 focus-within:ring-primary outline-none duration-300"
-                        placeholder="Ismingizni kiriting"
+                        placeholder="Ismingiz"
                         autoComplete="off"
                     />
-                    {errors.first_name?.message && (
+                    {errors.user_data?.first_name && (
                         <p className="text-red-500 text-xs mt-1">
-                            {errors.first_name.message}
-                        </p>
-                    )}
-                </div>
-                <div className="mb-4">
-                    <label className="block mb-1" htmlFor="last_name">
-                        To'liq ism
-                    </label>
-                    <input
-                        id="last_name"
-                        type="text"
-                        {...register("last_name")}
-                        className="w-full bg-transparent indent-2 h-10 ring-1 ring-grey focus-within:ring-2 focus-within:ring-primary outline-none duration-300"
-                        placeholder="Familiya kiriting ( ixtiyoriy )"
-                        autoComplete="off"
-                    />
-                    {errors.last_name?.message && (
-                        <p className="text-red-500 text-xs mt-1">
-                            {errors.last_name.message}
+                            {errors.user_data.first_name.message}
                         </p>
                     )}
                 </div>
 
+                {selectedRole === "user" && (
+                    <>
+                        <div className="mb-4">
+                            <label className="block mb-1" htmlFor="last_name">
+                                Familiyangiz (ixtiyoriy)
+                            </label>
+                            <input
+                                id="last_name"
+                                {...register("user_data.last_name")}
+                                className="w-full bg-transparent indent-2 h-10 ring-1 ring-grey focus-within:ring-2 focus-within:ring-primary outline-none duration-300"
+                                placeholder="Familiyangiz"
+                                autoComplete="off"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label
+                                className="block mb-1"
+                                htmlFor="phone_number"
+                            >
+                                Telefon raqam
+                            </label>
+                            <Controller
+                                name="user_data.phone_number"
+                                control={control}
+                                rules={{
+                                    required: "Telefon raqam majburiy",
+                                    minLength: {
+                                        value: 12,
+                                        message:
+                                            "Telefon raqami to‘liq kiritilishi kerak",
+                                    },
+                                }}
+                                render={({ field }) => (
+                                    <PhoneInput
+                                        isRegister
+                                        value={field.value}
+                                        onChange={field.onChange}
+                                    />
+                                )}
+                            />
+                            {errors.user_data?.phone_number && (
+                                <p className="text-red-500 text-xs mt-1">
+                                    {errors.user_data.phone_number.message}
+                                </p>
+                            )}
+                        </div>
+                    </>
+                )}
+
+                {selectedRole !== "user" && (
+                    <>
+                        <div className="mb-4">
+                            <label
+                                className="block mb-1"
+                                htmlFor="workplace_name"
+                            >
+                                Ish joyi nomi
+                            </label>
+                            <input
+                                id="workplace_name"
+                                {...register("dealer_data.workplace_name", {
+                                    required: "Ish joyi nomi majburiy",
+                                })}
+                                className="w-full bg-transparent indent-2 h-10 ring-1 ring-grey focus-within:ring-2 focus-within:ring-primary outline-none duration-300"
+                                placeholder="Masalan: AutoSalon"
+                                autoComplete="off"
+                            />
+                            {errors.dealer_data?.workplace_name && (
+                                <p className="text-red-500 text-xs mt-1">
+                                    {errors.dealer_data.workplace_name.message}
+                                </p>
+                            )}
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="block mb-1" htmlFor="work_phone">
+                                Ish telefoni
+                            </label>
+                            <Controller
+                                name="dealer_data.work_phone"
+                                control={control}
+                                rules={{
+                                    required: "Ish telefoni majburiy",
+                                    minLength: {
+                                        value: 12,
+                                        message:
+                                            "Ish telefoni to‘liq kiritilishi kerak",
+                                    },
+                                }}
+                                render={({ field }) => (
+                                    <PhoneInput
+                                        isRegister
+                                        value={field.value}
+                                        onChange={field.onChange}
+                                    />
+                                )}
+                            />
+                            {errors.dealer_data?.work_phone && (
+                                <p className="text-red-500 text-xs mt-1">
+                                    {errors.dealer_data.work_phone.message}
+                                </p>
+                            )}
+                        </div>
+                    </>
+                )}
+
                 <div className="mb-4">
                     <label className="block mb-1" htmlFor="role">
-                        Role tanlang
+                        Rolini tanlang
                     </label>
                     <select
                         id="role"
-                        {...register("role", {
+                        {...register("user_data.role", {
                             required: "Role tanlash majburiy",
                         })}
-                        className="w-full bg-transparent indent-2 h-10 ring-1 ring-grey focus-within:ring-2 focus-within:ring-primary outline-none duration-300"
-                        defaultValue="user"
+                        className="w-full bg-transparent indent-2 h-10 ring-1 ring-grey focus:ring-2 focus:ring-primary outline-none duration-300"
                     >
                         <option value="user">User</option>
                         <option value="dealer">Dealer</option>
                         <option value="service">Service</option>
                     </select>
-                    {errors.role?.message && (
+                    {errors.user_data?.role && (
                         <p className="text-red-500 text-xs mt-1">
-                            {errors.role.message}
+                            {errors.user_data.role.message}
                         </p>
                     )}
                 </div>
@@ -124,14 +236,14 @@ const RegisterForm = ({
 
                     <button
                         type="submit"
-                        className={`w-[48%] p-2.5 rounded text-white ${
+                        disabled={!isValid || loading}
+                        className={`w-[48%] p-1 rounded text-white ${
                             isValid
                                 ? "bg-primary hover:bg-primary-hover"
                                 : "bg-gray-400 cursor-not-allowed"
                         }`}
-                        disabled={!isValid || loading}
                     >
-                        Ro'yxatdan o'tish{loading && "..."}
+                        Ro'yxatdan o'tish {loading && "..."}
                     </button>
                 </div>
             </form>

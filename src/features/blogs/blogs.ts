@@ -69,7 +69,15 @@ export const carsApi = apiSlice.injectEndpoints({
                 url: `/articles/like/${id}`,
                 method: "PATCH",
             }),
-            invalidatesTags: ["BLOGS"],
+            invalidatesTags: ["BLOGS", "AUTH"],
+        }),
+
+        dislikeBlog: builder.mutation({
+            query: (id: string) => ({
+                url: `/articles/dislike/${id}`,
+                method: "PATCH",
+            }),
+            invalidatesTags: ["BLOGS", "AUTH"],
         }),
 
         deleteBlog: builder.mutation({
@@ -89,6 +97,7 @@ export const {
     useLazyGetBlogsByCategoryQuery,
     useGetBlogByIdQuery,
     useUpdateLikeMutation,
+    useDislikeBlogMutation,
     useUpdateBlogMutation,
     useDeleteBlogMutation,
 } = carsApi;

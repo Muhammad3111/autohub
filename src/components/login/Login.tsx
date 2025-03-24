@@ -43,14 +43,16 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
     });
 
     const handleLogin: SubmitHandler<AuthSendOtp> = async (data) => {
-        await sendOtp({
-            phone_number: `+998${data.phone_number.split(" ").join("")}`,
-        })
-            .unwrap()
-            .then((res) => {
-                setCode(res.otp);
-                setStep("otp");
-            });
+        const formattedPhone = `+998${data.phone_number.split(" ").join("")}`;
+        try {
+            const res = await sendOtp({
+                phone_number: formattedPhone,
+            }).unwrap();
+            setCode(res.otp);
+            setStep("otp");
+        } catch (error) {
+            console.error("OTP yuborishda xatolik:", error);
+        }
     };
 
     const handleOtpSubmit = async (otp: string) => {
@@ -86,24 +88,56 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
     };
 
     const handleRegisterSubmit = async (data: AuthRegister) => {
-        await authRegister({
-            ...data,
-            phone_number: `+998${getValues("phone_number")
-                .split(" ")
-                .join("")}`,
-        })
-            .unwrap()
-            .then((res) => {
-                console.log(res);
+        const formattedPhone = `+998${getValues("phone_number")
+            .split(" ")
+            .join("")}`;
 
-                setStep("phone");
-                reset();
-            });
+        const registerPayload: AuthRegister = {
+            user_data: {
+                ...data.user_data,
+                phone_number: formattedPhone,
+            },
+            dealer_data:
+                data.user_data.role !== "user"
+                    ? data.dealer_data
+                    : ({} as AuthRegister["dealer_data"]),
+        };
+
+        try {
+            const res = await authRegister(registerPayload).unwrap();
+
+            if (res.token) {
+                const authData = await detailTrigger({
+                    token: res.token.access,
+                }).unwrap();
+
+                if (authData) {
+                    dispatch(
+                        setCredentials({
+                            accessToken: res.token.access,
+                            refreshToken: res.token.refresh,
+                            userData: authData,
+                        })
+                    );
+                    setOpenLogin(false);
+                    setStep("phone");
+                    reset();
+                }
+            }
+
+            setStep("phone");
+            reset();
+            setOpenLogin(false);
+        } catch (error) {
+            console.error("Ro'yxatdan o'tishda xatolik:", error);
+        }
     };
 
     return (
         <Modal isOpen={openLogin}>
-            <div className="bg-white rounded-2xl w-full relative overflow-hidden">
+            <div
+                className={`bg-white rounded-2xl w-full relative overflow-hidden`}
+            >
                 {step === "phone" && (
                     <button
                         type="button"
@@ -127,7 +161,7 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
                                 ? "250px"
                                 : step === "otp"
                                 ? "280px"
-                                : "430px",
+                                : "500px",
                     }}
                     className={`flex transition-transform duration-500`}
                 >
@@ -155,6 +189,7 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
                                     <PhoneInput
                                         value={field.value}
                                         onChange={field.onChange}
+                                        isRegister={false}
                                     />
                                 )}
                             />
@@ -182,6 +217,9 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
                             cancel={() => setOpenLogin(false)}
                             code={code}
                             loading={verifyLoading}
+                            phoneNumber={`+998${getValues("phone_number")
+                                .split(" ")
+                                .join("")}`}
                         />
                     </div>
 
