@@ -6,8 +6,8 @@ import { useLazyGetBlogsByCategoryQuery } from "../../features/blogs/blogs";
 import { BiLike } from "react-icons/bi";
 import { LuEye } from "react-icons/lu";
 import Pagination from "../../utility/pagination/Pagination";
+import { Link } from "react-router-dom";
 
-// 🟢 Reusable Component: SalesCard
 const SalesCard = memo(({ data }: { data: SalesRankingType }) => {
     const rankColor =
         data.rank === 1
@@ -49,7 +49,6 @@ const SalesCard = memo(({ data }: { data: SalesRankingType }) => {
     );
 });
 
-// 🟢 Reusable Component: Section
 const Section = ({
     title,
     salesData,
@@ -137,7 +136,8 @@ const Categories = () => {
                     <div className="flex flex-col justify-start gap-6 mt-5">
                         {posts.length > 0 ? (
                             posts.map((data) => (
-                                <div
+                                <Link
+                                    to={`/news/${data.id}`}
                                     key={data.id}
                                     className="cursor-pointer flex items-start gap-5 relative"
                                 >
@@ -175,7 +175,7 @@ const Categories = () => {
                                             <p>{data.like_count || 0}</p>
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                             ))
                         ) : (
                             <p>No blogs found for this category.</p>

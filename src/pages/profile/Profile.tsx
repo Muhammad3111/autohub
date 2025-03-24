@@ -19,12 +19,12 @@ const Profile = () => {
     }
 
     return (
-        <div>
+        <div className="min-h-[614px]">
             <div className="my-10 font-medium text-2xl">
                 {userData.first_name}
             </div>
             <div className="flex justify-between gap-20">
-                {userData.role === "user" ? (
+                {userData.role === "user" || userData.role === "admin" ? (
                     <div className="w-[400px] flex flex-col gap-1">
                         <button
                             onClick={() => setActiveTab("userProfile")}
@@ -75,7 +75,10 @@ const Profile = () => {
                   userData.role === "dealer" ? (
                     <MyCreateCar />
                 ) : (
-                    <></>
+                    activeTab === "userProfile" &&
+                    userData.role === "admin" && (
+                        <UserProfile userData={userData} />
+                    )
                 )}
             </div>
         </div>
