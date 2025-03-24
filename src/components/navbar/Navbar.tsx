@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FiDownload, FiUser } from "react-icons/fi";
-import { selectCurrentUserData } from "../../features/auth/authSlice";
+import { selectCurrentAccessToken } from "../../features/auth/authSlice";
 import { useSelector } from "react-redux";
 import Language from "./Language";
 import { useContext, useState } from "react";
@@ -9,18 +9,19 @@ import { LuMenu } from "react-icons/lu";
 import Search from "../search/Search";
 import { Context } from "../../context/Context";
 import { FaRegHandshake } from "react-icons/fa6";
+import { useAuthDetailQuery } from "../../features/auth/authApiSlice";
+import Loading from "../loading/Loading";
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const userData = useSelector(selectCurrentUserData);
-    // const [detailTrigger, { data: userData, isLoading }]: any =
-    //     useLazyAuthDetailQuery();
+    const token = useSelector(selectCurrentAccessToken) || "";
+    // const userData = useSelector(selectCurrentUserData);
+    const { data: userData, isLoading }: any = useAuthDetailQuery(
+        { token },
+        { skip: !token, refetchOnMountOrArgChange: true }
+    );
 
     const [openLogin, setOpenLogin] = useState(false);
-
-    // useEffect(() => {
-    //     detailTrigger({ token: token });
-    // }, [userData, token]);
 
     const context = useContext(Context);
     if (!context) {
@@ -28,6 +29,10 @@ const Navbar = () => {
     }
 
     const { setSidebarOpen } = context;
+
+    if (isLoading) {
+        return <Loading />;
+    }
 
     return (
         <div className="fixed top-0 left-0 z-20 bg-light w-full shadow-sm">
@@ -68,15 +73,6 @@ const Navbar = () => {
                             Kirish
                         </button>
                     )}
-                    {/* {!isLogin && (
-                        <button
-                            onClick={() => navigate("/sign-in")}
-                            className="flex items-center gap-2 rounded-full font-medium"
-                        >
-                            <FiUser className="text-xl" />
-                            Kirish
-                        </button>
-                    )} */}
 
                     {userData && (
                         <button

@@ -36,6 +36,8 @@ const DealerProfile = ({ userData }: DealerProfileProps) => {
         working_hours: "",
     });
 
+    console.log(userData);
+
     const handleLogout = () => {
         dispatch(logOut());
         navigate("/");
@@ -235,7 +237,7 @@ const DealerProfile = ({ userData }: DealerProfileProps) => {
                         </label>
                         <PatternFormat
                             className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-[#aaa] duration-150"
-                            format="+998 ## ### ## ##"
+                            format="+### ## ### ## ##"
                             placeholder="+998"
                             value={formState.contact_number}
                             onChange={handleChange}

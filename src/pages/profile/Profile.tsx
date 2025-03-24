@@ -66,8 +66,9 @@ const Profile = () => {
 
                 {activeTab === "userProfile" && userData.role === "user" ? (
                     <UserProfile userData={userData} />
-                ) : activeTab === "dealerProfile" &&
-                  userData.role === "dealer" ? (
+                ) : (activeTab === "dealerProfile" &&
+                      userData.role === "dealer") ||
+                  userData.role === "service" ? (
                     <DealerProfile userData={userData} />
                 ) : activeTab === "likedCar" && userData.role === "user" ? (
                     <UserLikedCars />

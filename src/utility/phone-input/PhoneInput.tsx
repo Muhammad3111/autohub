@@ -1,9 +1,10 @@
 type PhoneInputProps = {
     value: string;
     onChange: (value: string) => void;
+    isRegister: boolean;
 };
 
-const PhoneInput = ({ value, onChange }: PhoneInputProps) => {
+const PhoneInput = ({ value, onChange, isRegister }: PhoneInputProps) => {
     const formatUzbekNumber = (input: string) => {
         const cleanNumber = input.replace(/\D/g, "").slice(0, 9);
 
@@ -34,7 +35,9 @@ const PhoneInput = ({ value, onChange }: PhoneInputProps) => {
             <div className="flex items-center w-full ring-1 ring-grey focus-within:ring-2 focus-within:ring-primary outline-none duration-300 h-10 text-sm rounded">
                 <label
                     htmlFor="phone-number-input"
-                    className="text-primary font-medium pl-3 text-lg"
+                    className={`${
+                        isRegister ? " text-gray-900" : "text-primary"
+                    }  font-medium pl-3 text-lg`}
                 >
                     +998
                 </label>
@@ -48,7 +51,7 @@ const PhoneInput = ({ value, onChange }: PhoneInputProps) => {
                     autoComplete="off"
                     name="phone-number-input"
                     id="phone-number-input"
-                    autoFocus
+                    autoFocus={!isRegister}
                 />
             </div>
         </div>
