@@ -1,25 +1,31 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FiDownload, FiUser } from "react-icons/fi";
-import { selectCurrentAccessToken } from "../../features/auth/authSlice";
+import {
+    selectCurrentAccessToken,
+    selectCurrentUserData,
+} from "../../features/auth/authSlice";
 import { useSelector } from "react-redux";
 import Language from "./Language";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Login from "../login/Login";
 import { LuMenu } from "react-icons/lu";
 import Search from "../search/Search";
 import { Context } from "../../context/Context";
 import { FaRegHandshake } from "react-icons/fa6";
-import { useAuthDetailQuery } from "../../features/auth/authApiSlice";
+import { useLazyAuthDetailQuery } from "../../features/auth/authApiSlice";
 import Loading from "../loading/Loading";
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const token = useSelector(selectCurrentAccessToken) || "";
-    // const userData = useSelector(selectCurrentUserData);
-    const { data: userData, isLoading }: any = useAuthDetailQuery(
-        { token },
-        { skip: !token, refetchOnMountOrArgChange: true }
-    );
+    const token = useSelector(selectCurrentAccessToken);
+    const userData = useSelector(selectCurrentUserData);
+    const [detailTrigger, { isLoading }] = useLazyAuthDetailQuery();
+
+    useEffect(() => {
+        if (token) {
+            detailTrigger({ token });
+        }
+    }, [token]);
 
     const [openLogin, setOpenLogin] = useState(false);
 

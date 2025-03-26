@@ -7,13 +7,80 @@ import {
     useUpdateLikeMutation,
 } from "../../../features/blogs/blogs";
 import { BiDislike, BiLike, BiSolidDislike, BiSolidLike } from "react-icons/bi";
-import { useSelector } from "react-redux";
-import { selectCurrentAccessToken } from "../../../features/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    selectCurrentAccessToken,
+    selectCurrentUserData,
+    updateUserLikes,
+} from "../../../features/auth/authSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Login from "../../../components/login/Login";
-import { useEffect, useState } from "react";
-import { useLazyAuthDetailQuery } from "../../../features/auth/authApiSlice";
+import { memo, useState } from "react";
+import { FiChevronRight } from "react-icons/fi";
+import { useGetCarsQuery } from "../../../features/cars/carSlice";
+
+const SalesCard = memo(({ data, rank }: { data: CarObject; rank: number }) => {
+    const rankColor =
+        rank === 1
+            ? "bg-[#FFC900]"
+            : rank === 2
+            ? "bg-[#E1BF98]"
+            : rank === 3
+            ? "bg-[#E6E3E6]"
+            : "bg-gray-300";
+
+    return (
+        <div className="flex justify-between items-center cursor-pointer">
+            <div className="flex items-center gap-5">
+                <div
+                    className={`ranking-sales ${rankColor} w-5 h-6 flex items-center justify-center text-sm`}
+                >
+                    {rank}
+                </div>
+                <img
+                    src={data.cover_image || "/placeholder-car.jpg"}
+                    alt={data.name_uz}
+                    className="border"
+                    width={120}
+                    height={60}
+                />
+            </div>
+            <div className="text-center">
+                <h2>{data.name_uz}</h2>
+                <p className="text-primary">{data.price} $</p>
+            </div>
+
+            <button className="bg-primary text-white p-2 text-sm hover:bg-primary-hover duration-150">
+                Check the
+            </button>
+        </div>
+    );
+});
+
+const Section = ({
+    title,
+    salesData,
+}: {
+    title: string;
+    salesData: CarObject[];
+}) => (
+    <div className="flex-1 mb-4">
+        <div className="flex items-center justify-between border-b pb-5 mb-5">
+            <h1 className="text-xl">{title}</h1>
+            <button className="flex items-center gap-1 text-dark text-xl">
+                <p>Overall list</p>
+                <FiChevronRight />
+            </button>
+        </div>
+
+        <div className="flex flex-col gap-5">
+            {salesData.map((data, index) => (
+                <SalesCard key={data.id} data={data} rank={index + 1} />
+            ))}
+        </div>
+    </div>
+);
 
 export default function Post() {
     const { id } = useParams<{ id: string }>();
@@ -24,22 +91,19 @@ export default function Post() {
     const [addComment] = useAddCommentMutation();
 
     const token = useSelector(selectCurrentAccessToken);
-    const [triggerUserDetail, { data: userData }]: any =
-        useLazyAuthDetailQuery();
+    const dispatch = useDispatch();
+    const userData = useSelector(selectCurrentUserData);
+    const { data: carsData } = useGetCarsQuery({
+        page: 1,
+    });
     const [openLogin, setOpenLogin] = useState(false);
-
-    useEffect(() => {
-        if (token) {
-            triggerUserDetail(token);
-        }
-    }, [token]);
 
     if (isLoading || !post) {
         return <h1>Loading...</h1>;
     }
 
     const handleLikeDislike = async (
-        action: "like" | "dislike",
+        type: "like" | "dislike",
         mutation: any
     ) => {
         if (!token || !userData) {
@@ -47,12 +111,25 @@ export default function Post() {
             return;
         }
 
+        if (type === "like" && isPostLiked) return;
+        if (type === "dislike" && isPostDisliked) return;
+
         try {
-            await mutation(id!).unwrap();
-            triggerUserDetail(token);
+            await mutation(id!)
+                .unwrap()
+                .then(() => {
+                    dispatch(updateUserLikes({ postId: id!, type }));
+                });
         } catch (error) {
-            console.error(`Error on ${action}:`, error);
-            toast.error(`Failed to ${action} the post.`);
+            console.error(`Error on ${type}:`, error);
+            toast.error(`Failed to ${type} the post.`);
+
+            dispatch(
+                updateUserLikes({
+                    postId: id!,
+                    type: type === "like" ? "dislike" : "like",
+                })
+            );
         }
     };
 
@@ -70,7 +147,6 @@ export default function Post() {
             await addComment(formData).unwrap();
             toast.success("Kommentariyangiz yuborildi!");
             reset();
-            triggerUserDetail(token);
         } catch (error) {
             console.error("Comment error:", error);
             toast.error("Komment yuborilmadi!");
@@ -78,15 +154,15 @@ export default function Post() {
     };
 
     const isPostLiked = userData?.likes?.includes(post.id);
-    const isPostDisliked = userData?.disLikes?.includes(post.id);
+    const isPostDisliked = userData?.dislikes?.includes(post.id);
 
     return (
         <div>
             <Header title={post.title_uz} />
 
-            <div className="flex flex-col gap-4">
-                <div className="flex items-start py-5">
-                    <div className="basis-3/4 flex flex-col gap-4">
+            <div className="flex justify-between gap-10">
+                <div className="flex items-start py-5 w-full">
+                    <div className="w-full flex flex-col gap-4">
                         <div>
                             <h1 className="text-4xl font-bold capitalize">
                                 {post.title_uz}
@@ -186,6 +262,13 @@ export default function Post() {
                             )}
                         </div>
                     </div>
+                </div>
+
+                <div className="mt-5 w-[500px]">
+                    <Section
+                        title="Sales ranking"
+                        salesData={carsData?.items.slice(0, 3) || []}
+                    />
                 </div>
             </div>
 

@@ -27,7 +27,6 @@ const RegisterForm = ({
                 first_name: "",
                 last_name: "",
                 avatar: "",
-                phone_number: "",
                 role: "user",
             },
             dealer_data: {
@@ -49,14 +48,10 @@ const RegisterForm = ({
     const handleRegister = (data: AuthRegister) => {
         const submitData: AuthRegister = {
             user_data: data.user_data,
-            dealer_data:
-                selectedRole !== "user"
-                    ? data.dealer_data
-                    : ({} as AuthRegister["dealer_data"]),
+            dealer_data: data.dealer_data,
         };
 
         onSubmit(submitData);
-        cancel();
     };
 
     return (
@@ -109,39 +104,6 @@ const RegisterForm = ({
                                 placeholder="Familiyangiz"
                                 autoComplete="off"
                             />
-                        </div>
-
-                        <div className="mb-4">
-                            <label
-                                className="block mb-1"
-                                htmlFor="phone_number"
-                            >
-                                Telefon raqam
-                            </label>
-                            <Controller
-                                name="user_data.phone_number"
-                                control={control}
-                                rules={{
-                                    required: "Telefon raqam majburiy",
-                                    minLength: {
-                                        value: 12,
-                                        message:
-                                            "Telefon raqami to‘liq kiritilishi kerak",
-                                    },
-                                }}
-                                render={({ field }) => (
-                                    <PhoneInput
-                                        isRegister
-                                        value={field.value}
-                                        onChange={field.onChange}
-                                    />
-                                )}
-                            />
-                            {errors.user_data?.phone_number && (
-                                <p className="text-red-500 text-xs mt-1">
-                                    {errors.user_data.phone_number.message}
-                                </p>
-                            )}
                         </div>
                     </>
                 )}

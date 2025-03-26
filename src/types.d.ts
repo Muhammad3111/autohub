@@ -117,6 +117,8 @@ declare type UserDataType = {
     role: string;
     first_name: string;
     last_name: string;
+    likes: string[];
+    dislikes: string[];
 };
 
 declare type InputState = {
@@ -184,8 +186,8 @@ declare type AuthRegister = {
         phone_number: string;
         role: string;
     };
-    dealer_data: {
-        workplace_name: string;
+    dealer_data?: {
+        workplace_name?: string;
         region?: string;
         city?: string;
         address?: string;
@@ -194,4 +196,22 @@ declare type AuthRegister = {
         info?: string;
         work_phone: string;
     };
+};
+
+declare type DealersType = {
+    workplace_name: string;
+    region: string;
+    city: string;
+    address: string;
+    work_phone: string;
+    info: string;
+    working_hours: string;
+    avatar: string;
+    id: string;
+    rating: number;
+    user_id: string;
+    created_at: string;
+    updated_at: string;
+    reviews: null;
+    is_verified: null;
 };
