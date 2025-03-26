@@ -92,25 +92,33 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
             .split(" ")
             .join("")}`;
 
-        const registerPayload: AuthRegister = {
-            user_data: {
-                ...data.user_data,
-                phone_number: formattedPhone,
-            },
-            dealer_data:
-                data.user_data.role !== "user"
-                    ? data.dealer_data
-                    : ({} as AuthRegister["dealer_data"]),
-        };
+        const registerPayload: AuthRegister =
+            data.user_data.role === "user"
+                ? {
+                      user_data: {
+                          ...data.user_data,
+                          phone_number: formattedPhone,
+                      },
+                  }
+                : {
+                      dealer_data: {
+                          ...data.dealer_data,
+                          work_phone: `+998${data.dealer_data?.work_phone
+                              .split(" ")
+                              .join("")}`,
+                      },
+                      user_data: {
+                          ...data.user_data,
+                          phone_number: formattedPhone,
+                      },
+                  };
 
         try {
             const res = await authRegister(registerPayload).unwrap();
-
             if (res.token) {
                 const authData = await detailTrigger({
                     token: res.token.access,
                 }).unwrap();
-
                 if (authData) {
                     dispatch(
                         setCredentials({
@@ -124,7 +132,6 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
                     reset();
                 }
             }
-
             setStep("phone");
             reset();
             setOpenLogin(false);

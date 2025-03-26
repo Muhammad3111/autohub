@@ -36,8 +36,6 @@ const DealerProfile = ({ userData }: DealerProfileProps) => {
         working_hours: "",
     });
 
-    console.log(userData);
-
     const handleLogout = () => {
         dispatch(logOut());
         navigate("/");

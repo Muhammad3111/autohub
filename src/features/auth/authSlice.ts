@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { getFromLocalStorage } from "../../hooks/useGetFromLocalStorage";
+import { apiSlice } from "../../app/api/apiSlice";
 
 const updateLocalStorage = (key: string, value: any) => {
     if (value !== null && value !== undefined) {
@@ -54,10 +55,48 @@ const authSlice = createSlice({
                 (key) => localStorage.removeItem(key)
             );
         },
+        updateUserLikes: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{ postId: string; type: "like" | "dislike" }>
+        ) => {
+            if (!state.userData) return;
+
+            const { postId, type } = payload;
+
+            if (type === "like") {
+                if (!state.userData.likes.includes(postId)) {
+                    state.userData.likes.push(postId);
+                }
+                state.userData.dislikes = state.userData.dislikes.filter(
+                    (id) => id !== postId
+                );
+            } else if (type === "dislike") {
+                if (!state.userData.dislikes.includes(postId)) {
+                    state.userData.dislikes.push(postId);
+                }
+                state.userData.likes = state.userData.likes.filter(
+                    (id) => id !== postId
+                );
+            }
+
+            updateLocalStorage("user_data", state.userData);
+        },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(authSlice.actions.logOut, (_state) => {
+            apiSlice.util.resetApiState();
+        });
+
+        builder.addCase(authSlice.actions.updateUserLikes, (_state) => {
+            apiSlice.util.invalidateTags(["BLOGS"]);
+        });
     },
 });
 
-export const { setCredentials, logOut, changeLanguage } = authSlice.actions;
+export const { setCredentials, logOut, changeLanguage, updateUserLikes } =
+    authSlice.actions;
 export default authSlice.reducer;
 
 export const selectCurrentUserData = (state: { auth: AuthState }) =>
