@@ -12,7 +12,7 @@ const Profile = () => {
 
     const [activeTab, setActiveTab] = useState<
         "userProfile" | "likedCar" | "dealerProfile" | "myCreateCars"
-    >(() => (userData?.role === "dealer" ? "dealerProfile" : "userProfile"));
+    >(() => (userData?.role === "staff" ? "dealerProfile" : "userProfile"));
 
     if (!userData) {
         return <Loading />;
@@ -67,13 +67,13 @@ const Profile = () => {
                 {activeTab === "userProfile" && userData.role === "user" ? (
                     <UserProfile userData={userData} />
                 ) : (activeTab === "dealerProfile" &&
-                      userData.role === "dealer") ||
+                      userData.role === "staff") ||
                   userData.role === "service" ? (
                     <DealerProfile userData={userData} />
                 ) : activeTab === "likedCar" && userData.role === "user" ? (
                     <UserLikedCars />
                 ) : activeTab === "myCreateCars" &&
-                  userData.role === "dealer" ? (
+                  userData.role === "staff" ? (
                     <MyCreateCar />
                 ) : (
                     activeTab === "userProfile" &&

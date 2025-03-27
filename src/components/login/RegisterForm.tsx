@@ -21,6 +21,7 @@ const RegisterForm = ({
         control,
         watch,
         formState: { errors, isValid },
+        setValue,
     } = useForm<AuthRegister>({
         defaultValues: {
             user_data: {
@@ -29,7 +30,7 @@ const RegisterForm = ({
                 avatar: "",
                 role: "user",
             },
-            dealer_data: {
+            staff_data: {
                 workplace_name: "",
                 region: "",
                 city: "",
@@ -38,6 +39,7 @@ const RegisterForm = ({
                 working_hours: "",
                 info: "",
                 work_phone: "",
+                stype: "",
             },
         },
         mode: "onChange",
@@ -48,7 +50,7 @@ const RegisterForm = ({
     const handleRegister = (data: AuthRegister) => {
         const submitData: AuthRegister = {
             user_data: data.user_data,
-            dealer_data: data.dealer_data,
+            staff_data: data.staff_data,
         };
 
         onSubmit(submitData);
@@ -119,16 +121,16 @@ const RegisterForm = ({
                             </label>
                             <input
                                 id="workplace_name"
-                                {...register("dealer_data.workplace_name", {
+                                {...register("staff_data.workplace_name", {
                                     required: "Ish joyi nomi majburiy",
                                 })}
                                 className="w-full bg-transparent indent-2 h-10 ring-1 ring-grey focus-within:ring-2 focus-within:ring-primary outline-none duration-300"
                                 placeholder="Masalan: AutoSalon"
                                 autoComplete="off"
                             />
-                            {errors.dealer_data?.workplace_name && (
+                            {errors.staff_data?.workplace_name && (
                                 <p className="text-red-500 text-xs mt-1">
-                                    {errors.dealer_data.workplace_name.message}
+                                    {errors.staff_data.workplace_name.message}
                                 </p>
                             )}
                         </div>
@@ -138,7 +140,7 @@ const RegisterForm = ({
                                 Ish telefoni
                             </label>
                             <Controller
-                                name="dealer_data.work_phone"
+                                name="staff_data.work_phone"
                                 control={control}
                                 rules={{
                                     required: "Ish telefoni majburiy",
@@ -156,9 +158,9 @@ const RegisterForm = ({
                                     />
                                 )}
                             />
-                            {errors.dealer_data?.work_phone && (
+                            {errors.staff_data?.work_phone && (
                                 <p className="text-red-500 text-xs mt-1">
-                                    {errors.dealer_data.work_phone.message}
+                                    {errors.staff_data.work_phone.message}
                                 </p>
                             )}
                         </div>
@@ -173,13 +175,20 @@ const RegisterForm = ({
                         id="role"
                         {...register("user_data.role", {
                             required: "Role tanlash majburiy",
+                            onChange: (e) =>
+                                setValue(
+                                    "staff_data.stype",
+                                    e.target.value === "staff"
+                                        ? "dealer"
+                                        : "service"
+                                ),
                         })}
                         className="w-full bg-transparent indent-2 h-10 ring-1 ring-grey focus:ring-2 focus:ring-primary outline-none duration-300"
                     >
                         <option value="user">User</option>
-                        <option value="dealer">Dealer</option>
-                        <option value="service">Service</option>
+                        <option value="staff">Staff</option>
                     </select>
+
                     {errors.user_data?.role && (
                         <p className="text-red-500 text-xs mt-1">
                             {errors.user_data.role.message}

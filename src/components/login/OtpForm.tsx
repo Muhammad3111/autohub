@@ -24,6 +24,7 @@ const OTPForm = ({
     code,
     loading,
 }: OTPFormProps) => {
+    const [newCode, setNewCode] = useState("");
     const [countdown, setCountdown] = useState(60);
 
     const [sendOtp, { isLoading: resendLoading }] = useSendOtpMutation();
@@ -42,6 +43,10 @@ const OTPForm = ({
     });
 
     useEffect(() => {
+        setNewCode(code);
+    }, [code]);
+
+    useEffect(() => {
         if (countdown > 0) {
             const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
             return () => clearTimeout(timer);
@@ -50,7 +55,11 @@ const OTPForm = ({
 
     const handleSendOtp = async () => {
         try {
-            await sendOtp({ phone_number: phoneNumber }).unwrap();
+            await sendOtp({ phone_number: phoneNumber })
+                .unwrap()
+                .then((res) => {
+                    setNewCode(res.otp);
+                });
             setCountdown(60);
             reset({ otp: ["", "", "", "", ""] });
         } catch (error) {}
@@ -102,7 +111,7 @@ const OTPForm = ({
                 SMS kodni kiriting
             </h2>
             <p className="text-sm text-center text-gray-500 mb-6">
-                Kodni telefoningizga yubordik {code && <span>({code})</span>}
+                Kodni telefoningizga yubordik <span>({newCode})</span>
             </p>
 
             <form onSubmit={handleSubmit(onSubmitOTP)}>

@@ -35,8 +35,9 @@ const UserProfile = ({ userData }: UserProfileProps) => {
         }));
 
         const hasValue = Object.values({ ...formState, [name]: value }).some(
-            (val) => val.trim() !== ""
+            (val) => String(val).trim() !== ""
         );
+
         setIsChangeInput(hasValue);
     };
 
@@ -46,10 +47,10 @@ const UserProfile = ({ userData }: UserProfileProps) => {
 
     const handleCancel = () => {
         setFormState({
-            first_name: "",
-            last_name: "",
-            role: "",
-            phone_number: "",
+            first_name: userData.first_name,
+            last_name: userData.last_name,
+            role: userData.role,
+            phone_number: userData.phone_number,
         });
 
         setIsChangeInput(false);
@@ -75,7 +76,7 @@ const UserProfile = ({ userData }: UserProfileProps) => {
                         className="w-[200px] h-[200px] bg-white rounded flex items-center justify-center cursor-pointer"
                         onClick={handleButtonClick}
                     >
-                        <FiCamera className="text-5xl text-[#aaa]" />
+                        <FiCamera className="text-5xl text-primary" />
                     </button>
 
                     <input
@@ -98,7 +99,7 @@ const UserProfile = ({ userData }: UserProfileProps) => {
                             type="text"
                             name="first_name"
                             id="first_name"
-                            className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-[#aaa] duration-150"
+                            className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-primary duration-150"
                             value={formState.first_name}
                             onChange={handleChange}
                         />
@@ -114,7 +115,7 @@ const UserProfile = ({ userData }: UserProfileProps) => {
                             type="text"
                             id="last_name"
                             name="last_name"
-                            className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-[#aaa] duration-150"
+                            className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-primary duration-150"
                             value={formState.last_name}
                             onChange={handleChange}
                         />
@@ -127,10 +128,10 @@ const UserProfile = ({ userData }: UserProfileProps) => {
                             Telefon raqam
                         </label>
                         <PatternFormat
-                            className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-[#aaa] duration-150"
+                            className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-primary duration-150"
                             format="+998 ## ### ## ##"
                             placeholder="+998"
-                            value={formState.phone_number}
+                            value={formState.phone_number.slice(4)}
                             onChange={handleChange}
                             name="phone_number"
                             id="phone_number"

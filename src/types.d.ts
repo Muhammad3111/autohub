@@ -114,11 +114,21 @@ declare type AuthState = {
 
 declare type UserDataType = {
     phone_number: string;
+    avatar?: string;
     role: string;
     first_name: string;
     last_name: string;
-    likes: string[];
-    dislikes: string[];
+    likes?: string[];
+    dislikes?: string[];
+    address?: string;
+    avatar?: string;
+    city?: string;
+    id?: string;
+    info?: string;
+    region?: string;
+    work_phone?: string;
+    working_hours?: string;
+    workplace_name?: string;
 };
 
 declare type InputState = {
@@ -186,7 +196,7 @@ declare type AuthRegister = {
         phone_number: string;
         role: string;
     };
-    dealer_data?: {
+    staff_data?: {
         workplace_name?: string;
         region?: string;
         city?: string;
@@ -195,6 +205,7 @@ declare type AuthRegister = {
         working_hours?: string;
         info?: string;
         work_phone: string;
+        stype?: string;
     };
 };
 
