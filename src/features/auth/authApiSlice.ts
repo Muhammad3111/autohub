@@ -141,6 +141,15 @@ export const authApi = apiSlice.injectEndpoints({
             providesTags: ["DEALERS"],
             transformResponse: (data: DealerType) => data.items,
         }),
+
+        updateProfile: builder.mutation({
+            query: (data: AuthRegister) => ({
+                url: "/auth/update-profile",
+                method: "PUT",
+                body: data,
+            }),
+            invalidatesTags: ["AUTH"],
+        }),
     }),
 });
 

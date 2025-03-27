@@ -101,9 +101,9 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
                       },
                   }
                 : {
-                      dealer_data: {
-                          ...data.dealer_data,
-                          work_phone: `+998${data.dealer_data?.work_phone
+                      staff_data: {
+                          ...data.staff_data,
+                          work_phone: `+998${data.staff_data?.work_phone
                               .split(" ")
                               .join("")}`,
                       },

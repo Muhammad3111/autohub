@@ -11,9 +11,10 @@ type InputState = {
     region: string;
     city: string;
     address: string;
-    contact_number: string;
+    work_phone: string;
     info: string;
     working_hours: string;
+    phone_number: string;
 };
 
 type DealerProfileProps = {
@@ -27,13 +28,14 @@ const DealerProfile = ({ userData }: DealerProfileProps) => {
 
     const profilePhoto = useRef<HTMLInputElement>(null);
     const [formState, setFormState] = useState<InputState>({
-        workplace_name: "",
-        region: "",
-        city: "",
-        address: "",
-        contact_number: userData.phone_number,
-        info: "",
-        working_hours: "",
+        workplace_name: userData.workplace_name || "",
+        region: userData.region || "",
+        city: userData.city || "",
+        address: userData.address || "",
+        work_phone: userData.phone_number,
+        info: userData.info || "",
+        working_hours: userData.working_hours || "",
+        phone_number: userData.phone_number || "",
     });
 
     const handleLogout = () => {
@@ -60,13 +62,14 @@ const DealerProfile = ({ userData }: DealerProfileProps) => {
 
     const handleCancel = () => {
         setFormState({
-            workplace_name: "",
-            region: "",
-            city: "",
-            address: "",
-            contact_number: "",
-            info: "",
-            working_hours: "",
+            workplace_name: userData.workplace_name || "",
+            region: userData.region || "",
+            city: userData.city || "",
+            address: userData.address || "",
+            work_phone: userData.phone_number,
+            info: userData.info || "",
+            working_hours: userData.working_hours || "",
+            phone_number: userData.phone_number || "",
         });
 
         setIsChangeInput(false);
@@ -228,29 +231,46 @@ const DealerProfile = ({ userData }: DealerProfileProps) => {
                     </div>
                     <div className="flex flex-col w-full gap-1">
                         <label
-                            htmlFor="contact_number"
+                            htmlFor="work_phone"
                             className="font-semibold text-gray-500"
                         >
-                            Telefon raqam
+                            Korxona telefon raqami
                         </label>
                         <PatternFormat
                             className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-[#aaa] duration-150"
                             format="+### ## ### ## ##"
                             placeholder="+998"
-                            value={formState.contact_number}
+                            value={formState.work_phone}
                             onChange={handleChange}
-                            name="contact_number"
-                            id="contact_number"
+                            name="work_phone"
+                            id="work_phone"
+                        />
+                    </div>
+                    <div className="flex flex-col w-full gap-1">
+                        <label
+                            htmlFor="phone_number"
+                            className="font-semibold text-gray-500"
+                        >
+                            Profile telefon raqami
+                        </label>
+                        <PatternFormat
+                            className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-[#aaa] duration-150"
+                            format="+### ## ### ## ##"
+                            placeholder="+998"
+                            value={formState.phone_number}
+                            onChange={handleChange}
+                            name="phone_number"
+                            id="phone_number"
                         />
                     </div>
 
-                    <div className="flex flex-col w-full gap-1">
-                        <label
-                            htmlFor=""
-                            className="font-semibold text-gray-500 invisible"
+                    <div className="flex items-center justify-between w-full gap-1 col-span-2">
+                        <button
+                            onClick={handleLogout}
+                            className="text-lg text-red-500 px-8 py-2 rounded hover:bg-red-200 duration-150"
                         >
-                            Telefon raqam
-                        </label>
+                            Tizimdan chiqish
+                        </button>
                         <div className="flex items-center justify-end gap-2">
                             {isChangeInput && (
                                 <button
@@ -272,13 +292,6 @@ const DealerProfile = ({ userData }: DealerProfileProps) => {
                     </div>
                 </div>
             </div>
-
-            <button
-                onClick={handleLogout}
-                className="text-lg text-red-500 px-8 py-2 rounded hover:bg-red-200 duration-150 mt-10"
-            >
-                Tizimdan chiqish
-            </button>
         </div>
     );
 };
