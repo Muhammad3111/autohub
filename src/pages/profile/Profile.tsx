@@ -12,19 +12,19 @@ const Profile = () => {
 
     const [activeTab, setActiveTab] = useState<
         "userProfile" | "likedCar" | "dealerProfile" | "myCreateCars"
-    >(() => (userData?.role === "dealer" ? "dealerProfile" : "userProfile"));
+    >(() => (userData?.role === "staff" ? "dealerProfile" : "userProfile"));
 
     if (!userData) {
         return <Loading />;
     }
 
     return (
-        <div>
+        <div className="min-h-[614px]">
             <div className="my-10 font-medium text-2xl">
                 {userData.first_name}
             </div>
             <div className="flex justify-between gap-20">
-                {userData.role === "user" ? (
+                {userData.role === "user" || userData.role === "admin" ? (
                     <div className="w-[400px] flex flex-col gap-1">
                         <button
                             onClick={() => setActiveTab("userProfile")}
@@ -66,16 +66,20 @@ const Profile = () => {
 
                 {activeTab === "userProfile" && userData.role === "user" ? (
                     <UserProfile userData={userData} />
-                ) : activeTab === "dealerProfile" &&
-                  userData.role === "dealer" ? (
+                ) : (activeTab === "dealerProfile" &&
+                      userData.role === "staff") ||
+                  userData.role === "service" ? (
                     <DealerProfile userData={userData} />
                 ) : activeTab === "likedCar" && userData.role === "user" ? (
                     <UserLikedCars />
                 ) : activeTab === "myCreateCars" &&
-                  userData.role === "dealer" ? (
+                  userData.role === "staff" ? (
                     <MyCreateCar />
                 ) : (
-                    <></>
+                    activeTab === "userProfile" &&
+                    userData.role === "admin" && (
+                        <UserProfile userData={userData} />
+                    )
                 )}
             </div>
         </div>

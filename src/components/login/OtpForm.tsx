@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import { useForm, Controller } from "react-hook-form";
+import { useSendOtpMutation } from "../../features/auth/authApiSlice";
 
 type OTPFormProps = {
     onBack: () => void;
     onSubmit: (otp: string) => void;
     cancel: () => void;
+    phoneNumber: string;
     code: string;
     loading: boolean;
 };
@@ -14,23 +16,35 @@ type OTPInput = {
     otp: string[];
 };
 
-const OTPForm = ({ onBack, onSubmit, cancel, code, loading }: OTPFormProps) => {
+const OTPForm = ({
+    onBack,
+    onSubmit,
+    cancel,
+    phoneNumber,
+    code,
+    loading,
+}: OTPFormProps) => {
+    const [newCode, setNewCode] = useState("");
     const [countdown, setCountdown] = useState(60);
-    const [resendCount, setResendCount] = useState(0);
+
+    const [sendOtp, { isLoading: resendLoading }] = useSendOtpMutation();
+
     const {
         control,
         handleSubmit,
         watch,
         setValue,
         getValues,
+        reset,
         formState: { isValid },
     } = useForm<OTPInput>({
-        defaultValues: {
-            otp: ["", "", "", "", ""],
-        },
+        defaultValues: { otp: ["", "", "", "", ""] },
         mode: "onChange",
-        shouldUnregister: false,
     });
+
+    useEffect(() => {
+        setNewCode(code);
+    }, [code]);
 
     useEffect(() => {
         if (countdown > 0) {
@@ -39,20 +53,24 @@ const OTPForm = ({ onBack, onSubmit, cancel, code, loading }: OTPFormProps) => {
         }
     }, [countdown]);
 
-    const handleResendCode = () => {
-        const nextTime = resendCount >= 3 ? resendCount * 60 : 60;
-        setCountdown(nextTime);
-        setResendCount(resendCount + 1);
+    const handleSendOtp = async () => {
+        try {
+            await sendOtp({ phone_number: phoneNumber })
+                .unwrap()
+                .then((res) => {
+                    setNewCode(res.otp);
+                });
+            setCountdown(60);
+            reset({ otp: ["", "", "", "", ""] });
+        } catch (error) {}
     };
 
     const handleOtpChange = (index: number, value: string) => {
         if (!/^\d*$/.test(value)) return;
-
         const currentOtp = getValues("otp");
         currentOtp[index] = value;
         setValue("otp", currentOtp, { shouldValidate: true });
-
-        if (value && index < 4) {
+        if (value && index < currentOtp.length - 1) {
             document.getElementById(`otp-${index + 1}`)?.focus();
         }
     };
@@ -62,36 +80,29 @@ const OTPForm = ({ onBack, onSubmit, cancel, code, loading }: OTPFormProps) => {
         e: React.KeyboardEvent<HTMLInputElement>
     ) => {
         if (e.key !== "Backspace") return;
-
         const currentOtp = getValues("otp");
-
-        if (index === 4 || currentOtp[index] === "") {
-            for (let i = index; i >= 0; i--) {
-                if (currentOtp[i] !== "") {
-                    currentOtp[i] = "";
-                    setValue("otp", currentOtp, { shouldValidate: true });
-                    document.getElementById(`otp-${i}`)?.focus();
-                    break;
-                }
-            }
-        } else {
-            currentOtp[index] = "";
-            setValue("otp", currentOtp, { shouldValidate: true });
-            if (index > 0) {
-                document.getElementById(`otp-${index - 1}`)?.focus();
-            }
+        if (currentOtp[index] === "" && index > 0) {
+            document.getElementById(`otp-${index - 1}`)?.focus();
         }
+        currentOtp[index] = "";
+        setValue("otp", currentOtp, { shouldValidate: true });
     };
 
     const onSubmitOTP = (data: OTPInput) => {
         onSubmit(data.otp.join(""));
     };
 
+    const handleBack = () => {
+        reset({ otp: ["", "", "", "", ""] });
+        onBack();
+        setCountdown(60);
+    };
+
     return (
         <div className="w-full p-6 relative">
             <button
                 className="absolute top-4 left-4 text-gray-500 hover:text-gray-700 duration-150"
-                onClick={onBack}
+                onClick={handleBack}
             >
                 <FiArrowLeft size={20} />
             </button>
@@ -100,7 +111,7 @@ const OTPForm = ({ onBack, onSubmit, cancel, code, loading }: OTPFormProps) => {
                 SMS kodni kiriting
             </h2>
             <p className="text-sm text-center text-gray-500 mb-6">
-                Kodni telefoningizga yubordik {code}
+                Kodni telefoningizga yubordik <span>({newCode})</span>
             </p>
 
             <form onSubmit={handleSubmit(onSubmitOTP)}>
@@ -144,9 +155,12 @@ const OTPForm = ({ onBack, onSubmit, cancel, code, loading }: OTPFormProps) => {
                     <button
                         type="button"
                         className="w-full text-blue-500 underline text-center"
-                        onClick={handleResendCode}
+                        onClick={handleSendOtp}
+                        disabled={resendLoading}
                     >
-                        Kodni qayta yuborish
+                        {resendLoading
+                            ? "Yuborilmoqda..."
+                            : "Kodni qayta yuborish"}
                     </button>
                 )}
 
@@ -160,14 +174,14 @@ const OTPForm = ({ onBack, onSubmit, cancel, code, loading }: OTPFormProps) => {
                     </button>
                     <button
                         type="submit"
+                        disabled={!isValid || loading}
                         className={`w-[48%] p-2.5 rounded text-white ${
                             isValid
                                 ? "bg-primary hover:bg-primary-hover"
                                 : "bg-gray-400 cursor-not-allowed"
                         }`}
-                        disabled={!isValid || loading}
                     >
-                        Tasdiqlash{loading && "..."}
+                        Tasdiqlash {loading && "..."}
                     </button>
                 </div>
             </form>

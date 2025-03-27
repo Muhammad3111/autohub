@@ -89,6 +89,15 @@
 
 import { apiSlice } from "../../app/api/apiSlice";
 
+type DealerType = {
+    metadata: {
+        total_count: number;
+        total_pages: number;
+        current_page: number;
+    };
+    items: DealersType[];
+};
+
 export const authApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         sendOtp: builder.mutation({
@@ -125,6 +134,22 @@ export const authApi = apiSlice.injectEndpoints({
             }),
             providesTags: ["AUTH"],
         }),
+
+        getDealers: builder.query({
+            query: ({ page = 1 }: { page: number }) =>
+                `/auth/dealers?page=${page}`,
+            providesTags: ["DEALERS"],
+            transformResponse: (data: DealerType) => data.items,
+        }),
+
+        updateProfile: builder.mutation({
+            query: (data: AuthRegister) => ({
+                url: "/auth/update-profile",
+                method: "PUT",
+                body: data,
+            }),
+            invalidatesTags: ["AUTH"],
+        }),
     }),
 });
 
@@ -133,4 +158,6 @@ export const {
     useVerifyOtpMutation,
     useRegisterMutation,
     useLazyAuthDetailQuery,
+    useAuthDetailQuery,
+    useGetDealersQuery,
 } = authApi;

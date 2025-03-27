@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
 import { getFromLocalStorage } from "../../hooks/useGetFromLocalStorage";
+import { apiSlice } from "../../app/api/apiSlice";
 
 const updateLocalStorage = (key: string, value: any) => {
     if (value !== null && value !== undefined) {
@@ -10,11 +10,19 @@ const updateLocalStorage = (key: string, value: any) => {
     }
 };
 
+interface AuthState {
+    userData: (UserDataType & Partial<Omit<DealersType, "id" | "role">>) | null;
+    accessToken: string | null;
+    refreshToken: string | null;
+    language: string;
+}
+
+// LocalStorage'dan olingan ma'lumotni to'g'ri formatga o'tkazish
 const initialState: AuthState = {
-    userData: getFromLocalStorage<UserDataType | null>("user_data"),
-    accessToken: getFromLocalStorage<string | null>("access_token"),
-    refreshToken: getFromLocalStorage<string | null>("refresh_token"),
-    language: getFromLocalStorage("language", "uz"),
+    userData: getFromLocalStorage<UserDataType | null>("user_data") || null,
+    accessToken: getFromLocalStorage<string | null>("access_token") || null,
+    refreshToken: getFromLocalStorage<string | null>("refresh_token") || null,
+    language: getFromLocalStorage("language", "uz") || "uz",
 };
 
 const authSlice = createSlice({
@@ -27,37 +35,83 @@ const authSlice = createSlice({
                 userData?: UserDataType;
                 accessToken?: string | null;
                 refreshToken?: string | null;
+                dealerData?: Partial<Omit<DealersType, "id" | "role">>; // Dealer uchun ma'lumot
             }>
         ) => {
-            const { userData, accessToken, refreshToken } = action.payload;
+            const { userData, accessToken, refreshToken, dealerData } =
+                action.payload;
 
-            state.userData = userData ?? state.userData;
-            state.accessToken = accessToken ?? state.accessToken;
-            state.refreshToken = refreshToken ?? state.refreshToken;
+            if (userData) {
+                state.userData = {
+                    ...state.userData, // Avvalgi userData
+                    ...userData, // Yangi userData
+                    ...dealerData, // Dealer maydonlari qo‘shiladi
+                };
+            }
 
-            updateLocalStorage("user_data", userData);
-            updateLocalStorage("access_token", accessToken);
-            updateLocalStorage("refresh_token", refreshToken);
+            if (accessToken !== undefined) state.accessToken = accessToken;
+            if (refreshToken !== undefined) state.refreshToken = refreshToken;
+
+            updateLocalStorage("user_data", state.userData);
+            updateLocalStorage("access_token", state.accessToken);
+            updateLocalStorage("refresh_token", state.refreshToken);
         },
         changeLanguage: (state, action: PayloadAction<string>) => {
             state.language = action.payload;
             updateLocalStorage("language", action.payload);
         },
         logOut: (state) => {
-            Object.assign(state, {
-                userData: null,
-                accessToken: null,
-                refreshToken: null,
-            });
+            state.userData = null;
+            state.accessToken = null;
+            state.refreshToken = null;
 
             ["user_data", "access_token", "refresh_token", "language"].forEach(
                 (key) => localStorage.removeItem(key)
             );
         },
+        updateUserLikes: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{ postId: string; type: "like" | "dislike" }>
+        ) => {
+            if (!state.userData) return;
+
+            const { postId, type } = payload;
+
+            state.userData.likes = state.userData.likes ?? [];
+            state.userData.dislikes = state.userData.dislikes ?? [];
+
+            if (type === "like") {
+                if (!state.userData.likes.includes(postId)) {
+                    state.userData.likes.push(postId);
+                }
+                state.userData.dislikes = state.userData.dislikes.filter(
+                    (id) => id !== postId
+                );
+            } else {
+                if (!state.userData.dislikes.includes(postId)) {
+                    state.userData.dislikes.push(postId);
+                }
+                state.userData.likes = state.userData.likes.filter(
+                    (id) => id !== postId
+                );
+            }
+            updateLocalStorage("user_data", state.userData);
+        },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(authSlice.actions.logOut, (_state) => {
+            apiSlice.util.resetApiState();
+        });
+        builder.addCase(authSlice.actions.updateUserLikes, (_state) => {
+            apiSlice.util.invalidateTags(["BLOGS"]);
+        });
     },
 });
 
-export const { setCredentials, logOut, changeLanguage } = authSlice.actions;
+export const { setCredentials, logOut, changeLanguage, updateUserLikes } =
+    authSlice.actions;
 export default authSlice.reducer;
 
 export const selectCurrentUserData = (state: { auth: AuthState }) =>
