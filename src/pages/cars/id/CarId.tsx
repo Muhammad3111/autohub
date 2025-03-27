@@ -44,9 +44,7 @@ export default function CarId() {
     <div className="flex flex-col gap-4 w-full">
       <Header title={car.name_uz} />
       <div className="flex flex-col gap-4 py-5 my-container">
-        <h1 className="text-4xl font-bold capitalize">
-          {car.name_uz}
-        </h1>
+        <h1 className="text-4xl font-bold capitalize">{car.name_uz}</h1>
         <div className="flex gap-4">
           <div className="basis-1/2 flex gap-2">
             <div className="w-full h-[350px] bg-gray-300 relative">
@@ -60,7 +58,6 @@ export default function CarId() {
               >
                 <RiFullscreenLine className="text-2xl" />
               </button>
-              <button></button>
             </div>
             <div className="grid grid-cols-1 gap-2 w-full items-start">
               {car.images?.slice(0, 3).map((img, ind) => (
@@ -73,6 +70,11 @@ export default function CarId() {
                 </div>
               ))}
             </div>
+          </div>
+          <div>
+            <button onClick={() => navigate(`/cars/parametrs/${car.id}`)}>
+              Konfiguratisa
+            </button>
           </div>
         </div>
       </div>

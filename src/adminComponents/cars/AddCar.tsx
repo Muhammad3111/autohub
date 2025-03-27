@@ -15,6 +15,17 @@ import Button from "../../utility/button/Button";
 import Modal from "../../utility/modal/Modal";
 import ExcelUploader from "../../utility/excelParser/ExcelParser";
 
+const LoadingSkeleton = () => (
+  <div className="flex flex-col gap-4 p-6">
+    <div className="h-10 bg-gray-300 animate-pulse rounded w-1/2" />
+    <div className="grid grid-cols-3 gap-4">
+      {Array.from({ length: 12 }).map((_, i) => (
+        <div key={i} className="h-12 bg-gray-200 animate-pulse rounded" />
+      ))}
+    </div>
+  </div>
+);
+
 type InputFieldProps<T extends FieldValues> = {
   label: string;
   name: Path<T>; // 🔹 Endi name aniq `Path<T>` bo‘ldi
@@ -32,21 +43,20 @@ export default function AddCar() {
     setValue,
     reset,
   } = useForm<CarObject>({ defaultValues: { configurations: [] } });
+
   const [addCar] = useAddCarMutation();
   const { data, isLoading } = useGetBrandsQuery({});
 
-  // 🔹 Modal va rasmlar boshqaruvi
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"single" | "gallery">("single");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
 
-  // 🔹 Brendlar ma'lumotini olish va optimallashtirish
   const brands = useMemo(
     () =>
       (data?.items || []).map((b: any) => ({
         id: b.id,
-        name: b.name, // 🔹 Faqat `id` va `name` ni olamiz
+        name: b.name,
       })),
     [data]
   );
@@ -71,6 +81,11 @@ export default function AddCar() {
     { id: "Automatic", name: "Automatic" },
   ];
 
+  const currency = [
+    { id: "$", name: "$" },
+    { id: "UZS", name: "UZS" },
+  ];
+
   const handleImageSelect = (url: string | string[]) => {
     if (modalType === "single" && typeof url === "string") {
       setSelectedImage(url);
@@ -88,7 +103,6 @@ export default function AddCar() {
     setSelectedImage(null);
   };
 
-  // 🔹 Yangi avtomobil qo'shish
   const onSubmit: SubmitHandler<CarObject> = async (formData) => {
     try {
       const carData = {
@@ -107,9 +121,12 @@ export default function AddCar() {
     }
   };
 
+  if (isLoading) {
+    return <LoadingSkeleton />;
+  }
+
   return (
     <div className="flex flex-col gap-4 p-6">
-      {/* 🔹 Modal */}
       {isModalOpen && (
         <Modal
           onClose={() => setIsModalOpen(false)}
@@ -132,7 +149,6 @@ export default function AddCar() {
         className="grid grid-cols-3 w-full gap-4 items-start"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {/* 🔹 Asosiy maydonlar */}
         <div className="col-span-2 grid grid-cols-4 gap-4">
           <InputField
             label="Avtomobil nomi"
@@ -147,7 +163,7 @@ export default function AddCar() {
             register={register}
             options={brands}
             errors={errors}
-            isLoading={isLoading}
+            defaultValue={brands[0]?.id}
           />
           <InputField
             label="Model"
@@ -164,14 +180,23 @@ export default function AddCar() {
             required
             type="number"
           />
-          <InputField
-            label="Narx"
-            name="price"
-            register={register}
-            errors={errors}
-            required
-            type="number"
-          />
+          <div className="flex gap-4 w-full col-span-2">
+            <InputField
+              label="Narx"
+              name="price"
+              register={register}
+              errors={errors}
+              required
+              type="number"
+            />
+            <SelectField
+              label="Valyuta"
+              name="currency"
+              register={register}
+              options={currency}
+              defaultValue={currency[0].name}
+            />
+          </div>
           <ExcelUploader register={register} setValue={setValue} />
           <InputField
             label="Avtomobil turi"
@@ -179,7 +204,6 @@ export default function AddCar() {
             register={register}
             errors={errors}
             required
-            type="text"
           />
           <SelectField
             label="Harakat turi"
@@ -204,9 +228,7 @@ export default function AddCar() {
           />
         </div>
 
-        {/* 🔹 Rasm va qo'shimcha ma'lumotlar */}
         <div className="col-span-1 flex flex-col gap-5">
-          {/* 🔹 Asosiy rasm tanlash */}
           <div className="flex flex-col gap-2">
             <label className="block text-sm font-medium text-gray-700">
               Asosiy rasmni tanlash
@@ -224,7 +246,7 @@ export default function AddCar() {
             {selectedImage && (
               <div className="relative w-full h-48">
                 <img
-                  src={`http://89.223.126.64:8080${selectedImage}`}
+                  src={`https://usc1.contabostorage.com/c3e282af10b9439688d5390b60ed4045:autohub/${selectedImage}`}
                   alt="Selected"
                   className="w-full h-full object-cover rounded-md"
                 />
@@ -238,7 +260,6 @@ export default function AddCar() {
             )}
           </div>
 
-          {/* 🔹 Gallery uchun rasm tanlash */}
           <div className="flex flex-col gap-2">
             <label className="block text-sm font-medium text-gray-700">
               Gallery rasmlarini tanlash
@@ -258,7 +279,7 @@ export default function AddCar() {
                 {galleryImages.map((url, index) => (
                   <div key={index} className="relative">
                     <img
-                      src={`http://89.223.126.64:8080${url}`}
+                      src={`https://usc1.contabostorage.com/c3e282af10b9439688d5390b60ed4045:autohub/${url}`}
                       alt={`Gallery ${index}`}
                       className="w-full h-32 object-cover rounded-md"
                     />

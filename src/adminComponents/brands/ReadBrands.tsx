@@ -65,7 +65,7 @@ const ReadBrands = () => {
                   <td className="px-4 py-2 text-center">{index + 1}</td>
                   <td className="px-4 py-2 text-center">
                     <img
-                      src={`http://89.223.126.64:8080${item.image}`}
+                      src={`https://usc1.contabostorage.com/c3e282af10b9439688d5390b60ed4045:autohub/${item.image}`}
                       alt={item.name}
                       className="w-12 h-12 rounded-full mx-auto"
                     />

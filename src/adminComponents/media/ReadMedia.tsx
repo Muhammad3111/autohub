@@ -1,62 +1,89 @@
-import { useState } from "react";
-import { useGetUrlsQuery } from "../../features/media/mediaSlice";
-import DeleteMedia from "./DeleteMedia";
+import { useState, useEffect } from "react";
+import { useGetS3ObjectsQuery } from "../../features/media/mediaSlice";
+
+const SkeletonCard = () => (
+  <div className="w-full h-40 bg-gray-300 animate-pulse rounded-lg" />
+);
 
 const ReadMedia = () => {
-  const [page, setPage] = useState(1);
-  const perPage = 100; // 4 ustunda ko'rsatiladi
+  const [previousTokens, setPreviousTokens] = useState<string[]>([]);
+  const [continuationToken, setContinuationToken] = useState<
+    string | undefined
+  >(undefined);
 
-  const { data, isLoading, error } = useGetUrlsQuery({
-    page,
-    per_page: perPage,
+  const { data, isFetching, refetch } = useGetS3ObjectsQuery({
+    bucket: "autohub",
+    prefix: "uploads/",
+    continuationToken,
+    maxKeys: 20,
   });
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading media!</div>;
+  const media = data?.keys || [];
+  const hasMore = data?.isTruncated || false;
+  const nextToken = data?.nextContinuationToken;
 
-  const totalPages = Math.ceil((data?.total || 0) / perPage);
+  const handleNext = () => {
+    if (nextToken) {
+      setPreviousTokens((prev) => [...prev, continuationToken || ""]);
+      setContinuationToken(nextToken);
+    }
+  };
+
+  const handlePrevious = () => {
+    const prevTokensCopy = [...previousTokens];
+    const prevToken = prevTokensCopy.pop();
+    setPreviousTokens(prevTokensCopy);
+    setContinuationToken(prevToken);
+  };
+
+  useEffect(() => {
+    refetch(); // Har safar continuation token o‘zgarsa, yangi malumot oladi
+  }, [continuationToken, refetch]);
+
+  const imageURL = import.meta.env.VITE_S3_PUBLIC_URL as string;
 
   return (
-    <div>
-      <div className="h-[70vh] overflow-y-auto scrollbar-thin">
-        <div className="grid grid-cols-5 gap-4">
-          {data?.urls.map((url, index) => (
-            <div
-              key={index}
-              className="border border-gray-300 rounded-lg overflow-hidden shadow-sm group relative"
-            >
-              <img
-                src={`http://89.223.126.64:8080${url}`}
-                alt={`Media ${index}`}
-                className="w-full h-40 object-cover"
-              />
-              <DeleteMedia url={url} />
-            </div>
-          ))}
+    <div className="h-[75vh] overflow-y-auto scrollbar-thin px-4 flex flex-col justify-between">
+      <div className="grid grid-cols-5 gap-4">
+        {isFetching
+          ? Array.from({ length: 10 }).map((_, index) => (
+              <SkeletonCard key={index} />
+            ))
+          : media.map((url, index) => (
+              <div
+                key={index}
+                className="border border-gray-300 rounded-lg overflow-hidden shadow-sm group relative"
+              >
+                <img
+                  src={`${imageURL}${url}`}
+                  alt={`Media ${index}`}
+                  width="200"
+                  height="160"
+                  loading="lazy"
+                  className="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+            ))}
+      </div>
+
+      {!isFetching && (
+        <div className="flex justify-center gap-4 mt-6">
+          <button
+            onClick={handlePrevious}
+            disabled={previousTokens.length < 1}
+            className="px-6 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500 disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <button
+            onClick={handleNext}
+            disabled={!hasMore}
+            className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+          >
+            Next
+          </button>
         </div>
-      </div>
-
-      <div className="flex justify-between items-center">
-        <button
-          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-          disabled={page === 1}
-          className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 disabled:opacity-50"
-        >
-          Previous
-        </button>
-
-        <span className="text-gray-700">
-          Sahifa: {page} | Jami: {totalPages}
-        </span>
-
-        <button
-          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-          disabled={page === totalPages}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
-        >
-          Next
-        </button>
-      </div>
+      )}
     </div>
   );
 };

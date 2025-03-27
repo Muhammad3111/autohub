@@ -130,7 +130,7 @@ export default function AddBrand() {
             {selectedImage && (
               <div className="mb-4 relative w-full h-48">
                 <img
-                  src={`http://89.223.126.64:8080${selectedImage}`}
+                  src={`https://usc1.contabostorage.com/c3e282af10b9439688d5390b60ed4045:autohub/${selectedImage}`}
                   alt="Selected"
                   className="w-full h-full object-cover rounded-md"
                 />

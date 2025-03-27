@@ -1,41 +1,80 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from "../../app/api/apiSlice";
+import { s3 } from "../../s3/s3Client";
+import { ListObjectsV2Command, PutObjectCommand } from "@aws-sdk/client-s3";
 
-type UrlsData = {
-  total: number;
-  page: number;
-  per_page: number;
-  urls: string[];
+type S3ListResponse = {
+  keys: string[];
+  isTruncated: boolean;
+  nextContinuationToken?: string;
 };
 
-export const urlsApi = apiSlice.injectEndpoints({
+export const s3Api = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getUrls: builder.query<UrlsData, { page?: number; per_page?: number }>({
-      query: ({ page = 1, per_page = 100 }) => ({
-        url: `/media/uploads`,
-        method: "GET",
-        params: { page, per_page },
-      }),
+    getS3Objects: builder.query<
+      S3ListResponse,
+      {
+        bucket: string;
+        prefix?: string;
+        continuationToken?: string;
+        maxKeys?: number;
+      }
+    >({
+      async queryFn({ bucket, prefix = "", continuationToken, maxKeys = 20 }) {
+        try {
+          const command = new ListObjectsV2Command({
+            Bucket: bucket,
+            Prefix: prefix,
+            ContinuationToken: continuationToken,
+            MaxKeys: maxKeys,
+          });
+
+          const response = await s3.send(command);
+
+          return {
+            data: {
+              keys:
+                response.Contents?.map((item) => item.Key).filter(
+                  (key): key is string => !!key
+                ) || [],
+              isTruncated: response.IsTruncated || false,
+              nextContinuationToken: response.NextContinuationToken,
+            },
+          };
+        } catch (error) {
+          return { error: error as any };
+        }
+      },
       providesTags: ["MEDIA"],
     }),
 
-    addUrl: builder.mutation<{ success: boolean }, FormData>({
-      query: (formData: FormData) => ({
-        url: `/media/uploads`,
-        method: "POST",
-        body: formData,
-      }),
-      invalidatesTags: ["MEDIA"],
-    }),
+    uploadToS3: builder.mutation<
+      { key: string },
+      { bucket: string; key: string; body: any; contentType: string }
+    >({
+      async queryFn({ bucket, key, body, contentType }) {
+        try {
+          const command = new PutObjectCommand({
+            Bucket: bucket,
+            Key: key,
+            Body: body,
+            ContentType: contentType,
+            ACL: "public-read",
+          });
 
-    deleteUrl: builder.mutation<{ success: boolean }, string>({
-      query: (id: string) => ({
-        url: `http://89.223.126.64:8080${id}`,
-        method: "DELETE",
-      }),
+          await s3.send(command);
+          return { data: { key } };
+        } catch (error) {
+          return { error: error as any };
+        }
+      },
       invalidatesTags: ["MEDIA"],
     }),
   }),
 });
 
-export const { useGetUrlsQuery, useAddUrlMutation, useDeleteUrlMutation } =
-  urlsApi;
+export const {
+  useGetS3ObjectsQuery,
+  useLazyGetS3ObjectsQuery,
+  useUploadToS3Mutation,
+} = s3Api;

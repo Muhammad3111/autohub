@@ -11,10 +11,15 @@ declare type Brand = {
   id?: number;
 };
 
-declare type ConfigurationItem = {
+type ConfigurationItemChildren = {
   ckey: string;
   cvalue: string;
-  category: string;
+};
+
+declare type ConfigurationItem = {
+  id: number;
+  name: string;
+  children: ConfigurationItemChildren[];
 };
 
 declare type CarObject = {
@@ -31,6 +36,7 @@ declare type CarObject = {
   engine_type: string;
   drive_type: string;
   cover_image?: string;
+  currency: string;
   images?: string[];
   rating?: number;
   configurations?: ConfigurationItem[];

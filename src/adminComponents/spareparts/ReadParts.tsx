@@ -1,17 +1,22 @@
 import { useState } from "react";
 import { useGetSparesQuery } from "../../features/spare-parts/spare-parts";
+import DeleteSparePart from "./DeleteSparePart";
+import { MdOutlineEdit } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const ReadParts = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const { data, isLoading } = useGetSparesQuery({});
-
+  const navigate = useNavigate();
   const spareParts: SpareParts[] = data?.items || [];
   const filteredData = spareParts.filter((item) =>
     [item.name_uz].some((field) =>
       field.toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
+
+  const imageURL = import.meta.env.VITE_S3_PUBLIC_URL as string;
 
   return (
     <div className="">
@@ -53,7 +58,7 @@ const ReadParts = () => {
                   <td className="px-4 py-2 text-center">{index + 1}</td>
                   <td className="px-4 py-2 text-center">
                     <img
-                      src={item.cover_image}
+                      src={`${imageURL}${item.cover_image}`}
                       alt={item.name_uz}
                       className="w-12 h-12 rounded-full mx-auto"
                     />
@@ -68,7 +73,15 @@ const ReadParts = () => {
                     {item.status ? "Active" : "Inactive"}
                   </td>
                   <td className="px-4 py-2 text-center">{item.price}</td>
-                  <td></td>
+                  <td className="text-center">
+                    <button
+                      onClick={() => navigate(`/admin/spare-parts/update/${item.id}`)}
+                      className="rounded-full bg-blue-600 text-white p-2 hover:bg-blue-400 mr-3"
+                    >
+                      <MdOutlineEdit className="text-lg" />
+                    </button>
+                    <DeleteSparePart id={item.id} />
+                  </td>
                 </tr>
               ))
             )}

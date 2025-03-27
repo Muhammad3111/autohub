@@ -141,7 +141,7 @@
             "value_uz": "Atmosferik yoritish bilan interyer"
         },
         {
-            "key_uz": "toqnasuvlarniOldiniOlish",
+            "key_uz": "toqnaspare_partlarniOldiniOlish",
             "value_uz": "To'qnashuvlarni oldini olish tizimi"
         },
         {
@@ -214,12 +214,12 @@
         },
         {
             "id": 2,
-            "title": "Sedan",
+            "title": "Off-road",
             "icon": ""
         },
         {
             "id": 3,
-            "title": "SUV",
+            "title": "Suv",
             "icon": ""
         },
         {
@@ -262,301 +262,301 @@
             "id": 1,
             "name": "Audi",
             "image": "https://example.com/images/75.png",
-            "brand_type": "Economy"
+            "brand_type": "vehicle"
         },
         {
             "id": 2,
             "name": "BMW",
             "image": "https://example.com/images/95.png",
-            "brand_type": "Coupe"
+            "brand_type": "vehicle"
         },
         {
             "id": 3,
             "name": "Chevrolet",
             "image": "https://example.com/images/14.png",
-            "brand_type": "Coupe"
+            "brand_type": "vehicle"
         },
         {
             "id": 4,
             "name": "Dodge",
             "image": "https://example.com/images/44.png",
-            "brand_type": "SUV"
+            "brand_type": "spare_part"
         },
         {
             "id": 5,
             "name": "Ferrari",
             "image": "https://example.com/images/85.png",
-            "brand_type": "Sedan"
+            "brand_type": "vehicle"
         },
         {
             "id": 6,
             "name": "Ford",
             "image": "https://example.com/images/45.png",
-            "brand_type": "Off-road"
+            "brand_type": "spare_part"
         },
         {
             "id": 7,
             "name": "Honda",
             "image": "https://example.com/images/13.png",
-            "brand_type": "Coupe"
+            "brand_type": "vehicle"
         },
         {
             "id": 8,
             "name": "Hyundai",
             "image": "https://example.com/images/95.png",
-            "brand_type": "Sports"
+            "brand_type": "spare_part"
         },
         {
             "id": 9,
             "name": "Jaguar",
             "image": "https://example.com/images/71.png",
-            "brand_type": "Sedan"
+            "brand_type": "vehicle"
         },
         {
             "id": 10,
             "name": "Jeep",
             "image": "https://example.com/images/54.png",
-            "brand_type": "Sports"
+            "brand_type": "spare_part"
         },
         {
             "id": 11,
             "name": "Kia",
             "image": "https://example.com/images/55.png",
-            "brand_type": "Sedan"
+            "brand_type": "vehicle"
         },
         {
             "id": 12,
             "name": "Lamborghini",
             "image": "https://example.com/images/9.png",
-            "brand_type": "Economy"
+            "brand_type": "vehicle"
         },
         {
             "id": 13,
             "name": "Land Rover",
             "image": "https://example.com/images/89.png",
-            "brand_type": "Sedan"
+            "brand_type": "vehicle"
         },
         {
             "id": 14,
             "name": "Lexus",
             "image": "https://example.com/images/32.png",
-            "brand_type": "Sports"
+            "brand_type": "spare_part"
         },
         {
             "id": 15,
             "name": "Maserati",
             "image": "https://example.com/images/49.png",
-            "brand_type": "Off-road"
+            "brand_type": "spare_part"
         },
         {
             "id": 16,
             "name": "Mazda",
             "image": "https://example.com/images/46.png",
-            "brand_type": "Luxury"
+            "brand_type": "spare_part"
         },
         {
             "id": 17,
             "name": "Mercedes-Benz",
             "image": "https://example.com/images/79.png",
-            "brand_type": "Electric"
+            "brand_type": "spare_part"
         },
         {
             "id": 18,
             "name": "Mini",
             "image": "https://example.com/images/84.png",
-            "brand_type": "SUV"
+            "brand_type": "spare_part"
         },
         {
             "id": 19,
             "name": "Mitsubishi",
             "image": "https://example.com/images/100.png",
-            "brand_type": "Luxury"
+            "brand_type": "spare_part"
         },
         {
             "id": 20,
             "name": "Nissan",
             "image": "https://example.com/images/5.png",
-            "brand_type": "Coupe"
+            "brand_type": "vehicle"
         },
         {
             "id": 21,
             "name": "Opel",
             "image": "https://example.com/images/19.png",
-            "brand_type": "Coupe"
+            "brand_type": "vehicle"
         },
         {
             "id": 22,
             "name": "Peugeot",
             "image": "https://example.com/images/13.png",
-            "brand_type": "Economy"
+            "brand_type": "vehicle"
         },
         {
             "id": 23,
             "name": "Porsche",
             "image": "https://example.com/images/35.png",
-            "brand_type": "Electric"
+            "brand_type": "spare_part"
         },
         {
             "id": 24,
             "name": "Renault",
             "image": "https://example.com/images/89.png",
-            "brand_type": "Sports"
+            "brand_type": "spare_part"
         },
         {
             "id": 25,
             "name": "Rolls-Royce",
             "image": "https://example.com/images/24.png",
-            "brand_type": "Luxury"
+            "brand_type": "spare_part"
         },
         {
             "id": 26,
             "name": "Tesla",
             "image": "https://example.com/images/49.png",
-            "brand_type": "Sedan"
+            "brand_type": "vehicle"
         },
         {
             "id": 27,
             "name": "Toyota",
             "image": "https://example.com/images/46.png",
-            "brand_type": "Electric"
+            "brand_type": "spare_part"
         },
         {
             "id": 28,
             "name": "Volkswagen",
             "image": "https://example.com/images/54.png",
-            "brand_type": "SUV"
+            "brand_type": "spare_part"
         },
         {
             "id": 29,
             "name": "Volvo",
             "image": "https://example.com/images/72.png",
-            "brand_type": "Sports"
+            "brand_type": "spare_part"
         },
         {
             "id": 30,
             "name": "Acura",
             "image": "https://example.com/images/81.png",
-            "brand_type": "Economy"
+            "brand_type": "vehicle"
         },
         {
             "id": 31,
             "name": "Alfa Romeo",
             "image": "https://example.com/images/8.png",
-            "brand_type": "Off-road"
+            "brand_type": "spare_part"
         },
         {
             "id": 32,
             "name": "Aston Martin",
             "image": "https://example.com/images/99.png",
-            "brand_type": "Luxury"
+            "brand_type": "spare_part"
         },
         {
             "id": 33,
             "name": "Bentley",
             "image": "https://example.com/images/61.png",
-            "brand_type": "Coupe"
+            "brand_type": "vehicle"
         },
         {
             "id": 34,
             "name": "Bugatti",
             "image": "https://example.com/images/8.png",
-            "brand_type": "Electric"
+            "brand_type": "spare_part"
         },
         {
             "id": 35,
             "name": "McLaren",
             "image": "https://example.com/images/64.png",
-            "brand_type": "SUV"
+            "brand_type": "spare_part"
         },
         {
             "id": 36,
             "name": "Lucid",
             "image": "https://example.com/images/77.png",
-            "brand_type": "SUV"
+            "brand_type": "spare_part"
         },
         {
             "id": 37,
             "name": "Rivian",
             "image": "https://example.com/images/38.png",
-            "brand_type": "Coupe"
+            "brand_type": "vehicle"
         },
         {
             "id": 38,
             "name": "Fisker",
             "image": "https://example.com/images/98.png",
-            "brand_type": "SUV"
+            "brand_type": "spare_part"
         },
         {
             "id": 39,
             "name": "Polestar",
             "image": "https://example.com/images/78.png",
-            "brand_type": "Coupe"
+            "brand_type": "vehicle"
         },
         {
             "id": 40,
             "name": "Borgward",
             "image": "https://example.com/images/71.png",
-            "brand_type": "Off-road"
+            "brand_type": "spare_part"
         },
         {
             "id": 41,
             "name": "BYD",
             "image": "https://example.com/images/48.png",
-            "brand_type": "Economy"
+            "brand_type": "vehicle"
         },
         {
             "id": 42,
             "name": "NIO",
             "image": "https://example.com/images/24.png",
-            "brand_type": "Off-road"
+            "brand_type": "spare_part"
         },
         {
             "id": 43,
             "name": "Xpeng",
             "image": "https://example.com/images/67.png",
-            "brand_type": "Sports"
+            "brand_type": "spare_part"
         },
         {
             "id": 44,
             "name": "VinFast",
             "image": "https://example.com/images/61.png",
-            "brand_type": "Sedan"
+            "brand_type": "vehicle"
         },
         {
             "id": 45,
             "name": "Pagani",
             "image": "https://example.com/images/11.png",
-            "brand_type": "Economy"
+            "brand_type": "vehicle"
         },
         {
             "id": 46,
             "name": "Koenigsegg",
             "image": "https://example.com/images/76.png",
-            "brand_type": "Off-road"
+            "brand_type": "spare_part"
         },
         {
             "id": 47,
             "name": "Rimac",
             "image": "https://example.com/images/93.png",
-            "brand_type": "Electric"
+            "brand_type": "spare_part"
         },
         {
             "id": 48,
             "name": "Wiesmann",
             "image": "https://example.com/images/86.png",
-            "brand_type": "Electric"
+            "brand_type": "spare_part"
         },
         {
             "id": 49,
             "name": "Saab",
             "image": "https://example.com/images/46.png",
-            "brand_type": "Sedan"
+            "brand_type": "vehicle"
         },
         {
             "id": 50,
             "name": "Seat",
             "image": "https://example.com/images/87.png",
-            "brand_type": "Sedan"
+            "brand_type": "vehicle"
         }
     ],
     "menu_sidebar": [
@@ -579,7 +579,7 @@
                 "0-100 km/h Acceleration Time (s)",
                 "NEDC Comprehensive Fuel Consumption (L/100km)",
                 "WLTC Comprehensive Fuel Consumption (L/100km)",
-                "Vehicle Warranty Period",
+                "vehicle Warranty Period",
                 "Estimated Total Maintenance Cost for 60,000 km"
             ]
         },
@@ -651,7 +651,7 @@
                 "Front Suspension Type",
                 "Rear Suspension Type",
                 "Steering Type",
-                "Vehicle Structure"
+                "vehicle Structure"
             ]
         },
         {
@@ -674,7 +674,7 @@
                 "Braking Force Distribution (EBD/CBC, etc.)",
                 "Brake Assist (EBA/BA, etc.)",
                 "Traction Control (TCS/ASR, etc.)",
-                "Vehicle Stability System (ESP/DSC, etc.)",
+                "vehicle Stability System (ESP/DSC, etc.)",
                 "Lane Departure Warning",
                 "Forward Collision Warning",
                 "Rear Collision Warning",
@@ -718,7 +718,7 @@
             "children": [
                 "Parking Radar - Forward",
                 "Parking Radar - Back",
-                "Front Vehicle Departure Reminder",
+                "Front vehicle Departure Reminder",
                 "Driving Assistance Images - Reversing Image",
                 "Driving Assistance Images - 360° Panoramic Images",
                 "Driving Assistance Images - Transparent Images",
@@ -744,8 +744,8 @@
                 "Rear Axle Limited Slip Mode",
                 "Center Differential Lock Function",
                 "Integral Active Steering",
-                "Driving Mode Selection - Sports",
-                "Driving Mode Selection - ECO/Economy",
+                "Driving Mode Selection - spare_part",
+                "Driving Mode Selection - ECO/vehicle",
                 "Driving Mode Selection - Standard Comfort"
             ]
         },
@@ -758,8 +758,8 @@
                 "Light-sensitive Skylight",
                 "Roof Rack",
                 "Sport Appearance Kit",
-                "Electric Spoiler - Standard",
-                "Electric Spoiler - Optional",
+                "spare_part Spoiler - Standard",
+                "spare_part Spoiler - Optional",
                 "Active Closed Grille",
                 "Aluminum Alloy Wheels - Standard",
                 "Frameless Door Design - Standard",
@@ -774,7 +774,7 @@
                 "Steering Wheel Material - Leather",
                 "Steering Wheel Material - Genuine Leather",
                 "Steering Wheel Adjustment - Up and Down + Front and Back",
-                "Electric Steering Wheel Adjustment",
+                "spare_part Steering Wheel Adjustment",
                 "Steering Wheel Functions - Multi-function Control",
                 "Steering Wheel Functions - Shifting",
                 "Gear Shifting - Electronic Gear Lever",
@@ -787,12 +787,12 @@
             "id": 11,
             "name": "Comfort/Anti-Theft Configuration",
             "children": [
-                "Electric Suction Door",
-                "Electric Tailgate - Standard",
-                "Electric Tailgate - Optional",
+                "spare_part Suction Door",
+                "spare_part Tailgate - Standard",
+                "spare_part Tailgate - Optional",
                 "Sensor-type Tailgate",
-                "Electric Tailgate Position Memory - Standard",
-                "Electric Tailgate Position Memory - Optional",
+                "spare_part Tailgate Position Memory - Standard",
+                "spare_part Tailgate Position Memory - Optional",
                 "Electronic Engine Immobilizer - Standard",
                 "Central Locking System in the Car - Standard",
                 "Remote Control Key Type - Smart Remote Control Key",
@@ -800,9 +800,9 @@
                 "Keyless Entry - Front Row",
                 "Keyless Start - Standard",
                 "Remote Start - Standard",
-                "Remote Control Mobile Vehicle - Standard",
-                "Remote Control Mobile Vehicle - Optional",
-                "Vehicle Summon Function",
+                "Remote Control Mobile vehicle - Standard",
+                "Remote Control Mobile vehicle - Optional",
+                "vehicle Summon Function",
                 "Head-up Display (HUD) - Optional",
                 "Head-up Display (HUD) - Standard",
                 "HUD Projection Size (inches) - 49",
@@ -823,10 +823,10 @@
                 "Seat Material - Genuine Leather",
                 "Seat Material - Suede (Optional)",
                 "Seat Leather Style - Nappa Leather",
-                "Sports Style Seats - Standard",
+                "spare_part Style Seats - Standard",
                 "Second Row Independent Seats",
-                "Electric Seat Adjustment - Main Driving Seat",
-                "Electric Seat Adjustment - Co-pilot Seat",
+                "spare_part Seat Adjustment - Main Driving Seat",
+                "spare_part Seat Adjustment - Co-pilot Seat",
                 "Folding Rear Seats",
                 "Overall Adjustment of the Driver's Seat - Move Forward and Backward",
                 "Overall Adjustment of the Driver's Seat - Backrest Angle",
@@ -861,7 +861,7 @@
                 "Roadside Assistance",
                 "Bluetooth/Car Phone",
                 "Mobile Internet Mapping",
-                "Internet of Vehicles",
+                "Internet of vehicles",
                 "4G/5G Network - 4G",
                 "OTA Update",
                 "Facial Recognition",
@@ -926,11 +926,11 @@
             "children": [
                 "Power Windows - Front Row",
                 "Power Windows - Back Row",
-                "One-Touch Window Lifting - Full Vehicle",
+                "One-Touch Window Lifting - Full vehicle",
                 "Window Anti-Pinch Function - Standard",
-                "Exterior Mirror Function - Electric Adjustment",
+                "Exterior Mirror Function - spare_part Adjustment",
                 "Exterior Mirror Function - Heating",
-                "Exterior Mirror Function - Electric Folding",
+                "Exterior Mirror Function - spare_part Folding",
                 "Exterior Mirror Function - Memory",
                 "Automatic Folding When Car is Locked",
                 "Interior Rearview Mirror Function - Automatic Anti-Glare",
@@ -941,7 +941,7 @@
                 "Rain-Sensing Wipers - Standard",
                 "Rear Wiper",
                 "Multi-Layer Soundproof Glass - Front Row",
-                "Electric Front Windshield Heating",
+                "spare_part Front Windshield Heating",
                 "Heated Water Nozzle"
             ]
         },
@@ -967,11 +967,11 @@
             "name": "Intelligent Configuration",
             "children": [
                 "Assisted Driving Operating System - MG PILOT / MG NGP",
-                "In-Vehicle Intelligent System - Zebra Venus / Zebra Luoshen",
-                "In-Vehicle Smart Chip - Qualcomm Snapdragon 8155",
+                "In-vehicle Intelligent System - Zebra Venus / Zebra Luoshen",
+                "In-vehicle Smart Chip - Qualcomm Snapdragon 8155",
                 "Mobile App Remote Control - Service Appointment",
                 "Mobile App Remote Control - Remote Control",
-                "Mobile App Remote Control - Vehicle Monitoring",
+                "Mobile App Remote Control - vehicle Monitoring",
                 "Mobile App Remote Control - Digital Key",
                 "Heat Pump Management System",
                 "Number of External Cameras",

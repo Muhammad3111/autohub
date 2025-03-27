@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
-import { IoBanOutline, IoSpeedometerOutline } from "react-icons/io5";
+import { IoBanOutline } from "react-icons/io5";
 import { PiGasCan } from "react-icons/pi";
-import { TbPropeller } from "react-icons/tb";
+import { TbPropeller, TbSteeringWheelFilled } from "react-icons/tb";
 import { useGetCarsQuery } from "../../features/cars/carSlice";
 import DeleteCar from "./DeleteCar";
 import { MdOutlineEdit } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import Rating from "../../utility/rating/Rating";
 
 export default function ReadCars() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,6 +37,8 @@ export default function ReadCars() {
     }
   };
 
+  const imageURL = import.meta.env.VITE_S3_PUBLIC_URL as string;
+
   return (
     <div>
       {/* Qidiruv input */}
@@ -58,13 +61,11 @@ export default function ReadCars() {
             filteredCars.map((car) => (
               <div
                 key={car.id}
-                className="col-span-1 flex flex-col rounded-xl shadow-lg border-2 overflow-hidden bg-white"
+                className="w-full overflow-hidden min-h-[400px] bg-white flex flex-col duration-300 justify-between group relative shadow-md hover:shadow-lg border-2 cursor-pointer hover:border-primary"
               >
                 <div className="relative group">
                   <img
-                    src={`http://89.223.126.64:8080${
-                      car.cover_image || "placeholder.jpg"
-                    }`}
+                    src={`${imageURL}${car.cover_image || "placeholder.jpg"}`}
                     alt={car.name_uz}
                     className="w-full h-48 object-cover"
                   />
@@ -76,36 +77,33 @@ export default function ReadCars() {
                   </button>
                   <DeleteCar id={car.id || ""} />
                 </div>
-                <div className="flex flex-col items-start gap-6 p-4">
-                  <div className="flex items-start justify-between w-full">
-                    <h1 className="text-lg font-bold">{car.name_uz}</h1>
-                    <p className="text-lg font-bold">{car.price} $</p>
+                <div className="p-4 flex flex-col gap-4 group-hover:bg-primary group-hover:text-white h-full">
+                  <span className="bg-green-600/20 px-2 py-1 rounded-md text-center text-sm text-black w-max group-hover:bg-white">
+                    {car.brand_id}
+                  </span>
+                  <div className="flex items-center">
+                    <h1 className="text-2xl font-semibold truncate basis-1/2">
+                      {car.name_uz}
+                    </h1>
                   </div>
-                  <ul className="flex flex-wrap gap-2">
-                    <li className="p-1.5 border rounded-md shadow-md text-sm">
-                      Yil: {car.year}
-                    </li>
-                    <li className="p-1.5 border rounded-md shadow-md text-sm">
-                      Motor: {car.engine_type}
-                    </li>
-                    <li className="p-1.5 border rounded-md shadow-md text-sm">
-                      Transmissiya: {car.transmission}
-                    </li>
-                  </ul>
-                  <div className="flex justify-between items-center w-full">
+                  <div className="border-y-2 py-4 flex flex-col gap-2 h-32">
+                    <div className="flex items-end gap-2">
+                      <Rating rating={car.rating || 0} />{" "}
+                      <sup>{car.rating}+Reviews</sup>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <IoSpeedometerOutline className="text-xl" />
-                      <p className="text-base font-normal">{car.drive_type}</p>
+                      <TbSteeringWheelFilled className="text-xl" />
+                      <span>{car.drive_type}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <TbPropeller className="text-xl" />
-                      <p className="text-base font-normal">
-                        {car.transmission}
-                      </p>
+                      <span>{car.transmission}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <PiGasCan className="text-xl" />
-                      <p className="text-base font-normal">{car.engine_type}</p>
+                      <span>{car.engine_type}</span>
                     </div>
                   </div>
                 </div>

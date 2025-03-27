@@ -51,7 +51,7 @@ export const carsApi = apiSlice.injectEndpoints({
     updateCar: builder.mutation({
       query: ({ id, carData }: { id: string; carData: CarObject }) => ({
         url: `/vehicles/${id}`,
-        method: "PUT",
+        method: "PATCH",
         body: carData,
       }),
       invalidatesTags: ["CAR"],

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react"; // Import your API hook
-import { useGetUrlsQuery } from "../../features/media/mediaSlice";
+import React, { useState, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
-import FileUploader from "../file-uploader/FileUploader";
+import FileUploader from "../file-uploader/FileUploader"; // shu yerga import qil
+import { useGetS3ObjectsQuery } from "../../features/media/mediaSlice";
 
 type ModalProps = {
   onClose: () => void;
@@ -11,22 +11,27 @@ type ModalProps = {
 
 const Modal: React.FC<ModalProps> = ({ onClose, onSelect, type }) => {
   const [activeTab, setActiveTab] = useState<"upload" | "media">("upload");
-  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
-  const [page, setPage] = useState(1);
-  const perPage = 100; // 4 columns shown per page
+  const [continuationToken, setContinuationToken] = useState<
+    string | undefined
+  >(undefined);
+  const [prevTokens, setPrevTokens] = useState<string[]>([]);
 
-  const { data, isLoading, error } = useGetUrlsQuery({
-    page,
-    per_page: perPage,
+  const { data, isFetching, refetch } = useGetS3ObjectsQuery({
+    bucket: "autohub",
+    prefix: "uploads/",
+    continuationToken,
+    maxKeys: 20,
   });
 
+  const uploadedImages = data?.keys || [];
+  const nextToken = data?.nextContinuationToken;
+  const hasMore = data?.isTruncated || false;
+
   useEffect(() => {
-    if (data && data.urls) {
-      setUploadedImages(data.urls);
-    }
-  }, [data]);
+    refetch();
+  }, [continuationToken, refetch]);
 
   const handleImageToggle = (url: string) => {
     if (type === "single") {
@@ -50,11 +55,18 @@ const Modal: React.FC<ModalProps> = ({ onClose, onSelect, type }) => {
   };
 
   const handleNextPage = () => {
-    setPage((prevPage) => prevPage + 1);
+    if (nextToken) {
+      setPrevTokens((prev) => [...prev, continuationToken || ""]);
+      setContinuationToken(nextToken);
+    }
   };
 
   const handlePreviousPage = () => {
-    setPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1));
+    const prevToken = prevTokens[prevTokens.length - 2];
+    if (prevToken) {
+      setPrevTokens((prev) => prev.slice(0, -1));
+      setContinuationToken(prevToken);
+    }
   };
 
   return (
@@ -70,7 +82,6 @@ const Modal: React.FC<ModalProps> = ({ onClose, onSelect, type }) => {
           </button>
         </div>
 
-        {/* Tabs */}
         <div className="flex border-b mb-4">
           <button
             onClick={() => setActiveTab("upload")}
@@ -90,12 +101,9 @@ const Modal: React.FC<ModalProps> = ({ onClose, onSelect, type }) => {
           </button>
         </div>
 
-        {/* Tab Content */}
         <div className="flex-1">
-          {isLoading ? (
+          {isFetching ? (
             <div>Loading...</div>
-          ) : error ? (
-            <div>Error loading images</div>
           ) : activeTab === "upload" ? (
             <FileUploader />
           ) : (
@@ -113,20 +121,16 @@ const Modal: React.FC<ModalProps> = ({ onClose, onSelect, type }) => {
                       onClick={() => handleImageToggle(url)}
                     >
                       <img
-                        src={`http://89.223.126.64:8080${url}`}
+                        src={`https://usc1.contabostorage.com/c3e282af10b9439688d5390b60ed4045:autohub/${url}`}
                         alt={`Media ${index}`}
                         className="w-full h-32 object-cover"
                       />
-                      {type === "single" && selectedImage === url && (
+                      {(type === "single" && selectedImage === url) ||
+                      (type === "gallery" && selectedImages.includes(url)) ? (
                         <div className="absolute top-2 right-2 w-5 h-5 flex items-center justify-center text-sm bg-green-500 text-white rounded-full">
                           ✓
                         </div>
-                      )}
-                      {type === "gallery" && selectedImages.includes(url) && (
-                        <div className="absolute top-2 right-2 w-5 h-5 flex items-center justify-center text-sm bg-green-500 text-white rounded-full">
-                          ✓
-                        </div>
-                      )}
+                      ) : null}
                     </div>
                   ))}
                 </div>
@@ -134,13 +138,13 @@ const Modal: React.FC<ModalProps> = ({ onClose, onSelect, type }) => {
               <div className="mt-4 flex justify-between">
                 <button
                   onClick={handlePreviousPage}
-                  disabled={page === 1}
+                  disabled={prevTokens.length < 2}
                   className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 disabled:opacity-50"
                 >
                   Previous
                 </button>
                 <button
-                  disabled={uploadedImages.length < perPage}
+                  disabled={!hasMore}
                   onClick={handleNextPage}
                   className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
                 >

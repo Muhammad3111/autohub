@@ -30,7 +30,7 @@ export const carsApi = apiSlice.injectEndpoints({
     }),
     getSpareById: builder.query({
       query: (id: string) => ({
-        url: `/spares/details/${id}`,
+        url: `/spares/${id}`,
         method: "GET",
       }),
       providesTags: ["SPARE_PARTS"],

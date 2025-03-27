@@ -40,7 +40,7 @@ const Cars = () => {
                                 Korpus (Kuzov) turlari
                             </span>
                         </h1>
-                        <div className="grid grid-cols-7 gap-4">
+                        <div className="grid grid-cols-8 gap-4">
                             {collections.slice(1).map((c) => (
                                 <div
                                     key={c.id}
