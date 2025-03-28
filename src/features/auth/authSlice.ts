@@ -35,7 +35,7 @@ const authSlice = createSlice({
                 userData?: UserDataType;
                 accessToken?: string | null;
                 refreshToken?: string | null;
-                dealerData?: Partial<Omit<DealersType, "id" | "role">>; // Dealer uchun ma'lumot
+                dealerData?: Partial<Omit<DealersType, "id" | "role">>;
             }>
         ) => {
             const { userData, accessToken, refreshToken, dealerData } =
@@ -43,9 +43,9 @@ const authSlice = createSlice({
 
             if (userData) {
                 state.userData = {
-                    ...state.userData, // Avvalgi userData
-                    ...userData, // Yangi userData
-                    ...dealerData, // Dealer maydonlari qo‘shiladi
+                    ...state.userData,
+                    ...userData,
+                    ...dealerData,
                 };
             }
 
@@ -102,7 +102,7 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(authSlice.actions.logOut, (_state) => {
-            apiSlice.util.resetApiState();
+            apiSlice.util.invalidateTags(["AUTH"]);
         });
         builder.addCase(authSlice.actions.updateUserLikes, (_state) => {
             apiSlice.util.invalidateTags(["BLOGS"]);

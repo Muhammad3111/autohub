@@ -19,7 +19,9 @@ const Header = ({ title, image = CarImage }: HeaderProps) => {
         <div className="mb-8 mt-20">
             <div className="w-full h-52 bg-light shadow-md px-10 flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-semibold mb-4">{title}</h1>
+                    <h1 className="text-2xl font-semibold mb-4 capitalize">
+                        {title}
+                    </h1>
 
                     <nav className="text-gray-600 text-sm">
                         <Link to="/" className="hover:underline">
