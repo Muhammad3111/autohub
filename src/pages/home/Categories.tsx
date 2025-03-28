@@ -8,6 +8,7 @@ import { LuEye } from "react-icons/lu";
 import Pagination from "../../utility/pagination/Pagination";
 import { Link } from "react-router-dom";
 import { useGetCarsQuery } from "../../features/cars/carSlice";
+import Image from "../../components/image/Image";
 
 const SalesCard = memo(({ data, rank }: { data: CarObject; rank: number }) => {
     const rankColor =
@@ -27,12 +28,11 @@ const SalesCard = memo(({ data, rank }: { data: CarObject; rank: number }) => {
                 >
                     {rank}
                 </div>
-                <img
-                    src={data.cover_image || "/placeholder-car.jpg"}
+                <Image
+                    src={data.cover_image || ""}
                     alt={data.name_uz}
-                    className="border"
                     width={120}
-                    height={60}
+                    className="border h-20 object-cover"
                 />
             </div>
             <div className="text-center">

@@ -143,9 +143,9 @@ export const authApi = apiSlice.injectEndpoints({
         }),
 
         updateProfile: builder.mutation({
-            query: (data: AuthRegister) => ({
-                url: "/auth/update-profile",
-                method: "PUT",
+            query: (data: UpdateAuth) => ({
+                url: "/auth/update",
+                method: "PATCH",
                 body: data,
             }),
             invalidatesTags: ["AUTH"],
@@ -160,4 +160,5 @@ export const {
     useLazyAuthDetailQuery,
     useAuthDetailQuery,
     useGetDealersQuery,
+    useUpdateProfileMutation,
 } = authApi;

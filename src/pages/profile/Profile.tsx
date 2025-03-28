@@ -2,19 +2,22 @@ import { useState } from "react";
 import UserProfile from "./UserProfile";
 import UserLikedCars from "./UserLikedCars";
 import { useSelector } from "react-redux";
-import { selectCurrentUserData } from "../../features/auth/authSlice";
+import { selectCurrentAccessToken } from "../../features/auth/authSlice";
 import DealerProfile from "./DealerProfile";
 import MyCreateCar from "./MyCreateCar";
 import Loading from "../../components/loading/Loading";
+import { useAuthDetailQuery } from "../../features/auth/authApiSlice";
 
 const Profile = () => {
-    const userData = useSelector(selectCurrentUserData);
+    const token = useSelector(selectCurrentAccessToken);
+    const { data, isLoading } = useAuthDetailQuery({ token });
+    const userData: UserDataType = data ?? ({} as UserDataType);
 
     const [activeTab, setActiveTab] = useState<
         "userProfile" | "likedCar" | "dealerProfile" | "myCreateCars"
     >(() => (userData?.role === "staff" ? "dealerProfile" : "userProfile"));
 
-    if (!userData) {
+    if (!userData || isLoading) {
         return <Loading />;
     }
 

@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import { Context } from "../../context/Context";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { collection } from "../../mock/data.json";
 import { useGetBrandsQuery } from "../../features/brands/brands";
+import { FaArrowRight } from "react-icons/fa6";
+import Image from "../../components/image/Image";
 
 const Brands = () => {
     const context = useContext(Context);
@@ -36,25 +38,41 @@ const Brands = () => {
                 ))}
             </div>
 
-            <div className="w-full py-5 mt-5 grid grid-cols-10 gap-4 justify-items-center bg-light">
+            <div className="w-full py-5 mt-5 grid grid-cols-10 gap-4 justify-items-center bg-light relative">
                 {isLoading ? (
                     <h2>Loading...</h2>
                 ) : carBrands?.items?.length ? (
                     carBrands.items.slice(0, 10).map((item) => (
-                        <button
+                        <Link
                             key={item.id}
                             className="flex flex-col items-center gap-2 text-center"
+                            to={`/brands/${item.name}-${item.id}`}
+                            state={item}
                         >
-                            <img
-                                src={`http://89.223.126.64:8080${item.image}`}
+                            <Image
+                                src={item.image}
                                 alt={item.name}
                                 width={40}
                             />
                             <p className="text-dark uppercase">{item.name}</p>
-                        </button>
+                        </Link>
                     ))
                 ) : (
                     <h2>Brands not found</h2>
+                )}
+            </div>
+
+            <div className="w-full flex items-center justify-center mt-10">
+                {carBrands?.items.length && (
+                    <div>
+                        <button
+                            onClick={() => navigate("/brands")}
+                            className="bg-primary hover:bg-primary-hover text-white py-2 px-4 flex items-center gap-1 duration-150"
+                        >
+                            <p>Barcha brandlar</p>
+                            <FaArrowRight />
+                        </button>
+                    </div>
                 )}
             </div>
         </div>

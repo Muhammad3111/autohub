@@ -226,3 +226,19 @@ declare type DealersType = {
     reviews: null;
     is_verified: null;
 };
+
+declare type UpdateAuth = {
+    first_name?: string;
+    last_name?: string;
+    avatar?: string;
+    staff_data?: {
+        workplace_name: string;
+        region: string;
+        work_phone: string;
+        city: string;
+        info: string;
+        avatar: string;
+        address: string;
+        working_hours: string;
+    };
+};
