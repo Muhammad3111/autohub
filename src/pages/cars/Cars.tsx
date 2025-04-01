@@ -9,6 +9,7 @@ import { useGetCarsQuery } from "../../features/cars/carSlice";
 import Button from "../../utility/button/Button";
 import { Context } from "../../context/Context";
 import SkeletonByCars from "../../components/skeletons/SkeletonByCars";
+import { useTranslation } from "react-i18next";
 
 const Cars = () => {
     const context = useContext(Context);
@@ -18,6 +19,7 @@ const Cars = () => {
         isLoading,
         isSuccess,
     } = useGetCarsQuery({ page: 1 });
+    const { t } = useTranslation();
 
     if (!context) {
         throw new Error("Ushbu component contextdan tashqarida ishlatilmoqda");
@@ -29,7 +31,7 @@ const Cars = () => {
 
     return (
         <div className="w-full">
-            <Header title="Avtomobillar" />
+            <Header title={t("cars-page.header-title")} />
             <div className="flex flex-col gap-4 pt-10">
                 {collections.length > 1 && (
                     <div className="flex flex-col gap-4 p-10 bg-white">

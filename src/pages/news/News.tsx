@@ -4,10 +4,12 @@ import BlogCard from "../../components/blog/BlogCard";
 import { useGetBlogsQuery } from "../../features/blogs/blogs";
 import BlogSidebar from "../../components/blog/BlogSidebar";
 import Pagination from "../../utility/pagination/Pagination";
+import { useTranslation } from "react-i18next";
 
 const SpareParts = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const { data } = useGetBlogsQuery({ page: currentPage });
+    const { t } = useTranslation();
 
     const posts: Blogs[] = data?.items || [];
     const totalPages = data?.metadata?.total_pages || 1;
@@ -18,7 +20,7 @@ const SpareParts = () => {
 
     return (
         <div className="w-full">
-            <Header title="Yangiliklar" />
+            <Header title={t("news-page.header-title")} />
             <div>
                 <div className="flex items-start gap-4 my-container p-10 bg-white">
                     <div className="grid grid-cols-1 basis-3/4">

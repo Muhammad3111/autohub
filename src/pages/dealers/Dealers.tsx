@@ -5,10 +5,12 @@ import { MdLocationPin } from "react-icons/md";
 import { useGetDealersQuery } from "../../features/auth/authApiSlice";
 import Loading from "../../components/loading/Loading";
 import { FiClock } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 // import DealerImg from "../../assets/dealer-default-img.png";
 
 const Dealers = () => {
     const { data: dealers, isLoading } = useGetDealersQuery({ page: 1 });
+    const { t } = useTranslation();
 
     if (isLoading) return <p>Loading...</p>;
 
@@ -17,7 +19,7 @@ const Dealers = () => {
     }
     return (
         <div className="w-full">
-            <Header title="Dealers" />
+            <Header title={t("dealer-page.header-title")} />
             <div className="flex gap-10">
                 <BrandsFilter />
                 <div className="w-full bg-white">
@@ -64,7 +66,7 @@ const Dealers = () => {
                                 </Link>
                             ))
                         ) : (
-                            <h2>Dealers not found</h2>
+                            <h2>{t("dealer-page.dealer-not-found")}</h2>
                         )}
                     </div>
                 </div>

@@ -163,6 +163,7 @@ declare type Comments = {
     target_type: "article" | "vehicle" | "spare-parts";
     comment: string;
     images?: string[];
+    rating: number;
 };
 
 declare type Articles = {
@@ -241,4 +242,14 @@ declare type UpdateAuth = {
         address: string;
         working_hours: string;
     };
+};
+
+declare type CommentsDataType = {
+    target_id: string;
+    target_type: "vehicle" | "spare_part" | "article";
+    rating: number;
+    comment: string;
+    id: string;
+    images: null;
+    user_id: string;
 };

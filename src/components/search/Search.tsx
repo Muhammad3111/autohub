@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 import Typewriter from "typewriter-effect";
 
@@ -7,6 +8,7 @@ const Search = () => {
     const navigate = useNavigate();
     const searchParams = new URLSearchParams(search);
     const query = searchParams.get("query");
+    const { t } = useTranslation();
 
     const [inputValue, setInputValue] = useState(query || "");
     const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -58,7 +60,7 @@ const Search = () => {
                 )}
             </div>
             <button type="submit" className="bg-primary text-white h-10 px-2">
-                Search
+                {t("navbar.search")}
             </button>
         </form>
     );

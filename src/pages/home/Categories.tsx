@@ -9,6 +9,7 @@ import Pagination from "../../utility/pagination/Pagination";
 import { Link } from "react-router-dom";
 import { useGetCarsQuery } from "../../features/cars/carSlice";
 import Image from "../../components/image/Image";
+import { useTranslation } from "react-i18next";
 
 const SalesCard = memo(({ data, rank }: { data: CarObject; rank: number }) => {
     const rankColor =
@@ -19,6 +20,7 @@ const SalesCard = memo(({ data, rank }: { data: CarObject; rank: number }) => {
             : rank === 3
             ? "bg-[#E6E3E6]"
             : "bg-gray-300";
+    const { t } = useTranslation();
 
     return (
         <div className="flex justify-between items-center cursor-pointer">
@@ -29,7 +31,7 @@ const SalesCard = memo(({ data, rank }: { data: CarObject; rank: number }) => {
                     {rank}
                 </div>
                 <Image
-                    src={data.cover_image || ""}
+                    src={data.cover_image!}
                     alt={data.name_uz}
                     width={120}
                     className="border h-20 object-cover"
@@ -41,7 +43,7 @@ const SalesCard = memo(({ data, rank }: { data: CarObject; rank: number }) => {
             </div>
 
             <button className="bg-primary text-white p-2 text-sm hover:bg-primary-hover duration-150">
-                Check the
+                {t("home-page.check-the")}
             </button>
         </div>
     );
@@ -53,23 +55,27 @@ const Section = ({
 }: {
     title: string;
     salesData: CarObject[];
-}) => (
-    <div className="flex-1 mb-4">
-        <div className="flex items-center justify-between border-b pb-5 mb-5">
-            <h1 className="text-xl">{title}</h1>
-            <button className="flex items-center gap-1 text-dark text-xl">
-                <p>Overall list</p>
-                <FiChevronRight />
-            </button>
-        </div>
+}) => {
+    const { t } = useTranslation();
 
-        <div className="flex flex-col gap-5">
-            {salesData.map((data, index) => (
-                <SalesCard key={data.id} data={data} rank={index + 1} />
-            ))}
+    return (
+        <div className="flex-1 mb-4">
+            <div className="flex items-center justify-between border-b pb-5 mb-5">
+                <h1 className="text-xl">{title}</h1>
+                <button className="flex items-center gap-1 text-dark text-xl">
+                    <p>{t("home-page.overall-list")}</p>
+                    <FiChevronRight />
+                </button>
+            </div>
+
+            <div className="flex flex-col gap-5">
+                {salesData.map((data, index) => (
+                    <SalesCard key={data.id} data={data} rank={index + 1} />
+                ))}
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 const Categories = () => {
     const [activeTab, setActiveTab] = useState<string>("news");
@@ -77,6 +83,7 @@ const Categories = () => {
     const { data: carsData } = useGetCarsQuery({
         page: 1,
     });
+    const { t } = useTranslation();
 
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [blogTrigger, { data, isLoading }] = useLazyGetBlogsByCategoryQuery();
@@ -97,7 +104,7 @@ const Categories = () => {
     }, [activeTab, blogTrigger, currentPage]);
 
     if (isLoading) {
-        return <h2>Loading...</h2>;
+        return <h2>{t("loading")}...</h2>;
     }
 
     return (
@@ -108,7 +115,7 @@ const Categories = () => {
                 </div>
 
                 <Section
-                    title="Sales ranking"
+                    title={t("home-page.sales-ranking")}
                     salesData={carsData?.items.slice(0, 3) || []}
                 />
             </div>
@@ -129,7 +136,7 @@ const Categories = () => {
                                     setCurrentPage(1);
                                 }}
                             >
-                                {item.name}
+                                {t(`home-page.${item.value}`)}
                             </button>
                         ))}
                     </div>
@@ -179,7 +186,7 @@ const Categories = () => {
                                 </Link>
                             ))
                         ) : (
-                            <p>No blogs found for this category.</p>
+                            <p>{t("home-page.blogs-not-found")}</p>
                         )}
 
                         <Pagination
@@ -192,11 +199,11 @@ const Categories = () => {
 
                 <div className="flex-1">
                     <Section
-                        title="Popularity ranking"
+                        title={t("home-page.popular-ranking")}
                         salesData={carsData?.items.slice(0, 3) || []}
                     />
                     <Section
-                        title="New cars"
+                        title={t("home-page.new-cars")}
                         salesData={[...(carsData?.items || [])]
                             .reverse()
                             .slice(0, 3)}
