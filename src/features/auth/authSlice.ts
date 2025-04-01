@@ -22,7 +22,7 @@ const initialState: AuthState = {
     userData: getFromLocalStorage<UserDataType | null>("user_data") || null,
     accessToken: getFromLocalStorage<string | null>("access_token") || null,
     refreshToken: getFromLocalStorage<string | null>("refresh_token") || null,
-    language: getFromLocalStorage("language", "uz") || "uz",
+    language: getFromLocalStorage("language") || "uz",
 };
 
 const authSlice = createSlice({

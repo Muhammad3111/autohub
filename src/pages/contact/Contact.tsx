@@ -2,11 +2,13 @@ import { CiLocationOn, CiMail, CiPhone, CiTimer } from "react-icons/ci";
 import Header from "../../components/header/Header";
 import MapComponent from "../../components/map/Map";
 import Button from "../../utility/button/Button";
+import { useTranslation } from "react-i18next";
 
 const Contact = () => {
+    const { t } = useTranslation();
     return (
         <div className="w-full">
-            <Header title="Contact Us" />
+            <Header title={t("contact-page.header-title")} />
             <div>
                 <div className="w-full bg-white mt-10 p-10">
                     <MapComponent />
@@ -14,42 +16,41 @@ const Contact = () => {
                     <div className="grid grid-cols-2 mt-20">
                         <div className="flex flex-col gap-10 items-center">
                             <h1 className="text-3xl font-medium">
-                                We Love To Help
+                                {t("contact-page.we-love-to-help")}
                             </h1>
                             <p className="text-center">
-                                Consectetur adipiscing elit. Nam hendrerit nisi
-                                sed sollicitudin pellentesque. Nunc posuere
-                                purus rhoncus pulvinar aliquam. aliquet
-                                tristique nisl vitae volutpat.{" "}
+                                {t("contact-page.we-are-always-ready")}
                             </p>
 
                             <div className="grid grid-cols-2 w-full gap-4">
                                 <input
                                     type="text"
-                                    placeholder="First name"
+                                    placeholder={t("contact-page.firstname")}
                                     className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-primary duration-150"
                                 />
                                 <input
                                     type="text"
-                                    placeholder="Last name"
+                                    placeholder={t("contact-page.lastname")}
                                     className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-primary duration-150"
                                 />
                                 <input
                                     type="text"
-                                    placeholder="Email"
+                                    placeholder={t("contact-page.email")}
                                     className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-primary duration-150"
                                 />
                                 <input
                                     type="text"
-                                    placeholder="Phone number"
+                                    placeholder={t("contact-page.phone-number")}
                                     className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-primary duration-150"
                                 />
                                 <textarea
-                                    placeholder="Message here"
+                                    placeholder={t("contact-page.message")}
                                     className="h-[200px] p-4 rounded-md outline-none text-lg border focus:border-primary duration-150 col-span-2"
                                 ></textarea>
                                 <div className="col-span-2">
-                                    <Button className="px-10">Submit</Button>
+                                    <Button className="px-10">
+                                        {t("contact-page.send-message")}
+                                    </Button>
                                 </div>
                             </div>
                         </div>

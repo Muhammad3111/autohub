@@ -4,6 +4,7 @@ import SpareCard from "../../components/spare-card/SpareCard";
 import { useGetSpareCatsQuery } from "../../features/spare-parts/spare-categories";
 import Button from "../../utility/button/Button";
 import AboutSlider from "../about-us/AboutSlider";
+import { useTranslation } from "react-i18next";
 
 const SpareParts = () => {
     const { data } = useGetSparesQuery({ page: 1 });
@@ -11,16 +12,19 @@ const SpareParts = () => {
 
     const spareParts: SpareParts[] = data?.items || [];
     const categories: SpareCategories[] = spareCats || [];
+    const { t } = useTranslation();
     return (
         <div className="w-full">
-            <Header title="Ehtiyot qisimlar" />
+            <Header title={t("spare-parts-page.header-title")} />
             <div>
                 <div className="flex flex-col gap-4 my-container pt-10">
                     <div className="flex flex-col gap-4 items-center"></div>
                     <div className="flex flex-col gap-4 p-10 bg-white">
                         <h1 className="text-3xl font-semibold text-center">
-                            Ehtiyot qisimlarning{" "}
-                            <span className="text-primary">Turlari</span>
+                            <span>{t("spare-parts-page.header-title")} </span>
+                            <span className="text-primary capitalize">
+                                {t("spare-parts-page.types")}
+                            </span>
                         </h1>
                         <div className="grid grid-cols-6 gap-4 ">
                             {categories.slice(0, 12).map((c) => (
@@ -49,10 +53,10 @@ const SpareParts = () => {
                     </div>
                     <div className="flex flex-col gap-4 p-10">
                         <h1 className="text-4xl font-semibold text-center">
-                            Eng ommabop
+                            {t("spare-parts-page.most-popular")}
                             <span className="text-primary">
                                 {" "}
-                                Ehtiyot qisim brendlari
+                                {t("spare-parts-page.spare-part-brands")}
                             </span>
                         </h1>
                         <div className="px-20">
@@ -60,15 +64,15 @@ const SpareParts = () => {
                         </div>
                         <div className="col-span-full flex justify-center">
                             <Button className="px-4">
-                                Barcha brendlarni ko'rish
+                                {t("spare-parts-page.see-all-brands")}
                             </Button>
                         </div>
                     </div>
                     <div className="flex flex-col gap-4 p-10 bg-white">
                         <h1 className="text-4xl font-semibold text-center">
-                            Eng reytingi baland{" "}
-                            <span className="text-primary">
-                                Ehtiyot qisimlar
+                            {t("spare-parts-page.highest-rating")}{" "}
+                            <span className="text-primary capitalize">
+                                {t("spare-parts-page.header-title")}
                             </span>
                         </h1>
                         <div className="grid grid-cols-4 gap-4">

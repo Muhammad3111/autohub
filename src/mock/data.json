@@ -1006,7 +1006,7 @@
         },
         {
             "name": "Expert Review",
-            "value": "expert_review"
+            "value": "expert-review"
         },
         {
             "name": "Tips",
@@ -1014,15 +1014,15 @@
         },
         {
             "name": "Useful Content",
-            "value": "useful_content"
+            "value": "useful-content"
         },
         {
             "name": "Customer Stories",
-            "value": "customer_stories"
+            "value": "customer-stories"
         },
         {
             "name": "Test Drives",
-            "value": "test_drives"
+            "value": "test-drives"
         }
     ]
 }

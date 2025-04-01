@@ -3,7 +3,7 @@ import { initReactI18next } from "react-i18next";
 import ru from "./locales/ru.json";
 import uz from "./locales/uz.json";
 
-const storedLanguage = localStorage.getItem("language") || "uz";
+const storedLanguage = JSON.parse(localStorage.getItem("language") ?? '"uz"');
 
 i18n.use(initReactI18next).init({
     fallbackLng: "uz",

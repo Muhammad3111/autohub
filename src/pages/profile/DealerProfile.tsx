@@ -195,16 +195,13 @@ const DealerProfile = ({ userData }: DealerProfileProps) => {
 
             <div className="flex flex-col gap-10 mt-10">
                 <div className="grid grid-cols-2 flex-1 gap-10">
-                    {" "}
                     <div className="flex flex-col w-full gap-1">
-                        {" "}
                         <label
                             htmlFor="workplace_name"
                             className="font-semibold text-gray-500"
                         >
-                            {" "}
-                            Korxona nomi{" "}
-                        </label>{" "}
+                            Korxona nomi
+                        </label>
                         <input
                             type="text"
                             name="workplace_name"
@@ -212,17 +209,15 @@ const DealerProfile = ({ userData }: DealerProfileProps) => {
                             className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-primary duration-150"
                             value={formState.workplace_name}
                             onChange={handleChange}
-                        />{" "}
-                    </div>{" "}
+                        />
+                    </div>
                     <div className="flex flex-col w-full gap-1">
-                        {" "}
                         <label
                             htmlFor="region"
                             className="font-semibold text-gray-500"
                         >
-                            {" "}
-                            Viloyat{" "}
-                        </label>{" "}
+                            Viloyat
+                        </label>
                         <input
                             type="text"
                             id="region"
@@ -230,17 +225,15 @@ const DealerProfile = ({ userData }: DealerProfileProps) => {
                             className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-primary duration-150"
                             value={formState.region}
                             onChange={handleChange}
-                        />{" "}
-                    </div>{" "}
+                        />
+                    </div>
                     <div className="flex flex-col w-full gap-1">
-                        {" "}
                         <label
                             htmlFor="city"
                             className="font-semibold text-gray-500"
                         >
-                            {" "}
-                            Shahar{" "}
-                        </label>{" "}
+                            Shahar
+                        </label>
                         <input
                             type="text"
                             id="city"
@@ -248,17 +241,15 @@ const DealerProfile = ({ userData }: DealerProfileProps) => {
                             className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-primary duration-150"
                             value={formState.city}
                             onChange={handleChange}
-                        />{" "}
-                    </div>{" "}
+                        />
+                    </div>
                     <div className="flex flex-col w-full gap-1">
-                        {" "}
                         <label
                             htmlFor="address"
                             className="font-semibold text-gray-500"
                         >
-                            {" "}
-                            Manzil{" "}
-                        </label>{" "}
+                            Manzil
+                        </label>
                         <input
                             type="text"
                             id="address"
@@ -266,17 +257,15 @@ const DealerProfile = ({ userData }: DealerProfileProps) => {
                             className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-primary duration-150"
                             value={formState.address}
                             onChange={handleChange}
-                        />{" "}
-                    </div>{" "}
+                        />
+                    </div>
                     <div className="flex flex-col w-full gap-1">
-                        {" "}
                         <label
                             htmlFor="phone_number"
                             className="font-semibold text-gray-500"
                         >
-                            {" "}
-                            Profile telefon raqami{" "}
-                        </label>{" "}
+                            Profile telefon raqami
+                        </label>
                         <PatternFormat
                             className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-primary duration-150"
                             format="+### ## ### ## ##"
@@ -286,8 +275,8 @@ const DealerProfile = ({ userData }: DealerProfileProps) => {
                             name="phone_number"
                             id="phone_number"
                             disabled
-                        />{" "}
-                    </div>{" "}
+                        />
+                    </div>
                 </div>
 
                 <div className="flex items-center justify-between w-full">

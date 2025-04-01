@@ -6,6 +6,7 @@ import { IoCarSportOutline, IoNewspaperOutline } from "react-icons/io5";
 import { BsBuilding, BsBuildingGear, BsInfoCircle } from "react-icons/bs";
 import { CiBoxes } from "react-icons/ci";
 import { MdOutlinePhone } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 type NavLinkType = {
     name: string;
@@ -16,15 +17,36 @@ type NavLinkType = {
 const Sidebar = () => {
     const location = useLocation();
     const pathname = location.pathname;
+    const { t } = useTranslation();
     const navLinks: NavLinkType[] = [
-        { name: "Bosh sahifa", path: "/", icon: <GoHome /> },
-        { name: "Avtomobillar", path: "/cars", icon: <IoCarSportOutline /> },
-        { name: "Dillerlar", path: "/dealers", icon: <BsBuilding /> },
-        { name: "Servislar", path: "/services", icon: <BsBuildingGear /> },
-        { name: "Extiyot qismlar", path: "/spare-parts", icon: <CiBoxes /> },
-        { name: "Yangiliklar", path: "/news", icon: <IoNewspaperOutline /> },
-        { name: "Biz haqimizda", path: "/about-us", icon: <BsInfoCircle /> },
-        { name: "Aloqa", path: "/contact", icon: <MdOutlinePhone /> },
+        { name: t("sidebar.home"), path: "/", icon: <GoHome /> },
+        { name: t("sidebar.cars"), path: "/cars", icon: <IoCarSportOutline /> },
+        { name: t("sidebar.dealers"), path: "/dealers", icon: <BsBuilding /> },
+        {
+            name: t("sidebar.services"),
+            path: "/services",
+            icon: <BsBuildingGear />,
+        },
+        {
+            name: t("sidebar.spare-parts"),
+            path: "/spare-parts",
+            icon: <CiBoxes />,
+        },
+        {
+            name: t("sidebar.news"),
+            path: "/news",
+            icon: <IoNewspaperOutline />,
+        },
+        {
+            name: t("sidebar.about-us"),
+            path: "/about-us",
+            icon: <BsInfoCircle />,
+        },
+        {
+            name: t("sidebar.contact"),
+            path: "/contact",
+            icon: <MdOutlinePhone />,
+        },
     ];
 
     const context = useContext(Context);

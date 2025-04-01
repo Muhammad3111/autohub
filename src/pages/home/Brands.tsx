@@ -5,10 +5,12 @@ import { collection } from "../../mock/data.json";
 import { useGetBrandsQuery } from "../../features/brands/brands";
 import { FaArrowRight } from "react-icons/fa6";
 import Image from "../../components/image/Image";
+import { useTranslation } from "react-i18next";
 
 const Brands = () => {
     const context = useContext(Context);
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     if (!context) {
         throw new Error(
@@ -40,7 +42,7 @@ const Brands = () => {
 
             <div className="w-full py-5 mt-5 grid grid-cols-10 gap-4 justify-items-center bg-light relative">
                 {isLoading ? (
-                    <h2>Loading...</h2>
+                    <h2>{t("loading")}...</h2>
                 ) : carBrands?.items?.length ? (
                     carBrands.items.slice(0, 10).map((item) => (
                         <Link
@@ -58,7 +60,7 @@ const Brands = () => {
                         </Link>
                     ))
                 ) : (
-                    <h2>Brands not found</h2>
+                    <h2>{t("home-page.brands-not-found")}</h2>
                 )}
             </div>
 
@@ -69,7 +71,7 @@ const Brands = () => {
                             onClick={() => navigate("/brands")}
                             className="bg-primary hover:bg-primary-hover text-white py-2 px-4 flex items-center gap-1 duration-150"
                         >
-                            <p>Barcha brandlar</p>
+                            <p>{t("home-page.all-brands")}</p>
                             <FaArrowRight />
                         </button>
                     </div>

@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import CarImage from "../../assets/login-car.webp";
+import { useTranslation } from "react-i18next";
 
 type HeaderProps = {
     title: string;
@@ -9,10 +10,11 @@ type HeaderProps = {
 const Header = ({ title, image = CarImage }: HeaderProps) => {
     const location = useLocation();
     const pathnames = location.pathname.split("/").filter((x) => x);
+    const { t } = useTranslation();
 
     const formatBreadcrumbName = (name: string) => {
         if (name.length === 36) return "Ma'lumot";
-        return decodeURIComponent(name);
+        return t(`sidebar.${decodeURIComponent(name)}`);
     };
 
     return (
@@ -25,7 +27,7 @@ const Header = ({ title, image = CarImage }: HeaderProps) => {
 
                     <nav className="text-gray-600 text-sm">
                         <Link to="/" className="hover:underline">
-                            Bosh sahifa
+                            {t("sidebar.home")}
                         </Link>
                         {pathnames.map((path, index) => {
                             const routeTo = `/${pathnames
