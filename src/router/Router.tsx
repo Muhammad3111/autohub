@@ -32,10 +32,9 @@ import DealerId from "../pages/dealers/id/DealerId";
 import News from "../pages/news/News";
 import Contact from "../pages/contact/Contact";
 import NotFound from "../pages/not-found/NotFound";
-import Search from "../pages/search/Search";
+// import Search from "../pages/search/Search";
 import Profile from "../pages/profile/Profile";
 import UserBrands from "../pages/brands/Brands";
-import UserBrandId from "../pages/brands/id/BrandsId";
 
 // Layouts
 import Layout from "../layout/Layout";
@@ -54,32 +53,31 @@ const Router = () => {
         <Routes>
             {/* user route */}
             <Route element={<HomeLayout />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/about-us" element={<AboutUs />} />
-                <Route path="/cars" element={<Cars />} />
-                <Route path="/cars/:slug/:id" element={<CarId />} />
-                <Route path="/cars/:slug" element={<Shop />} />
-                <Route path="/cars/3dmodel/panorama" element={<Panorama />} />
-                <Route path="/cars/3dmodel/interier" element={<Interier />} />
-                <Route path="/cars/parametrs/:id" element={<Parametrs />} />
-                <Route path="/spare-parts" element={<SpareParts />} />
-                <Route path="/spare-parts/:id" element={<SpareId />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/dealers" element={<Dealers />} />
-                <Route path="/dealers/:id" element={<DealerId />} />
-                <Route path="/news" element={<News />} />
-                <Route path="news/:id" element={<Post />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="*" element={<Navigate to="/not-found" />} />
-                <Route path="/not-found" element={<NotFound />} />
-                <Route path="/brands" element={<UserBrands />} />
-                <Route path="/brands/:id" element={<UserBrandId />} />
+                <Route path='/' element={<Home />} />
+                <Route path='/about-us' element={<AboutUs />} />
+                <Route path='/cars' element={<Cars />} />
+                <Route path='/cars/:slug/:id' element={<CarId />} />
+                <Route path='/cars/:slug' element={<Shop />} />
+                <Route path='/cars/3dmodel/panorama' element={<Panorama />} />
+                <Route path='/cars/3dmodel/interier' element={<Interier />} />
+                <Route path='/cars/parametrs/:id' element={<Parametrs />} />
+                <Route path='/spare-parts' element={<SpareParts />} />
+                <Route path='/spare-parts/:id' element={<SpareId />} />
+                <Route path='/services' element={<Services />} />
+                <Route path='/dealers' element={<Dealers />} />
+                <Route path='/dealers/:id' element={<DealerId />} />
+                <Route path='/news' element={<News />} />
+                <Route path='news/:id' element={<Post />} />
+                <Route path='/contact' element={<Contact />} />
+                {/* <Route path='/search' element={<Search />} /> */}
+                <Route path='*' element={<Navigate to='/not-found' />} />
+                <Route path='/not-found' element={<NotFound />} />
+                <Route path='/brands' element={<UserBrands />} />
 
                 <Route
-                    path="/profile"
+                    path='/profile'
                     element={
-                        <ProtectedRoute requiredRole="user">
+                        <ProtectedRoute requiredRole='user'>
                             <Profile />
                         </ProtectedRoute>
                     }
@@ -88,42 +86,42 @@ const Router = () => {
 
             {/* admin route */}
 
-            <Route path="/admin/login" element={<Login />} />
+            <Route path='/admin/login' element={<Login />} />
             <Route
-                path="/admin"
+                path='/admin'
                 element={
-                    <ProtectedRoute requiredRole="admin">
+                    <ProtectedRoute requiredRole='admin'>
                         <Layout />
                     </ProtectedRoute>
                 }
             >
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="media" element={<Media />} />
-                <Route path="media/add" element={<AddMedia />} />
-                <Route path="brands" element={<Brands />} />
-                <Route path="brands/add" element={<AddBrand />} />
+                <Route path='dashboard' element={<Dashboard />} />
+                <Route path='media' element={<Media />} />
+                <Route path='media/add' element={<AddMedia />} />
+                <Route path='brands' element={<Brands />} />
+                <Route path='brands/add' element={<AddBrand />} />
                 <Route
-                    path="brands/update/:brandId"
+                    path='brands/update/:brandId'
                     element={<UpdateBrand />}
                 />
-                <Route path="cars" element={<AdminCars />} />
-                <Route path="cars/add" element={<AddCar />} />
-                <Route path="cars/update/:carId" element={<UpdateCar />} />
-                <Route path="spare-parts" element={<AdminSpareParts />} />
-                <Route path="spare-parts/add" element={<AddSpareParts />} />
+                <Route path='cars' element={<AdminCars />} />
+                <Route path='cars/add' element={<AddCar />} />
+                <Route path='cars/update/:carId' element={<UpdateCar />} />
+                <Route path='spare-parts' element={<AdminSpareParts />} />
+                <Route path='spare-parts/add' element={<AddSpareParts />} />
                 <Route
-                    path="spare-parts/update/:spareId"
+                    path='spare-parts/update/:spareId'
                     element={<UpdateSpareParts />}
                 />
                 <Route
-                    path="spare-parts/categories"
+                    path='spare-parts/categories'
                     element={<SpareCategories />}
                 />
-                <Route path="posts" element={<Posts />} />
-                <Route path="posts/add" element={<AddBlog />} />
-                <Route path="users" element={<Users />} />
-                <Route path="test-drive" element={<TestDrive />} />
-                <Route path="comments" element={<Comments />} />
+                <Route path='posts' element={<Posts />} />
+                <Route path='posts/add' element={<AddBlog />} />
+                <Route path='users' element={<Users />} />
+                <Route path='test-drive' element={<TestDrive />} />
+                <Route path='comments' element={<Comments />} />
             </Route>
         </Routes>
     );

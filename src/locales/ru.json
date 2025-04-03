@@ -29,7 +29,9 @@
         "for-example": "Например",
         "work-phone": "Рабочий телефон",
         "staff-role": "Дилер",
-        "user-role": "Пользователь"
+        "user-role": "Пользователь",
+        "sending": "Отправляется",
+        "phone-number-required": "Введите номер телефона"
     },
     "home-page": {
         "all-brands": "Все бренды",
@@ -45,7 +47,18 @@
         "customer-stories": "Истории клиентов",
         "test-drives": "Тест-драйвы",
         "brands-not-found": "Бренды не найдены",
-        "blogs-not-found": "Блоги для этой категории не найдены."
+        "blogs-not-found": "Блоги для этой категории не найдены.",
+        "brand-electricity": "Электрический",
+        "brand-sedan": "Седан",
+        "brand-suv": "Внедорожник",
+        "brand-mpv": "Минивэн",
+        "brand-sport-car": "Спортивный автомобиль",
+        "brand-micro-van": "Микро фургон",
+        "brand-van": "Фургон",
+        "brand-light-passenger": "Лёгковой пассажирский",
+        "brand-all": "Все",
+        "higher-than": "выше чем",
+        "less-than": "ниже чем"
     },
     "cars-page": {
         "header-title": "Автомобили",
@@ -100,5 +113,9 @@
         "contact": "Контакты"
     },
     "loading": "Загрузка",
-    "information": "Информация"
+    "information": "Информация",
+    "all": "Все",
+    "not-found": "Данные не найдены",
+    "price": "Цена",
+    "classfication": "Классификация"
 }

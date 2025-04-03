@@ -34,6 +34,8 @@ declare type CarObject = {
     images?: string[];
     rating?: number;
     configurations?: ConfigurationItem[];
+    view_count: number;
+    created_at: string;
 };
 
 declare type Image = {
@@ -102,6 +104,7 @@ declare type Collection = {
     id: number;
     title: string;
     icon: string;
+    value?: string;
 };
 
 declare type AuthState = {

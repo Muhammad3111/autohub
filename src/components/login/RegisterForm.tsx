@@ -1,6 +1,7 @@
 import { FiArrowLeft } from "react-icons/fi";
 import { useForm, Controller } from "react-hook-form";
 import PhoneInput from "../../utility/phone-input/PhoneInput";
+import { useTranslation } from "react-i18next";
 
 type RegisterFormProps = {
     onBack: () => void;
@@ -13,7 +14,7 @@ const RegisterForm = ({
     onBack,
     onSubmit,
     cancel,
-    loading,
+    loading
 }: RegisterFormProps) => {
     const {
         handleSubmit,
@@ -21,14 +22,14 @@ const RegisterForm = ({
         control,
         watch,
         formState: { errors, isValid },
-        setValue,
+        setValue
     } = useForm<AuthRegister>({
         defaultValues: {
             user_data: {
                 first_name: "",
                 last_name: "",
                 avatar: "",
-                role: "user",
+                role: "user"
             },
             staff_data: {
                 workplace_name: "",
@@ -39,55 +40,55 @@ const RegisterForm = ({
                 working_hours: "",
                 info: "",
                 work_phone: "",
-                stype: "",
-            },
+                stype: ""
+            }
         },
-        mode: "onChange",
+        mode: "onChange"
     });
 
     const selectedRole = watch("user_data.role");
-
+    const { t } = useTranslation();
     const handleRegister = (data: AuthRegister) => {
         const submitData: AuthRegister = {
             user_data: data.user_data,
-            staff_data: data.staff_data,
+            staff_data: data.staff_data
         };
 
         onSubmit(submitData);
     };
 
     return (
-        <div className="w-full p-6 relative">
+        <div className='w-full p-6 relative'>
             <button
-                className="absolute top-4 left-4 text-gray-500 hover:text-gray-700 duration-150"
+                className='absolute top-4 left-4 text-gray-500 hover:text-gray-700 duration-150'
                 onClick={onBack}
             >
                 <FiArrowLeft size={20} />
             </button>
 
-            <h2 className="text-xl font-bold text-center mb-4">
-                Ro'yxatdan o'tish
+            <h2 className='text-xl font-bold text-center mb-4'>
+                {t("auth-form.sign-up")}
             </h2>
-            <p className="text-sm text-center text-gray-500 mb-6">
-                Iltimos, ma'lumotlaringizni to'ldiring
+            <p className='text-sm text-center text-gray-500 mb-6'>
+                {t("auth-form.please-full-information")}
             </p>
 
             <form onSubmit={handleSubmit(handleRegister)}>
-                <div className="mb-4">
-                    <label className="block mb-1" htmlFor="first_name">
-                        Ismingiz
+                <div className='mb-4'>
+                    <label className='block mb-1' htmlFor='first_name'>
+                        {t("auth-form.firstname")}
                     </label>
                     <input
-                        id="first_name"
+                        id='first_name'
                         {...register("user_data.first_name", {
-                            required: "Ismingiz majburiy",
+                            required: "Ismingiz majburiy"
                         })}
-                        className="w-full bg-transparent indent-2 h-10 ring-1 ring-grey focus-within:ring-2 focus-within:ring-primary outline-none duration-300"
-                        placeholder="Ismingiz"
-                        autoComplete="off"
+                        className='w-full bg-transparent indent-2 h-10 ring-1 ring-grey focus-within:ring-2 focus-within:ring-primary outline-none duration-300'
+                        placeholder={t("auth-form.enter-your-firstname")}
+                        autoComplete='off'
                     />
                     {errors.user_data?.first_name && (
-                        <p className="text-red-500 text-xs mt-1">
+                        <p className='text-red-500 text-xs mt-1'>
                             {errors.user_data.first_name.message}
                         </p>
                     )}
@@ -95,16 +96,17 @@ const RegisterForm = ({
 
                 {selectedRole === "user" && (
                     <>
-                        <div className="mb-4">
-                            <label className="block mb-1" htmlFor="last_name">
-                                Familiyangiz (ixtiyoriy)
+                        <div className='mb-4'>
+                            <label className='block mb-1' htmlFor='last_name'>
+                                {t("auth-form.lastname")} (
+                                {t("auth-form.optional")})
                             </label>
                             <input
-                                id="last_name"
+                                id='last_name'
                                 {...register("user_data.last_name")}
-                                className="w-full bg-transparent indent-2 h-10 ring-1 ring-grey focus-within:ring-2 focus-within:ring-primary outline-none duration-300"
-                                placeholder="Familiyangiz"
-                                autoComplete="off"
+                                className='w-full bg-transparent indent-2 h-10 ring-1 ring-grey focus-within:ring-2 focus-within:ring-primary outline-none duration-300'
+                                placeholder={t("auth-form.enter-your-lastname")}
+                                autoComplete='off'
                             />
                         </div>
                     </>
@@ -112,43 +114,45 @@ const RegisterForm = ({
 
                 {selectedRole !== "user" && (
                     <>
-                        <div className="mb-4">
+                        <div className='mb-4'>
                             <label
-                                className="block mb-1"
-                                htmlFor="workplace_name"
+                                className='block mb-1'
+                                htmlFor='workplace_name'
                             >
-                                Ish joyi nomi
+                                {t("auth-form.enter-workplace-name")}
                             </label>
                             <input
-                                id="workplace_name"
+                                id='workplace_name'
                                 {...register("staff_data.workplace_name", {
-                                    required: "Ish joyi nomi majburiy",
+                                    required: "Ish joyi nomi majburiy"
                                 })}
-                                className="w-full bg-transparent indent-2 h-10 ring-1 ring-grey focus-within:ring-2 focus-within:ring-primary outline-none duration-300"
-                                placeholder="Masalan: AutoSalon"
-                                autoComplete="off"
+                                className='w-full bg-transparent indent-2 h-10 ring-1 ring-grey focus-within:ring-2 focus-within:ring-primary outline-none duration-300'
+                                placeholder={`${t(
+                                    "auth-form.for-example"
+                                )}: BMW`}
+                                autoComplete='off'
                             />
                             {errors.staff_data?.workplace_name && (
-                                <p className="text-red-500 text-xs mt-1">
+                                <p className='text-red-500 text-xs mt-1'>
                                     {errors.staff_data.workplace_name.message}
                                 </p>
                             )}
                         </div>
 
-                        <div className="mb-4">
-                            <label className="block mb-1" htmlFor="work_phone">
-                                Ish telefoni
+                        <div className='mb-4'>
+                            <label className='block mb-1' htmlFor='work_phone'>
+                                {t("auth-form.work-phone")}
                             </label>
                             <Controller
-                                name="staff_data.work_phone"
+                                name='staff_data.work_phone'
                                 control={control}
                                 rules={{
                                     required: "Ish telefoni majburiy",
                                     minLength: {
                                         value: 12,
                                         message:
-                                            "Ish telefoni to‘liq kiritilishi kerak",
-                                    },
+                                            "Ish telefoni to‘liq kiritilishi kerak"
+                                    }
                                 }}
                                 render={({ field }) => (
                                     <PhoneInput
@@ -159,7 +163,7 @@ const RegisterForm = ({
                                 )}
                             />
                             {errors.staff_data?.work_phone && (
-                                <p className="text-red-500 text-xs mt-1">
+                                <p className='text-red-500 text-xs mt-1'>
                                     {errors.staff_data.work_phone.message}
                                 </p>
                             )}
@@ -167,12 +171,12 @@ const RegisterForm = ({
                     </>
                 )}
 
-                <div className="mb-4">
-                    <label className="block mb-1" htmlFor="role">
-                        Rolini tanlang
+                <div className='mb-4'>
+                    <label className='block mb-1' htmlFor='role'>
+                        {t("auth-form.select-role")}
                     </label>
                     <select
-                        id="role"
+                        id='role'
                         {...register("user_data.role", {
                             required: "Role tanlash majburiy",
                             onChange: (e) =>
@@ -181,32 +185,34 @@ const RegisterForm = ({
                                     e.target.value === "staff"
                                         ? "dealer"
                                         : "service"
-                                ),
+                                )
                         })}
-                        className="w-full bg-transparent indent-2 h-10 ring-1 ring-grey focus:ring-2 focus:ring-primary outline-none duration-300"
+                        className='w-full bg-transparent indent-2 h-10 ring-1 ring-grey focus:ring-2 focus:ring-primary outline-none duration-300'
                     >
-                        <option value="user">User</option>
-                        <option value="staff">Staff</option>
+                        <option value='user'>{t("auth-form.user-role")}</option>
+                        <option value='staff'>
+                            {t("auth-form.staff-role")}
+                        </option>
                     </select>
 
                     {errors.user_data?.role && (
-                        <p className="text-red-500 text-xs mt-1">
+                        <p className='text-red-500 text-xs mt-1'>
                             {errors.user_data.role.message}
                         </p>
                     )}
                 </div>
 
-                <div className="flex justify-between mt-6">
+                <div className='flex justify-between mt-6'>
                     <button
-                        type="button"
+                        type='button'
                         onClick={cancel}
-                        className="w-[48%] bg-gray-200 text-black p-2.5 rounded hover:bg-gray-300 duration-150"
+                        className='w-[48%] bg-gray-200 text-black p-2.5 rounded hover:bg-gray-300 duration-150'
                     >
-                        Bekor qilish
+                        {t("auth-form.cancel")}
                     </button>
 
                     <button
-                        type="submit"
+                        type='submit'
                         disabled={!isValid || loading}
                         className={`w-[48%] p-1 rounded text-white ${
                             isValid
@@ -214,7 +220,7 @@ const RegisterForm = ({
                                 : "bg-gray-400 cursor-not-allowed"
                         }`}
                     >
-                        Ro'yxatdan o'tish {loading && "..."}
+                        {t("auth-form.sign-up")} {loading && "..."}
                     </button>
                 </div>
             </form>

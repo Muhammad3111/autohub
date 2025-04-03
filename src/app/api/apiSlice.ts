@@ -15,7 +15,7 @@ const baseQuery = fetchBaseQuery({
         }
 
         return headers;
-    },
+    }
 });
 
 const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
@@ -30,12 +30,12 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
             refreshHeaders.set("Authorization", refreshToken);
 
             const refreshResult: any = await fetchBaseQuery({
-                baseUrl: BASE_URL,
+                baseUrl: BASE_URL
             })(
                 {
                     url: "/auth/access",
                     method: "GET",
-                    headers: refreshHeaders,
+                    headers: refreshHeaders
                 },
                 api,
                 extraOptions
@@ -48,12 +48,12 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
                 userHeaders.set("Authorization", `Bearer ${access_token}`);
 
                 const userResult: any = await fetchBaseQuery({
-                    baseUrl: BASE_URL,
+                    baseUrl: BASE_URL
                 })(
                     {
                         url: "/auth/details",
                         method: "GET",
-                        headers: userHeaders,
+                        headers: userHeaders
                     },
                     api,
                     extraOptions
@@ -63,7 +63,7 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
                     setCredentials({
                         accessToken: access_token,
                         refreshToken: refreshToken,
-                        userData: userResult.data,
+                        userData: userResult.data
                     })
                 );
 
@@ -92,6 +92,7 @@ export const apiSlice = createApi({
         "BRANDS",
         "TEST_DRIVE",
         "DEALERS",
+        "SAVED"
     ],
-    endpoints: () => ({}),
+    endpoints: () => ({})
 });

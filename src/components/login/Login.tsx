@@ -9,10 +9,11 @@ import {
     useLazyAuthDetailQuery,
     useRegisterMutation,
     useSendOtpMutation,
-    useVerifyOtpMutation,
+    useVerifyOtpMutation
 } from "../../features/auth/authApiSlice";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../features/auth/authSlice";
+import { useTranslation } from "react-i18next";
 
 type LoginProps = {
     openLogin: boolean;
@@ -22,7 +23,7 @@ type LoginProps = {
 const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
     const [step, setStep] = useState<"phone" | "otp" | "register">("phone");
     const [code, setCode] = useState("");
-
+    const { t } = useTranslation();
     const [sendOtp, { isLoading: otpLoading }] = useSendOtpMutation();
     const [verifyOtp, { isLoading: verifyLoading }] = useVerifyOtpMutation();
     const [authRegister, { isLoading: registerLoading }] =
@@ -35,18 +36,18 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
         handleSubmit,
         formState: { errors },
         getValues,
-        reset,
+        reset
     } = useForm<AuthSendOtp>({
         defaultValues: {
-            phone_number: "",
-        },
+            phone_number: ""
+        }
     });
 
     const handleLogin: SubmitHandler<AuthSendOtp> = async (data) => {
         const formattedPhone = `+998${data.phone_number.split(" ").join("")}`;
         try {
             const res = await sendOtp({
-                phone_number: formattedPhone,
+                phone_number: formattedPhone
             }).unwrap();
             setCode(res.otp);
             setStep("otp");
@@ -60,7 +61,7 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
             phone_number: `+998${getValues("phone_number")
                 .split(" ")
                 .join("")}`,
-            otp,
+            otp
         })
             .unwrap()
             .then((res) => {
@@ -73,7 +74,7 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
                                     setCredentials({
                                         accessToken: res.access_token,
                                         refreshToken: res.refresh_token,
-                                        userData: authData,
+                                        userData: authData
                                     })
                                 );
                                 setOpenLogin(false);
@@ -97,34 +98,34 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
                 ? {
                       user_data: {
                           ...data.user_data,
-                          phone_number: formattedPhone,
-                      },
+                          phone_number: formattedPhone
+                      }
                   }
                 : {
                       staff_data: {
                           ...data.staff_data,
                           work_phone: `+998${data.staff_data?.work_phone
                               .split(" ")
-                              .join("")}`,
+                              .join("")}`
                       },
                       user_data: {
                           ...data.user_data,
-                          phone_number: formattedPhone,
-                      },
+                          phone_number: formattedPhone
+                      }
                   };
 
         try {
             const res = await authRegister(registerPayload).unwrap();
             if (res.token) {
                 const authData = await detailTrigger({
-                    token: res.token.access,
+                    token: res.token.access
                 }).unwrap();
                 if (authData) {
                     dispatch(
                         setCredentials({
                             accessToken: res.token.access,
                             refreshToken: res.token.refresh,
-                            userData: authData,
+                            userData: authData
                         })
                     );
                     setOpenLogin(false);
@@ -147,8 +148,8 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
             >
                 {step === "phone" && (
                     <button
-                        type="button"
-                        className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl duration-150 z-10"
+                        type='button'
+                        className='absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl duration-150 z-10'
                         onClick={() => setOpenLogin(false)}
                     >
                         <FiX />
@@ -168,29 +169,32 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
                                 ? "250px"
                                 : step === "otp"
                                 ? "280px"
-                                : "500px",
+                                : "500px"
                     }}
                     className={`flex transition-transform duration-500`}
                 >
-                    <div className="w-full flex-shrink-0 p-6">
-                        <h2 className="text-xl font-bold text-center mb-4">
-                            Telefon raqamingizni kiriting
+                    <div className='w-full flex-shrink-0 p-6'>
+                        <h2 className='text-xl font-bold text-center mb-4'>
+                            {t("auth-form.enter-your-phone-number")}
                         </h2>
-                        <p className="text-sm text-center text-gray-500 mb-6">
-                            Tasdiqlash kodini SMS orqali yuboramiz
+                        <p className='text-sm text-center text-gray-500 mb-6'>
+                            {t("auth-form.send-sms-code")}
                         </p>
 
                         <form onSubmit={handleSubmit(handleLogin)}>
                             <Controller
-                                name="phone_number"
+                                name='phone_number'
                                 control={control}
                                 rules={{
-                                    required: "Telefon raqami majburiy",
+                                    required: t(
+                                        "auth-form.phone-number-required"
+                                    ),
                                     minLength: {
                                         value: 13,
-                                        message:
-                                            "Telefon raqami to‘liq kiritilishi kerak",
-                                    },
+                                        message: t(
+                                            "auth-form.phone-number-required"
+                                        )
+                                    }
                                 }}
                                 render={({ field }) => (
                                     <PhoneInput
@@ -202,22 +206,23 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
                             />
 
                             {errors.phone_number && (
-                                <p className="text-red-500 text-xs mt-1">
+                                <p className='text-red-500 text-xs mt-1'>
                                     {errors.phone_number.message}
                                 </p>
                             )}
 
                             <button
-                                type="submit"
-                                className="w-full bg-primary text-white p-2.5 text-sm mt-5 hover:bg-primary-hover duration-150 rounded"
+                                type='submit'
+                                className='w-full bg-primary text-white p-2.5 text-sm mt-5 hover:bg-primary-hover duration-150 rounded'
                                 disabled={otpLoading}
                             >
-                                Kodni olish{otpLoading && "..."}
+                                {t("auth-form.get-code")}
+                                {otpLoading && "..."}
                             </button>
                         </form>
                     </div>
 
-                    <div className="w-full flex-shrink-0">
+                    <div className='w-full flex-shrink-0'>
                         <OTPForm
                             onBack={() => setStep("phone")}
                             onSubmit={handleOtpSubmit}
@@ -230,7 +235,7 @@ const Login = ({ openLogin, setOpenLogin }: LoginProps) => {
                         />
                     </div>
 
-                    <div className="w-full flex-shrink-0">
+                    <div className='w-full flex-shrink-0'>
                         <RegisterForm
                             onBack={() => setStep("otp")}
                             onSubmit={handleRegisterSubmit}

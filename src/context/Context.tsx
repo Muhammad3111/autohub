@@ -4,13 +4,18 @@ import React, {
     ReactNode,
     useEffect,
     Dispatch,
-    SetStateAction,
+    SetStateAction
 } from "react";
 
 type Price = {
     id: number;
     start: number;
     end: number;
+};
+
+type SelectedType = {
+    name: string;
+    value: string;
 };
 
 type CarContextProps = {
@@ -22,6 +27,8 @@ type CarContextProps = {
     setPrice: (price: Price) => void;
     sidebarOpen: boolean;
     setSidebarOpen: Dispatch<SetStateAction<boolean>>;
+    selected: SelectedType;
+    setSelected: Dispatch<SetStateAction<SelectedType>>;
 };
 
 export const Context = createContext<CarContextProps | undefined>(undefined);
@@ -47,6 +54,13 @@ export const ContextProvider: React.FC<CarProviderProps> = ({ children }) => {
 
     const [sidebarOpen, setSidebarOpen] = useState(true);
 
+    const [selected, setSelected] = useState<{ name: string; value: string }>(
+        () =>
+            JSON.parse(
+                localStorage.getItem("selected") || '{"name": "", "value": ""}'
+            )
+    );
+
     // Har safar state o'zgarganda localStorage'ni yangilash
     useEffect(() => {
         localStorage.setItem("brand", brand);
@@ -60,6 +74,10 @@ export const ContextProvider: React.FC<CarProviderProps> = ({ children }) => {
         localStorage.setItem("price", JSON.stringify(price));
     }, [price]);
 
+    useEffect(() => {
+        localStorage.setItem("selected", JSON.stringify(selected));
+    }, [selected]);
+
     return (
         <Context.Provider
             value={{
@@ -71,6 +89,8 @@ export const ContextProvider: React.FC<CarProviderProps> = ({ children }) => {
                 setPrice,
                 sidebarOpen,
                 setSidebarOpen,
+                selected,
+                setSelected
             }}
         >
             {children}
