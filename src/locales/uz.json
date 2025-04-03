@@ -29,7 +29,10 @@
         "for-example": "Masalan",
         "work-phone": "Ish telefoni",
         "staff-role": "Diller",
-        "user-role": "Foydalanuvchi"
+        "user-role": "Foydalanuvchi",
+
+        "sending": "Yuborilmoqda",
+        "phone-number-required": "Telefon raqam kiriting"
     },
     "home-page": {
         "all-brands": "Barcha brandlar",
@@ -45,7 +48,18 @@
         "customer-stories": "Mijozlar hikoyasi",
         "test-drives": "Sinov uchun haydash",
         "brands-not-found": "Brendlar topilmadi",
-        "blogs-not-found": "Ushbu kategoriya uchun bloglar topilmadi."
+        "blogs-not-found": "Ushbu kategoriya uchun bloglar topilmadi.",
+        "brand-electricity": "Elektr",
+        "brand-sedan": "Sedan",
+        "brand-suv": "SUV",
+        "brand-mpv": "MPV",
+        "brand-sport-car": "Sport Avtomobili",
+        "brand-micro-van": "Mikro VAN",
+        "brand-van": "VAN",
+        "brand-light-passenger": "Yengil yo'lovchi",
+        "brand-all": "Barchasi",
+        "higher-than": "dan yuqori",
+        "less-than": "dan past"
     },
     "cars-page": {
         "header-title": "Avtomobillar",
@@ -100,5 +114,9 @@
         "contact": "Aloqa"
     },
     "loading": "Yuklanyapti",
-    "information": "Ma'lumot"
+    "information": "Ma'lumot",
+    "all": "Barchasi",
+    "not-found": "Ma'lumotlar topilmadi",
+    "price": "Narx",
+    "classfication": "Klassifikatsiya"
 }

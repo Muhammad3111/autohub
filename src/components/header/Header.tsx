@@ -14,7 +14,7 @@ const Header = ({ title, image = CarImage }: HeaderProps) => {
 
     const formatBreadcrumbName = (name: string) => {
         if (name.length === 36) return "Ma'lumot";
-        return t(`sidebar.${decodeURIComponent(name)}`);
+        return decodeURIComponent(name);
     };
 
     return (

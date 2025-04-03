@@ -18,14 +18,14 @@ const Brands = () => {
         );
     }
 
-    const { setModel } = context;
+    const { setModel, setSelected } = context;
 
     const carModels: Collection[] = collection;
     const { data: carBrands, isLoading } = useGetBrandsQuery({ page: 1 });
 
     return (
-        <div className="w-full">
-            <div className="flex items-center justify-between mt-20 w-full bg-light p-6">
+        <div className='w-full'>
+            <div className='flex items-center justify-between mt-20 w-full bg-light p-6'>
                 {carModels.slice(1).map((item, index) => (
                     <button
                         onClick={() => {
@@ -33,30 +33,38 @@ const Brands = () => {
                             navigate(`/cars/${item.title}`);
                         }}
                         key={index}
-                        className="flex flex-col items-center gap-1"
+                        className='flex flex-col items-center gap-1'
                     >
-                        <p className="text-dark uppercase">{item.title}</p>
+                        <p className='text-dark uppercase'>
+                            {t(`home-page.brand-${item.value}`)}
+                        </p>
                     </button>
                 ))}
             </div>
 
-            <div className="w-full py-5 mt-5 grid grid-cols-10 gap-4 justify-items-center bg-light relative">
+            <div className='w-full py-5 mt-5 grid grid-cols-10 gap-4 justify-items-center bg-light relative'>
                 {isLoading ? (
                     <h2>{t("loading")}...</h2>
                 ) : carBrands?.items?.length ? (
                     carBrands.items.slice(0, 10).map((item) => (
                         <Link
                             key={item.id}
-                            className="flex flex-col items-center gap-2 text-center"
-                            to={`/brands/${item.name}-${item.id}`}
+                            className='flex flex-col items-center gap-2 text-center'
+                            to={`/cars/${item.name}`}
                             state={item}
+                            onClick={() =>
+                                setSelected({
+                                    name: item.name,
+                                    value: item.name
+                                })
+                            }
                         >
                             <Image
                                 src={item.image}
                                 alt={item.name}
                                 width={40}
                             />
-                            <p className="text-dark uppercase">{item.name}</p>
+                            <p className='text-dark uppercase'>{item.name}</p>
                         </Link>
                     ))
                 ) : (
@@ -64,12 +72,12 @@ const Brands = () => {
                 )}
             </div>
 
-            <div className="w-full flex items-center justify-center mt-10">
+            <div className='w-full flex items-center justify-center mt-10'>
                 {carBrands?.items.length && (
                     <div>
                         <button
                             onClick={() => navigate("/brands")}
-                            className="bg-primary hover:bg-primary-hover text-white py-2 px-4 flex items-center gap-1 duration-150"
+                            className='bg-primary hover:bg-primary-hover text-white py-2 px-4 flex items-center gap-1 duration-150'
                         >
                             <p>{t("home-page.all-brands")}</p>
                             <FaArrowRight />
