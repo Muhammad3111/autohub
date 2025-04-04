@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import * as xlsx from "xlsx";
 import { UseFormRegister, UseFormSetValue } from "react-hook-form"; // Typelarni import qilish
-import {
-  CarFormInputs,
-  ConfigurationItem,
-} from "../../adminComponents/cars/AddCar";
 
 type ExcelUploaderProps = {
-  register: UseFormRegister<CarFormInputs>;
-  setValue: UseFormSetValue<CarFormInputs>;
+  register: UseFormRegister<CarObject>;
+  setValue: UseFormSetValue<CarObject>;
 };
 
 const ExcelUploader: React.FC<ExcelUploaderProps> = ({
