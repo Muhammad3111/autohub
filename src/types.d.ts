@@ -242,16 +242,17 @@ declare type UpdateAuth = {
   first_name?: string;
   last_name?: string;
   avatar?: string;
-  staff_data?: {
+  staff_data?: Partial<{
     workplace_name: string;
     region: string;
-    work_phone: string;
     city: string;
-    info: string;
-    avatar: string;
     address: string;
+    avatar: string;
     working_hours: string;
-  };
+    info: string;
+    work_phone: string;
+    stype: string;
+  }>;
 };
 
 declare type CommentsDataType = {
