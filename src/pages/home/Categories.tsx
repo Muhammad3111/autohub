@@ -55,7 +55,7 @@ const SalesCard = memo(({ data, rank }: { data: CarObject; rank: number }) => {
     );
 });
 
-const Section = ({
+export const Section = ({
     title,
     salesData,
     name,
