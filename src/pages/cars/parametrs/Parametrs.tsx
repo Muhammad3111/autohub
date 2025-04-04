@@ -39,17 +39,17 @@ export default function Parametrs() {
   const { id } = useParams<{ id: string }>();
   const { data, isLoading } = useGetCarByIdsQuery(id!);
 
-    const [activeCategory, setActiveCategory] = useState<string | null>(`cat0`);
+  const [activeCategory, setActiveCategory] = useState<string | null>(`cat0`);
 
-    const handleScrollToCategory = (id: string) => {
-        setActiveCategory(id);
-        scroller.scrollTo(id, {
-            duration: 800,
-            smooth: "easeInOutQuart",
-            offset: -80,
-            containerId: "tableContainer"
-        });
-    };
+  const handleScrollToCategory = (id: string) => {
+    setActiveCategory(id);
+    scroller.scrollTo(id, {
+      duration: 800,
+      smooth: "easeInOutQuart",
+      offset: -80,
+      containerId: "tableContainer",
+    });
+  };
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -93,7 +93,7 @@ export default function Parametrs() {
             </div>
           ))}
         </div>
-        {carParam[0].configurations.map((category) => (
+        {carParam[0]?.configurations.map((category) => (
           <Element key={category.id} name={`cat${category.id}`}>
             <h2 className="text-xl font-semibold bg-gray-200 p-2">
               {category.name}
@@ -103,14 +103,21 @@ export default function Parametrs() {
                 <tr className="border-b">
                   {/* Faqat bitta ckey (birinchi childdan) */}
                   <td className="border border-gray-300 px-4 py-2 w-[calc(100%/7)] font-bold">
-                    {category.children[0]?.ckey || "-"}
+                    {Array.isArray(category.children) &&
+                    category.children.length > 0
+                      ? category.children[0]?.ckey
+                      : "-"}
                   </td>
 
-                  {/* Barcha cvalue lar (children bo‘ylab map) */}
+                  {/* Barcha cvalue lar (agar array bo‘lsa) */}
                   <td className="border border-gray-300 px-4 py-2 w-[calc(100%/7)]">
-                    {category.children.map((sub, idx) => (
-                      <div key={idx}>{sub.cvalue}</div>
-                    ))}
+                    {Array.isArray(category.children) ? (
+                      category.children.map((sub, idx) => (
+                        <div key={idx}>{sub.cvalue}</div>
+                      ))
+                    ) : (
+                      <div>-</div>
+                    )}
                   </td>
                 </tr>
               </tbody>
