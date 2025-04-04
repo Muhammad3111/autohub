@@ -81,7 +81,7 @@ export default function AddBlog() {
         <h1 className="text-2xl text-black">Blog Qo'shish</h1>
         <Button
           path="/admin/posts"
-          className="mt-0 flex items-center gap-2 px-5"
+          className="mt-0 flex items-center gap-2 px-5 mr-10"
         >
           Orqaga
         </Button>
