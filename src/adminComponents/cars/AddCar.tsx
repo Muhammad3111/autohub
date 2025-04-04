@@ -56,14 +56,16 @@ export default function AddCar() {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [galleryImages, setGalleryImages] = useState<string[]>([]);
 
-    const brands = useMemo(
-        () =>
-            (data?.items || []).map((b: any) => ({
-                id: b.id,
-                name: b.name
-            })),
-        [data]
-    );
+  const brands = useMemo(
+    () =>
+      (data?.items || [])
+        .filter((b) => b.brand_type === "vehicle")
+        .map((b: any) => ({
+          id: b.id,
+          name: b.name,
+        })),
+    [data]
+  );
 
     const engineTypes = [
         { id: "Gasoline", name: "Gasoline" },

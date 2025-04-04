@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentUserData } from "../../features/auth/authSlice";
 
 type Props = {
-    vehicle: CarObject;
+  vehicle: CarObject;
 };
 
 const CardCar = ({ vehicle }: Props) => {
@@ -113,7 +113,7 @@ const CardCar = ({ vehicle }: Props) => {
                 </div>
             </div>
         </div>
-    );
+  );
 };
 
 export default CardCar;

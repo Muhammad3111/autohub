@@ -104,7 +104,7 @@ const authSlice = createSlice({
         builder.addCase(authSlice.actions.logOut, (_state) => {
             apiSlice.util.invalidateTags(["AUTH"]);
         });
-        builder.addCase(authSlice.actions.updateUserLikes, (_state) => {
+        builder.addCase(authSlice.actions.updateUserLikes, () => {
             apiSlice.util.invalidateTags(["BLOGS"]);
         });
     },
