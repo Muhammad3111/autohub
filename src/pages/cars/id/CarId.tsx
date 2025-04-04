@@ -40,6 +40,8 @@ export default function CarId() {
   };
 
   const car: CarObject = data;
+  const imageURL = import.meta.env.VITE_S3_PUBLIC_URL as string;
+
   return (
     <div className="flex flex-col gap-4 w-full">
       <Header title={car.name_uz} />
@@ -63,7 +65,7 @@ export default function CarId() {
               {car.images?.slice(0, 3).map((img, ind) => (
                 <div key={ind}>
                   <img
-                    src={`http://89.223.126.64:8080/api/${img}`}
+                    src={`${imageURL}${img}`}
                     alt={img}
                     className="w-full h-[110px] object-cover"
                   />

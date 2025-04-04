@@ -54,10 +54,12 @@ export default function AddCar() {
 
   const brands = useMemo(
     () =>
-      (data?.items || []).map((b: any) => ({
-        id: b.id,
-        name: b.name,
-      })),
+      (data?.items || [])
+        .filter((b) => b.brand_type === "vehicle")
+        .map((b: any) => ({
+          id: b.id,
+          name: b.name,
+        })),
     [data]
   );
 

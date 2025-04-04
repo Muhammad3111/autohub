@@ -48,6 +48,14 @@ export const carsApi = apiSlice.injectEndpoints({
       providesTags: ["CAR"],
     }),
 
+    getCarByIds: builder.query({
+      query: (id: string) => ({
+        url: `/vehicles/filters/same-model/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["CAR"],
+    }),
+
     updateCar: builder.mutation({
       query: ({ id, carData }: { id: string; carData: CarObject }) => ({
         url: `/vehicles/${id}`,
@@ -71,6 +79,7 @@ export const {
   useAddCarMutation,
   useGetCarsQuery,
   useGetCarByIdQuery,
+  useGetCarByIdsQuery,
   useUpdateCarMutation,
   useDeleteCarMutation,
 } = carsApi;

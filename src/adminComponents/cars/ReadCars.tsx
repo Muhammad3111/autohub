@@ -79,7 +79,7 @@ export default function ReadCars() {
                 </div>
                 <div className="p-4 flex flex-col gap-4 group-hover:bg-primary group-hover:text-white h-full">
                   <span className="bg-green-600/20 px-2 py-1 rounded-md text-center text-sm text-black w-max group-hover:bg-white">
-                    {car.brand_id}
+                    {car.brand?.name}
                   </span>
                   <div className="flex items-center">
                     <h1 className="text-2xl font-semibold truncate basis-1/2">

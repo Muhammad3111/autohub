@@ -101,10 +101,10 @@ const authSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(authSlice.actions.logOut, (_state) => {
+        builder.addCase(authSlice.actions.logOut, () => {
             apiSlice.util.resetApiState();
         });
-        builder.addCase(authSlice.actions.updateUserLikes, (_state) => {
+        builder.addCase(authSlice.actions.updateUserLikes, () => {
             apiSlice.util.invalidateTags(["BLOGS"]);
         });
     },
