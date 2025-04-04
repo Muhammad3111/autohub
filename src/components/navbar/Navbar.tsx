@@ -1,9 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FiDownload, FiUser } from "react-icons/fi";
-import {
-    selectCurrentAccessToken,
-    selectCurrentUserData,
-} from "../../features/auth/authSlice";
+import { selectCurrentAccessToken } from "../../features/auth/authSlice";
 import { useSelector } from "react-redux";
 import Language from "./Language";
 import { useContext, useEffect, useState } from "react";
@@ -14,22 +11,25 @@ import { Context } from "../../context/Context";
 import { FaRegHandshake } from "react-icons/fa6";
 import { useLazyAuthDetailQuery } from "../../features/auth/authApiSlice";
 import Loading from "../loading/Loading";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
     const navigate = useNavigate();
     const token = useSelector(selectCurrentAccessToken);
-    const userData = useSelector(selectCurrentUserData);
-    const [detailTrigger, { isLoading }] = useLazyAuthDetailQuery();
+    const [detailTrigger, { data, isLoading }] = useLazyAuthDetailQuery();
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (token) {
             detailTrigger({ token });
         }
-    }, [token]);
+    }, [token, detailTrigger]);
+
+    const userData = data as UserDataType | null;
 
     const [openLogin, setOpenLogin] = useState(false);
-
     const context = useContext(Context);
+
     if (!context) {
         throw new Error("Ushbu component contextdan tashqarida ishlatilmoqda");
     }
@@ -63,29 +63,27 @@ const Navbar = () => {
 
                     <button className="flex items-center gap-2 p-1.5 px-2">
                         <FiDownload className="text-lg" />
-                        <p>App download</p>
+                        <p>{t("navbar.app-download")}</p>
                     </button>
                     <button className="flex items-center gap-2 p-1.5 px-2">
                         <FaRegHandshake className="text-lg" />
-                        <p>Partner</p>
+                        <p>{t("navbar.partner")}</p>
                     </button>
 
-                    {!userData && (
+                    {!token || !userData ? (
                         <button
                             onClick={() => setOpenLogin(true)}
                             className="flex items-center gap-2 rounded-full font-medium"
                         >
                             <FiUser className="text-xl" />
-                            Kirish
+                            {t("navbar.enter")}
                         </button>
-                    )}
-
-                    {userData && (
+                    ) : (
                         <button
                             onClick={() => navigate("/profile")}
                             className="font-medium flex items-center gap-2"
                         >
-                            <p>{userData.first_name}</p>
+                            <p>{userData?.first_name}</p>
                         </button>
                     )}
                 </div>

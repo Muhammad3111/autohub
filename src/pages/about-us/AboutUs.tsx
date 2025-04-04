@@ -9,6 +9,7 @@ import About6 from "../../assets/about-6.png";
 import About7 from "../../assets/about-7.png";
 import About8 from "../../assets/about-8.png";
 import AboutSlider from "./AboutSlider";
+import { useTranslation } from "react-i18next";
 
 type AboutState = {
     img: string;
@@ -69,13 +70,15 @@ const AboutUs = () => {
         },
     ];
 
+    const { t } = useTranslation();
+
     return (
         <div className="w-full">
-            <Header title="About" />
+            <Header title={t("about-page.header-title")} />
             <div className="bg-white">
                 <div className="flex flex-col p-10">
                     <h1 className="text-2xl text-center font-medium">
-                        Our Partners
+                        {t("about-page.our-partners")}
                     </h1>
 
                     <div className="p-10">

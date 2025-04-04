@@ -20,13 +20,25 @@ export const carsApi = apiSlice.injectEndpoints({
             invalidatesTags: ["BLOGS"],
         }),
         addComment: builder.mutation({
-            query: (commentData: FormData) => ({
+            query: (commentData) => ({
                 url: "/commons/reviews/create",
                 method: "POST",
                 body: commentData,
-                formdata: true,
             }),
             invalidatesTags: ["BLOGS"],
+        }),
+        getComment: builder.query<
+            CommentsDataType[],
+            {
+                target_id: string;
+                target_type: "vehicle" | "spare_part" | "article";
+            }
+        >({
+            query: ({ target_id, target_type }) => ({
+                url: `/commons/reviews?target_id=${target_id}&target_type=${target_type}`,
+                method: "GET",
+            }),
+            providesTags: ["BLOGS"],
         }),
         getBlogs: builder.query<UrlsData, { page?: number }>({
             query: ({ page = 1 }) => ({
@@ -93,6 +105,7 @@ export const carsApi = apiSlice.injectEndpoints({
 export const {
     useAddBlogMutation,
     useAddCommentMutation,
+    useGetCommentQuery,
     useGetBlogsQuery,
     useLazyGetBlogsByCategoryQuery,
     useGetBlogByIdQuery,

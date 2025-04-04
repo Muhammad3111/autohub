@@ -4,14 +4,15 @@ import {
     useAddCommentMutation,
     useDislikeBlogMutation,
     useGetBlogByIdQuery,
-    useUpdateLikeMutation,
+    useGetCommentQuery,
+    useUpdateLikeMutation
 } from "../../../features/blogs/blogs";
 import { BiDislike, BiLike, BiSolidDislike, BiSolidLike } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import {
     selectCurrentAccessToken,
     selectCurrentUserData,
-    updateUserLikes,
+    updateUserLikes
 } from "../../../features/auth/authSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -19,6 +20,9 @@ import Login from "../../../components/login/Login";
 import { memo, useState } from "react";
 import { FiChevronRight } from "react-icons/fi";
 import { useGetCarsQuery } from "../../../features/cars/carSlice";
+import defaultImg from "../../../assets/dealer-default-img.png";
+import Image from "../../../components/image/Image";
+import { useTranslation } from "react-i18next";
 
 const SalesCard = memo(({ data, rank }: { data: CarObject; rank: number }) => {
     const rankColor =
@@ -31,27 +35,26 @@ const SalesCard = memo(({ data, rank }: { data: CarObject; rank: number }) => {
             : "bg-gray-300";
 
     return (
-        <div className="flex justify-between items-center cursor-pointer">
-            <div className="flex items-center gap-5">
+        <div className='flex justify-between items-center cursor-pointer'>
+            <div className='flex items-center gap-5'>
                 <div
                     className={`ranking-sales ${rankColor} w-5 h-6 flex items-center justify-center text-sm`}
                 >
                     {rank}
                 </div>
-                <img
-                    src={data.cover_image || "/placeholder-car.jpg"}
+                <Image
+                    src={data.cover_image!}
                     alt={data.name_uz}
-                    className="border"
                     width={120}
-                    height={60}
+                    className='border h-20 object-cover'
                 />
             </div>
-            <div className="text-center">
+            <div className='text-center'>
                 <h2>{data.name_uz}</h2>
-                <p className="text-primary">{data.price} $</p>
+                <p className='text-primary'>{data.price} $</p>
             </div>
 
-            <button className="bg-primary text-white p-2 text-sm hover:bg-primary-hover duration-150">
+            <button className='bg-primary text-white p-2 text-sm hover:bg-primary-hover duration-150'>
                 Check the
             </button>
         </div>
@@ -60,21 +63,21 @@ const SalesCard = memo(({ data, rank }: { data: CarObject; rank: number }) => {
 
 const Section = ({
     title,
-    salesData,
+    salesData
 }: {
     title: string;
     salesData: CarObject[];
 }) => (
-    <div className="flex-1 mb-4">
-        <div className="flex items-center justify-between border-b pb-5 mb-5">
-            <h1 className="text-xl">{title}</h1>
-            <button className="flex items-center gap-1 text-dark text-xl">
+    <div className='flex-1 mb-4'>
+        <div className='flex items-center justify-between border-b pb-5 mb-5'>
+            <h1 className='text-xl'>{title}</h1>
+            <button className='flex items-center gap-1 text-dark text-xl'>
                 <p>Overall list</p>
                 <FiChevronRight />
             </button>
         </div>
 
-        <div className="flex flex-col gap-5">
+        <div className='flex flex-col gap-5'>
             {salesData.map((data, index) => (
                 <SalesCard key={data.id} data={data} rank={index + 1} />
             ))}
@@ -89,17 +92,26 @@ export default function Post() {
     const [updateBlogLike] = useUpdateLikeMutation();
     const [dislikeBlog] = useDislikeBlogMutation();
     const [addComment] = useAddCommentMutation();
-
+    const { t } = useTranslation();
     const token = useSelector(selectCurrentAccessToken);
     const dispatch = useDispatch();
     const userData = useSelector(selectCurrentUserData);
     const { data: carsData } = useGetCarsQuery({
-        page: 1,
+        page: 1
     });
     const [openLogin, setOpenLogin] = useState(false);
 
+    const { data: comments = [] } = useGetCommentQuery({
+        target_id: id!,
+        target_type: "article"
+    });
+    const [showAllComments, setShowAllComments] = useState(false);
+    const visibleComments = showAllComments
+        ? comments ?? []
+        : comments?.slice(0, 3) ?? [];
+
     if (isLoading || !post) {
-        return <h1>Loading...</h1>;
+        return <h1>{t("loading")}...</h1>;
     }
 
     const handleLikeDislike = async (
@@ -127,7 +139,7 @@ export default function Post() {
             dispatch(
                 updateUserLikes({
                     postId: id!,
-                    type: type === "like" ? "dislike" : "like",
+                    type: type === "like" ? "dislike" : "like"
                 })
             );
         }
@@ -139,14 +151,20 @@ export default function Post() {
             return;
         }
 
-        const formData = new FormData();
-        formData.append("target_id", id!);
-        formData.append("comment", data.comment);
+        const commentData = {
+            target_id: id,
+            comment: data.comment,
+            target_type: "article",
+            rating: 0
+        };
 
         try {
-            await addComment(formData).unwrap();
-            toast.success("Kommentariyangiz yuborildi!");
-            reset();
+            await addComment(commentData)
+                .unwrap()
+                .then(() => {
+                    toast.success("Kommentariyangiz yuborildi!");
+                    reset();
+                });
         } catch (error) {
             console.error("Comment error:", error);
             toast.error("Komment yuborilmadi!");
@@ -160,24 +178,24 @@ export default function Post() {
         <div>
             <Header title={post.title_uz} />
 
-            <div className="flex justify-between gap-10">
-                <div className="flex items-start py-5 w-full">
-                    <div className="w-full flex flex-col gap-4">
+            <div className='flex justify-between gap-20'>
+                <div className='flex items-start py-5 w-full'>
+                    <div className='w-full flex flex-col gap-4'>
                         <div>
-                            <h1 className="text-4xl font-bold capitalize">
+                            <h1 className='text-4xl font-bold capitalize'>
                                 {post.title_uz}
                             </h1>
                         </div>
 
-                        <div className="flex justify-between items-center">
+                        <div className='flex justify-between items-center'>
                             <p>{post.category}</p>
                         </div>
 
-                        <div className="w-full h-96 border">
-                            <img
-                                src={post.cover_image || "placeholder.jpg"}
-                                alt="post-image"
-                                className="object-cover w-full h-full"
+                        <div className='w-full h-96 border'>
+                            <Image
+                                src={post.cover_image}
+                                alt='post-image'
+                                className='object-cover w-full h-full'
                             />
                         </div>
 
@@ -185,13 +203,9 @@ export default function Post() {
                             <p>{post.content_uz}</p>
                         </div>
 
-                        <div className="flex items-center justify-end gap-4">
+                        <div className='flex items-center justify-end gap-4'>
                             <button
-                                className={`flex items-center gap-2 ${
-                                    isPostLiked
-                                        ? "text-blue-600"
-                                        : "text-gray-500"
-                                }`}
+                                className={`flex items-center gap-2 text-gray-400`}
                                 onClick={() =>
                                     handleLikeDislike("like", updateBlogLike)
                                 }
@@ -205,11 +219,7 @@ export default function Post() {
                             </button>
 
                             <button
-                                className={`flex items-center gap-2 ${
-                                    isPostDisliked
-                                        ? "text-red-600"
-                                        : "text-gray-500"
-                                }`}
+                                className={`flex items-center gap-2 text-gray-400`}
                                 onClick={() =>
                                     handleLikeDislike("dislike", dislikeBlog)
                                 }
@@ -223,38 +233,79 @@ export default function Post() {
                         </div>
 
                         <div>
-                            <h1 className="text-2xl font-normal">
-                                Comments{" "}
-                                <span className="text-base text-gray-500">
-                                    ({post.comments?.length || 0})
+                            <div>
+                                <span className='text-xl font-normal mr-2'>
+                                    Comments
                                 </span>
-                            </h1>
+                                <span className='text-base text-gray-500'>
+                                    ({comments?.length})
+                                </span>
+                            </div>
+
+                            <div className='flex flex-col mt-4'>
+                                {visibleComments.map((comment) => (
+                                    <div
+                                        key={comment.id}
+                                        className='py-4 first:border-t border-b flex gap-2 w-full relative min-h-32'
+                                    >
+                                        <div className='w-10 h-10 rounded-full'>
+                                            <img
+                                                src={defaultImg}
+                                                alt=''
+                                                className='w-full h-full object-cover border rounded-full'
+                                            />
+                                        </div>
+                                        <div className='w-full'>
+                                            <h1 className='text-sm'>
+                                                Anonymous
+                                            </h1>
+                                            <p>{comment.comment}</p>
+                                        </div>
+                                        <p className='absolute bottom-2 right-2 text-gray-400 text-sm'>
+                                            4 hour ago
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {comments.length > 3 && (
+                                <button
+                                    onClick={() =>
+                                        setShowAllComments(!showAllComments)
+                                    }
+                                    className='mt-2 hover:underline'
+                                >
+                                    {showAllComments
+                                        ? "Show Less"
+                                        : "Show All Comments"}
+                                </button>
+                            )}
 
                             {userData ? (
                                 <form
                                     onSubmit={handleSubmit(onSubmit)}
-                                    className="mt-4 flex flex-col gap-2"
+                                    className='mt-4 flex flex-col gap-4'
                                 >
                                     <textarea
-                                        className="border rounded p-2"
-                                        placeholder="Fikringizni yozing..."
+                                        className='w-full bg-transparent ring-1 p-4 ring-grey focus-within:ring-2 focus-within:ring-primary outline-none duration-300'
+                                        placeholder='Fikringizni yozing...'
                                         {...register("comment", {
                                             required:
-                                                "Ushbu joy bo'sh bo'lmasligi kerak",
+                                                "Ushbu joy bo'sh bo'lmasligi kerak"
                                         })}
                                     />
                                     <button
-                                        type="submit"
-                                        className="bg-primary text-white p-2 rounded"
+                                        type='submit'
+                                        className='bg-primary hover:bg-primary-hover text-white p-2 duration-150'
                                     >
                                         Yuborish
                                     </button>
                                 </form>
                             ) : (
-                                <div className="mt-4">
+                                <div className='mt-4'>
                                     <button
                                         onClick={() => setOpenLogin(true)}
-                                        className="text-blue-500 underline"
+                                        className='text-blue-500 underline'
                                     >
                                         Komment yozish uchun kiring
                                     </button>
@@ -264,9 +315,9 @@ export default function Post() {
                     </div>
                 </div>
 
-                <div className="mt-5 w-[500px]">
+                <div className='mt-5 w-1/2'>
                     <Section
-                        title="Sales ranking"
+                        title='Sales ranking'
                         salesData={carsData?.items.slice(0, 3) || []}
                     />
                 </div>

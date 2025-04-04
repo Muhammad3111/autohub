@@ -1,12 +1,16 @@
 import { useContext } from "react";
 import { Context } from "../../context/Context";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { collection } from "../../mock/data.json";
 import { useGetBrandsQuery } from "../../features/brands/brands";
+import { FaArrowRight } from "react-icons/fa6";
+import Image from "../../components/image/Image";
+import { useTranslation } from "react-i18next";
 
 const Brands = () => {
   const context = useContext(Context);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   if (!context) {
     throw new Error(
@@ -14,11 +18,11 @@ const Brands = () => {
     );
   }
 
-  const { setModel } = context;
+  const { setModel, setSelected } = context;
 
   const carModels: Collection[] = collection;
   const { data: carBrands, isLoading } = useGetBrandsQuery({ page: 1 });
-  const imageURL = import.meta.env.VITE_S3_PUBLIC_URL as string;
+
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mt-20 w-full bg-light p-6">
@@ -31,30 +35,50 @@ const Brands = () => {
             key={index}
             className="flex flex-col items-center gap-1"
           >
-            <p className="text-dark uppercase">{item.title}</p>
+            <p className="text-dark uppercase">
+              {t(`home-page.brand-${item.value}`)}
+            </p>
           </button>
         ))}
       </div>
 
-      <div className="w-full py-5 mt-5 grid grid-cols-10 gap-4 justify-items-center bg-light">
+      <div className="w-full py-5 mt-5 grid grid-cols-10 gap-4 justify-items-center bg-light relative">
         {isLoading ? (
-          <h2>Loading...</h2>
+          <h2>{t("loading")}...</h2>
         ) : carBrands?.items?.length ? (
           carBrands.items.slice(0, 10).map((item) => (
-            <button
+            <Link
               key={item.id}
               className="flex flex-col items-center gap-2 text-center"
+              to={`/cars/${item.name}`}
+              state={item}
+              onClick={() =>
+                setSelected({
+                  name: item.name,
+                  value: item.name,
+                })
+              }
             >
-              <img
-                src={`${imageURL}${item.image}`}
-                alt={item.name}
-                width={40}
-              />
+              <Image src={item.image} alt={item.name} width={40} />
               <p className="text-dark uppercase">{item.name}</p>
-            </button>
+            </Link>
           ))
         ) : (
-          <h2>Brands not found</h2>
+          <h2>{t("home-page.brands-not-found")}</h2>
+        )}
+      </div>
+
+      <div className="w-full flex items-center justify-center mt-10">
+        {carBrands?.items.length && (
+          <div>
+            <button
+              onClick={() => navigate("/brands")}
+              className="bg-primary hover:bg-primary-hover text-white py-2 px-4 flex items-center gap-1 duration-150"
+            >
+              <p>{t("home-page.all-brands")}</p>
+              <FaArrowRight />
+            </button>
+          </div>
         )}
       </div>
     </div>

@@ -206,46 +206,54 @@
         }
     ],
     "collection": [
-        { "id": 0, "title": "Cheksiz", "icon": "" },
+        { "id": 0, "title": "Cheksiz", "icon": "", "value": "all" },
         {
             "id": 1,
             "title": "Elektr",
-            "icon": ""
+            "icon": "",
+            "value": "electricity"
         },
         {
             "id": 2,
             "title": "Sedan",
-            "icon": ""
+            "icon": "",
+            "value": "sedan"
         },
         {
             "id": 3,
             "title": "SUV",
-            "icon": ""
+            "icon": "",
+            "value": "suv"
         },
         {
             "id": 4,
             "title": "MPV",
-            "icon": ""
+            "icon": "",
+            "value": "mpv"
         },
         {
             "id": 5,
             "title": "Sport Avtomobili",
-            "icon": ""
+            "icon": "",
+            "value": "sport-car"
         },
         {
             "id": 6,
             "title": "Mikro yuz",
-            "icon": ""
+            "icon": "",
+            "value": "micro-van"
         },
         {
             "id": 7,
             "title": "Mikro karta",
-            "icon": ""
+            "icon": "",
+            "value": "van"
         },
         {
             "id": 8,
             "title": "Yengil yo'lovchi",
-            "icon": ""
+            "icon": "",
+            "value": "light-passenger"
         }
     ],
     "priceButtons": [
@@ -1006,7 +1014,7 @@
         },
         {
             "name": "Expert Review",
-            "value": "expert_review"
+            "value": "expert-review"
         },
         {
             "name": "Tips",
@@ -1014,15 +1022,15 @@
         },
         {
             "name": "Useful Content",
-            "value": "useful_content"
+            "value": "useful-content"
         },
         {
             "name": "Customer Stories",
-            "value": "customer_stories"
+            "value": "customer-stories"
         },
         {
             "name": "Test Drives",
-            "value": "test_drives"
+            "value": "test-drives"
         }
     ]
 }

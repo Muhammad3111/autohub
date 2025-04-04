@@ -39,17 +39,17 @@ export default function Parametrs() {
   const { id } = useParams<{ id: string }>();
   const { data, isLoading } = useGetCarByIdsQuery(id!);
 
-  const [activeCategory, setActiveCategory] = useState<string | null>(`cat0`);
+    const [activeCategory, setActiveCategory] = useState<string | null>(`cat0`);
 
-  const handleScrollToCategory = (id: string) => {
-    setActiveCategory(id);
-    scroller.scrollTo(id, {
-      duration: 800,
-      smooth: "easeInOutQuart",
-      offset: -80,
-      containerId: "tableContainer",
-    });
-  };
+    const handleScrollToCategory = (id: string) => {
+        setActiveCategory(id);
+        scroller.scrollTo(id, {
+            duration: 800,
+            smooth: "easeInOutQuart",
+            offset: -80,
+            containerId: "tableContainer"
+        });
+    };
 
   if (isLoading) {
     return <h1>Loading...</h1>;

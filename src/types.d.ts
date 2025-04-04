@@ -36,11 +36,13 @@ declare type CarObject = {
   engine_type: string;
   drive_type: string;
   cover_image?: string;
-  currency: string;
   images?: string[];
   rating?: number;
-  configurations?: ConfigurationItem[];
+  currency: string;
   brand?: Brand;
+  configurations?: ConfigurationItem[];
+  view_count: number;
+  created_at: string;
 };
 
 declare type Image = {
@@ -109,6 +111,7 @@ declare type Collection = {
   id: number;
   title: string;
   icon: string;
+  value?: string;
 };
 
 declare type AuthState = {
@@ -170,6 +173,7 @@ declare type Comments = {
   target_type: "article" | "vehicle" | "spare-parts";
   comment: string;
   images?: string[];
+  rating: number;
 };
 
 declare type Articles = {
@@ -232,4 +236,30 @@ declare type DealersType = {
   updated_at: string;
   reviews: null;
   is_verified: null;
+};
+
+declare type UpdateAuth = {
+  first_name?: string;
+  last_name?: string;
+  avatar?: string;
+  staff_data?: {
+    workplace_name: string;
+    region: string;
+    work_phone: string;
+    city: string;
+    info: string;
+    avatar: string;
+    address: string;
+    working_hours: string;
+  };
+};
+
+declare type CommentsDataType = {
+  target_id: string;
+  target_type: "vehicle" | "spare_part" | "article";
+  rating: number;
+  comment: string;
+  id: string;
+  images: null;
+  user_id: string;
 };

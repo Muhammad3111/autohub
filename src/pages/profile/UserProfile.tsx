@@ -4,18 +4,39 @@ import { useNavigate } from "react-router-dom";
 import { logOut } from "../../features/auth/authSlice";
 import { useRef, useState } from "react";
 import { PatternFormat } from "react-number-format";
+import { useUpdateProfileMutation } from "../../features/auth/authApiSlice";
 
 type UserProfileProps = {
     userData: UserDataType;
+};
+
+const getUpdatedFields = <T extends Record<string, any>>(
+    original: T,
+    updated: T
+) => {
+    return Object.keys(updated).reduce((acc, key) => {
+        const typedKey = key as keyof T;
+
+        if (
+            JSON.stringify(original[typedKey]) !==
+            JSON.stringify(updated[typedKey])
+        ) {
+            acc[typedKey] = updated[typedKey];
+        }
+
+        return acc;
+    }, {} as Partial<T>);
 };
 
 const UserProfile = ({ userData }: UserProfileProps) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isChangeInput, setIsChangeInput] = useState<boolean>(false);
+    const [updateAuth] = useUpdateProfileMutation();
 
     const profilePhoto = useRef<HTMLInputElement>(null);
     const [formState, setFormState] = useState<UserDataType>({
+        avatar: "",
         first_name: userData.first_name || "",
         last_name: userData.last_name || "",
         role: userData.role || "",
@@ -41,8 +62,25 @@ const UserProfile = ({ userData }: UserProfileProps) => {
         setIsChangeInput(hasValue);
     };
 
-    const handleSave = () => {
-        setIsChangeInput(false);
+    const handleSave = async () => {
+        const updatedFields = getUpdatedFields(userData, formState);
+
+        if (Object.keys(updatedFields).length === 0) {
+            console.log("No changes detected.");
+            return;
+        }
+
+        try {
+            await updateAuth(updatedFields as UpdateAuth)
+                .unwrap()
+                .then((res) => {
+                    console.log(res);
+
+                    setIsChangeInput(false);
+                });
+        } catch (error) {
+            console.error("Error updating profile:", error);
+        }
     };
 
     const handleCancel = () => {
@@ -118,6 +156,7 @@ const UserProfile = ({ userData }: UserProfileProps) => {
                             className="h-[50px] indent-4 rounded-md outline-none text-lg border focus:border-primary duration-150"
                             value={formState.last_name}
                             onChange={handleChange}
+                            autoComplete="off"
                         />
                     </div>
                     <div className="flex flex-col w-full gap-1">
@@ -135,6 +174,7 @@ const UserProfile = ({ userData }: UserProfileProps) => {
                             onChange={handleChange}
                             name="phone_number"
                             id="phone_number"
+                            disabled
                         />
                     </div>
                 </div>
