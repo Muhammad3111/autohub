@@ -6,6 +6,7 @@ import { useGetDealersQuery } from "../../features/auth/authApiSlice";
 import Loading from "../../components/loading/Loading";
 import { FiClock } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
+import { formatDateTime } from "../../hooks/useFormatDateTime";
 // import DealerImg from "../../assets/dealer-default-img.png";
 
 const Dealers = () => {
@@ -46,7 +47,11 @@ const Dealers = () => {
 
                                         <div className='text-sm flex items-center gap-1'>
                                             <FiClock className='text-2xl text-gray-500' />
-                                            <p>{item.working_hours}</p>
+                                            <p>
+                                                {formatDateTime(
+                                                    item.created_at
+                                                )}
+                                            </p>
                                         </div>
                                         <div className='text-sm flex items-center gap-1'>
                                             <MdLocationPin className='text-2xl text-gray-500' />

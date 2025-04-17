@@ -20,9 +20,9 @@ export default function BrandsFilter() {
 
     const brands: Brand[] = data?.items || [];
 
-    const sortedBrands = [...brands].sort((a, b) =>
-        a.name.localeCompare(b.name)
-    );
+    const sortedBrands = [...brands]
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .filter((brand) => brand.brand_type === "vehicle");
     return (
         <div
             ref={brandSectionRef}

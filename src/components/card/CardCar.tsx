@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentUserData } from "../../features/auth/authSlice";
 
 type Props = {
-  vehicle: CarObject;
+    vehicle: CarObject;
 };
 
 const CardCar = ({ vehicle }: Props) => {
@@ -26,7 +26,6 @@ const CardCar = ({ vehicle }: Props) => {
     const navigate = useNavigate();
     const userData = useSelector(selectCurrentUserData);
 
-    // Check if the vehicle is saved in the data
     useEffect(() => {
         if (data && data.some((item) => item.item_id === vehicle.id)) {
             setIsSaved(true);
@@ -113,7 +112,7 @@ const CardCar = ({ vehicle }: Props) => {
                 </div>
             </div>
         </div>
-  );
+    );
 };
 
 export default CardCar;

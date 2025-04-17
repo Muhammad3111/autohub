@@ -1,4 +1,4 @@
-export const useFormatDateTime = (createdAt: string): string => {
+export const formatDateTime = (createdAt: string): string => {
     const date = new Date(createdAt);
 
     const hours = date.getHours().toString().padStart(2, "0");
