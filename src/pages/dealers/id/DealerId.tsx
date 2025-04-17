@@ -5,9 +5,11 @@ type DealerIdType = {
     id: string;
     img: string;
     title: string;
+    workplace_name: string;
     mainBrands: string;
     electricity: string;
     landsite: string;
+    created_at: string;
 };
 
 const DealerId = () => {
@@ -21,10 +23,10 @@ const DealerId = () => {
 
     return (
         <div>
-            <Header title={state.title} />
+            <Header title={state.workplace_name} />
             {state?.id === id && (
-                <div className="mt-20">
-                    <img src={state.img} alt="" />
+                <div className='mt-20'>
+                    <img src={state.img} alt='' />
                 </div>
             )}
         </div>

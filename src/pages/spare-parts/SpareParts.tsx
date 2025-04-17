@@ -52,7 +52,7 @@ const SpareParts = () => {
                             )}
                         </div>
                     </div>
-                    <div className='flex flex-col gap-4 p-10'>
+                    <div className='flex flex-col gap-4 my-10'>
                         <h1 className='text-4xl font-semibold text-center'>
                             {t("spare-parts-page.most-popular")}
                             <span className='text-primary'>
@@ -60,14 +60,7 @@ const SpareParts = () => {
                                 {t("spare-parts-page.spare-part-brands")}
                             </span>
                         </h1>
-                        <div className='px-20'>
-                            <AboutSlider />
-                        </div>
-                        <div className='col-span-full flex justify-center'>
-                            <Button className='px-4'>
-                                {t("spare-parts-page.see-all-brands")}
-                            </Button>
-                        </div>
+                        <AboutSlider />
                     </div>
                     <div className='flex flex-col gap-4 p-10 bg-white'>
                         <h1 className='text-4xl font-semibold text-center'>
