@@ -21,7 +21,7 @@ export default function Shop() {
     const { data: carsData } = useGetCarsQuery({
         page: 1,
         brand,
-        model: model === "Cheksiz" ? "" : model,
+        vehicle_type: model === "Cheksiz" ? "" : model,
         price_gt: price.start,
         price_lt: price.end
     });

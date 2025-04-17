@@ -141,6 +141,7 @@ export default function CarId() {
               <button className="bg-primary text-white text-base px-4 py-2">
                 Kalkulatsiya
               </button>
+              <button>Compare</button>
             </div>
           </div>
         </div>
