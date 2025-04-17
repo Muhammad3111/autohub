@@ -27,15 +27,22 @@ export const carsApi = apiSlice.injectEndpoints({
         limit?: number;
         name_uz?: string;
         brand?: string;
-        model?: string;
+        vehicle_type?: string;
         price_gt?: number;
         price_lt?: number;
       }
     >({
-      query: ({ page = 1, name_uz, brand, model, price_gt, price_lt }) => ({
+      query: ({
+        page = 1,
+        name_uz,
+        brand,
+        vehicle_type,
+        price_gt,
+        price_lt,
+      }) => ({
         url: "/vehicles/filters",
         method: "GET",
-        params: { page, name_uz, brand, model, price_gt, price_lt },
+        params: { page, name_uz, brand, vehicle_type, price_gt, price_lt },
       }),
       providesTags: ["CAR"],
     }),
@@ -67,7 +74,7 @@ export const carsApi = apiSlice.injectEndpoints({
 
     deleteCar: builder.mutation({
       query: (id: string) => ({
-        url: `/vehicles/delete/${id}`,
+        url: `/vehicles/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["CAR"],
