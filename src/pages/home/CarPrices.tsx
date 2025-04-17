@@ -78,7 +78,7 @@ const CarPrices = () => {
                     ))
                 ) : (
                     <p className='text-gray-500 whitespace-nowrap'>
-                        No cars found for this price range.
+                        {t("not-found")}
                     </p>
                 )}
             </div>
