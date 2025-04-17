@@ -109,7 +109,7 @@ export default function Parametrs() {
       >
         <div className="mt-20">
           <h1 className="text-2xl font-semibold mb-4">
-            Topilgan avtomobillar soni: {carParam.length}
+            Mavjud Modellar Soni: {carParam.length}
           </h1>
           <div className="flex gap-4 mb-8">
             {carParam.map((car) => (
@@ -138,23 +138,10 @@ export default function Parametrs() {
                 {configName}
               </h2>
               <table className="w-full border-collapse border border-gray-300 mb-6">
-                <thead>
-                  <tr className="bg-gray-100">
-                    <th className="border border-gray-300 px-4 py-2 w-[20%] text-left">
-                      Xususiyat nomi
-                    </th>
-                    {carParam.map((_, carIdx) => (
-                      <th
-                        key={carIdx}
-                        className="border border-gray-300 px-4 py-2 text-left"
-                      ></th>
-                    ))}
-                  </tr>
-                </thead>
                 <tbody>
                   {Array.from(keyMap.entries()).map(([ckey, values]) => (
                     <tr key={ckey}>
-                      <td className="border border-gray-300 px-4 py-2 font-medium">
+                      <td className="border border-gray-300 px-4 py-2 font-medium w-[calc(100%/7)]">
                         {ckey}
                       </td>
                       {carParam.map((_, valIdx) => (
