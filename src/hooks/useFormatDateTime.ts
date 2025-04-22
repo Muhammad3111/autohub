@@ -1,4 +1,4 @@
-export const useFormatDateTime = (createdAt: string): string => {
+export const formatDateTime = (createdAt: string): string => {
     const date = new Date(createdAt);
 
     const hours = date.getHours().toString().padStart(2, "0");
@@ -8,5 +8,5 @@ export const useFormatDateTime = (createdAt: string): string => {
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const year = date.getFullYear();
 
-    return `${hours}:${minutes} ${day}-${month}-${year}`;
+    return `${day}-${month}-${year} ${hours}:${minutes}`;
 };

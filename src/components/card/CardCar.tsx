@@ -21,7 +21,7 @@ import {
 } from "../../features/compare/compare";
 
 type Props = {
-  vehicle: CarObject;
+    vehicle: CarObject;
 };
 
 const CardCar = ({ vehicle }: Props) => {
