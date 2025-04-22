@@ -264,3 +264,11 @@ declare type CommentsDataType = {
   images: null;
   user_id: string;
 };
+
+declare type Counts = {
+  vehicle: number;
+  article: number;
+  spare_part: number;
+  user: number;
+  test_drive: number;
+};

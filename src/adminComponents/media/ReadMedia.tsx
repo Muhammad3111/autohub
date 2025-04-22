@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useGetS3ObjectsQuery } from "../../features/media/mediaSlice";
+import DeleteMedia from "./DeleteMedia";
 
 const SkeletonCard = () => (
   <div className="w-full h-40 bg-gray-300 animate-pulse rounded-lg" />
@@ -62,6 +63,7 @@ const ReadMedia = () => {
                   loading="lazy"
                   className="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-105"
                 />
+                <DeleteMedia keyName={url} />
               </div>
             ))}
       </div>

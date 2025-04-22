@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from "../../app/api/apiSlice";
 import { s3 } from "../../s3/s3Client";
-import { ListObjectsV2Command, PutObjectCommand } from "@aws-sdk/client-s3";
+import {
+  ListObjectsV2Command,
+  PutObjectCommand,
+  DeleteObjectCommand,
+} from "@aws-sdk/client-s3";
 
 type S3ListResponse = {
   keys: string[];
@@ -70,6 +74,25 @@ export const s3Api = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["MEDIA"],
     }),
+    deleteFromS3: builder.mutation<
+      { success: boolean },
+      { bucket: string; key: string }
+    >({
+      async queryFn({ bucket, key }) {
+        try {
+          const command = new DeleteObjectCommand({
+            Bucket: bucket,
+            Key: key,
+          });
+
+          await s3.send(command);
+          return { data: { success: true } };
+        } catch (error) {
+          return { error: error as any };
+        }
+      },
+      invalidatesTags: ["MEDIA"],
+    }),
   }),
 });
 
@@ -77,4 +100,5 @@ export const {
   useGetS3ObjectsQuery,
   useLazyGetS3ObjectsQuery,
   useUploadToS3Mutation,
+  useDeleteFromS3Mutation,
 } = s3Api;

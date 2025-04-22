@@ -148,7 +148,7 @@ export default function FileUploader({ height = "55vh" }: { height?: string }) {
           className="w-max text-base bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 disabled:opacity-50"
           disabled={files.length === 0 || isLoading}
         >
-          {isLoading ? "Yuklanmoqda..." : "S3'ga yuklash"}
+          {isLoading ? "Yuklanmoqda..." : "Yuborish"}
         </button>
       </div>
     </form>

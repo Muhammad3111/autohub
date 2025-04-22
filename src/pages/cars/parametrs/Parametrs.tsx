@@ -85,8 +85,7 @@ export default function Parametrs() {
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <div className="w-64 bg-gray-100 px-4 py-6 overflow-y-auto h-full fixed scrollbar-thin">
-        <h2 className="text-xl font-bold mb-4">Kategoriyalar</h2>
+      <div className="w-64 bg-gray-100 px-4 py-6 overflow-y-auto h-full fixed scrollbar-thin mt-16">
         {Array.from(groupedConfigs.keys()).map((categoryName, idx) => (
           <button
             key={idx}
@@ -103,62 +102,86 @@ export default function Parametrs() {
       </div>
 
       {/* Table Section */}
-      <div
-        id="tableContainer"
-        className="w-full ml-64 p-6 overflow-auto h-screen"
-      >
-        <div className="mt-20">
-          <h1 className="text-2xl font-semibold mb-4">
-            Mavjud Modellar Soni: {carParam.length}
-          </h1>
-          <div className="flex gap-4 mb-8">
+      <div className="w-full ml-64 p-6 overflow-auto h-screen">
+        <div className="mt-16">
+          {/* Avtomobillar Header */}
+          <div
+            className={`grid`}
+            style={{
+              gridTemplateColumns: `200px repeat(${
+                carParam.length > 4 ? carParam.length : 4
+              }, minmax(200px, 1fr))`,
+              gap: "1px",
+            }}
+          >
+            <div className="bg-white font-bold px-4 py-2 border border-gray-300">
+              <h1 className="text-xl font-normal mb-6">
+                Mavjud Modellar Soni:{" "}
+                <span className="text-black text-2xl">{carParam.length}</span>
+              </h1>
+            </div>
             {carParam.map((car) => (
               <div
                 key={car.id}
-                className="border rounded p-4 shadow w-64 text-center"
+                className="border border-gray-300 px-4 py-2 flex flex-col items-center bg-white"
               >
                 <Image
                   src={car.cover_image}
                   alt={car.name_uz}
-                  className="w-full h-40 object-cover rounded mb-2"
+                  className="w-full h-32 object-cover rounded mb-1"
                 />
-                <h3 className="text-lg font-semibold">{car.name_uz}</h3>
-                <p className="text-gray-600">
+                <h3 className="text-sm font-semibold">{car.name_uz}</h3>
+                <p className="text-xs text-gray-600">
                   {car.price} {car.currency}
                 </p>
               </div>
             ))}
           </div>
-        </div>
 
-        {Array.from(groupedConfigs.entries()).map(
-          ([configName, keyMap], idx) => (
-            <Element key={idx} name={`cat${idx}`}>
-              <h2 className="text-xl font-semibold bg-gray-200 p-2 mt-6">
-                {configName}
-              </h2>
-              <table className="w-full border-collapse border border-gray-300 mb-6">
-                <tbody>
+          {/* Har bir konfiguratsiya blok */}
+          <div
+            id="tableContainer"
+            className="h-[70vh] overflow-y-auto scrollbar-thin w-full"
+          >
+            {Array.from(groupedConfigs.entries()).map(
+              ([configName, keyMap], idx) => (
+                <Element key={idx} name={`cat${idx}`}>
+                  <h2 className="text-xl font-semibold bg-primary px-4 py-2 text-white">
+                    {configName}
+                  </h2>
+
                   {Array.from(keyMap.entries()).map(([ckey, values]) => (
-                    <tr key={ckey}>
-                      <td className="border border-gray-300 px-4 py-2 font-medium w-[calc(100%/7)]">
+                    <div
+                      key={ckey}
+                      className="grid border border-gray-200"
+                      style={{
+                        gridTemplateColumns: `200px repeat(${
+                          carParam.length > 4 ? carParam.length : 4
+                        }, minmax(200px, 1fr))`,
+                        gap: "1px",
+                      }}
+                    >
+                      {/* Ckey – xususiyat nomi */}
+                      <div className="px-4 py-2 bg-gray-50 font-medium border border-gray-300">
                         {ckey}
-                      </td>
-                      {carParam.map((_, valIdx) => (
-                        <td
-                          key={valIdx}
-                          className="border border-gray-300 px-4 py-2"
+                      </div>
+
+                      {/* Cvalue – avtomobillar bo‘yicha qiymatlar */}
+                      {carParam.map((_, idx) => (
+                        <div
+                          key={idx}
+                          className="px-4 py-2 border border-gray-300 bg-white text-sm"
                         >
-                          {values[valIdx] || "-"}
-                        </td>
+                          {values[idx] || "-"}
+                        </div>
                       ))}
-                    </tr>
+                    </div>
                   ))}
-                </tbody>
-              </table>
-            </Element>
-          )
-        )}
+                </Element>
+              )
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
