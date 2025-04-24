@@ -95,6 +95,7 @@ export const apiSlice = createApi({
     "SAVED",
     "COMPARE",
     "COUNTS",
+    "COLLOBRATORS",
   ],
   endpoints: () => ({}),
 });

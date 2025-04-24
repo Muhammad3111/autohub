@@ -3,15 +3,22 @@ import { LuLayoutDashboard, LuNotebookText } from "react-icons/lu";
 import Logo from "../../assets/autohub-logo.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IoCarSportOutline } from "react-icons/io5";
-import { MdOutlinePermMedia, MdOutlineSpeakerNotes } from "react-icons/md";
+import {
+  MdChecklistRtl,
+  MdOutlinePermMedia,
+  MdOutlineSpeakerNotes,
+} from "react-icons/md";
 import { RiMenuFold3Line } from "react-icons/ri";
 import { CiBoxes } from "react-icons/ci";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { TbBrandAppstore } from "react-icons/tb";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../features/auth/authSlice";
 
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   const [isPostsOpen, setIsPostsOpen] = useState(""); // Submenu holati
   const [toggleLink, setToggleLink] = useState<string>("");
   useEffect(() => {
@@ -28,6 +35,11 @@ export default function Sidebar() {
       navigate(link); // Linkka o'tish
       setToggleLink(link); // Aktiv linkni belgilash
     }
+  };
+
+  const handleLogout = () => {
+    dispatch(logOut());
+    navigate("/");
   };
 
   return (
@@ -49,7 +61,7 @@ export default function Sidebar() {
             location.pathname.includes("/admin/dashboard")
               ? "bg-primary text-white"
               : "bg-transparent text-black"
-          } text-base font-semibold w-full rounded-xl cursor-pointer hover:bg-primary/50 hover:text-white duration-300 flex items-center gap-2`}
+          } text-base font-semibold w-full rounded cursor-pointer hover:bg-primary/50 hover:text-white duration-300 flex items-center gap-2`}
         >
           <LuLayoutDashboard className="text-2xl" />
           Dashboard
@@ -60,7 +72,7 @@ export default function Sidebar() {
             location.pathname.includes("/admin/media")
               ? "bg-primary text-white"
               : "bg-transparent text-black"
-          } text-base font-semibold w-full rounded-xl cursor-pointer hover:bg-primary/50 hover:text-white duration-300 flex items-center gap-2`}
+          } text-base font-semibold w-full rounded cursor-pointer hover:bg-primary/50 hover:text-white duration-300 flex items-center gap-2`}
         >
           <MdOutlinePermMedia className="text-2xl" />
           Media
@@ -71,7 +83,7 @@ export default function Sidebar() {
             location.pathname.includes("/admin/brands")
               ? "bg-primary text-white"
               : "bg-transparent text-black"
-          } text-base font-semibold w-full rounded-xl cursor-pointer hover:bg-primary/50 hover:text-white duration-300 flex items-center gap-2`}
+          } text-base font-semibold w-full rounded cursor-pointer hover:bg-primary/50 hover:text-white duration-300 flex items-center gap-2`}
         >
           <TbBrandAppstore className="text-2xl" />
           Brandlar
@@ -82,7 +94,7 @@ export default function Sidebar() {
             location.pathname.includes("/admin/cars")
               ? "bg-primary text-white"
               : "bg-transparent text-black"
-          } text-base font-semibold w-full rounded-xl cursor-pointer hover:bg-primary/50 hover:text-white duration-300 flex items-center gap-2`}
+          } text-base font-semibold w-full rounded cursor-pointer hover:bg-primary/50 hover:text-white duration-300 flex items-center gap-2`}
         >
           <IoCarSportOutline className="text-2xl" />
           Cars
@@ -95,9 +107,7 @@ export default function Sidebar() {
                 ? "bg-primary text-white"
                 : "bg-transparent text-black"
             } ${
-              isPostsOpen === "/admin/spare-parts"
-                ? "rounded-t-xl"
-                : "rounded-xl"
+              isPostsOpen === "/admin/spare-parts" ? "rounded-t" : "rounded"
             } text-base font-semibold w-full  cursor-pointer hover:bg-primary/50 hover:text-white duration-300 flex items-center justify-between`}
           >
             <div className="flex items-center gap-2">
@@ -113,7 +123,7 @@ export default function Sidebar() {
             </span>
           </div>
           <ul
-            className={`pl-4 overflow-hidden transition-all duration-300 rounded-b-xl ${
+            className={`pl-4 overflow-hidden transition-all duration-300 rounded-b ${
               location.pathname.startsWith("/admin/spare-parts")
                 ? "bg-primary text-white"
                 : "bg-transparent text-black"
@@ -125,13 +135,13 @@ export default function Sidebar() {
           >
             <li
               onClick={() => navigate("/admin/spare-parts/categories")}
-              className="px-6 py-2 text-white hover:text-black duration-300 cursor-pointer rounded-xl"
+              className="px-6 py-2 text-white hover:text-black duration-300 cursor-pointer rounded"
             >
               Bo'limar
             </li>
             <li
               onClick={() => navigate("/admin/spare-parts")}
-              className="px-6 py-2 text-white hover:text-black duration-300 rounded-xl cursor-pointer"
+              className="px-6 py-2 text-white hover:text-black duration-300 rounded cursor-pointer"
             >
               Barcha ehtiyot qismlar
             </li>
@@ -144,7 +154,7 @@ export default function Sidebar() {
               location.pathname.includes("/admin/posts")
                 ? "bg-primary text-white"
                 : "bg-transparent text-black"
-            } rounded-xl text-base font-semibold w-full  cursor-pointer hover:bg-primary/50 hover:text-white duration-300 flex items-center justify-between`}
+            } rounded text-base font-semibold w-full  cursor-pointer hover:bg-primary/50 hover:text-white duration-300 flex items-center justify-between`}
           >
             <div className="flex items-center gap-2">
               <MdOutlineSpeakerNotes className="text-2xl" />
@@ -158,10 +168,21 @@ export default function Sidebar() {
             location.pathname === "/admin/test-drive"
               ? "bg-primary text-white"
               : "bg-transparent text-black"
-          } text-base font-semibold w-full rounded-xl cursor-pointer hover:bg-primary/50 hover:text-white duration-300 flex items-center gap-2`}
+          } text-base font-semibold w-full rounded cursor-pointer hover:bg-primary/50 hover:text-white duration-300 flex items-center gap-2`}
         >
           <LuNotebookText className="text-2xl" />
           Test Drive
+        </li>
+        <li
+          onClick={() => navigate("/admin/collaborations")}
+          className={`px-4 py-2 ${
+            location.pathname === "/admin/collaborations"
+              ? "bg-primary text-white"
+              : "bg-transparent text-black"
+          } text-base font-semibold w-full rounded cursor-pointer hover:bg-primary/50 hover:text-white duration-300 flex items-center gap-2`}
+        >
+          <MdChecklistRtl className="text-2xl" />
+          Hamkorlik arizalari
         </li>
         {/* <li
           onClick={() => navigate("/admin/comments")}
@@ -186,6 +207,14 @@ export default function Sidebar() {
           Users
         </li> */}
       </ul>
+      <div className="px-2 mt-auto mb-2">
+        <button
+          onClick={handleLogout}
+          className="text-lg w-full text-red-600 px-8 py-2 rounded hover:bg-primary/50 hover:text-white duration-300"
+        >
+          Tizimdan chiqish
+        </button>
+      </div>
     </div>
   );
 }

@@ -43,7 +43,9 @@ export default function AddCar() {
     formState: { errors },
     setValue,
     reset,
-  } = useForm<CarObject>({ defaultValues: { configurations: [] } });
+  } = useForm<CarObject>({
+    defaultValues: { configurations: [], currency: "$" },
+  });
 
   const [addCar] = useAddCarMutation();
   const { data, isLoading } = useGetBrandsQuery({});
@@ -84,10 +86,10 @@ export default function AddCar() {
     { id: "Automatic", name: "Automatic" },
   ];
 
-  const currency = [
-    { id: "$", name: "$" },
-    { id: "UZS", name: "UZS" },
-  ];
+  // const currency = [
+  //   { id: "$", name: "$" },
+  //   { id: "UZS", name: "UZS" },
+  // ];
 
   const handleImageSelect = (url: string | string[]) => {
     if (modalType === "single" && typeof url === "string") {
@@ -192,12 +194,13 @@ export default function AddCar() {
               required
               type="number"
             />
-            <SelectField
-              label="Valyuta"
-              name="currency"
+            <InputField
+              label="Sotilgan soni"
+              name="most_sold"
               register={register}
-              options={currency}
-              defaultValue={currency[0].name}
+              errors={errors}
+              required
+              type="number"
             />
           </div>
           <ExcelUploader register={register} setValue={setValue} />

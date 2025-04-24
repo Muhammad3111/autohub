@@ -48,6 +48,7 @@ import Parametrs from "../pages/cars/parametrs/Parametrs";
 import HomeLayout from "../layout/HomeLayout";
 import UpdateSpareParts from "../adminComponents/spareparts/UpdateSparePart";
 import Compare from "../pages/compare/Compare";
+import Collaborators from "../pages/admin/collaborators/Collaborators";
 
 const Router = () => {
   return (
@@ -117,6 +118,7 @@ const Router = () => {
         <Route path="users" element={<Users />} />
         <Route path="test-drive" element={<TestDrive />} />
         <Route path="comments" element={<Comments />} />
+        <Route path="collaborations" element={<Collaborators />} />
       </Route>
     </Routes>
   );
