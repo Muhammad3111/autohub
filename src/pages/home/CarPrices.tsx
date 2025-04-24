@@ -25,7 +25,7 @@ const CarPrices = () => {
     const { data: carsData, isLoading } = useGetCarsQuery({
         page: 1,
         price_gt: price.start,
-        price_lt: price.end,
+        price_lt: price.end
     });
 
     if (isLoading) {
@@ -35,8 +35,8 @@ const CarPrices = () => {
     const cars = carsData?.items || [];
 
     return (
-        <div className="w-full min-h-[300px] border">
-            <div className="w-full h-10 border-b flex items-center bg-grey">
+        <div className='w-full min-h-[300px] border'>
+            <div className='w-full h-10 border-b flex items-center bg-grey'>
                 {priceData.map((p) => (
                     <button
                         key={p.id}
@@ -58,26 +58,26 @@ const CarPrices = () => {
                 ))}
             </div>
 
-            <div className="p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
+            <div className='p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4'>
                 {cars.length > 0 ? (
                     cars.slice(0, 7).map((item) => (
                         <Link
                             to={`/cars/${item?.brand_id}/${item.id}`}
                             key={item.id}
-                            className="border p-2 text-center hover:border-primary duration-300 group w-full"
+                            className='border p-2 text-center hover:border-primary duration-300 group w-full'
                         >
                             <Image
                                 src={item.cover_image || ""}
                                 alt={item.name_uz}
-                                loading="lazy"
-                                className="group-hover:scale-105 duration-300 object-cover w-full h-40"
+                                loading='lazy'
+                                className='group-hover:scale-105 duration-300 object-cover w-full h-40'
                             />
                             <p>{item.name_uz}</p>
                             <p>${item.price.toLocaleString()}</p>
                         </Link>
                     ))
                 ) : (
-                    <p className="text-gray-500 whitespace-nowrap">
+                    <p className='text-gray-500 whitespace-nowrap'>
                         {t("not-found")}
                     </p>
                 )}
