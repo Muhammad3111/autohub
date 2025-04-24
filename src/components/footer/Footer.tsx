@@ -7,17 +7,10 @@ type Display = {
 
 const Footer = ({ display }: Display) => {
     const { pathname } = useLocation();
-    const links = [
-        "/about-us",
-        "/cars",
-        "/spare-parts",
-        "/services",
-        "/dealers",
-        "/news",
-    ];
+    const links = ["/compare"];
 
     const shouldHideFooter = links.some((route) =>
-        pathname.startsWith(`${route}/`)
+        pathname.startsWith(`${route}`)
     );
 
     if (shouldHideFooter || display === "none") {

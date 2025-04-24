@@ -110,7 +110,7 @@ declare type Blogs = {
 declare type Collection = {
     id: number;
     title: string;
-    icon: string;
+    icon: CarIconType;
     value?: string;
 };
 
@@ -268,9 +268,24 @@ declare type CommentsDataType = {
 };
 
 declare type Counts = {
-  vehicle: number;
-  article: number;
-  spare_part: number;
-  user: number;
-  test_drive: number;
+    vehicle: number;
+    article: number;
+    spare_part: number;
+    user: number;
+    test_drive: number;
+};
+
+declare type CarType =
+    | "electricity"
+    | "sedan"
+    | "suv"
+    | "mpv"
+    | "sport-car"
+    | "micro-van"
+    | "van"
+    | "light-passenger";
+
+declare type CarIconType = {
+    white: string;
+    hover: string;
 };

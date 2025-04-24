@@ -50,9 +50,9 @@ const CarPrices = () => {
                         {p.end === 0
                             ? p.start === 0
                                 ? t("home-page.brand-all")
-                                : `${p.start}$ ${t("home-page.higher-than")}`
+                                : `85K`
                             : p.end === 15000
-                            ? `${p.end}$ ${t("home-page.less-than")}`
+                            ? `15K`
                             : p.title}
                     </button>
                 ))}

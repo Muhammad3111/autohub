@@ -258,12 +258,12 @@
     ],
     "priceButtons": [
         { "id": 0, "title": "Cheksiz", "start": 0, "end": 0 },
-        { "id": 1, "title": "15 000$ dan past", "start": 0, "end": 15000 },
-        { "id": 2, "title": "15 000$ - 25 000$", "start": 15000, "end": 25000 },
-        { "id": 3, "title": "25 000$ - 40 000$", "start": 25000, "end": 40000 },
-        { "id": 4, "title": "40 000$ - 60 000$", "start": 40000, "end": 60000 },
-        { "id": 5, "title": "60 000$ - 85 000$", "start": 60000, "end": 85000 },
-        { "id": 6, "title": "85 000$ dan yuqori", "start": 85000, "end": 0 }
+        { "id": 1, "title": "15K", "start": 0, "end": 15000 },
+        { "id": 2, "title": "15K - 25K", "start": 15000, "end": 25000 },
+        { "id": 3, "title": "25K - 40K", "start": 25000, "end": 40000 },
+        { "id": 4, "title": "40K - 60K", "start": 40000, "end": 60000 },
+        { "id": 5, "title": "60K - 85K", "start": 60000, "end": 85000 },
+        { "id": 6, "title": "85K", "start": 85000, "end": 0 }
     ],
     "brands": [
         {
