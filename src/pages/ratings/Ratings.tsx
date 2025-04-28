@@ -10,6 +10,8 @@ import Header from "../../components/header/Header";
 import Rating from "../../utility/rating/Rating";
 import InfoCard from "../../components/infoCard/InfoCard";
 import { useGetBlogsByCategoryQuery } from "../../features/blogs/blogs";
+import Loading from "../../components/loading/Loading";
+
 
 const RankingsCard = memo(
   ({ data, rank }: { data: CarObject; rank: number }) => {
@@ -146,7 +148,7 @@ const Ratings = () => {
   const blogs: Blogs[] = news?.items || [];
 
   if (isLoading) {
-    return <h2>{t("loading")}...</h2>;
+    return <Loading />;
   }
 
   return (
