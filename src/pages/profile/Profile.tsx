@@ -38,10 +38,7 @@ const Profile = () => {
             return <DealerProfile userData={userData} />;
         }
 
-        if (
-            activeTab === "likedCar" &&
-            (userData.role === "user" || userData.role === "admin")
-        ) {
+        if (activeTab === "likedCar") {
             return <UserLikedCars />;
         }
 
@@ -100,6 +97,14 @@ const Profile = () => {
                                 }`}
                             >
                                 Ma'lumotlarim
+                            </button>
+                            <button
+                                onClick={() => setActiveTab("likedCar")}
+                                className={`w-full h-11 text-lg text-left pl-5 rounded ${
+                                    activeTab === "likedCar" ? "bg-[#ddd]" : ""
+                                }`}
+                            >
+                                Sevimlilar
                             </button>
                             <button
                                 onClick={() => setActiveTab("myCreateCars")}
