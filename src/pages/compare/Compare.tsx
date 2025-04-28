@@ -145,10 +145,7 @@ export default function Compare() {
               >
                 {Array.from(groupedConfigs.entries()).map(
                   ([configName, keyMap], idx) => (
-                    <Element
-                      key={idx}
-                      name={`cat${idx}`}
-                    >
+                    <Element key={idx} name={`cat${idx}`}>
                       <h2 className="text-xl font-semibold bg-primary/50 px-4 py-2 text-black">
                         {configName}
                       </h2>

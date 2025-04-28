@@ -15,6 +15,7 @@ import Button from "../../utility/button/Button";
 import Modal from "../../utility/modal/Modal";
 import ExcelUploader from "../../utility/excelParser/ExcelParser";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 
 const LoadingSkeleton = () => (
   <div className="flex flex-col gap-4 p-6">
@@ -55,6 +56,7 @@ export default function AddCar() {
   const [modalType, setModalType] = useState<"single" | "gallery">("single");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
+  const { pathname } = useLocation();
 
   const brands = useMemo(
     () =>
@@ -132,7 +134,11 @@ export default function AddCar() {
   }
 
   return (
-    <div className="flex flex-col gap-4 p-6">
+    <div
+      className={`flex flex-col gap-4 ${
+        pathname.includes("/admin") ? "p-6" : "p-0"
+      }`}
+    >
       {isModalOpen && (
         <Modal
           onClose={() => setIsModalOpen(false)}
@@ -142,13 +148,14 @@ export default function AddCar() {
       )}
 
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl text-black">Avtomobil Qo'shish</h1>
-        <Button
-          path="/admin/cars"
-          className="mt-0 flex items-center gap-2 px-5"
-        >
-          Orqaga
-        </Button>
+        {pathname.includes("/admin") && (
+          <h1 className="text-2xl text-black">Avtomobil Qo'shish</h1>
+        )}
+        {pathname.includes("/admin") && (
+          <Button path={"/admin/cars"} className="">
+            Orqaga
+          </Button>
+        )}
       </div>
 
       <form
@@ -247,85 +254,84 @@ export default function AddCar() {
               ></textarea>
             </label>
           </div>
-        </div>
+          <div className="col-span-1 flex flex-col gap-5">
+            <div className="flex flex-col gap-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Asosiy rasmni tanlash
+              </label>
+              <button
+                type="button"
+                onClick={() => {
+                  setModalType("single");
+                  setIsModalOpen(true);
+                }}
+                className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              >
+                Rasm tanlang
+              </button>
+              {selectedImage && (
+                <div className="relative w-full h-48">
+                  <img
+                    src={`https://usc1.contabostorage.com/c3e282af10b9439688d5390b60ed4045:autohub/${selectedImage}`}
+                    alt="Selected"
+                    className="w-full h-full object-cover rounded-md"
+                  />
+                  <button
+                    onClick={handleRemoveMainImage}
+                    className="absolute top-2 right-2 w-5 h-5 flex items-center justify-center bg-red-600 text-white rounded-full hover:bg-red-700"
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
+            </div>
 
-        <div className="col-span-1 flex flex-col gap-5">
-          <div className="flex flex-col gap-2">
-            <label className="block text-sm font-medium text-gray-700">
-              Asosiy rasm
-            </label>
-            <button
-              type="button"
-              onClick={() => {
-                setModalType("single");
-                setIsModalOpen(true);
-              }}
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-            >
-              Rasmni tanlang
-            </button>
-            {selectedImage && (
-              <div className="relative w-full h-48">
-                <img
-                  src={`https://usc1.contabostorage.com/c3e282af10b9439688d5390b60ed4045:autohub/${selectedImage}`}
-                  alt="Selected"
-                  className="w-full h-full object-cover rounded-md"
-                />
-                <button
-                  onClick={handleRemoveMainImage}
-                  className="absolute top-2 right-2 w-5 h-5 flex items-center justify-center bg-red-600 text-white rounded-full hover:bg-red-700"
-                >
-                  ✕
-                </button>
-              </div>
-            )}
+            <div className="flex flex-col gap-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Gallery rasmlarini tanlash
+              </label>
+              <button
+                type="button"
+                onClick={() => {
+                  setModalType("gallery");
+                  setIsModalOpen(true);
+                }}
+                className="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+              >
+                Rasm tanlang
+              </button>
+              {galleryImages.length > 0 && (
+                <div className="grid grid-cols-4 gap-4 mt-4">
+                  {galleryImages.map((url, index) => (
+                    <div key={index} className="relative">
+                      <img
+                        src={`https://usc1.contabostorage.com/c3e282af10b9439688d5390b60ed4045:autohub/${url}`}
+                        alt={`Gallery ${index}`}
+                        className="w-full h-32 object-cover rounded-md"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveImage(url)}
+                        className="absolute top-2 right-2 bg-red-600 text-white text-sm rounded-full w-5 h-5 flex items-center justify-center hover:bg-red-700"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-
-          <div className="flex flex-col gap-2">
-            <label className="block text-sm font-medium text-gray-700">
-              Gallery qo'shish
-            </label>
-            <button
-              type="button"
-              onClick={() => {
-                setModalType("gallery");
-                setIsModalOpen(true);
-              }}
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-            >
-              Gallery rasmlarini tanlash
-            </button>
-            {galleryImages.length > 0 && (
-              <div className="grid grid-cols-4 gap-4 mt-4">
-                {galleryImages.map((url, index) => (
-                  <div key={index} className="relative">
-                    <img
-                      src={`https://usc1.contabostorage.com/c3e282af10b9439688d5390b60ed4045:autohub/${url}`}
-                      alt={`Gallery ${index}`}
-                      className="w-full h-32 object-cover rounded-md"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveImage(url)}
-                      className="absolute top-2 right-2 bg-red-600 text-white text-sm rounded-full w-5 h-5 flex items-center justify-center hover:bg-red-700"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          <label className="block text-sm font-medium text-gray-700">
-            Ma'lumotlarni saqlash
-            <button
-              type="submit"
-              className="w-full mt-1 text-base bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
-            >
-              Saqlash
-            </button>
-          </label>
         </div>
+        <label className="block text-sm font-medium text-gray-700">
+          Ma'lumotlarni saqlash
+          <button
+            type="submit"
+            className="w-full mt-1 text-base bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
+          >
+            Saqlash
+          </button>
+        </label>
       </form>
     </div>
   );

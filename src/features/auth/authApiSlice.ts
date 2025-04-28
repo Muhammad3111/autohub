@@ -47,8 +47,13 @@ export const authApi = apiSlice.injectEndpoints({
         }),
 
         getDealers: builder.query({
-            query: ({ page = 1 }: { page: number }) =>
-                `/auth/staff?page=${page}`,
+            query: ({
+                page = 1,
+                type
+            }: {
+                page: number;
+                type?: "service" | "dealer";
+            }) => `/auth/staff?staff_type=${type}&page=${page}`,
             providesTags: ["DEALERS"],
             transformResponse: (data: DealerType) => data.items
         }),

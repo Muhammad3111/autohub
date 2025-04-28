@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import { LuEye } from "react-icons/lu";
 import { BiLike } from "react-icons/bi";
 import Image from "../../components/image/Image";
+import VideoPlayer from "../../utility/videoPlayer/VideoPlayer";
+import Loading from "../../components/loading/Loading";
 
 const SpareParts = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -33,7 +35,7 @@ const SpareParts = () => {
   }, [activeTab, blogTrigger, currentPage]);
 
   if (isLoading) {
-    return <h2>{t("loading")}...</h2>;
+    return <Loading />;
   }
 
   return (
@@ -68,14 +70,11 @@ const SpareParts = () => {
                     className="cursor-pointer flex items-start gap-5 relative"
                   >
                     {data.video_link ? (
-                      <iframe
+                      <VideoPlayer
+                        url={data.video_link}
                         width="400"
-                        height="220"
-                        src={data.video_link}
-                        title={data.title_uz}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                      ></iframe>
+                        height="200"
+                      />
                     ) : (
                       <Image
                         src={data.cover_image || "blog.jpg"}

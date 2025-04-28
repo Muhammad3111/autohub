@@ -24,6 +24,7 @@ import defaultImg from "../../../assets/dealer-default-img.png";
 import Image from "../../../components/image/Image";
 import { useTranslation } from "react-i18next";
 import { IoShareSocialOutline } from "react-icons/io5";
+import VideoPlayer from "../../../utility/videoPlayer/VideoPlayer";
 
 const SalesCard = memo(({ data, rank }: { data: CarObject; rank: number }) => {
   const rankColor =
@@ -200,11 +201,11 @@ export default function Post() {
             </div>
 
             <div className="w-full h-96 border">
-              <Image
-                src={post.cover_image}
-                alt="post-image"
-                className="object-cover w-full h-full"
-              />
+              {post.video_link ? (
+                <VideoPlayer width="100%" height="400" url={post.video_link} />
+              ) : (
+                <Image src={post.cover_image} alt={post.title_uz} />
+              )}
             </div>
 
             <div>

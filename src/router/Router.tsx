@@ -32,7 +32,7 @@ import DealerId from "../pages/dealers/id/DealerId";
 import News from "../pages/news/News";
 import Contact from "../pages/contact/Contact";
 import NotFound from "../pages/not-found/NotFound";
-// import Search from "../pages/search/Search";
+import Search from "../pages/search/Search";
 import Profile from "../pages/profile/Profile";
 import UserBrands from "../pages/brands/Brands";
 
@@ -74,7 +74,7 @@ const Router = () => {
         <Route path="/news" element={<News />} />
         <Route path="news/:id" element={<Post />} />
         <Route path="/contact" element={<Contact />} />
-        {/* <Route path='/search' element={<Search />} /> */}
+        <Route path="/search" element={<Search />} />
         <Route path="*" element={<Navigate to="/not-found" />} />
         <Route path="/not-found" element={<NotFound />} />
         <Route path="/brands" element={<UserBrands />} />
