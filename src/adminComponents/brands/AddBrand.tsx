@@ -104,18 +104,7 @@ export default function AddBrand() {
         <div className="col-span-1 flex flex-col gap-5">
           <div className="flex flex-col gap-2">
             <label className="block text-sm font-medium text-gray-700">
-              Ma'lumotlarni saqlash
-              <button
-                type="submit"
-                className="w-full mt-1 text-base bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
-                Saqlash
-              </button>
-            </label>
-          </div>
-          <div className="flex flex-col gap-2">
-            <label className="block text-sm font-medium text-gray-700">
-              Avtomobil rasmini qo'shish
+              Brand rasmini qo'shish
               <button
                 type="button"
                 onClick={() => {
@@ -142,6 +131,17 @@ export default function AddBrand() {
                 </button>
               </div>
             )}
+          </div>
+          <div className="flex flex-col gap-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Ma'lumotlarni saqlash
+              <button
+                type="submit"
+                className="w-full mt-1 text-base bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
+              >
+                Saqlash
+              </button>
+            </label>
           </div>
         </div>
       </form>

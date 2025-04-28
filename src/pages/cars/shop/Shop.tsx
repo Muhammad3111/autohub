@@ -23,7 +23,7 @@ export default function Shop() {
         brand,
         vehicle_type: model === "Cheksiz" ? "" : model,
         price_gt: price.start,
-        price_lt: price.end
+        price_lt: price.end,
     });
     const cars: CarObject[] = carsData?.items || [];
     const total_pages = carsData?.metadata?.total_pages || 1;
@@ -47,15 +47,15 @@ export default function Shop() {
     });
 
     return (
-        <div className='w-full'>
+        <div className="w-full">
             <Header title={t("cars-page.header-title")} />
-            <div className='flex flex-col max-w-[1440px] mx-auto'>
-                <div className='flex gap-4 py-5 my-container bg-white'>
+            <div className="flex flex-col">
+                <div className="grid grid-cols-7 gap-4 my-container bg-white">
                     {/* Brendlar bo'limi */}
                     <BrandsFilter />
                     {/* Mashinalar bo'limi */}
-                    <div className='grid grid-cols-4 gap-4 basis-3/4 items-start'>
-                        <div className='col-span-4'>
+                    <div className="grid grid-cols-5 gap-4 basis-3/4 items-start pt-4 col-span-6">
+                        <div className="col-span-5">
                             <VehicleFilter />
                         </div>
                         {cars?.length > 0 ? (
@@ -63,8 +63,8 @@ export default function Shop() {
                                 <ShopCard key={car.id} vehicle={car} />
                             ))
                         ) : (
-                            <div className='col-span-full text-2xl font-semibold text-center py-10 bg-grey'>
-                                <h1 className='text-3xl font-normal text-primary'>
+                            <div className="col-span-full text-2xl font-semibold text-center py-10 bg-grey">
+                                <h1 className="text-3xl font-normal text-primary">
                                     {t("not-found")}
                                 </h1>
                             </div>

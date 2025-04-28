@@ -112,8 +112,8 @@ export default function Compare() {
                   gap: "1px",
                 }}
               >
-                <div className="bg-white font-bold px-4 py-2 border border-gray-300">
-                  <h1 className="text-xl font-normal mb-6">
+                <div className="bg-white font-bold px-4 py-2 border border-gray-300 items-center flex">
+                  <h1 className="text-xl font-normal">
                     Mavjud Modellar Soni:{" "}
                     <span className="text-black text-2xl">
                       {carParam.length}
@@ -141,12 +141,15 @@ export default function Compare() {
               {/* Har bir konfiguratsiya blok */}
               <div
                 id="tableContainer"
-                className="h-[70vh] overflow-y-auto scrollbar-thin"
+                className="h-[70vh] overflow-y-auto scrollbar-thin mt-4"
               >
                 {Array.from(groupedConfigs.entries()).map(
                   ([configName, keyMap], idx) => (
-                    <Element key={idx} name={`cat${idx}`}>
-                      <h2 className="text-xl font-semibold bg-primary px-4 py-2 text-white">
+                    <Element
+                      key={idx}
+                      name={`cat${idx}`}
+                    >
+                      <h2 className="text-xl font-semibold bg-primary/50 px-4 py-2 text-black">
                         {configName}
                       </h2>
 
@@ -162,7 +165,7 @@ export default function Compare() {
                           }}
                         >
                           {/* Ckey – xususiyat nomi */}
-                          <div className="px-4 py-2 bg-gray-50 font-medium border border-gray-300">
+                          <div className="px-4 py-2 bg-gray-50 font-medium border border-gray-300 text-lg">
                             {ckey}
                           </div>
 
@@ -170,7 +173,7 @@ export default function Compare() {
                           {carParam.map((_, idx) => (
                             <div
                               key={idx}
-                              className="px-4 py-2 border border-gray-300 bg-white text-sm"
+                              className="px-4 py-2 border border-gray-300 bg-white text-sm text-center"
                             >
                               {values[idx] || "-"}
                             </div>

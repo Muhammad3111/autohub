@@ -7,6 +7,35 @@ import { useTranslation } from "react-i18next";
 import Image from "../../components/image/Image";
 import { useGetCollaboratorsQuery } from "../../features/collobarators/collobarators";
 
+export type WorkplaceItem = {
+  workplace_name: string;
+  region: string;
+  city: string;
+  address: string;
+  work_phone: string;
+  info: string;
+  working_hours: string;
+  avatar: string;
+  id: string;
+  rating: number;
+  user: UserType;
+  created_at: string;
+  updated_at: string;
+  reviews: null | any;
+  is_verified: null | boolean;
+  stype: string;
+};
+
+type UserType = {
+  id: string;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  avatar: string;
+  role: "staff" | "admin" | string;
+  status: "active" | "inactive" | string;
+};
+
 const ReadColl = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,9 +57,9 @@ const ReadColl = () => {
   }
 
   // 🔹 Bloglarni olish va qidiruv bo‘yicha filtrlash
-  const users: UserDataType[] = data?.items || [];
+  const users: WorkplaceItem[] = data?.items || [];
   const filteredData = users.filter((item) =>
-    item.first_name.toLowerCase().includes(debouncedSearch.toLowerCase())
+    item.user.first_name.toLowerCase().includes(debouncedSearch.toLowerCase())
   );
 
   return (
@@ -71,21 +100,23 @@ const ReadColl = () => {
                   <td className="px-4 py-2 text-center">
                     <Image
                       src={item.avatar || "blog-images.jpg"}
-                      alt={item.first_name}
+                      alt={item.user.first_name}
                       className="w-12 h-12 rounded-full mx-auto"
                     />
                   </td>
-                  <td className="px-4 py-2">
-                    {item.first_name} {item.last_name}
+                  <td className="px-4 py-2 text-center">
+                    {item.user.first_name} {item.user.last_name}
                   </td>
-                  <td className="px-4 py-2">{item.phone_number}</td>
+                  <td className="px-4 py-2 text-center">
+                    {item.user.phone_number}
+                  </td>
                   <td className="px-4 py-2 text-center">
                     {item.workplace_name}
                   </td>
                   <td className="px-4 py-2 text-center truncate max-w-[200px]">
                     {item.address}
                   </td>
-                  <td className="px-4 py-2 text-center flex justify-center gap-2">
+                  <td className="px-4 py-2 text-center">
                     <button className="text-blue-500 text-xl">
                       <MdEdit />
                     </button>

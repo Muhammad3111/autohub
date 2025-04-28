@@ -5,7 +5,7 @@ import { Html, OrbitControls, useGLTF } from "@react-three/drei";
 import { MathUtils } from "three";
 
 const FerrariModel: React.FC = () => {
-  const { scene } = useGLTF("/models/mers.glb"); // Model faylini mos joyga joylashtiring
+  const { scene } = useGLTF("/models/toyota.glb"); // Model faylini mos joyga joylashtiring
   const modelRef = useRef<any>(null);
   const spinComplete = useRef(false);
   const initialRotation = MathUtils.degToRad(-35); // Boshlang'ich 45° burilish

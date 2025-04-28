@@ -6,10 +6,12 @@ import Pagination from "../../utility/pagination/Pagination";
 import { useDebounce } from "../../utility/hooks/useDebounce";
 import { useTranslation } from "react-i18next";
 import Image from "../../components/image/Image";
+import { useNavigate } from "react-router-dom";
 
 const ReadBlogs = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
   const { t } = useTranslation();
   // 🔹 Debounced qidiruv (500ms kechikish bilan)
   const debouncedSearch = useDebounce(searchQuery, 500);
@@ -72,14 +74,17 @@ const ReadBlogs = () => {
                       className="w-12 h-12 rounded-full mx-auto"
                     />
                   </td>
-                  <td className="px-4 py-2">{item.title_uz}</td>
-                  <td className="px-4 py-2">{item.vname_ru}</td>
+                  <td className="px-4 py-2 text-center">{item.title_uz}</td>
+                  <td className="px-4 py-2 text-center">{item.vname_ru}</td>
                   <td className="px-4 py-2 text-center">{item.category}</td>
                   <td className="px-4 py-2 text-center truncate max-w-[200px]">
                     {item.content_uz}
                   </td>
                   <td className="px-4 py-2 text-center flex justify-center gap-2">
-                    <button className="text-blue-500 text-xl">
+                    <button
+                      className="text-blue-500 text-xl"
+                      onClick={() => navigate(`/admin/posts/update/${item.id}`)}
+                    >
                       <MdEdit />
                     </button>
                     <button className="text-red-500 text-xl">

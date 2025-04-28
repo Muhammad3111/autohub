@@ -8,7 +8,10 @@ import {
 } from "@aws-sdk/client-s3";
 
 type S3ListResponse = {
-  keys: string[];
+  objects: {
+    key: string;
+    lastModified: string; // yoki Date bo‘lsa undan ham yaxshi
+  }[];
   isTruncated: boolean;
   nextContinuationToken?: string;
 };
@@ -22,9 +25,16 @@ export const s3Api = apiSlice.injectEndpoints({
         prefix?: string;
         continuationToken?: string;
         maxKeys?: number;
+        search?: string; // ✅ yangi qo‘shildi
       }
     >({
-      async queryFn({ bucket, prefix = "", continuationToken, maxKeys = 20 }) {
+      async queryFn({
+        bucket,
+        prefix = "",
+        continuationToken,
+        maxKeys = 20,
+        search,
+      }) {
         try {
           const command = new ListObjectsV2Command({
             Bucket: bucket,
@@ -35,12 +45,24 @@ export const s3Api = apiSlice.injectEndpoints({
 
           const response = await s3.send(command);
 
+          let objects =
+            response.Contents?.map((item) => ({
+              key: item.Key!,
+              lastModified: item.LastModified!.toISOString(),
+              size: item.Size,
+            })) || [];
+
+          // ✅ Search qo‘llab-quvvatlash: client tarafda filter
+          if (search) {
+            const lower = search.toLowerCase();
+            objects = objects.filter((obj) =>
+              obj.key.toLowerCase().includes(lower)
+            );
+          }
+
           return {
             data: {
-              keys:
-                response.Contents?.map((item) => item.Key).filter(
-                  (key): key is string => !!key
-                ) || [],
+              objects,
               isTruncated: response.IsTruncated || false,
               nextContinuationToken: response.NextContinuationToken,
             },

@@ -21,20 +21,24 @@ import {
 } from "../../features/compare/compare";
 
 type Props = {
-    vehicle: CarObject;
+  vehicle: CarObject;
 };
 
 const CardCar = ({ vehicle }: Props) => {
   const [savedVehicle] = useAddSavedItemsMutation();
   const [removeSavedVehicle] = useRemoveSavedItemMutation();
-  const { data: comparedCars } = useGetComparisonsQuery({});
+  const userData = useSelector(selectCurrentUserData);
+  const { data: comparedData } = useGetComparisonsQuery(
+    {},
+    { skip: !!userData }
+  );
+  const comparedCars: CarObject[] = comparedData || [];
   const { data } = useGetSavedItemsQuery();
   const [isSaved, setIsSaved] = useState(false);
   const [rating, setRating] = useState(vehicle.rating || 0);
   const [addCompare] = useAddComparisonMutation();
   const [deleteFromCompare] = useDeleteComparisonMutation();
   const navigate = useNavigate();
-  const userData = useSelector(selectCurrentUserData);
 
   useEffect(() => {
     if (data && data.some((item) => item.item_id === vehicle.id)) {
@@ -140,6 +144,9 @@ const CardCar = ({ vehicle }: Props) => {
           <div className="flex items-end gap-2">
             <Rating rating={rating} setRating={setRating} />
             <sup>{vehicle.rating}+Reviews</sup>
+          </div>
+          <div>
+            <p className="line-clamp-3">{vehicle.description_uz}</p>
           </div>
         </div>
         <div className="flex items-center justify-between">

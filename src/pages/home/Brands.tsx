@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Context } from "../../context/Context";
 import { Link, useNavigate } from "react-router-dom";
-import { collection } from "../../mock/data.json";
 import { useGetBrandsQuery } from "../../features/brands/brands";
 import { FaArrowRight } from "react-icons/fa6";
 import Image from "../../components/image/Image";
@@ -18,9 +17,8 @@ const Brands = () => {
         );
     }
 
-    const { setModel, setSelected } = context;
+    const { setSelected } = context;
 
-    const carModels: Collection[] = collection;
     const { data: carBrandData, isLoading } = useGetBrandsQuery({ page: 1 });
     const carBrands = carBrandData?.items.filter(
         (car) => car.brand_type === "vehicle"
@@ -28,23 +26,6 @@ const Brands = () => {
 
     return (
         <div className='w-full'>
-            <div className='flex items-center justify-between mt-20 w-full bg-light p-6'>
-                {carModels.slice(1).map((item, index) => (
-                    <button
-                        onClick={() => {
-                            setModel(item.title);
-                            navigate(`/cars/${item.title}`);
-                        }}
-                        key={index}
-                        className='flex flex-col items-center gap-1'
-                    >
-                        <p className='text-dark uppercase'>
-                            {t(`home-page.brand-${item.value}`)}
-                        </p>
-                    </button>
-                ))}
-            </div>
-
             <div className='w-full py-5 mt-5 grid grid-cols-10 gap-4 justify-items-center bg-light relative'>
                 {isLoading ? (
                     <h2>{t("loading")}...</h2>

@@ -35,8 +35,12 @@ export default function CarId() {
   const [addCompare] = useAddComparisonMutation();
   const [deleteFromCompare] = useDeleteComparisonMutation();
   const [months, setMonths] = useState<number>(3);
-  const { data: comparedCars } = useGetComparisonsQuery({});
   const userData = useSelector(selectCurrentUserData);
+  const { data: comparedData } = useGetComparisonsQuery(
+    {},
+    { skip: !!userData }
+  );
+  const comparedCars: CarObject[] = comparedData || [];
   const { data, isLoading } = useGetCarByIdQuery(id!);
   const { data: carsData } = useGetCarsQuery({ page: 1 });
   const car: CarObject = data;
@@ -109,10 +113,10 @@ export default function CarId() {
 
   return (
     <div className="flex flex-col gap-4 w-full pb-5">
-      <Header title={car.name_uz} />
+      <Header title={car.name_uz} image={car.cover_image} />
       <div className="flex flex-col gap-4 py-5 my-container">
         <div className="flex gap-4">
-          <div className="basis-1/2 flex gap-2">
+          <div className="basis-[40%] flex gap-2">
             <div className="w-full h-[350px] bg-gray-300 relative">
               <ModelViewer />
               <button className="bg-primary text-white text-sm px-2 py-1 absolute bottom-2 left-2">
@@ -187,6 +191,10 @@ export default function CarId() {
       </div>
       <div className="flex justify-between gap-20">
         <div className="flex flex-col gap-4 w-2/3">
+          <div className="flex flex-col gap-2">
+            <h1 className="text-xl font-normal">Qo'shimcha ma'lumot</h1>
+            <p className="text-gray-500">{car.description_uz}</p>
+          </div>
           <div>
             <div>
               <h1 className="text-xl font-normal">

@@ -17,8 +17,13 @@ const HomeLayout = () => {
     const { sidebarOpen, setSidebarOpen } = context;
 
     useEffect(() => {
-        if (pathname.startsWith("/cars/parametrs")) {
+        if (
+            pathname.startsWith("/cars/parametrs") ||
+            pathname.startsWith("/compare")
+        ) {
             setSidebarOpen(false);
+        } else {
+            setSidebarOpen(true);
         }
     }, [pathname, setSidebarOpen]);
 

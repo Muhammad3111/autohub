@@ -110,6 +110,7 @@
     "dealers": "Dillerlar",
     "services": "Servislar",
     "spare-parts": "Extiyot qismlar",
+    "ratings": "Reytinglar",
     "news": "Yangiliklar",
     "about-us": "Biz haqimizda",
     "contact": "Aloqa"
@@ -119,5 +120,16 @@
   "all": "Barchasi",
   "not-found": "Ma'lumotlar topilmadi",
   "price": "Narx",
-  "classfication": "Klassifikatsiya"
+  "classfication": "Klassifikatsiya",
+  "Ranking": [
+    { "title": "Eng ko'p sotilganlar", "value": "most_sold" },
+    {
+      "title": "Yangi avtomobillar",
+      "value": "new_cars"
+    },
+    { "title": "Mashxur avtomobillar", "value": "popular_cars" }
+  ],
+  "Warnings": {
+    "info_change_date": "Ma'lumotlar sanoatning keng qamrovli savdo hajmidan olingan va har oyning 10-kunida yangilanadi."
+  }
 }

@@ -44,6 +44,8 @@ declare type CarObject = {
   configurations?: ConfigurationItem[];
   view_count: number;
   created_at: string;
+  description_uz: string;
+  description_ru?: string;
 };
 
 declare type Image = {
@@ -111,7 +113,7 @@ declare type Blogs = {
 declare type Collection = {
   id: number;
   title: string;
-  icon: string;
+  icon: CarIconType;
   value?: string;
 };
 
@@ -274,4 +276,19 @@ declare type Counts = {
   spare_part: number;
   user: number;
   test_drive: number;
+};
+
+declare type CarType =
+  | "electricity"
+  | "sedan"
+  | "suv"
+  | "mpv"
+  | "sport-car"
+  | "micro-van"
+  | "van"
+  | "light-passenger";
+
+declare type CarIconType = {
+  white: string;
+  hover: string;
 };

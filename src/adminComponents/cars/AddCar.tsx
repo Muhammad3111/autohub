@@ -34,6 +34,7 @@ type InputFieldProps<T extends FieldValues> = {
   errors?: FieldErrors<T>;
   required?: boolean;
   type?: string;
+  className?: string;
 };
 
 export default function AddCar() {
@@ -232,12 +233,26 @@ export default function AddCar() {
             options={engineTypes}
             defaultValue={engineTypes[0].id}
           />
+          <div className="col-span-4">
+            <label
+              htmlFor="description_uz"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Qoshimcha ma'lumot
+              <textarea
+                rows={5}
+                className=" mt-1 block w-full border-gray-300 rounded-md p-2 border"
+                id="description_uz"
+                {...register("description_uz")}
+              ></textarea>
+            </label>
+          </div>
         </div>
 
         <div className="col-span-1 flex flex-col gap-5">
           <div className="flex flex-col gap-2">
             <label className="block text-sm font-medium text-gray-700">
-              Asosiy rasmni tanlash
+              Asosiy rasm
             </label>
             <button
               type="button"
@@ -247,7 +262,7 @@ export default function AddCar() {
               }}
               className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
             >
-              Rasm tanlang
+              Rasmni tanlang
             </button>
             {selectedImage && (
               <div className="relative w-full h-48">
@@ -268,7 +283,7 @@ export default function AddCar() {
 
           <div className="flex flex-col gap-2">
             <label className="block text-sm font-medium text-gray-700">
-              Gallery rasmlarini tanlash
+              Gallery qo'shish
             </label>
             <button
               type="button"
@@ -276,9 +291,9 @@ export default function AddCar() {
                 setModalType("gallery");
                 setIsModalOpen(true);
               }}
-              className="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
             >
-              Rasm tanlang
+              Gallery rasmlarini tanlash
             </button>
             {galleryImages.length > 0 && (
               <div className="grid grid-cols-4 gap-4 mt-4">
@@ -301,12 +316,15 @@ export default function AddCar() {
               </div>
             )}
           </div>
-          <button
-            type="submit"
-            className="w-full mt-2 py-2 bg-red-600 text-white text-base rounded flex items-center justify-center hover:bg-red-700"
-          >
-            Saqlash
-          </button>
+          <label className="block text-sm font-medium text-gray-700">
+            Ma'lumotlarni saqlash
+            <button
+              type="submit"
+              className="w-full mt-1 text-base bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
+            >
+              Saqlash
+            </button>
+          </label>
         </div>
       </form>
     </div>
@@ -321,13 +339,14 @@ const InputField = <T extends FieldValues>({
   errors,
   required = false,
   type = "text",
+  className,
 }: InputFieldProps<T>) => (
   <div className="col-span-2">
     <label className="block text-sm font-medium text-gray-700">{label}</label>
     <input
       type={type}
       {...register(name, { required })}
-      className="mt-1 block w-full border-gray-300 rounded-md p-2 border"
+      className={`mt-1 block w-full border-gray-300 rounded-md p-2 border ${className}`}
     />
     {errors?.[name] && (
       <span className="text-red-500 text-sm">

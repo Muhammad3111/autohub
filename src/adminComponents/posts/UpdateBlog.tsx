@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import Button from "../../utility/button/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../../utility/modal/Modal";
 import { toast } from "react-toastify";
 import { useGetCarsQuery } from "../../features/cars/carSlice";
@@ -10,6 +10,8 @@ import {
 } from "../../features/blogs/blogs";
 import Select from "react-select";
 import { useParams } from "react-router-dom";
+import Image from "../../components/image/Image";
+import { articles } from "../../mock/data.json";
 
 export default function UpdateBlog() {
   const { blogId } = useParams<{ blogId: string }>();
@@ -20,6 +22,7 @@ export default function UpdateBlog() {
     formState: { errors },
     reset,
     control,
+    setValue,
   } = useForm<Blogs>({ defaultValues: data });
 
   const { data: vehicles, isLoading } = useGetCarsQuery({ page: 1, limit: 10 });
@@ -28,6 +31,18 @@ export default function UpdateBlog() {
   const [modalType, setModalType] = useState<"single" | "gallery">("single");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (data) {
+      (Object.keys(data) as (keyof Blogs)[]).forEach((key) => {
+        setValue(key, data[key]);
+      });
+      setSelectedImage(data.cover_image || null);
+      const imagePaths =
+        data.images?.map((img: ArticleImage) => img.path) || [];
+      setGalleryImages(imagePaths);
+    }
+  }, [data, setValue]);
 
   const handleImageSelect = (url: string | string[]) => {
     if (modalType === "single" && typeof url === "string") {
@@ -128,17 +143,19 @@ export default function UpdateBlog() {
             <label className="block text-sm font-medium text-gray-700">
               Bo'lim nomi
             </label>
-            <input
-              type="text"
-              {...register("category", {
-                required: "Bo'lim nomi majburiy",
-              })}
+            <select
+              {...register("category")}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
-            />
+            >
+              <option value="">Tanlang</option>
+              {articles.map((blog) => (
+                <option key={blog.value} value={blog.value}>
+                  {blog.name}
+                </option>
+              ))}
+            </select>
             {errors.category && (
-              <span className="text-red-500 text-sm">
-                {errors.category.message}
-              </span>
+              <p className="text-red-500 text-sm">{errors.category.message}</p>
             )}
           </div>
 
@@ -207,18 +224,7 @@ export default function UpdateBlog() {
         <div className="col-span-1 flex flex-col gap-5">
           <div className="flex flex-col gap-2">
             <label className="block text-sm font-medium text-gray-700">
-              Ma'lumotlarni saqlash
-              <button
-                type="submit"
-                className="w-full mt-1 text-base bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
-                Saqlash
-              </button>
-            </label>
-          </div>
-          <div className="flex flex-col gap-2">
-            <label className="block text-sm font-medium text-gray-700">
-              Avtomobil rasmini qo'shish
+              Blog rasmini qo'shish
               <button
                 type="button"
                 onClick={() => {
@@ -232,8 +238,8 @@ export default function UpdateBlog() {
             </label>
             {selectedImage && (
               <div className="mb-4 relative w-full h-48">
-                <img
-                  src={`http://89.223.126.64:8080${selectedImage}`}
+                <Image
+                  src={`${selectedImage}`}
                   alt="Selected"
                   className="w-full h-full object-cover rounded-md"
                 />
@@ -248,14 +254,14 @@ export default function UpdateBlog() {
           </div>
           <div className="flex flex-col gap-2">
             <label className="block text-sm font-medium text-gray-700">
-              Avtomobil galleryasini qo'shish
+              Blog galleryasini qo'shish
               <button
                 type="button"
                 onClick={() => {
                   setModalType("gallery");
                   setIsModalOpen(true);
                 }}
-                className="w-full px-4 py-2 text-base bg-green-600 text-white rounded-md hover:bg-green-700 mt-1"
+                className="w-full px-4 py-2 text-base bg-blue-600 text-white rounded-md hover:bg-blue-700 mt-1"
               >
                 Rasm tanlang
               </button>
@@ -264,8 +270,8 @@ export default function UpdateBlog() {
               <div className="grid grid-cols-4 gap-4 mt-4">
                 {galleryImages.map((url, index) => (
                   <div key={index} className="relative">
-                    <img
-                      src={`http://89.223.126.64:8080${url}`}
+                    <Image
+                      src={`${url}`}
                       alt={`Gallery ${index}`}
                       className="w-full h-32 object-cover rounded-md"
                     />
@@ -280,6 +286,17 @@ export default function UpdateBlog() {
                 ))}
               </div>
             )}
+          </div>
+          <div className="flex flex-col gap-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Ma'lumotlarni saqlash
+              <button
+                type="submit"
+                className="w-full mt-1 text-base bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
+              >
+                Saqlash
+              </button>
+            </label>
           </div>
         </div>
       </form>

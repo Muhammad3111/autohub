@@ -268,14 +268,7 @@ export default function AddSpareParts() {
         </div>
 
         {/* Right Panel - Image upload */}
-        <div className="col-span-1 flex flex-col gap-4 mt-6">
-          <button
-            type="submit"
-            className="w-full mt-1 text-base bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            Saqlash
-          </button>
-
+        <div className="col-span-1 flex flex-col gap-4">
           <div>
             <label className="text-sm font-medium">Asosiy rasm</label>
             <button
@@ -309,7 +302,7 @@ export default function AddSpareParts() {
             <label className="text-sm font-medium">Gallery rasmlar</label>
             <button
               type="button"
-              className="w-full px-4 py-2 text-base bg-green-600 text-white rounded-md hover:bg-green-700 mt-1"
+              className="w-full px-4 py-2 text-base bg-blue-600 text-white rounded-md hover:bg-blue-700 mt-1"
               onClick={() => {
                 setModalType("gallery");
                 setIsModalOpen(true);
@@ -337,6 +330,15 @@ export default function AddSpareParts() {
               </div>
             )}
           </div>
+          <label className="block text-sm font-medium text-gray-700">
+            Ma'lumotlarni saqlash
+            <button
+              type="submit"
+              className="w-full mt-1 text-base bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
+            >
+              Saqlash
+            </button>
+          </label>
         </div>
       </form>
     </div>

@@ -49,6 +49,8 @@ import HomeLayout from "../layout/HomeLayout";
 import UpdateSpareParts from "../adminComponents/spareparts/UpdateSparePart";
 import Compare from "../pages/compare/Compare";
 import Collaborators from "../pages/admin/collaborators/Collaborators";
+import UpdateBlog from "../adminComponents/posts/UpdateBlog";
+import Ratings from "../pages/ratings/Ratings";
 
 const Router = () => {
   return (
@@ -65,6 +67,7 @@ const Router = () => {
         <Route path="/cars/parametrs/:id" element={<Parametrs />} />
         <Route path="/spare-parts" element={<SpareParts />} />
         <Route path="/spare-parts/:id" element={<SpareId />} />
+        <Route path="/ratings" element={<Ratings />} />
         <Route path="/services" element={<Services />} />
         <Route path="/dealers" element={<Dealers />} />
         <Route path="/dealers/:id" element={<DealerId />} />
@@ -115,6 +118,7 @@ const Router = () => {
         <Route path="spare-parts/categories" element={<SpareCategories />} />
         <Route path="posts" element={<Posts />} />
         <Route path="posts/add" element={<AddBlog />} />
+        <Route path="posts/update/:blogId" element={<UpdateBlog />} />
         <Route path="users" element={<Users />} />
         <Route path="test-drive" element={<TestDrive />} />
         <Route path="comments" element={<Comments />} />

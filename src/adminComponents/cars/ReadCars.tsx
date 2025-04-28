@@ -55,7 +55,7 @@ export default function ReadCars() {
       </div>
 
       {/* Mashinalar ro'yxati */}
-      <div className="flex flex-col gap-4"> 
+      <div className="flex flex-col gap-4">
         <div className="h-[60vh] overflow-y-auto scrollbar-thin flex items-center justify-center">
           <div className="grid grid-cols-4 gap-4 w-full">
             {isLoading ? (
@@ -93,6 +93,9 @@ export default function ReadCars() {
                       <div className="flex items-end gap-2">
                         <Rating rating={car.rating || 0} />{" "}
                         <sup>{car.rating}+Reviews</sup>
+                      </div>
+                      <div>
+                        <p className="line-clamp-3">{car.description_uz}</p>
                       </div>
                     </div>
                     <div className="flex items-center justify-between">

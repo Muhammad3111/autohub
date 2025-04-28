@@ -1,3 +1,4 @@
+import { WorkplaceItem } from "../../adminComponents/collaborators/ReadColl";
 import { apiSlice } from "../../app/api/apiSlice";
 
 type Collobrators = {
@@ -6,7 +7,7 @@ type Collobrators = {
     total_pages: number;
     current_page: number;
   };
-  items: [];
+  items: WorkplaceItem[];
 };
 
 export const collobratorsApi = apiSlice.injectEndpoints({

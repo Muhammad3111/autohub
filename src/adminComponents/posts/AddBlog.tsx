@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import { useGetCarsQuery } from "../../features/cars/carSlice";
 import { useAddBlogMutation } from "../../features/blogs/blogs";
 import Select from "react-select";
+import Image from "../../components/image/Image";
+import { articles } from "../../mock/data.json";
 
 export default function AddBlog() {
   const {
@@ -121,17 +123,21 @@ export default function AddBlog() {
             <label className="block text-sm font-medium text-gray-700">
               Bo'lim nomi
             </label>
-            <input
-              type="text"
+            <select
               {...register("category", {
-                required: "Bo'lim nomi majburiy",
+                required: "Bo'limni tanlash majburiy",
               })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
-            />
+            >
+              <option value="">Tanlang</option>
+              {articles.map((blog) => (
+                <option key={blog.value} value={blog.value}>
+                  {blog.name}
+                </option>
+              ))}
+            </select>
             {errors.category && (
-              <span className="text-red-500 text-sm">
-                {errors.category.message}
-              </span>
+              <p className="text-red-500 text-sm">{errors.category.message}</p>
             )}
           </div>
 
@@ -200,18 +206,7 @@ export default function AddBlog() {
         <div className="col-span-1 flex flex-col gap-5">
           <div className="flex flex-col gap-2">
             <label className="block text-sm font-medium text-gray-700">
-              Ma'lumotlarni saqlash
-              <button
-                type="submit"
-                className="w-full mt-1 text-base bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
-                Saqlash
-              </button>
-            </label>
-          </div>
-          <div className="flex flex-col gap-2">
-            <label className="block text-sm font-medium text-gray-700">
-              Avtomobil rasmini qo'shish
+              Blog rasmini qo'shish
               <button
                 type="button"
                 onClick={() => {
@@ -225,8 +220,8 @@ export default function AddBlog() {
             </label>
             {selectedImage && (
               <div className="mb-4 relative w-full h-48">
-                <img
-                  src={`http://89.223.126.64:8080${selectedImage}`}
+                <Image
+                  src={`${selectedImage}`}
                   alt="Selected"
                   className="w-full h-full object-cover rounded-md"
                 />
@@ -241,14 +236,14 @@ export default function AddBlog() {
           </div>
           <div className="flex flex-col gap-2">
             <label className="block text-sm font-medium text-gray-700">
-              Avtomobil galleryasini qo'shish
+              Blog galleryasini qo'shish
               <button
                 type="button"
                 onClick={() => {
                   setModalType("gallery");
                   setIsModalOpen(true);
                 }}
-                className="w-full px-4 py-2 text-base bg-green-600 text-white rounded-md hover:bg-green-700 mt-1"
+                className="w-full px-4 py-2 text-base bg-blue-600 text-white rounded-md hover:bg-blue-700 mt-1"
               >
                 Rasm tanlang
               </button>
@@ -257,8 +252,8 @@ export default function AddBlog() {
               <div className="grid grid-cols-4 gap-4 mt-4">
                 {galleryImages.map((url, index) => (
                   <div key={index} className="relative">
-                    <img
-                      src={`http://89.223.126.64:8080${url}`}
+                    <Image
+                      src={`${url}`}
                       alt={`Gallery ${index}`}
                       className="w-full h-32 object-cover rounded-md"
                     />
@@ -273,6 +268,17 @@ export default function AddBlog() {
                 ))}
               </div>
             )}
+          </div>
+          <div className="flex flex-col gap-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Ma'lumotlarni saqlash
+              <button
+                type="submit"
+                className="w-full mt-1 text-base bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
+              >
+                Saqlash
+              </button>
+            </label>
           </div>
         </div>
       </form>

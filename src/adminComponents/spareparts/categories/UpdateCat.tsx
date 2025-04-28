@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useUpdateSpareCatMutation } from "../../../features/spare-parts/spare-categories";
 import { toast } from "react-toastify";
 import React from "react";
+import { IoClose } from "react-icons/io5";
 
 type Categories = {
   id: number | null;
@@ -43,11 +44,19 @@ export default function UpdateCategory({
         <label className="block text-sm font-medium text-gray-700">
           Bo'lim nomi
         </label>
-        <input
-          type="text"
-          {...register("title_uz", { required: "Rang majburiy" })}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
-        />
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            {...register("title_uz", { required: "Rang majburiy" })}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
+          />
+          <button
+            onClick={() => setChangeComponent(false)}
+            className="bg-primary text-white p-2 border-2 rounded-md"
+          >
+            <IoClose className="text-2xl" />
+          </button>
+        </div>
         {errors.title_uz && (
           <span className="text-red-500 text-sm">
             {errors.title_uz.message}
