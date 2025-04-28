@@ -1,131 +1,133 @@
 {
-  "navbar": {
-    "enter": "Войти",
-    "partner": "Партнёр",
-    "app-download": "Скачать",
-    "search": "Поиск",
-    "compare": "Сравнить"
-  },
-  "auth-form": {
-    "enter-your-phone-number": "Введите ваш номер телефона",
-    "send-sms-code": "Мы отправим код подтверждения по SMS",
-    "get-code": "Получить код",
-    "enter-sms-code": "Введите SMS-код",
-    "otp-code-sent": "Код был отправлен на ваш телефон",
-    "resend-otp-code": "Отправить код повторно",
-    "waiting-otp-code": "Повторная отправка кода возможна через",
-    "second": "секунд",
-    "cancel": "Отменить",
-    "submit": "Подтвердить",
-    "sign-up": "Регистрация",
-    "please-full-information": "Пожалуйста, заполните ваши данные",
-    "enter-your-firstname": "Введите ваше имя",
-    "firstname": "Имя",
-    "enter-your-lastname": "Введите вашу фамилию",
-    "lastname": "Фамилия",
-    "optional": "Необязательно",
-    "select-role": "Выберите роль",
-    "sign-up-submit": "Зарегистрироваться",
-    "enter-workplace-name": "Название места работы",
-    "for-example": "Например",
-    "work-phone": "Рабочий телефон",
-    "staff-role": "Дилер",
-    "user-role": "Пользователь",
-    "sending": "Отправляется",
-    "phone-number-required": "Введите номер телефона"
-  },
-  "home-page": {
-    "all-brands": "Все бренды",
-    "sales-ranking": "Популярные продажи",
-    "overall-list": "Общий список",
-    "check-the": "Проверить",
-    "popular-ranking": "Популярные",
-    "new-cars": "Новые автомобили",
-    "news": "Новости",
-    "expert-review": "Обзор экспертов",
-    "tips": "Советы",
-    "useful-content": "Полезный контент",
-    "customer-stories": "Истории клиентов",
-    "test-drives": "Тест-драйвы",
-    "brands-not-found": "Бренды не найдены",
-    "blogs-not-found": "Блоги для этой категории не найдены.",
-    "brand-electricity": "Электрический",
-    "brand-sedan": "Седан",
-    "brand-suv": "Внедорожник",
-    "brand-mpv": "Минивэн",
-    "brand-sport-car": "Спортивный автомобиль",
-    "brand-micro-van": "Микро фургон",
-    "brand-van": "Фургон",
-    "brand-light-passenger": "Лёгковой пассажирский",
-    "brand-all": "Все",
-    "higher-than": "выше чем",
-    "less-than": "ниже чем"
-  },
-  "cars-page": {
-    "header-title": "Автомобили",
-    "corpus": "Кузов",
-    "types": "типы",
-    "most-popular": "Самые популярные",
-    "car-brands": "Автомобильные бренды",
-    "see-all-brands": "Смотреть все бренды",
-    "highest-rating": "С высоким рейтингом",
-    "car-not-found": "Автомобили не найдены"
-  },
-  "dealer-page": {
-    "header-title": "Дилеры",
-    "dealer-not-found": "Дилеры не найдены"
-  },
-  "spare-parts-page": {
-    "header-title": "Запасные части",
-    "types": "типы",
-    "most-popular": "Самые популярные",
-    "spare-part-brands": "Бренды запчастей",
-    "see-all-brands": "Смотреть все бренды",
-    "highest-rating": "С высоким рейтингом",
-    "spare-parts-not-found": "Запасные части не найдены"
-  },
-  "news-page": {
-    "header-title": "Новости",
-    "news-not-found": "Новости не найдены"
-  },
-  "about-page": {
-    "header-title": "О нас",
-    "our-partners": "Наши партнеры"
-  },
-  "contact-page": {
-    "header-title": "Контакты",
-    "we-love-to-help": "Мы любим помогать",
-    "we-are-always-ready": "Мы всегда готовы помочь вам наилучшим образом.",
-    "firstname": "Имя",
-    "lastname": "Фамилия",
-    "email": "Ваш email",
-    "phone-number": "Номер телефона",
-    "message": "Введите сообщение",
-    "send-message": "Отправить"
-  },
-  "sidebar": {
-    "home": "Главная",
-    "cars": "Автомобили",
-    "dealers": "Дилеры",
-    "services": "Сервисы",
-    "spare-parts": "Запасные части",
-    "ratings": "Рейтинги",
-    "news": "Новости",
-    "about-us": "О нас",
-    "contact": "Контакты"
-  },
-  "loading": "Загрузка",
-  "information": "Информация",
-  "all": "Все",
-  "not-found": "Данные не найдены",
-  "price": "Цена",
-  "classfication": "Классификация",
-  "Ranking": [
-    { "title": "Самые продаваемые", "value": "most_sold" },
-    { "title": "Новые автомобили", "value": "new_cars" },
-    { "title": "Популярные автомобили", "value": "popular_cars" }
-  ],
-  "Warnings": {
-    "info_change_date": "Данные получены на основе общеотраслевых объемов продаж и обновляются 10-го числа каждого месяца."
-  }
+    "navbar": {
+        "enter": "Войти",
+        "partner": "Партнёр",
+        "app-download": "Скачать",
+        "search": "Поиск",
+        "compare": "Сравнить"
+    },
+    "auth-form": {
+        "enter-your-phone-number": "Введите ваш номер телефона",
+        "send-sms-code": "Мы отправим код подтверждения по SMS",
+        "get-code": "Получить код",
+        "enter-sms-code": "Введите SMS-код",
+        "otp-code-sent": "Код был отправлен на ваш телефон",
+        "resend-otp-code": "Отправить код повторно",
+        "waiting-otp-code": "Повторная отправка кода возможна через",
+        "second": "секунд",
+        "cancel": "Отменить",
+        "submit": "Подтвердить",
+        "sign-up": "Регистрация",
+        "please-full-information": "Пожалуйста, заполните ваши данные",
+        "enter-your-firstname": "Введите ваше имя",
+        "firstname": "Имя",
+        "enter-your-lastname": "Введите вашу фамилию",
+        "lastname": "Фамилия",
+        "optional": "Необязательно",
+        "select-role": "Выберите роль",
+        "sign-up-submit": "Зарегистрироваться",
+        "enter-workplace-name": "Название места работы",
+        "for-example": "Например",
+        "work-phone": "Рабочий телефон",
+        "staff-role": "Дилер",
+        "user-role": "Пользователь",
+        "sending": "Отправляется",
+        "phone-number-required": "Введите номер телефона"
+    },
+    "home-page": {
+        "all-brands": "Все бренды",
+        "sales-ranking": "Популярные продажи",
+        "overall-list": "Общий список",
+        "check-the": "Проверить",
+        "popular-ranking": "Популярные",
+        "new-cars": "Новые автомобили",
+        "news": "Новости",
+        "expert-review": "Обзор экспертов",
+        "tips": "Советы",
+        "useful-content": "Полезный контент",
+        "customer-stories": "Истории клиентов",
+        "test-drives": "Тест-драйвы",
+        "brands-not-found": "Бренды не найдены",
+        "blogs-not-found": "Блоги для этой категории не найдены.",
+        "brand-electricity": "Электрический",
+        "brand-sedan": "Седан",
+        "brand-suv": "Внедорожник",
+        "brand-mpv": "Минивэн",
+        "brand-sport-car": "Спортивный автомобиль",
+        "brand-micro-van": "Микро фургон",
+        "brand-van": "Фургон",
+        "brand-light-passenger": "Лёгковой пассажирский",
+        "brand-all": "Все",
+        "higher-than": "выше чем",
+        "less-than": "ниже чем"
+    },
+    "cars-page": {
+        "header-title": "Автомобили",
+        "corpus": "Кузов",
+        "types": "типы",
+        "most-popular": "Самые популярные",
+        "car-brands": "Автомобильные бренды",
+        "see-all-brands": "Смотреть все бренды",
+        "highest-rating": "С высоким рейтингом",
+        "car-not-found": "Автомобили не найдены"
+    },
+    "dealer-page": {
+        "header-title": "Дилеры",
+        "dealer-not-found": "Дилеры не найдены"
+    },
+    "spare-parts-page": {
+        "header-title": "Запасные части",
+        "types": "типы",
+        "most-popular": "Самые популярные",
+        "spare-part-brands": "Бренды запчастей",
+        "see-all-brands": "Смотреть все бренды",
+        "highest-rating": "С высоким рейтингом",
+        "spare-parts-not-found": "Запасные части не найдены"
+    },
+    "news-page": {
+        "header-title": "Новости",
+        "news-not-found": "Новости не найдены"
+    },
+    "about-page": {
+        "header-title": "О нас",
+        "our-partners": "Наши партнеры",
+        "why-we-are": "Почему мы специалисты!",
+        "why-choose-us": "Почему выбирают нас?"
+    },
+    "contact-page": {
+        "header-title": "Контакты",
+        "we-love-to-help": "Мы любим помогать",
+        "we-are-always-ready": "Мы всегда готовы помочь вам наилучшим образом.",
+        "firstname": "Имя",
+        "lastname": "Фамилия",
+        "email": "Ваш email",
+        "phone-number": "Номер телефона",
+        "message": "Введите сообщение",
+        "send-message": "Отправить"
+    },
+    "sidebar": {
+        "home": "Главная",
+        "cars": "Автомобили",
+        "dealers": "Дилеры",
+        "services": "Сервисы",
+        "spare-parts": "Запасные части",
+        "ratings": "Рейтинги",
+        "news": "Новости",
+        "about-us": "О нас",
+        "contact": "Контакты"
+    },
+    "loading": "Загрузка",
+    "information": "Информация",
+    "all": "Все",
+    "not-found": "Данные не найдены",
+    "price": "Цена",
+    "classfication": "Классификация",
+    "Ranking": [
+        { "title": "Самые продаваемые", "value": "most_sold" },
+        { "title": "Новые автомобили", "value": "new_cars" },
+        { "title": "Популярные автомобили", "value": "popular_cars" }
+    ],
+    "Warnings": {
+        "info_change_date": "Данные получены на основе общеотраслевых объемов продаж и обновляются 10-го числа каждого месяца."
+    }
 }
