@@ -1,20 +1,10 @@
 import { Navigate, useLocation, useParams } from "react-router-dom";
 import Header from "../../../components/header/Header";
-
-type DealerIdType = {
-    id: string;
-    img: string;
-    title: string;
-    workplace_name: string;
-    mainBrands: string;
-    electricity: string;
-    landsite: string;
-    created_at: string;
-};
+import Image from "../../../components/image/Image";
 
 const DealerId = () => {
     const location = useLocation();
-    const state = location.state as DealerIdType;
+    const state = location.state as DealersType;
     const { id } = useParams<{ id: string }>();
 
     if (state?.id !== id) {
@@ -25,8 +15,11 @@ const DealerId = () => {
         <div>
             <Header title={state.workplace_name} />
             {state?.id === id && (
-                <div className='mt-20'>
-                    <img src={state.img} alt='' />
+                <div className='mt-20 p-10 shadow-md bg-white flex items-center justify-between gap-20'>
+                    <div className='w-full h-[380px]'></div>
+                    <div className='w-full h-[380px]'>
+                        <Image src={state.avatar} alt='' />
+                    </div>
                 </div>
             )}
         </div>
