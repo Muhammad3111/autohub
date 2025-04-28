@@ -19,6 +19,7 @@ const Search = () => {
     const [inputValue, setInputValue] = useState("");
     const [isFocused, setIsFocused] = useState<boolean>(false);
     const { setSelected } = context;
+    const [customLoading, setCustomLoading] = useState(false);
 
     const [searchTrigger, { data, isLoading }] = useLazyGetSearchDataQuery();
     const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
@@ -27,12 +28,21 @@ const Search = () => {
     const resultsRef = useRef<HTMLDivElement>(null);
 
     const handleClickOutside = (e: MouseEvent) => {
-        if (
-            inputRef.current &&
-            !inputRef.current.contains(e.target as Node) &&
-            resultsRef.current &&
-            !resultsRef.current.contains(e.target as Node)
-        ) {
+        const input = inputRef.current;
+        const results = resultsRef.current;
+
+        if (input && results) {
+            if (
+                !input.contains(e.target as Node) &&
+                !results.contains(e.target as Node)
+            ) {
+                setIsFocused(false);
+            }
+        } else if (input) {
+            if (!input.contains(e.target as Node)) {
+                setIsFocused(false);
+            }
+        } else {
             setIsFocused(false);
         }
     };
@@ -44,8 +54,15 @@ const Search = () => {
         };
     }, []);
 
+    useEffect(() => {
+        if (!isLoading) {
+            setCustomLoading(false);
+        }
+    }, [isLoading]);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
+        setCustomLoading(true);
 
         if (timer) {
             clearTimeout(timer);
@@ -55,6 +72,7 @@ const Search = () => {
             if (e.target.value.trim().length) {
                 searchTrigger({ query: e.target.value, page: 1, type: null });
             }
+            setCustomLoading(false);
         }, 3000);
 
         setTimer(newTimer);
@@ -85,9 +103,8 @@ const Search = () => {
                     onFocus={() => setIsFocused(true)}
                     className='w-full h-10 px-4 focus:outline-none text-black border-2 border-primary'
                 />
-
                 {!isFocused && inputValue === "" && (
-                    <div className='absolute top-0 left-4 w-full h-full flex text-gray-500 items-center justify-start pointer-events-none'>
+                    <div className='absolute top-0 left-4 right-0 h-full flex text-gray-500 items-center justify-start pointer-events-none'>
                         <Typewriter
                             options={{
                                 strings: [
@@ -116,7 +133,7 @@ const Search = () => {
                 )}
             </div>
 
-            {isLoading && inputValue.trim().length > 0 && (
+            {customLoading && inputValue.trim().length > 0 && (
                 <div className='absolute top-full left-0 w-full bg-white border-2 border-primary shadow-lg mt-1 z-10 p-2 text-center text-gray-500'>
                     {t("loading")}...
                 </div>
@@ -125,7 +142,7 @@ const Search = () => {
             {data &&
                 data.length === 0 &&
                 inputValue.trim().length > 0 &&
-                !isLoading && (
+                !customLoading && (
                     <div className='absolute top-full left-0 w-full bg-white border-2 border-primary shadow-lg mt-1 z-10 p-2 text-center text-gray-500'>
                         {t("not-found")}
                     </div>
@@ -133,7 +150,7 @@ const Search = () => {
 
             {data &&
                 data.length > 0 &&
-                !isLoading &&
+                !customLoading &&
                 inputValue.trim().length > 0 &&
                 isFocused && (
                     <div

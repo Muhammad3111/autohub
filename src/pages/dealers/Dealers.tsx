@@ -7,10 +7,13 @@ import Loading from "../../components/loading/Loading";
 import { FiClock } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import { formatDateTime } from "../../hooks/useFormatDateTime";
-// import DealerImg from "../../assets/dealer-default-img.png";
+import Image from "../../components/image/Image";
 
 const Dealers = () => {
-    const { data: dealers, isLoading } = useGetDealersQuery({ page: 1 });
+    const { data: dealers, isLoading } = useGetDealersQuery({
+        page: 1,
+        type: "dealer"
+    });
     const { t } = useTranslation();
 
     if (isLoading) return <p>{t("loading")}...</p>;
@@ -33,7 +36,7 @@ const Dealers = () => {
                                     key={item.id}
                                     className='w-full bg-white p-5 hover:bg-primary hover:bg-opacity-5 border hover:border-primary duration-150 flex gap-8 relative'
                                 >
-                                    <img
+                                    <Image
                                         src={item.avatar}
                                         alt={item.workplace_name}
                                         className='h-[150px] object-cover'

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Context } from "../../context/Context";
 import { collection } from "../../mock/data.json";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,6 @@ const CarTypes = () => {
     const context = useContext(Context);
     const navigate = useNavigate();
     const { t } = useTranslation();
-    const [isHovering, setIsHovering] = useState("");
 
     if (!context) {
         throw new Error(
@@ -36,20 +35,14 @@ const CarTypes = () => {
                             navigate(`/cars/${item.title}`);
                         }}
                         key={index}
-                        className='flex flex-col items-center gap-1'
-                        onMouseEnter={() => setIsHovering(item.value)}
-                        onMouseLeave={() => setIsHovering("")}
+                        className='flex flex-col items-center gap-1 group'
                     >
                         <img
-                            src={
-                                isHovering === item.value
-                                    ? item.icon.hover
-                                    : item.icon.white
-                            }
+                            src={item.icon.white}
                             alt=''
                             className='w-32 h-20 object-cover'
                         />
-                        <p className='text-dark uppercase'>
+                        <p className='text-dark uppercase group-hover:text-primary duration-150'>
                             {t(`home-page.brand-${item.value}`)}
                         </p>
                     </button>
