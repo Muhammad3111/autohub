@@ -17,9 +17,13 @@ const UserLikedCars = () => {
     return (
         <div className='w-full h-full border border-[#ccc] rounded-md p-10 flex flex-wrap gap-10'>
             <div className='grid grid-cols-4 gap-4'>
-                {likedCars?.map((car) => (
-                    <CardCar key={car.id} vehicle={car} />
-                ))}
+                {likedCars?.length ? (
+                    likedCars?.map((car) => (
+                        <CardCar key={car.id} vehicle={car} />
+                    ))
+                ) : (
+                    <h2>{t("not-found")}</h2>
+                )}
             </div>
         </div>
     );
