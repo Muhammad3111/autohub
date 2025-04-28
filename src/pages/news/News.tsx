@@ -12,6 +12,7 @@ import Image from "../../components/image/Image";
 import VideoPlayer from "../../utility/videoPlayer/VideoPlayer";
 import Loading from "../../components/loading/Loading";
 
+
 const SpareParts = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const articlesData: Articles[] = articles;
