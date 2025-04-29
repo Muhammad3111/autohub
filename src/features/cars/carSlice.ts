@@ -30,6 +30,7 @@ export const carsApi = apiSlice.injectEndpoints({
         vehicle_type?: string;
         price_gt?: number;
         price_lt?: number;
+        model?: string;
       }
     >({
       query: ({
@@ -39,10 +40,19 @@ export const carsApi = apiSlice.injectEndpoints({
         vehicle_type,
         price_gt,
         price_lt,
+        model,
       }) => ({
         url: "/vehicles/filters",
         method: "GET",
-        params: { page, name_uz, brand, vehicle_type, price_gt, price_lt },
+        params: {
+          page,
+          name_uz,
+          brand,
+          vehicle_type,
+          price_gt,
+          price_lt,
+          model,
+        },
       }),
       providesTags: ["CAR"],
     }),
@@ -85,6 +95,7 @@ export const carsApi = apiSlice.injectEndpoints({
 export const {
   useAddCarMutation,
   useGetCarsQuery,
+  useLazyGetCarsQuery,
   useGetCarByIdQuery,
   useGetCarByIdsQuery,
   useUpdateCarMutation,

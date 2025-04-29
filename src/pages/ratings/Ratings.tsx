@@ -130,7 +130,7 @@ const Ratings = () => {
   const { data: carsData, isLoading } = useGetCarsQuery({
     page: currentPage,
   });
-  const { data: news } = useGetBlogsByCategoryQuery({ category: "info_data" });
+  const { data: news } = useGetBlogsByCategoryQuery({ category: "news" });
   const { t } = useTranslation();
 
   const totalPages = carsData?.metadata?.total_pages || 1;

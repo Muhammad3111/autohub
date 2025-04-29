@@ -2,6 +2,7 @@ import { Element, scroller } from "react-scroll";
 import { useState } from "react";
 import { useGetComparisonsQuery } from "../../features/compare/compare";
 import Image from "../../components/image/Image";
+import TreeSelectComponent from "../../utility/treeSelect/TreeSelectComponent";
 
 // Types
 
@@ -57,7 +58,6 @@ export default function Compare() {
   };
 
   if (isLoading) return <h1>Loading...</h1>;
-  console.log(data);
 
   const carParam: CarObjects[] = data || [];
   // Grouping configurations by category name and merging values across cars
@@ -136,6 +136,9 @@ export default function Compare() {
                     </p>
                   </div>
                 ))}
+                <div className="border border-gray-300 px-4 py-2 flex flex-col items-center bg-white">
+                  <TreeSelectComponent />
+                </div>
               </div>
 
               {/* Har bir konfiguratsiya blok */}

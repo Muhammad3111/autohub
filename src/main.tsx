@@ -9,6 +9,7 @@ import { store } from "./app/store.ts";
 import { BrowserRouter } from "react-router-dom";
 import { ContextProvider } from "./context/Context.tsx";
 
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ContextProvider>
