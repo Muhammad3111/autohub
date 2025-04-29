@@ -12,6 +12,7 @@ import InfoCard from "../../components/infoCard/InfoCard";
 import { useGetBlogsByCategoryQuery } from "../../features/blogs/blogs";
 import Loading from "../../components/loading/Loading";
 
+
 const RankingsCard = memo(
   ({ data, rank }: { data: CarObject; rank: number }) => {
     const rankColor =
