@@ -92,31 +92,31 @@ const Search = () => {
     return (
         <form
             onSubmit={handleSubmit}
-            className='flex items-center w-[550px] relative'
+            className="flex items-center w-[550px] relative"
         >
-            <div className='w-full relative'>
+            <div className="w-full relative">
                 <input
                     ref={inputRef}
-                    type='text'
+                    type="text"
                     value={inputValue}
                     onChange={handleChange}
                     onFocus={() => setIsFocused(true)}
-                    className='w-full h-10 px-4 focus:outline-none text-black border-2 border-primary'
+                    className="w-full h-10 px-4 focus:outline-none text-black border-2 border-primary"
                 />
                 {!isFocused && inputValue === "" && (
-                    <div className='absolute top-0 left-4 right-0 h-full flex text-gray-500 items-center justify-start pointer-events-none'>
+                    <div className="absolute top-0 left-4 right-0 h-full flex text-gray-500 items-center justify-start pointer-events-none">
                         <Typewriter
                             options={{
                                 strings: [
                                     "Onix",
                                     "Tracker",
                                     "Malibu",
-                                    "Equinox"
+                                    "Equinox",
                                 ],
                                 autoStart: true,
                                 loop: true,
                                 delay: 75,
-                                deleteSpeed: 50
+                                deleteSpeed: 50,
                             }}
                         />
                     </div>
@@ -124,7 +124,7 @@ const Search = () => {
 
                 {inputValue.trim().length > 0 && (
                     <FiX
-                        className='absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer text-primary'
+                        className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer text-primary"
                         onClick={() => {
                             setInputValue("");
                             setIsFocused(false);
@@ -134,35 +134,35 @@ const Search = () => {
             </div>
 
             {customLoading && inputValue.trim().length > 0 && (
-                <div className='absolute top-full left-0 w-full bg-white border-2 border-primary shadow-lg mt-1 z-10 p-2 text-center text-gray-500'>
+                <div className="absolute top-full left-0 w-full bg-white border-2 border-primary shadow-lg mt-1 z-10 p-2 text-center text-gray-500">
                     {t("loading")}...
                 </div>
             )}
 
             {data &&
-                data.length === 0 &&
+                data.items.length === 0 &&
                 inputValue.trim().length > 0 &&
                 !customLoading && (
-                    <div className='absolute top-full left-0 w-full bg-white border-2 border-primary shadow-lg mt-1 z-10 p-2 text-center text-gray-500'>
+                    <div className="absolute top-full left-0 w-full bg-white border-2 border-primary shadow-lg mt-1 z-10 p-2 text-center text-gray-500">
                         {t("not-found")}
                     </div>
                 )}
 
             {data &&
-                data.length > 0 &&
+                data.items.length > 0 &&
                 !customLoading &&
                 inputValue.trim().length > 0 &&
                 isFocused && (
                     <div
                         ref={resultsRef}
-                        className='absolute top-full left-0 w-full bg-white border-2 border-primary shadow-lg mt-1 z-10'
+                        className="absolute top-full left-0 w-full bg-white border-2 border-primary shadow-lg mt-1 z-10"
                     >
-                        {data.map(
+                        {data.items.map(
                             (item: any) =>
                                 item && (
                                     <div
                                         key={item.id}
-                                        className='p-2 hover:bg-gray-200 cursor-pointer'
+                                        className="p-2 hover:bg-gray-200 cursor-pointer"
                                         onClick={() =>
                                             handleItemClick(
                                                 item.name_uz || item.title_uz
@@ -177,8 +177,8 @@ const Search = () => {
                 )}
 
             <button
-                type='submit'
-                className='bg-primary active:bg-primary-hover duration-150 text-white h-10 px-2'
+                type="submit"
+                className="bg-primary active:bg-primary-hover duration-150 text-white h-10 px-2"
             >
                 {t("navbar.search")}
             </button>

@@ -133,5 +133,9 @@
     ],
     "Warnings": {
         "info_change_date": "Ma'lumotlar sanoatning keng qamrovli savdo hajmidan olingan va har oyning 10-kunida yangilanadi."
+    },
+    "search-page": {
+        "search-not-found": "Biz siz qidirayotgan narsani topa olmadik",
+        "search-other": "Qidirilayotgan narsa nomida xatolik yoki bizda hali bunday narsa bo'lmasligi mumkin"
     }
 }
