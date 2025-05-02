@@ -3,10 +3,10 @@ import Header from "../../components/header/Header";
 import { useEffect, useState } from "react";
 import {
     useGetSearchDataQuery,
-    useLazyGetSearchDataQuery,
+    useLazyGetSearchDataQuery
 } from "../../features/search/search";
 import Image from "../../components/image/Image";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Rating from "../../utility/rating/Rating";
 
 interface SearchDataTabs {
@@ -71,8 +71,8 @@ const RankingsCard = ({ data, rank, type }: RankingsCardProps) => {
     }
 
     return (
-        <div className="flex justify-between items-center cursor-pointer hover:bg-white hover:border hover:border-gray-200 border border-transparent p-2 duration-300">
-            <div className="flex items-center gap-5">
+        <div className='flex justify-between items-center cursor-pointer hover:bg-white hover:border hover:border-gray-200 border border-transparent p-2 duration-300'>
+            <div className='flex items-center gap-5'>
                 <div
                     className={`ranking-sales ${rankColor} w-5 h-6 flex items-center justify-center text-sm`}
                 >
@@ -82,26 +82,26 @@ const RankingsCard = ({ data, rank, type }: RankingsCardProps) => {
                     src={image}
                     alt={title}
                     width={120}
-                    className="border h-20 object-cover"
+                    className='border h-20 object-cover'
                 />
             </div>
 
-            <div className="text-center">
+            <div className='text-center'>
                 <h2>{title}</h2>
-                {price !== null && <p className="text-primary">{price} $</p>}
-                {year !== null && <p className="text-black">{year}</p>}
+                {price !== null && <p className='text-primary'>{price} $</p>}
+                {year !== null && <p className='text-black'>{year}</p>}
 
                 {type === "vehicle" && (
-                    <div className="flex items-center gap-4">
+                    <div className='flex items-center gap-4'>
                         <Link
                             to={`/cars/parametrs/${id}`}
-                            className="hover:text-primary duration-150"
+                            className='hover:text-primary duration-150'
                         >
                             konfiguratsiya
                         </Link>
                         <Link
                             to={`/cars/gallery${id}`}
-                            className="hover:text-primary duration-150"
+                            className='hover:text-primary duration-150'
                         >
                             rasmlar
                         </Link>
@@ -109,8 +109,8 @@ const RankingsCard = ({ data, rank, type }: RankingsCardProps) => {
                 )}
             </div>
 
-            <div className="flex flex-col gap-2">
-                <h2 className="text-xl">{rating}</h2>
+            <div className='flex flex-col gap-2'>
+                <h2 className='text-xl'>{rating}</h2>
                 <Rating rating={rating} setRating={setRating} readonly={true} />
             </div>
 
@@ -129,7 +129,7 @@ const RankingsCard = ({ data, rank, type }: RankingsCardProps) => {
                         : `/${type}/${id}`
                 }
                 state={data}
-                className="bg-primary text-white p-2 text-sm hover:bg-primary-hover duration-150"
+                className='bg-primary text-white p-2 text-sm hover:bg-primary-hover duration-150'
             >
                 {t("home-page.check-the")}
             </Link>
@@ -139,7 +139,12 @@ const RankingsCard = ({ data, rank, type }: RankingsCardProps) => {
 
 const SearchData = () => {
     const { t } = useTranslation();
-    const searchText = "b";
+
+    const location = useLocation();
+
+    const queryParams = new URLSearchParams(location.search);
+    const searchText = queryParams.get("query") || "";
+
     const [selectedTab, setSelectedTab] = useState<
         "article" | "dealer" | "vehicle" | "spare_part" | "service"
     >("vehicle");
@@ -147,29 +152,29 @@ const SearchData = () => {
     const tabs: SearchDataTabs[] = [
         {
             title: t("sidebar.cars"),
-            value: "vehicle",
+            value: "vehicle"
         },
         {
             title: t("sidebar.dealers"),
-            value: "dealer",
+            value: "dealer"
         },
         {
             title: t("sidebar.services"),
-            value: "service",
+            value: "service"
         },
         {
             title: t("sidebar.news"),
-            value: "article",
+            value: "article"
         },
         {
             title: t("sidebar.spare-parts"),
-            value: "spare_part",
-        },
+            value: "spare_part"
+        }
     ];
 
     const { data: searchTabs } = useGetSearchDataQuery({
         page: 1,
-        query: searchText,
+        query: searchText
     });
     const [searchTrigger, { data: searchData, isFetching }] =
         useLazyGetSearchDataQuery();
@@ -186,17 +191,17 @@ const SearchData = () => {
                 {
                     type: selectedTab,
                     page: 1,
-                    query: searchText.toLowerCase(),
+                    query: searchText.toLowerCase()
                 },
                 true
             );
         }
-    }, [selectedTab]);
+    }, [selectedTab, searchText]);
 
     return (
-        <div className="mt-20">
+        <div className='mt-20'>
             <Header title={t("navbar.search")} />
-            <div className="w-full py-5 border-b flex items-center gap-5">
+            <div className='w-full py-5 border-b flex items-center gap-5'>
                 {tabs.map((item, index) => (
                     <button
                         key={index}
@@ -209,15 +214,15 @@ const SearchData = () => {
                         onClick={() => setSelectedTab(item.value)}
                     >
                         {item.title}
-                        <div className="w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center text-xs">
+                        <div className='w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center text-xs'>
                             {searchTabs?.metadata?.[item.value]}
                         </div>
                     </button>
                 ))}
             </div>
 
-            <div className="w-full min-h-[500px] bg-white mt-5 shadow-sm">
-                <div className="w-full h-full p-10">
+            <div className='w-full min-h-[500px] bg-white mt-5 shadow-sm'>
+                <div className='w-full h-full p-10'>
                     {filterData?.length ? (
                         filterData.map((item, inx) => (
                             <RankingsCard
@@ -228,12 +233,12 @@ const SearchData = () => {
                             />
                         ))
                     ) : (
-                        <p className="text-xl">{t("not-found")}</p>
+                        <p className='text-xl'>{t("not-found")}</p>
                     )}
                 </div>
                 {isFetching && (
-                    <div className="w-full flex items-center justify-center">
-                        <div className="w-16 h-16 border-4 border-solid rounded-full border-primary border-t-transparent animate-spin"></div>
+                    <div className='w-full flex items-center justify-center'>
+                        <div className='w-16 h-16 border-4 border-solid rounded-full border-primary border-t-transparent animate-spin'></div>
                     </div>
                 )}
             </div>
