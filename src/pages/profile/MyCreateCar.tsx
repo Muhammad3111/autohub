@@ -2,12 +2,27 @@ import { useState } from "react";
 import AddCar from "../../adminComponents/cars/AddCar";
 import { useGetDealerCarsQuery } from "../../features/auth/authApiSlice";
 
+import CardCar from "../../components/card/CardCar";
+
 const MyCars = () => {
-    const { data } = useGetDealerCarsQuery({ page: 1 });
+    const { data, isLoading } = useGetDealerCarsQuery({ page: 1 });
 
-    console.log(data);
+    const dealerCarsData = data as CarObject[];
 
-    return <div>My Cars</div>;
+    return (
+        <div className='w-full mt-5 grid grid-cols-3 gap-5 justify-items-center bg-light relative'>
+            {dealerCarsData &&
+                dealerCarsData.map((item) => (
+                    <CardCar key={item.id} vehicle={item} />
+                ))}
+
+            {isLoading && (
+                <div className='w-full col-span-3 flex items-center justify-center h-[500px]'>
+                    <div className='w-16 h-16 border-4 border-solid rounded-full border-primary border-t-transparent animate-spin mx-auto'></div>
+                </div>
+            )}
+        </div>
+    );
 };
 
 const MyCreateCar = () => {
