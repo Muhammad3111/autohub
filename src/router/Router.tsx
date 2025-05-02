@@ -51,6 +51,7 @@ import Compare from "../pages/compare/Compare";
 import Collaborators from "../pages/admin/collaborators/Collaborators";
 import UpdateBlog from "../adminComponents/posts/UpdateBlog";
 import Ratings from "../pages/ratings/Ratings";
+import InfoData from "../pages/infoData/InfoData";
 
 const Router = () => {
   return (
@@ -79,6 +80,7 @@ const Router = () => {
         <Route path="/not-found" element={<NotFound />} />
         <Route path="/brands" element={<UserBrands />} />
         <Route path="/compare" element={<Compare />} />
+        <Route path="/informations" element={<InfoData />} />
         <Route
           path="/profile"
           element={

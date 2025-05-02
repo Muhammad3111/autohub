@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { MdEdit } from "react-icons/md";
-import { BsTrash } from "react-icons/bs";
 import Pagination from "../../utility/pagination/Pagination";
 import { useDebounce } from "../../utility/hooks/useDebounce";
 import { useTranslation } from "react-i18next";
 import Image from "../../components/image/Image";
 import { useGetCollaboratorsQuery } from "../../features/collobarators/collobarators";
+import {
+  IoCheckmarkDoneOutline,
+  IoCheckmarkOutline,
+  IoCloseOutline,
+} from "react-icons/io5";
+import { useUpdateStaffMutation } from "../../features/auth/authApiSlice";
+import { toast } from "react-toastify";
 
 export type WorkplaceItem = {
   workplace_name: string;
@@ -36,13 +41,19 @@ type UserType = {
   status: "active" | "inactive" | string;
 };
 
+type ActiveType = {
+  staff_id: string;
+  status: string;
+  type: string;
+};
+
 const ReadColl = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const { t } = useTranslation();
   // 🔹 Debounced qidiruv (500ms kechikish bilan)
   const debouncedSearch = useDebounce(searchQuery, 500);
-
+  const [updateStaff] = useUpdateStaffMutation();
   // 🔹 Ma’lumotlarni olish (paginatsiya bilan)
   const { data, isLoading } = useGetCollaboratorsQuery({
     page: 1,
@@ -61,6 +72,21 @@ const ReadColl = () => {
   const filteredData = users.filter((item) =>
     item.user.first_name.toLowerCase().includes(debouncedSearch.toLowerCase())
   );
+
+  const handleChangeStatus = async ({ staff_id, status, type }: ActiveType) => {
+    try {
+      await updateStaff({ staff_id, status });
+      toast.success(
+        `${
+          type === "dealer"
+            ? "Diller actvilashtirildi"
+            : "Servis aktivlashtirildi"
+        }`
+      );
+    } catch (error) {
+      toast.error(`Xatolik: ${error}`);
+    }
+  };
 
   return (
     <div className="px-4">
@@ -117,11 +143,35 @@ const ReadColl = () => {
                     {item.address}
                   </td>
                   <td className="px-4 py-2 text-center">
-                    <button className="text-blue-500 text-xl">
-                      <MdEdit />
+                    <button
+                      onClick={() =>
+                        handleChangeStatus({
+                          staff_id: item.id,
+                          status: "active",
+                          type: item.stype,
+                        })
+                      }
+                      className={`text-blue-500 text-xl mr-2 ${
+                        item.is_verified ? "bg-green-400" : "hover:bg-green-400"
+                      } rounded-full p-1 group duration-150`}
+                    >
+                      {item.is_verified ? (
+                        <IoCheckmarkDoneOutline className="text-white" />
+                      ) : (
+                        <IoCheckmarkOutline className="text-green-600 group-hover:text-white duration-150" />
+                      )}
                     </button>
-                    <button className="text-red-500 text-xl">
-                      <BsTrash />
+                    <button
+                      onClick={() =>
+                        handleChangeStatus({
+                          staff_id: item.id,
+                          status: "cancelled",
+                          type: item.stype,
+                        })
+                      }
+                      className="text-red-500 text-xl hover:bg-red-400 group duration-150 rounded-full p-1"
+                    >
+                      <IoCloseOutline className="text-primary group-hover:text-white" />
                     </button>
                   </td>
                 </tr>

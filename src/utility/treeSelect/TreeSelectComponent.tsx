@@ -1,144 +1,202 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
-import { useGetBrandsQuery } from "../../features/brands/brands"; // <-- Lazy query kerak
+import { useState } from "react";
+import { useGetBrandsQuery } from "../../features/brands/brands";
 import { useLazyGetCarsQuery } from "../../features/cars/carSlice";
-// loading uchun simple spinner component
+import Image from "../../components/image/Image";
+import { useAddComparisonMutation } from "../../features/compare/compare";
 
 const TreeSelectComponent = () => {
   const { data: brandData, isLoading: brandsLoading } = useGetBrandsQuery({
     page: 1,
   });
+  const [getCars, { isFetching: carsLoading }] = useLazyGetCarsQuery();
 
-  const [loadCars, { isFetching: carsLoading }] = useLazyGetCarsQuery({}); // lazy fetch cars
-  const [brands, setBrands] = useState<any[]>([]);
-  const [models, setModels] = useState<any[]>([]);
-  const [cars, setCars] = useState<any[]>([]);
-
+  const [open, setOpen] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState<any>(null);
-  const [selectedModel, setSelectedModel] = useState<any>(null);
+  const [selectedModel, setSelectedModel] = useState<string | null>(null);
   const [selectedCar, setSelectedCar] = useState<any>(null);
+  const [addComparisons] = useAddComparisonMutation();
+  const [models, setModels] = useState<string[]>([]);
+  const [cars, setCars] = useState<CarObject[]>([]);
 
-  useEffect(() => {
-    if (brandData?.items) {
-      setBrands(brandData.items);
-    }
-  }, [brandData]);
-
-  const handleBrandSelect = async (brand: any) => {
+  const handleBrandSelect = async (brand: Brand) => {
     setSelectedBrand(brand);
     setSelectedModel(null);
     setSelectedCar(null);
-    setModels([]);
     setCars([]);
+    setModels([]);
 
-    // brand tanlanganda cars olib model unique qilamiz
-    const { data } = await loadCars({ page: 1, brand: brand.name });
+    const { data } = await getCars({ page: 1, brand: brand.name });
     if (data?.items) {
-      const modelsList = Array.from(
-        new Set(data.items.map((car: any) => car.model))
-      ).map((model) => ({
-        model,
-      }));
-      setModels(modelsList);
+      const uniqueModels = Array.from(
+        new Set(data.items.map((car: CarObject) => car.model))
+      );
+      setModels(uniqueModels);
     }
   };
 
-  const handleModelSelect = async (modelName: string) => {
-    setSelectedModel(modelName);
+  const handleModelSelect = async (model: string) => {
+    setSelectedModel(model);
     setSelectedCar(null);
     setCars([]);
 
-    const { data } = await loadCars({
+    const { data } = await getCars({
       page: 1,
       brand: selectedBrand.name,
-      model: modelName,
+      model,
     });
     if (data?.items) {
       setCars(data.items);
     }
   };
 
-  const handleCarSelect = (car: any) => {
+  const handleReset = () => {
+    setSelectedBrand(null);
+    setSelectedModel(null);
+    setSelectedCar(null);
+    setCars([]);
+    setModels([]);
+  };
+
+  const handleCarSelect = async (car: CarObject) => {
     setSelectedCar(car);
+    setOpen(false); // close dropdown
+    await addComparisons([car.id || ""]);
+    handleReset();
+  };
+
+  const resetModel = () => {
+    setSelectedModel(null);
+    setSelectedCar(null);
+    setCars([]);
+  };
+
+  const resetBrand = () => {
+    setSelectedBrand(null);
+    setSelectedModel(null);
+    setSelectedCar(null);
+    setModels([]);
+    setCars([]);
   };
 
   return (
-    <div className="p-4 space-y-4">
-      {/* Brand tanlash */}
-      <div>
-        <h4>Brand tanlang</h4>
-        {brandsLoading ? (
-          <h1>Loading...</h1>
-        ) : (
-          <ul className="border rounded p-2">
-            {brands.map((brand) => (
-              <li
-                key={brand.id}
-                onClick={() => handleBrandSelect(brand)}
-                className="cursor-pointer p-2 hover:bg-gray-100"
-              >
-                {brand.name}
-              </li>
-            ))}
-          </ul>
+    <div className="relative w-80">
+      {/* Dropdown toggle */}
+      <div
+        onClick={() => setOpen((prev) => !prev)}
+        className="border px-4 py-2 bg-white rounded cursor-pointer flex justify-between items-center"
+      >
+        <span className="truncate">
+          {selectedCar
+            ? selectedCar.name_uz || selectedCar.name_ru || selectedCar.model
+            : "Avtomobil tanlang"}
+        </span>
+
+        {selectedCar && (
+          <span
+            onClick={(e) => {
+              e.stopPropagation(); // dropdown ochilishini to‘xtatamiz
+              handleReset();
+            }}
+            className="ml-2 text-gray-400 hover:text-red-500 cursor-pointer"
+          >
+            ✕
+          </span>
         )}
       </div>
+      {/* Dropdown content */}
+      {open && (
+        <div className="absolute mt-2 z-50 bg-white border shadow-md rounded w-full max-h-96 overflow-auto p-2 space-y-2">
+          {/* Header */}
+          <div className="flex gap-2 text-sm text-gray-600 border-b pb-2 items-center flex-wrap">
+            {selectedBrand && (
+              <span
+                onClick={resetBrand}
+                className="flex items-center gap-1 hover:text-red-700 cursor-pointer"
+              >
+                <button className="text-red-500">←</button>
+                {selectedBrand.name}
+              </span>
+            )}
+            {selectedModel && (
+              <span
+                onClick={resetModel}
+                className="flex items-center gap-1 hover:text-red-700 cursor-pointer"
+              >
+                <button className="text-red-500">←</button>
+                {selectedModel}
+              </span>
+            )}
+          </div>
 
-      {/* Model tanlash */}
-      {selectedBrand && (
-        <div>
-          <h4>Model tanlang</h4>
-          {carsLoading ? (
-            <h1>Loading...</h1>
-          ) : models.length > 0 ? (
-            <ul className="border rounded p-2">
-              {models.map((model) => (
-                <li
-                  key={model.model}
-                  onClick={() => handleModelSelect(model.model)}
-                  className="cursor-pointer p-2 hover:bg-gray-100"
+          {/* Level: Brand */}
+          {!selectedBrand && !brandsLoading && (
+            <div className="max-h-64 overflow-y-auto">
+              {brandData?.items?.map((brand: Brand) => (
+                <div
+                  key={brand.id}
+                  onClick={() => handleBrandSelect(brand)}
+                  className="p-2 hover:bg-gray-100 cursor-pointer flex gap-2 items-center"
                 >
-                  {model.model}
-                </li>
+                  <Image src={brand.image} width={20} alt={brand.name} />
+                  {brand.name}
+                </div>
               ))}
-            </ul>
-          ) : (
-            <div>Model mavjud emas</div>
+            </div>
           )}
-        </div>
-      )}
 
-      {/* Car tanlash */}
-      {selectedModel && (
-        <div>
-          <h4>Avtomobil tanlang</h4>
-          {carsLoading ? (
-            <h1>Loading...</h1>
-          ) : cars.length > 0 ? (
-            <ul className="border rounded p-2">
-              {cars.map((car) => (
-                <li
-                  key={car.id}
-                  onClick={() => handleCarSelect(car)}
-                  className="cursor-pointer p-2 hover:bg-gray-100"
-                >
-                  {car.name_uz || car.name_ru || car.model}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <div>Avtomobil topilmadi</div>
+          {/* Level: Model */}
+          {selectedBrand && !selectedModel && (
+            <>
+              {carsLoading ? (
+                <div className="text-center py-4">Yuklanmoqda...</div>
+              ) : (
+                <div className="max-h-64 overflow-y-auto">
+                  {models.length > 0 ? (
+                    models.map((model) => (
+                      <div
+                        key={model}
+                        onClick={() => handleModelSelect(model)}
+                        className="p-2 hover:bg-gray-100 cursor-pointer"
+                      >
+                        {model}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center">
+                      <h1 className="text-sm">Modellar topilmadi</h1>
+                    </div>
+                  )}
+                </div>
+              )}
+            </>
           )}
-        </div>
-      )}
 
-      {/* Tanlangan car */}
-      {selectedCar && (
-        <div className="mt-4 p-4 bg-gray-100 rounded">
-          <h4 className="font-bold">Tanlangan Avtomobil:</h4>
-          <div>Model: {selectedCar.model}</div>
-          <div>Yili: {selectedCar.year}</div>
-          <div>Transmission: {selectedCar.transmission}</div>
+          {/* Level: Cars */}
+          {selectedModel && (
+            <>
+              {carsLoading ? (
+                <div className="text-center py-4">Yuklanmoqda...</div>
+              ) : (
+                <div className="max-h-64 overflow-y-auto">
+                  {cars.length > 0 ? (
+                    cars.map((car: CarObject) => (
+                      <div
+                        key={car.id}
+                        onClick={() => handleCarSelect(car)}
+                        className="p-2 hover:bg-gray-100 cursor-pointer"
+                      >
+                        {car.name_uz || car.name_ru || car.model}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center">
+                      <h1 className="text-sm">Avtomobillar topilmadi</h1>
+                    </div>
+                  )}
+                </div>
+              )}
+            </>
+          )}
         </div>
       )}
     </div>

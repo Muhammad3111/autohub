@@ -11,7 +11,7 @@ export default function InfoCard(props: Blogs) {
     return `${day}.${month}.${year}`;
   };
   return (
-    <div className="group flex flex-col gap-4 col-span-1 border px-4 py-8 shadow-md relative">
+    <div className="group flex flex-col gap-4 col-span-1 border px-4 py-8 shadow-md relative col-span-1">
       <h1 className="text-primary text-2xl line-clamp-3 text-center">
         {props.title_uz}
       </h1>

@@ -8,10 +8,7 @@ import { useTranslation } from "react-i18next";
 import { Context } from "../../context/Context";
 import Header from "../../components/header/Header";
 import Rating from "../../utility/rating/Rating";
-import InfoCard from "../../components/infoCard/InfoCard";
-import { useGetBlogsByCategoryQuery } from "../../features/blogs/blogs";
 import Loading from "../../components/loading/Loading";
-
 
 const RankingsCard = memo(
   ({ data, rank }: { data: CarObject; rank: number }) => {
@@ -131,7 +128,7 @@ const Ratings = () => {
   const { data: carsData, isLoading } = useGetCarsQuery({
     page: currentPage,
   });
-  const { data: news } = useGetBlogsByCategoryQuery({ category: "news" });
+
   const { t } = useTranslation();
 
   const totalPages = carsData?.metadata?.total_pages || 1;
@@ -144,8 +141,6 @@ const Ratings = () => {
     title: string;
     value: string;
   }[];
-
-  const blogs: Blogs[] = news?.items || [];
 
   if (isLoading) {
     return <Loading />;
@@ -190,11 +185,18 @@ const Ratings = () => {
         </div>
 
         <div className="flex-1 flex flex-col gap-4">
-          {blogs
-            .filter((blog) => blog.category === "news")
-            .map((blog) => (
-              <InfoCard key={blog.id} {...blog} />
-            ))}
+          <div className="shadow-lg p-4 flex flex-col gap-4 border">
+            <h1 className="text-xl">
+              Sizga uzbekistonda qaysi avtomobil eng ko'p sotilayotgani haqidagi
+              ma'lumotlar kerakmi?
+            </h1>
+            <Link
+              to={"/informations"}
+              className="text-lg text-white py-2 px-4 bg-primary w-full hover:bg-primary/80 duration-300 text-center"
+            >
+              Batafsil
+            </Link>
+          </div>
         </div>
       </div>
     </div>

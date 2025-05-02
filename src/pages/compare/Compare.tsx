@@ -1,8 +1,13 @@
 import { Element, scroller } from "react-scroll";
 import { useState } from "react";
-import { useGetComparisonsQuery } from "../../features/compare/compare";
+import {
+  useDeleteComparisonMutation,
+  useGetComparisonsQuery,
+} from "../../features/compare/compare";
 import Image from "../../components/image/Image";
 import TreeSelectComponent from "../../utility/treeSelect/TreeSelectComponent";
+import { IoMdClose } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 // Types
 
@@ -46,7 +51,8 @@ type CarObjects = {
 export default function Compare() {
   const { data, isLoading } = useGetComparisonsQuery({});
   const [activeCategory, setActiveCategory] = useState<string | null>("cat0");
-
+  const [deleteCar] = useDeleteComparisonMutation();
+  const navigate = useNavigate();
   const handleScrollToCategory = (id: string) => {
     setActiveCategory(id);
     scroller.scrollTo(id, {
@@ -78,6 +84,10 @@ export default function Compare() {
       });
     });
   });
+
+  const handleDeleteCar = async (id: string) => {
+    await deleteCar(id);
+  };
 
   return (
     <div className="flex h-screen">
@@ -123,20 +133,27 @@ export default function Compare() {
                 {carParam.map((car) => (
                   <div
                     key={car.id}
-                    className="border border-gray-300 px-4 py-2 flex flex-col items-center bg-white"
+                    className="border border-gray-300 px-4 py-2 flex flex-col gap-2 items-center bg-white"
                   >
+                    <div className="flex justify-end w-full">
+                      <button onClick={() => handleDeleteCar(car.id)}>
+                        <IoMdClose className="hover:text-primary duration-300" />
+                      </button>
+                    </div>
                     <Image
                       src={car.cover_image}
                       alt={car.name_uz}
-                      className="w-full h-32 object-cover rounded mb-1"
+                      className="w-full h-32 object-cover rounded"
                     />
-                    <h3 className="text-sm font-semibold">{car.name_uz}</h3>
-                    <p className="text-xs text-gray-600">
-                      {car.price} {car.currency}
-                    </p>
+                    <div className="flex items-center justify-between w-full">
+                      <h3 className="text-sm font-semibold">{car.name_uz}</h3>
+                      <p className="text-lg text-primary">
+                        {car.price} {car.currency}
+                      </p>
+                    </div>
                   </div>
                 ))}
-                <div className="border border-gray-300 px-4 py-2 flex flex-col items-center bg-white">
+                <div className="border border-gray-300 px-4 py-2 flex flex-col items-center justify-center bg-white">
                   <TreeSelectComponent />
                 </div>
               </div>
@@ -148,7 +165,6 @@ export default function Compare() {
               >
                 {Array.from(groupedConfigs.entries()).map(
                   ([configName, keyMap], idx) => (
-
                     <Element key={idx} name={`cat${idx}`}>
                       <h2 className="text-xl font-semibold bg-primary/50 px-4 py-2 text-black">
                         {configName}
@@ -189,10 +205,17 @@ export default function Compare() {
           </div>
         </>
       ) : (
-        <div className="flex items-center justify-center w-full h-full">
+        <div className="flex flex-col gap-4 items-center justify-center w-full h-full">
           <h1 className="text-2xl font-semibold">
-            Hech qanday avtomobil topilmadi
+            Hech qanday avtomobil topilmadi Iltimos avtomobillar sahifasidan
+            biror bir avtomobilni tanlang
           </h1>
+          <button
+            onClick={() => navigate("/cars")}
+            className="text-lg p-2 w-full bg-primary text-white"
+          >
+            Avtomobillar sahifasiga o'tish
+          </button>
         </div>
       )}
       {/* Sidebar */}
