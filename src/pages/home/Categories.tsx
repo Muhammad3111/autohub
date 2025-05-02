@@ -130,8 +130,6 @@ const Categories = () => {
         return <h2>{t("loading")}...</h2>;
     }
 
-    console.log(carsData);
-
     return (
         <div>
             <div className='flex justify-between gap-20'>
