@@ -1,7 +1,12 @@
 import { useState } from "react";
 import AddCar from "../../adminComponents/cars/AddCar";
+import { useGetDealerCarsQuery } from "../../features/auth/authApiSlice";
 
 const MyCars = () => {
+    const { data } = useGetDealerCarsQuery({ page: 1 });
+
+    console.log(data);
+
     return <div>My Cars</div>;
 };
 
