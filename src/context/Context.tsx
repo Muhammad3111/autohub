@@ -19,7 +19,7 @@ type SelectedType = {
 };
 
 type CarContextProps = {
-  brands: string;
+  brand: string;
   setBrand: (brand: string) => void;
   model: string;
   setModel: (model: string) => void;
@@ -41,7 +41,7 @@ interface CarProviderProps {
 }
 
 export const ContextProvider: React.FC<CarProviderProps> = ({ children }) => {
-  const [brands, setBrand] = useState<string>(
+  const [brand, setBrand] = useState<string>(
     () => localStorage.getItem("brand") || ""
   );
 
@@ -71,8 +71,8 @@ export const ContextProvider: React.FC<CarProviderProps> = ({ children }) => {
 
   // localStorage'ni doimiy ravishda yangilash
   useEffect(() => {
-    localStorage.setItem("brand", brands);
-  }, [brands]);
+    localStorage.setItem("brand", brand);
+  }, [brand]);
 
   useEffect(() => {
     localStorage.setItem("model", model);
@@ -107,7 +107,7 @@ export const ContextProvider: React.FC<CarProviderProps> = ({ children }) => {
   return (
     <Context.Provider
       value={{
-        brands,
+        brand,
         setBrand,
         model,
         setModel,
