@@ -10,7 +10,7 @@ import Image from "../../components/image/Image";
 import { IoMdCall } from "react-icons/io";
 
 const Services = () => {
-    const { data } = useGetDealersQuery({ page: 1, staff_type: "service" });
+    const { data } = useGetDealersQuery({ page: 1, type: "service" });
     const { t } = useTranslation();
 
     return (
