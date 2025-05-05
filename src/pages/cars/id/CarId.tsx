@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   useGetCarByIdQuery,
   useGetCarsQuery,
@@ -131,12 +131,20 @@ export default function CarId() {
             </div>
             <div className="grid grid-cols-1 gap-2 w-full items-start">
               {car.images?.slice(0, 3).map((img, ind) => (
-                <div key={ind}>
+                <div key={ind} className="relative">
                   <Image
                     src={img}
                     alt={img}
                     className="w-full h-[110px] object-cover"
                   />
+                  {ind === 2 && car.images && car.images.length > 3 && (
+                    <Link
+                      to={`/cars/${car.name_uz}/gallery/${car.id}`}
+                      className="absolute inset-0 bg-black/60 flex items-center justify-center text-white text-lg font-semibold"
+                    >
+                      +{car.images.length - 3}
+                    </Link>
+                  )}
                 </div>
               ))}
             </div>

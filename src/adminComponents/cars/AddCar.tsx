@@ -92,7 +92,7 @@ export default function AddCar() {
 
   const vehicleType = collection.slice(1).map((type) => {
     return {
-      id: type.id,
+      id: type.title,
       name: type.title,
     };
   });

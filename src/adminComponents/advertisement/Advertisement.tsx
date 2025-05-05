@@ -3,7 +3,7 @@ import Button from "../../utility/button/Button";
 import { useState } from "react";
 import Modal from "../../utility/modal/Modal";
 import { toast } from "react-toastify";
-import { useAddBrandMutation } from "../../features/brands/brands";
+import { useAddAdsMutation } from "../../features/ads/ads";
 
 export default function AddAdvertisement() {
   const {
@@ -11,9 +11,9 @@ export default function AddAdvertisement() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<Brand>();
+  } = useForm<AdsType>();
 
-  const [addBrand] = useAddBrandMutation();
+  const [addAds] = useAddAdsMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"single" | "gallery">("single");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -28,14 +28,14 @@ export default function AddAdvertisement() {
   const handleRemoveMainImage = () => {
     setSelectedImage(null);
   };
-  const onSubmit: SubmitHandler<Brand> = async (data) => {
+  const onSubmit: SubmitHandler<AdsType> = async (data) => {
     if (selectedImage) {
-      data.image = selectedImage;
+      data.image_url = selectedImage;
     }
 
     try {
-      await addBrand(data);
-      toast.success("Brand muvaffaqiyatli qo'shildi");
+      await addAds(data);
+      toast.success("Reklama muvaffaqiyatli qo'shildi");
       reset();
       setSelectedImage(null);
     } catch (error) {
@@ -55,10 +55,7 @@ export default function AddAdvertisement() {
 
       <div className="flex justify-between items-center">
         <h1 className="text-2xl text-black">Brand Qo'shish</h1>
-        <Button
-          path="/admin/brands"
-          className="mt-0 flex items-center gap-2 px-5"
-        >
+        <Button path="/admin/ads" className="mt-0 flex items-center gap-2 px-5">
           Orqaga
         </Button>
       </div>
@@ -69,42 +66,37 @@ export default function AddAdvertisement() {
         <div className="col-span-2 grid grid-cols-4 gap-4">
           <div className="col-span-4">
             <label className="block text-sm font-medium text-gray-700">
-              Brand nomi
+              Reklama nomi
             </label>
             <input
               type="text"
-              {...register("name", { required: "Brnad nomi majburiy" })}
+              {...register("title", { required: "Reklama nomi majburiy" })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
             />
-            {errors.name && (
+            {errors.title && (
               <span className="text-red-500 text-sm">
-                {errors.name.message}
+                {errors.title.message}
               </span>
             )}
           </div>
           <div className="col-span-4">
             <label className="block text-sm font-medium text-gray-700">
-              Brand turi
+              Reklama linki
             </label>
-            <select
-              defaultValue={"vehicle"}
-              {...register("brand_type", { required: "Brnad turi majburiy" })}
+            <input
+              type="text"
+              {...register("url")}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
-            >
-              <option value="vehicle">Avtomobil</option>
-              <option value="spare_part">Ehtiyot qisim</option>
-            </select>
-            {errors.name && (
-              <span className="text-red-500 text-sm">
-                {errors.name.message}
-              </span>
+            />
+            {errors.url && (
+              <span className="text-red-500 text-sm">{errors.url.message}</span>
             )}
           </div>
         </div>
         <div className="col-span-1 flex flex-col gap-5">
           <div className="flex flex-col gap-2">
             <label className="block text-sm font-medium text-gray-700">
-              Brand rasmini qo'shish
+              Reklama rasmini qo'shish
               <button
                 type="button"
                 onClick={() => {
