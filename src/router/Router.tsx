@@ -52,6 +52,9 @@ import Collaborators from "../pages/admin/collaborators/Collaborators";
 import UpdateBlog from "../adminComponents/posts/UpdateBlog";
 import Ratings from "../pages/ratings/Ratings";
 import InfoData from "../pages/infoData/InfoData";
+import AddAdvertisement from "../adminComponents/advertisement/Advertisement";
+import Ads from "../pages/admin/ads/Ads";
+import Gallery from "../pages/cars/gallery/Gallery";
 
 const Router = () => {
   return (
@@ -66,6 +69,10 @@ const Router = () => {
         <Route path="/cars/3dmodel/panorama" element={<Panorama />} />
         <Route path="/cars/3dmodel/interier" element={<Interier />} />
         <Route path="/cars/parametrs/:id" element={<Parametrs />} />
+        <Route
+          path="/cars/:carsName/gallery/:galleryId"
+          element={<Gallery />}
+        />
         <Route path="/spare-parts" element={<SpareParts />} />
         <Route path="/spare-parts/:id" element={<SpareId />} />
         <Route path="/ratings" element={<Ratings />} />
@@ -105,6 +112,8 @@ const Router = () => {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="media" element={<Media />} />
         <Route path="media/add" element={<AddMedia />} />
+        <Route path="ads" element={<Ads />} />
+        <Route path="ads/add" element={<AddAdvertisement />} />
         <Route path="brands" element={<Brands />} />
         <Route path="brands/add" element={<AddBrand />} />
         <Route path="brands/update/:brandId" element={<UpdateBrand />} />

@@ -4,6 +4,7 @@ import Logo from "../../assets/autohub-logo.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IoCarSportOutline } from "react-icons/io5";
 import {
+  MdAdsClick,
   MdChecklistRtl,
   MdOutlinePermMedia,
   MdOutlineSpeakerNotes,
@@ -76,6 +77,17 @@ export default function Sidebar() {
         >
           <MdOutlinePermMedia className="text-2xl" />
           Media
+        </li>
+        <li
+          onClick={() => navigate("/admin/ads")}
+          className={`px-4 py-2 ${
+            location.pathname.includes("/admin/ads")
+              ? "bg-primary text-white"
+              : "bg-transparent text-black"
+          } text-base font-semibold w-full rounded cursor-pointer hover:bg-primary/50 hover:text-white duration-300 flex items-center gap-2`}
+        >
+          <MdAdsClick className="text-2xl" />
+          Reklamalar
         </li>
         <li
           onClick={() => navigate("/admin/brands")}
