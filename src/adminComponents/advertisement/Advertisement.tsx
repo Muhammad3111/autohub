@@ -92,6 +92,21 @@ export default function AddAdvertisement() {
               <span className="text-red-500 text-sm">{errors.url.message}</span>
             )}
           </div>
+          <div className="col-span-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Reklama ko'rsatuvchi sahifa
+            </label>
+            <input
+              type="text"
+              {...register("page")}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
+            />
+            {errors.page && (
+              <span className="text-red-500 text-sm">
+                {errors.page.message}
+              </span>
+            )}
+          </div>
         </div>
         <div className="col-span-1 flex flex-col gap-5">
           <div className="flex flex-col gap-2">

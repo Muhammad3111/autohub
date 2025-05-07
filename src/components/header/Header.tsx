@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import CarImage from "../../assets/login-car.webp";
 import { useTranslation } from "react-i18next";
 import Image from "../image/Image";
+import { useGetAdsQuery } from "../../features/ads/ads";
 
 type HeaderProps = {
   title: string;
@@ -11,12 +12,16 @@ type HeaderProps = {
 const Header = ({ title, image }: HeaderProps) => {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
+  const { data, isSuccess } = useGetAdsQuery({});
   const { t } = useTranslation();
 
   const formatBreadcrumbName = (name: string) => {
     if (name.length === 36) return "Ma'lumot";
     return decodeURIComponent(name);
   };
+
+  const ads: AdsType[] = data || [];
+  const currentPage = pathnames[pathnames.length - 1];
 
   return (
     <div className="mb-8 mt-20">
@@ -48,6 +53,23 @@ const Header = ({ title, image }: HeaderProps) => {
               );
             })}
           </nav>
+        </div>
+        <div>
+          {isSuccess ? (
+            ads
+              .filter((ad) => ad.page === currentPage)
+              .map((ad) => (
+                <Image
+                  key={ad.id}
+                  src={ad.image_url}
+                  width={800}
+                  alt={ad.title}
+                  className="h-32 object-cover"
+                />
+              ))
+          ) : (
+            <h1>Reklama yo'q...</h1>
+          )}
         </div>
         {image ? (
           <Image src={image} width={200} alt={title} />

@@ -309,5 +309,6 @@ declare type AdsType = {
   id?: number;
   title: string;
   url: string;
+  page: string;
   image_url: string;
 };
