@@ -52,9 +52,8 @@ export default function AddAdvertisement() {
           type={modalType}
         />
       )}
-
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl text-black">Brand Qo'shish</h1>
+        <h1 className="text-2xl text-black">Reklama Qo'shish</h1>
         <Button path="/admin/ads" className="mt-0 flex items-center gap-2 px-5">
           Orqaga
         </Button>
@@ -70,7 +69,9 @@ export default function AddAdvertisement() {
             </label>
             <input
               type="text"
-              {...register("title", { required: "Reklama nomi majburiy" })}
+              {...register("title", {
+                required: "Reklama nomi majburiy",
+              })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
             />
             {errors.title && (
@@ -90,21 +91,6 @@ export default function AddAdvertisement() {
             />
             {errors.url && (
               <span className="text-red-500 text-sm">{errors.url.message}</span>
-            )}
-          </div>
-          <div className="col-span-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Reklama ko'rsatuvchi sahifa
-            </label>
-            <input
-              type="text"
-              {...register("page")}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 border-2 p-2"
-            />
-            {errors.page && (
-              <span className="text-red-500 text-sm">
-                {errors.page.message}
-              </span>
             )}
           </div>
         </div>

@@ -16,7 +16,7 @@ const Header = ({ title, image }: HeaderProps) => {
   const { t } = useTranslation();
 
   const formatBreadcrumbName = (name: string) => {
-    if (name.length === 36) return "Ma'lumot";
+    if (name.length === 36) return t("information");
     return decodeURIComponent(name);
   };
 

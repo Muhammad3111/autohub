@@ -64,7 +64,11 @@ const Services = () => {
                                             ) => e.stopPropagation()}
                                         >
                                             <IoMdCall />
-                                            <p>Bepul konsultatsiya</p>
+                                            <p>
+                                                {t(
+                                                    "dealer-page.free-consultation"
+                                                )}
+                                            </p>
                                         </a>
                                     </div>
                                 </Link>
