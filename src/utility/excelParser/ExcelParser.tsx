@@ -35,14 +35,16 @@ const ExcelUploader: React.FC<ExcelUploaderProps> = ({
 
         // ✅ To‘g‘ri `header` berish
         const sheetData = xlsx.utils.sheet_to_json(worksheet, {
-          header: ["A", "B"], // 🔹 A -> ckey, B -> cvalue
+          header: ["A", "B", "C", "D"], // 🔹 A -> ckey, B -> cvalue
           range: 0, // 1-qatorni olib tashlamaymiz
-        }) as { A: string; B: string }[];
+        }) as { A: string; B: string; C: string; D: string }[];
         // ✅ Konsolda tekshirish uchun
 
         const parsedData: ConfigurationItem[] = sheetData.map((row) => ({
-          ckey: row.A?.toString() || "", // 🔹 A ustunni ckey sifatida olamiz
-          cvalue: row.B?.toString() || "", // 🔹 B ustunni cvalue sifatida olamiz
+          ckey_uz: row.A?.toString() || "", // 🔹 A ustunni ckey sifatida olamiz
+          cvalue_uz: row.B?.toString() || "",
+          ckey_ru: row.C?.toString() || "",
+          cvalue_ru: row.D?.toString() || "", // 🔹 A ustunni ckey sifatida olamiz           // 🔹 B ustunni cvalue sifatida olamiz
           category: sheetName, // 🔹 Sheet nomini category sifatida yozamiz
         }));
 

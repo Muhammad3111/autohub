@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useGetS3ObjectsQuery } from "../../features/media/mediaSlice";
-import Image from "../../components/image/Image";
 import FileUploader from "../file-uploader/FileUploader";
 import { useDebounce } from "../hooks/useDebounce";
+import ModelViewer from "../Model/Model";
 
 type ModalProps = {
   onClose: () => void;
@@ -21,7 +21,9 @@ const Modal: React.FC<ModalProps> = ({ onClose, onSelect, type }) => {
   const [prevTokens, setPrevTokens] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearch = useDebounce(searchTerm, 500);
-  const [sortOrder, setSortOrder] = useState<"newest" | "older">("newest");
+  const [sortOrder, setSortOrder] = useState<
+    "all" | "image" | "video" | "3d" | "other"
+  >("all");
 
   const { data } = useGetS3ObjectsQuery({
     bucket: "autohub",
@@ -31,15 +33,35 @@ const Modal: React.FC<ModalProps> = ({ onClose, onSelect, type }) => {
     search: debouncedSearch,
   });
 
-  const uploadedImages = useMemo(() => {
+  const uploadedFiles = useMemo(() => {
     const filtered = (data?.objects || []).filter((obj) =>
       obj.key.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    return filtered.sort((a, b) =>
-      sortOrder === "newest"
-        ? b.lastModified.localeCompare(a.lastModified)
-        : a.lastModified.localeCompare(b.lastModified)
-    );
+
+    const mapped = filtered.map((item: any) => {
+      const ext =
+        "." + item.key.toLowerCase().split(".").pop()?.split("?")[0] || "";
+
+      const isImage = /\.(jpe?g|png|webp|gif|bmp|svg|avif)$/i.test(ext);
+      const isVideo = /\.(mp4|mov|webm|avi|mkv)$/i.test(ext);
+      const is3DModel = /\.(glb|gltf|fbx|obj)$/i.test(ext);
+
+      let type: "image" | "video" | "3d" | "other" = "other";
+
+      if (isImage) type = "image";
+      else if (isVideo) type = "video";
+      else if (is3DModel) type = "3d";
+
+      return {
+        url: item.key,
+        lastModified: new Date(item.lastModified),
+        size: item.size,
+        type,
+      };
+    });
+
+    if (sortOrder === "all") return mapped;
+    return mapped.filter((item) => item.type === sortOrder);
   }, [data?.objects, searchTerm, sortOrder]);
 
   const handleNext = () => {
@@ -71,6 +93,8 @@ const Modal: React.FC<ModalProps> = ({ onClose, onSelect, type }) => {
     else if (type === "gallery") onSelect(selectedImages);
     onClose();
   };
+
+  const imageURL = import.meta.env.VITE_S3_PUBLIC_URL as string;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
@@ -121,36 +145,69 @@ const Modal: React.FC<ModalProps> = ({ onClose, onSelect, type }) => {
                 <select
                   value={sortOrder}
                   onChange={(e) =>
-                    setSortOrder(e.target.value as "newest" | "older")
+                    setSortOrder(
+                      e.target.value as
+                        | "all"
+                        | "image"
+                        | "video"
+                        | "3d"
+                        | "other"
+                    )
                   }
                   className="px-3 py-2 border rounded-md"
                 >
-                  <option value="newest">Yangi</option>
-                  <option value="older">Eski</option>
+                  <option value="all">Hammasi</option>
+                  <option value="image">Rasmlar</option>
+                  <option value="video">Videolar</option>
+                  <option value="3d">3D Modellar</option>
+                  <option value="other">Boshqa Fayllar</option>
                 </select>
               </div>
 
               {/* Media Grid */}
               <div className="grid grid-cols-4 md:grid-cols-5 gap-4">
-                {uploadedImages.map((item, index) => (
+                {uploadedFiles.map((item, index) => (
                   <div
                     key={index}
                     className={`relative border rounded-md overflow-hidden cursor-pointer ${
-                      selectedImages.includes(item.key) ||
-                      selectedImage === item.key
+                      selectedImages.includes(item.url) ||
+                      selectedImage === item.url
                         ? "border-blue-500"
                         : ""
                     }`}
-                    onClick={() => handleImageToggle(item.key)}
+                    onClick={() => handleImageToggle(item.url)}
                   >
-                    <Image
-                      src={item.key}
-                      alt={`Image ${index}`}
-                      className="w-full h-32 object-cover"
-                    />
-                    {(type === "single" && selectedImage === item.key) ||
+                    {item.type === "image" ? (
+                      <img
+                        src={`${imageURL}${item.url}`}
+                        alt={`Media ${index}`}
+                        width="200"
+                        height="160"
+                        loading="lazy"
+                        className="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    ) : item.type === "video" ? (
+                      <video
+                        src={`${imageURL}${item.url}`}
+                        controls
+                        className="w-full h-40 object-cover"
+                      />
+                    ) : item.type === "3d" ? (
+                      <div className="w-full h-40 flex items-center justify-center bg-black text-white text-sm px-2 text-center">
+                        <ModelViewer
+                          fileName={`${imageURL}${item.url}`}
+                          width={300}
+                          height={160}
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-full h-40 flex items-center justify-center bg-gray-100 text-gray-800 text-sm px-2 text-center">
+                        Fayl: {item.url.split("/").pop()}
+                      </div>
+                    )}
+                    {(type === "single" && selectedImage === item.url) ||
                     (type === "gallery" &&
-                      selectedImages.includes(item.key)) ? (
+                      selectedImages.includes(item.url)) ? (
                       <div className="absolute top-2 right-2 w-5 h-5 flex items-center justify-center text-white bg-green-500 rounded-full">
                         ✓
                       </div>

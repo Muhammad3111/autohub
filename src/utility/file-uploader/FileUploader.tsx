@@ -13,7 +13,7 @@ export default function FileUploader({ height = "55vh" }: { height?: string }) {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const newFiles = Array.from(event.target.files).filter((file) => {
-        if (file.size > 20 * 1024 * 1024) {
+        if (file.size > 120 * 1024 * 1024) {
           toast.error(`Fayl ${file.name} 20MB dan katta — qo‘shilmaydi.`);
           return false;
         }
@@ -22,6 +22,7 @@ export default function FileUploader({ height = "55vh" }: { height?: string }) {
 
       setFiles((prev) => [...prev, ...newFiles]);
       simulateProgress(newFiles);
+      event.target.value = "";
     }
   };
 
@@ -82,6 +83,10 @@ export default function FileUploader({ height = "55vh" }: { height?: string }) {
     fileInputRef.current?.click();
   };
 
+  const isImage = (type: string) => type.startsWith("image/");
+  const isVideo = (type: string) => type.startsWith("video/");
+  const is3DModel = (name: string) => /\.(glb|gltf|fbx|obj)$/i.test(name);
+
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div
@@ -89,7 +94,7 @@ export default function FileUploader({ height = "55vh" }: { height?: string }) {
         className="h-14 flex gap-4 items-center justify-center w-full border-2 border-dashed border-gray-700 rounded-lg shadow-lg cursor-pointer"
       >
         <p className="text-base font-semibold text-gray-400">
-          Fayl hajmi 20MB dan oshmasligi kerak.
+          Fayl hajmi 120MB dan oshmasligi kerak.
         </p>
         <button
           type="button"
@@ -108,37 +113,62 @@ export default function FileUploader({ height = "55vh" }: { height?: string }) {
       </div>
 
       <div className={`overflow-y-auto scrollbar-thin h-[${height}]`}>
-        <div className="mt-4 grid grid-cols-4 gap-4">
-          {files.map((file) => (
-            <div
-              key={file.name}
-              className="relative w-full h-32 bg-gray-200 overflow-hidden rounded-lg shadow"
-            >
-              <img
-                src={URL.createObjectURL(file)}
-                alt={file.name}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              <button
-                onClick={() => handleRemoveFile(file.name)}
-                className="absolute top-2 right-2 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center z-50"
+        <div className="mt-4 grid grid-cols-5 gap-4">
+          {files.map((file) => {
+            const fileURL = URL.createObjectURL(file);
+
+            return (
+              <div
+                key={file.name}
+                className="relative w-full h-44 bg-gray-200 overflow-hidden rounded-lg shadow"
               >
-                &times;
-              </button>
-              <div className="absolute inset-0 bg-black bg-opacity-50 flex items-end">
-                <div
-                  className="w-full bg-blue-600"
-                  style={{
-                    height: `${Math.min(uploadProgress[file.name] || 0, 100)}%`,
-                    transition: "height 0.2s",
-                  }}
-                />
-                <span className="absolute bottom-2 left-2 text-white font-bold z-10">
-                  {Math.min(uploadProgress[file.name] || 0, 100).toFixed(0)}%
-                </span>
+                {isImage(file.type) ? (
+                  <img
+                    src={fileURL}
+                    alt={file.name}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                ) : isVideo(file.type) ? (
+                  <video
+                    src={fileURL}
+                    controls
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                ) : is3DModel(file.name) ? (
+                  <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-black text-white text-sm">
+                    3D Fayl: {file.name}
+                  </div>
+                ) : (
+                  <div className="absolute inset-0 w-full h-full flex items-center justify-center text-sm bg-red-200 text-red-800">
+                    Fayl nomi: {file.name}
+                  </div>
+                )}
+
+                <button
+                  onClick={() => handleRemoveFile(file.name)}
+                  className="absolute top-2 right-2 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center z-50"
+                >
+                  &times;
+                </button>
+
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-end">
+                  <div
+                    className="w-full bg-blue-600/50"
+                    style={{
+                      height: `${Math.min(
+                        uploadProgress[file.name] || 0,
+                        100
+                      )}%`,
+                      transition: "height 0.2s",
+                    }}
+                  />
+                  <span className="absolute bottom-2 left-2 text-white font-bold z-10">
+                    {Math.min(uploadProgress[file.name] || 0, 100).toFixed(0)}%
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

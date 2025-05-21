@@ -3,6 +3,7 @@ import { useGetS3ObjectsQuery } from "../../features/media/mediaSlice";
 import DeleteMedia from "./DeleteMedia";
 import StorageManager from "./StorageManager";
 import { useDebounce } from "../../utility/hooks/useDebounce";
+import ModelViewer from "../../utility/Model/Model";
 
 const SkeletonCard = () => (
   <div className="w-full h-40 bg-gray-300 animate-pulse rounded-lg" />
@@ -39,14 +40,18 @@ const ReadMedia = () => {
     if (data?.objects) {
       const newItems = data.objects
         .map((item: any) => {
-          const ext = item.key.toLowerCase().split(".").pop();
-          let type: "image" | "video" | "other" = "other";
-          if (
-            ["jpg", "jpeg", "png", "webp", "gif", "svg", "avif"].includes(ext)
-          )
-            type = "image";
-          else if (["mp4", "mov", "webm", "avi", "mkv"].includes(ext))
-            type = "video";
+          const ext =
+            "." + item.key.toLowerCase().split(".").pop()?.split("?")[0] || "";
+
+          const isImage = /\.(jpe?g|png|webp|gif|bmp|svg|avif)$/i.test(ext);
+          const isVideo = /\.(mp4|mov|webm|avi|mkv)$/i.test(ext);
+          const is3DModel = /\.(glb|gltf|fbx|obj)$/i.test(ext);
+
+          let type: "image" | "video" | "3d" | "other" = "other";
+
+          if (isImage) type = "image";
+          else if (isVideo) type = "video";
+          else if (is3DModel) type = "3d";
 
           return {
             url: item.key,
@@ -55,12 +60,12 @@ const ReadMedia = () => {
             type,
           };
         })
+
         .filter(
           (newItem) =>
             !mediaList.some((existing) => existing.url === newItem.url)
         );
 
-      // ✅ MUHIM: Boshqa `mediaList`ga bog‘liq bo‘lmagan tarzda update qilamiz
       setMediaList((prev) => {
         const unique = newItems.filter(
           (newItem) => !prev.some((old) => old.url === newItem.url)
@@ -125,14 +130,31 @@ const ReadMedia = () => {
               key={item.url + index}
               className="border border-gray-300 rounded-lg overflow-hidden shadow-sm group relative"
             >
-              <img
-                src={`${imageURL}${item.url}`}
-                alt={`Media ${index}`}
-                width="200"
-                height="160"
-                loading="lazy"
-                className="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-105"
-              />
+              {item.type === "image" ? (
+                <img
+                  src={`${imageURL}${item.url}`}
+                  alt={`Media ${index}`}
+                  width="200"
+                  height="160"
+                  loading="lazy"
+                  className="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              ) : item.type === "video" ? (
+                <video
+                  src={`${imageURL}${item.url}`}
+                  controls
+                  className="w-full h-40 object-cover"
+                />
+              ) : item.type === "3d" ? (
+                <div className="w-full h-40 flex items-center justify-center bg-black text-white text-sm px-2 text-center">
+                  <ModelViewer fileName={`${imageURL}${item.url}`} width={300} height={160} />
+                </div>
+              ) : (
+                <div className="w-full h-40 flex items-center justify-center bg-gray-100 text-gray-800 text-sm px-2 text-center">
+                  Fayl: {item.url.split("/").pop()}
+                </div>
+              )}
+
               <DeleteMedia keyName={item.url} />
             </div>
           ))}

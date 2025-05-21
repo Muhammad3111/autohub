@@ -17,6 +17,7 @@ import ExcelUploader from "../../utility/excelParser/ExcelParser";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { collection } from "../../mock/data.json";
+import ModelViewer from "../../utility/Model/Model";
 
 const LoadingSkeleton = () => (
   <div className="flex flex-col gap-4 p-6">
@@ -56,6 +57,7 @@ export default function AddCar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"single" | "gallery">("single");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedModel, setSelectedModel] = useState<string | null>(null);
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
   const { pathname } = useLocation();
 
@@ -98,11 +100,23 @@ export default function AddCar() {
   });
 
   const handleImageSelect = (url: string | string[]) => {
+    const isImage = (file: string) =>
+      /\.(jpe?g|png|webp|gif|bmp|svg)$/i.test(file);
+    const is3DFile = (file: string) => /\.(glb|gltf|obj|fbx|usdz)$/i.test(file);
+
     if (modalType === "single" && typeof url === "string") {
-      setSelectedImage(url);
+      if (isImage(url)) {
+        setSelectedImage(url);
+      } else if (is3DFile(url)) {
+        setSelectedModel(url);
+      } else {
+        toast.warning(`Qullab quvatlanmaydigan file: ${url}`);
+      }
     } else if (Array.isArray(url)) {
-      setGalleryImages((prev) => [...prev, ...url]);
+      const validFiles = url.filter((item) => isImage(item) || is3DFile(item));
+      setGalleryImages((prev) => [...prev, ...validFiles]);
     }
+
     setIsModalOpen(false);
   };
 
@@ -112,6 +126,10 @@ export default function AddCar() {
 
   const handleRemoveMainImage = () => {
     setSelectedImage(null);
+  };
+
+  const handleRemoveModel = () => {
+    setSelectedModel(null);
   };
 
   const onSubmit: SubmitHandler<CarObject> = async (formData) => {
@@ -135,7 +153,7 @@ export default function AddCar() {
   if (isLoading) {
     return <LoadingSkeleton />;
   }
-
+  const imageURL = import.meta.env.VITE_S3_PUBLIC_URL as string;
   return (
     <div
       className={`flex flex-col gap-4 ${
@@ -271,12 +289,38 @@ export default function AddCar() {
               }}
               className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
             >
+              Model tanlang
+            </button>
+            {selectedModel && (
+              <div className="relative w-full">
+                <ModelViewer fileName={`${imageURL}${selectedModel}`} width={507} height={250} />
+                <button
+                  onClick={handleRemoveModel}
+                  className="absolute top-2 right-2 w-5 h-5 flex items-center justify-center bg-red-600 text-white rounded-full hover:bg-red-700"
+                >
+                  ✕
+                </button>
+              </div>
+            )}
+          </div>
+          <div className="flex flex-col gap-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Asosiy rasmni tanlash
+            </label>
+            <button
+              type="button"
+              onClick={() => {
+                setModalType("single");
+                setIsModalOpen(true);
+              }}
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            >
               Rasm tanlang
             </button>
             {selectedImage && (
               <div className="relative w-full h-48">
                 <img
-                  src={`https://usc1.contabostorage.com/c3e282af10b9439688d5390b60ed4045:autohub/${selectedImage}`}
+                  src={`${imageURL}${selectedImage}`}
                   alt="Selected"
                   className="w-full h-full object-cover rounded-md"
                 />
@@ -309,7 +353,7 @@ export default function AddCar() {
                 {galleryImages.map((url, index) => (
                   <div key={index} className="relative">
                     <img
-                      src={`https://usc1.contabostorage.com/c3e282af10b9439688d5390b60ed4045:autohub/${url}`}
+                      src={`${imageURL}${url}`}
                       alt={`Gallery ${index}`}
                       className="w-full h-32 object-cover rounded-md"
                     />
