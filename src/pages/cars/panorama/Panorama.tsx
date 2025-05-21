@@ -38,7 +38,7 @@ const Loader: React.FC = () => {
 };
 
 const FerrariModel: React.FC = () => {
-  const { scene } = useGLTF("/models/lixiang.glb");
+  const { scene } = useGLTF("/models/untitled.glb");
   const modelRef = useRef<any>(null);
   const [color, setColor] = useState(""); // Default: Qizil rang
   const navigate = useNavigate();
@@ -66,6 +66,7 @@ const FerrariModel: React.FC = () => {
       });
     }
   }, [color]);
+
 
   return (
     <>

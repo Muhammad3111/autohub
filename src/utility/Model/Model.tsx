@@ -1,11 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Html, OrbitControls, useGLTF } from "@react-three/drei";
 import { MathUtils } from "three";
 
-const FerrariModel: React.FC = () => {
-  const { scene } = useGLTF("/models/toyota.glb"); // Model faylini mos joyga joylashtiring
+type ModelProps = {
+  fileName: string;
+  width?: number;
+  height?: number;
+};
+
+export const FerrariModel = ({ file }: { file: string }) => {
+  const { scene } = useGLTF(file); // Model faylini mos joyga joylashtiring
   const modelRef = useRef<any>(null);
   const spinComplete = useRef(false);
   const initialRotation = MathUtils.degToRad(-35); // Boshlang'ich 45° burilish
@@ -39,13 +45,13 @@ const FerrariModel: React.FC = () => {
   );
 };
 
-const ModelViewer: React.FC = () => {
+const ModelViewer = ({ fileName, width = 450, height = 350 }: ModelProps) => {
   return (
     <Canvas
       style={{
         background: "#eeeeee",
-        width: "450px",
-        height: "350px",
+        width,
+        height,
         cursor: "grab",
       }}
       camera={{ position: [0, 0, 4] }}
@@ -68,7 +74,7 @@ const ModelViewer: React.FC = () => {
           </Html>
         }
       >
-        <FerrariModel />
+        <FerrariModel file={fileName} />
       </Suspense>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]} receiveShadow>
         <planeGeometry args={[100, 100]} />

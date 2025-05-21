@@ -119,7 +119,7 @@ export default function CarId() {
         <div className="flex gap-4">
           <div className="basis-[40%] flex gap-2">
             <div className="w-full h-[350px] bg-gray-300 relative">
-              <ModelViewer />
+              <ModelViewer fileName="/models/mers.glb" />
               <button className="bg-primary text-white text-sm px-2 py-1 absolute bottom-2 left-2">
                 Barcha rasmlarni ko'rish
               </button>
